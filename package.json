@@ -1,0 +1,15 @@
+{
+	"name": "aoc",
+	"type": "module",
+	"dependencies": {
+		"ts-pattern": "^5.1.1",
+		"valibot": "^0.30.0"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"prettier": "^3.2.5"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	}
+}
