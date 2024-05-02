@@ -53,6 +53,7 @@ export async function getInput(input: {year: number; day: number}) {
 			.run();
 
 		console.error(message);
+		process.exit();
 	}
 }
 
