@@ -17,11 +17,13 @@ for (const [idx, char] of Object.entries(input)) {
 			floor--;
 			break;
 		default:
-			throw new Error('unhandled character');
+			throw new Error('unhandled char');
 	}
 
-	if (floor === -1) basement ??= Number(idx + 1);
+	if (floor === -1) basement ??= Number(idx) + 1;
 }
 
-console.log(floor);
-console.log(basement);
+console.log({
+	floor,
+	basement,
+});
