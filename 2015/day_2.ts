@@ -25,7 +25,7 @@ for (const ln of input.split('\n')) {
 	const m = ln.match(/^(\d+)x(\d+)x(\d+)$/);
 	if (!m) continue;
 
-	const [l, w, h] = m.slice(1).map(Number);
+	const [l = 0, w = 0, h = 0] = m.slice(1).map(Number);
 
 	paper += calcPaper({l, w, h});
 	ribbon += calcRibbon({l, w, h});
