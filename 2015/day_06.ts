@@ -22,28 +22,21 @@ for (const ln of lns) {
 
 	for (let x = x1; x <= x2; x++) {
 		for (let y = y1; y <= y2; y++) {
+			const k = `${x},${y}`;
+			m2[k] ??= 0;
 			switch (cmd) {
-				case 'turn on': {
-					const k = `${x},${y}`;
+				case 'turn on':
 					m[k] = true;
-					m2[k] ??= 0;
 					m2[k]++;
 					break;
-				}
-				case 'turn off': {
-					const k = `${x},${y}`;
+				case 'turn off':
 					m[k] = false;
-					m2[k] ??= 0;
 					m2[k] = Math.max(0, m2[k]! - 1);
 					break;
-				}
-				case 'toggle': {
-					const k = `${x},${y}`;
+				case 'toggle':
 					m[k] = !m[k];
-					m2[k] ??= 0;
 					m2[k] += 2;
 					break;
-				}
 				default:
 					throw new Error('unhandled cmd');
 			}
