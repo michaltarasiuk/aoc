@@ -57,6 +57,11 @@ export async function getInput(input: {year: number; day: number}) {
 	}
 }
 
+export async function getInputLines(...params: Parameters<typeof getInput>) {
+	const input = await getInput(...params);
+	return input.trim().split('\n');
+}
+
 function getMessageOfValiError(error: v.ValiError) {
 	return error.issues
 		.map((issue) => `[ValiError] ${issue.message}`)

@@ -1,6 +1,6 @@
-import {getInput} from '../lib/get_input';
+import {getInputLines} from '../lib/get_input';
 
-const input = await getInput({
+const lns = await getInputLines({
 	year: 2015,
 	day: 2,
 });
@@ -21,7 +21,7 @@ function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
 let paper = 0,
 	ribbon = 0;
 
-for (const ln of input.split('\n')) {
+for (const ln of lns) {
 	const m = ln.match(/^(\d+)x(\d+)x(\d+)$/);
 	if (!m) continue;
 
