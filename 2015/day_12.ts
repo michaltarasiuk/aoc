@@ -11,7 +11,6 @@ const p = JSON.parse(input, (_, v) => {
 	if (typeof v === 'number') ns.push(v);
 	return v;
 });
-console.log(add(...ns));
 
 const ns2: number[] = [];
 JSON.stringify(p, (_, v) => {
@@ -23,4 +22,6 @@ JSON.stringify(p, (_, v) => {
 	}
 	return v;
 });
+
+console.log(add(...ns));
 console.log(add(...ns2));

@@ -1,7 +1,7 @@
 import {atLeastOne} from '../lib/at_least_one';
 import {getInput} from '../lib/get_input';
 
-let input = await getInput({
+const input = await getInput({
 	year: 2015,
 	day: 10,
 });

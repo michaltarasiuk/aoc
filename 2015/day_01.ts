@@ -17,7 +17,7 @@ for (const [idx, char] of Object.entries(input)) {
 			floor--;
 			break;
 		default:
-			throw new Error('unhandled char');
+			throw new Error('unknown char');
 	}
 
 	if (floor === -1) basement ??= Number(idx) + 1;

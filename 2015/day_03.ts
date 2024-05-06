@@ -35,7 +35,7 @@ function xy() {
 					y--;
 					break;
 				default:
-					throw new Error('unhandled char');
+					throw new Error('unknown char');
 			}
 			return this;
 		},
