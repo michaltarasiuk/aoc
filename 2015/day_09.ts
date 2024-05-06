@@ -1,5 +1,5 @@
 import {getInputLines} from '../lib/get_input';
-import {permutations} from '../lib/permutations';
+import {permute} from '../lib/permutate';
 import {raise} from '../lib/raise';
 
 const lns = await getInputLines({
@@ -28,7 +28,7 @@ const flightCostMap = lns.reduce<{[k: string]: Record<string, number>}>(
 
 let costs: number[] = [];
 
-for (const cities of permutations(Object.keys(flightCostMap))) {
+for (const cities of permute(Object.keys(flightCostMap))) {
 	let cost = 0;
 	for (const [idx, city] of cities.entries()) {
 		const dest = cities[idx + 1]!;
