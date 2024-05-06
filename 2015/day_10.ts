@@ -1,17 +1,18 @@
 import {atLeastOne} from '../lib/at_least_one';
 import {getInput} from '../lib/get_input';
+import {raise} from '../lib/raise';
 
 const input = await getInput({
 	year: 2015,
 	day: 10,
 });
 
+const repeatedDigitsRe = /(?:(\d)\1*)/g;
 let result = input;
 let count = 0;
 
 while (++count <= 50) {
-	const match = result.match(/(?:(\d)\1*)/g);
-	if (!match) break;
+	const match = result.match(repeatedDigitsRe) ?? raise('no match');
 
 	result = match
 		.map(([...digits]) => {

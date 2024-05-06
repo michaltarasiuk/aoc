@@ -8,24 +8,21 @@ const lns = await getInputLines({
 function calcPaper({l, w, h}: {l: number; w: number; h: number}) {
 	const [lw, wh, hl] = [l * w, w * h, h * l];
 
-	return 2 * lw + 2 * wh + 2 * hl + Math.min(lw, wh, hl);
+	return 2 * (lw + wh + hl) + Math.min(lw, wh, hl);
 }
 
 function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
-	const distance = Math.min(2 * l + 2 * w, 2 * w + 2 * h, 2 * h + 2 * l);
-	const volume = l * w * h;
+	const dist = Math.min(l + w, w + h, h + l);
+	const vol = l * w * h;
 
-	return distance + volume;
+	return 2 * dist + vol;
 }
 
-let paper = 0,
-	ribbon = 0;
+let paper = 0;
+let ribbon = 0;
 
 for (const ln of lns) {
-	const m = ln.match(/^(\d+)x(\d+)x(\d+)$/);
-	if (!m) continue;
-
-	const [l = 0, w = 0, h = 0] = m.slice(1).map(Number);
+	const [l = 0, w = 0, h = 0] = ln.split('x').map(Number);
 
 	paper += calcPaper({l, w, h});
 	ribbon += calcRibbon({l, w, h});

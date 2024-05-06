@@ -7,30 +7,32 @@ const lns = await getInputLines({
 	day: 9,
 });
 
-const parse = (ln: string) => {
-	const [, a = raise(), b = raise(), cost = raise()] =
-		ln.match(/^(\w+) to (\w+) = (\d+)$/) ?? [];
+const parseLine = (ln: string) => {
+	const lineRe = /^(\w+) to (\w+) = (\d+)$/;
+	const [, a = raise(), b = raise(), cost = raise()] = ln.match(lineRe) ?? [];
+
 	return {a, b, cost: Number(cost)};
 };
 
-const m = lns.reduce(
+// Like {[city]: {[dest]: cost}}
+const flightCostMap = lns.reduce<{[k: string]: Record<string, number>}>(
 	(acc, ln) => {
-		const {a, b, cost} = parse(ln);
+		const {a, b, cost} = parseLine(ln);
 
 		(acc[a] ??= {}), (acc[a]![b] = cost);
 		(acc[b] ??= {}), (acc[b]![a] = cost);
-
 		return acc;
 	},
-	{} as {[k: string]: Record<string, number>},
+	{},
 );
 
 let costs: number[] = [];
 
-for (const cs of permutations(Object.keys(m))) {
+for (const cities of permutations(Object.keys(flightCostMap))) {
 	let cost = 0;
-	for (const [idx, c] of cs.entries()) {
-		cost += m[c]![cs[idx + 1]!] ?? 0;
+	for (const [idx, city] of cities.entries()) {
+		const dest = cities[idx + 1]!;
+		cost += flightCostMap[city]?.[dest] ?? 0;
 	}
 	costs.push(cost);
 }

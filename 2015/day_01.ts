@@ -6,24 +6,15 @@ const input = await getInput({
 });
 
 let floor = 0;
-let basement: number | null = null;
+let basementEntryIdx: number | null = null;
 
 for (const [idx, char] of Object.entries(input)) {
-	switch (char) {
-		case '(':
-			floor++;
-			break;
-		case ')':
-			floor--;
-			break;
-		default:
-			throw new Error('unknown char');
-	}
-
-	if (floor === -1) basement ??= Number(idx) + 1;
+	floor += char === '(' ? 1 : -1;
+	if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
 }
 
 console.log({
 	floor,
-	basement,
+	basementEntryIdx,
 });
+2;

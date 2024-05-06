@@ -5,16 +5,9 @@ const input = await getInput({
 	day: 3,
 });
 
-class UniqueSet<V> extends Set<V> {
-	addUnique(v: V) {
-		if (!this.has(v)) this.add(v);
-		return this;
-	}
-}
-
-function xy() {
-	let x = 0,
-		y = 0;
+function createPos() {
+	let x = 0;
+	let y = 0;
 
 	return {
 		toString() {
@@ -43,31 +36,31 @@ function xy() {
 }
 
 {
-	const s = xy();
-	const h = new UniqueSet();
+	const santa = createPos();
+	const houses = new Set();
 
 	for (const char of input) {
-		const v = s.set(char).toString();
-		h.addUnique(v);
+		const v = santa.set(char).toString();
+		houses.add(v);
 	}
 
-	console.log(h.size);
+	console.log(houses.size);
 }
 
 {
-	const s = xy();
-	const r = xy();
-	const h = new UniqueSet();
+	const santa = createPos();
+	const robotSanta = createPos();
+	const houses = new Set();
 
 	for (const [idx, char] of Object.entries(input)) {
-		if (Number(idx) % 2 === 0) {
-			const k = s.set(char).toString();
-			h.addUnique(k);
+		if (Number(idx) % 2) {
+			const house = robotSanta.set(char).toString();
+			houses.add(house);
 		} else {
-			const k = r.set(char).toString();
-			h.addUnique(k);
+			const house = santa.set(char).toString();
+			houses.add(house);
 		}
 	}
 
-	console.log(h.size);
+	console.log(houses.size);
 }
