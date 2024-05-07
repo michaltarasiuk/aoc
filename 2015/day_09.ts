@@ -1,6 +1,6 @@
-import {getInputLines} from '../lib/get_input';
-import {permute} from '../lib/permutate';
-import {raise} from '../lib/raise';
+import {getInputLines} from 'lib/get_input';
+import {permute} from 'lib/permutate';
+import {raise} from 'lib/raise';
 
 const lns = await getInputLines({
 	year: 2015,

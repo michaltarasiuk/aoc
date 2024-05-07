@@ -1,6 +1,6 @@
-import {getInput} from '../lib/get_input';
-import {add} from '../lib/add';
-import {isObject} from '../lib/is_object';
+import {getInput} from 'lib/get_input';
+import {add} from 'lib/add';
+import {isObject} from 'lib/is_object';
 
 const input = await getInput({
 	year: 2015,

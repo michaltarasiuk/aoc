@@ -1,6 +1,6 @@
-import {atLeastOne} from '../lib/at_least_one';
-import {getInput} from '../lib/get_input';
-import {raise} from '../lib/raise';
+import {atLeastOne} from 'lib/at_least_one';
+import {getInput} from 'lib/get_input';
+import {raise} from 'lib/raise';
 
 const input = await getInput({
 	year: 2015,
