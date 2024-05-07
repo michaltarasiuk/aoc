@@ -11,7 +11,7 @@ function createPos() {
 
 	return {
 		toString() {
-			return `${x},${y}`;
+			return [x, y].join();
 		},
 		set(char: string) {
 			switch (char) {
