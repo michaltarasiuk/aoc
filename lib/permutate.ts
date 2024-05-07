@@ -1,4 +1,4 @@
-export function permute<Item>(items: Item[]): Item[][] {
+export function permute<T>(items: T[]): T[][] {
 	if (!items.length) {
 		return [[]];
 	}
@@ -6,7 +6,7 @@ export function permute<Item>(items: Item[]): Item[][] {
 	return permute(rest).flatMap((items) => interleave(first!, items));
 }
 
-function interleave<Item>(item: Item, items: Item[]): Item[][] {
+function interleave<T>(item: T, items: T[]): T[][] {
 	if (!items.length) {
 		return [[item]];
 	}
