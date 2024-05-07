@@ -1,12 +1,22 @@
 import {divisors} from '../lib/divisors';
+import {getInput} from '../lib/get_input';
 
-const houses: Record<number, number> = {};
+const input = await getInput({
+	year: 2015,
+	day: 20,
+});
 
-for (let i = 1; i <= 9; i++) {
+const houses: {[k: number]: number} = {};
+let i = 0;
+
+loop: while (++i) {
 	for (const j of divisors(i)) {
-		houses[i] ??= 0;
-		houses[i] += 10 * j;
+		const housePresentsCount = ((houses[i] ??= 0), (houses[i] += 10 * j));
+
+		if (housePresentsCount >= Number(input)) {
+			break loop;
+		}
 	}
 }
 
-console.log(houses);
+console.log(i);
