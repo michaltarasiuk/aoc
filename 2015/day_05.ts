@@ -23,3 +23,17 @@ const lns = await getInputLines({
 
 	console.log(add(...lns.map(isNiceString)));
 }
+
+{
+	const containsPairOfAnyTwoLetters = (string: string) =>
+		/(?:.*(\w{2}).*)\1/.test(string);
+
+	const containsRepeatingLetterWithOneBetween = (string: string) =>
+		/(\w)\w\1/.test(string);
+
+	const isNiceString = (string: string) =>
+		containsPairOfAnyTwoLetters(string) &&
+		containsRepeatingLetterWithOneBetween(string);
+
+	console.log(add(...lns.map(isNiceString)));
+}
