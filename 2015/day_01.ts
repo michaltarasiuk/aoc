@@ -17,4 +17,3 @@ console.log({
 	floor,
 	basementEntryIdx,
 });
-2;

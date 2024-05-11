@@ -26,7 +26,7 @@ const flightCostMap = lns.reduce<{[k: string]: Record<string, number>}>(
 	{},
 );
 
-let costs: number[] = [];
+const costs: number[] = [];
 
 for (const cities of permute(Object.keys(flightCostMap))) {
 	let cost = 0;
