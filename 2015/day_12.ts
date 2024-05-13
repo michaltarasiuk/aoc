@@ -8,13 +8,13 @@ const input = await getInput({
 });
 
 const ns: number[] = [];
-const parsed = JSON.parse(input, (_, val) => {
+const parsed = JSON.parse(input, (_, val: unknown) => {
 	if (typeof val === "number") ns.push(val);
 	return val;
 });
 
 const ns2: number[] = [];
-JSON.stringify(parsed, (_, val) => {
+JSON.stringify(parsed, (_, val: unknown) => {
 	if (isObject(val)) {
 		for (const v of Object.values(val)) {
 			if (v === "red") return;
