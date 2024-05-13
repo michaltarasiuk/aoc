@@ -1,4 +1,4 @@
-import {getInput} from 'lib/get_input';
+import { getInput } from "lib/get_input";
 
 const input = await getInput({
 	year: 2015,
@@ -15,20 +15,20 @@ function createPos() {
 		},
 		set(char: string) {
 			switch (char) {
-				case '>':
+				case ">":
 					x++;
 					break;
-				case '<':
+				case "<":
 					x--;
 					break;
-				case '^':
+				case "^":
 					y++;
 					break;
-				case 'v':
+				case "v":
 					y--;
 					break;
 				default:
-					throw new Error('unknown char');
+					throw new Error("unknown char");
 			}
 			return this;
 		},

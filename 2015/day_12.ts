@@ -1,6 +1,6 @@
-import {getInput} from 'lib/get_input';
-import {add} from 'lib/add';
-import {isObject} from 'lib/is_object';
+import { add } from "lib/add";
+import { getInput } from "lib/get_input";
+import { isObject } from "lib/is_object";
 
 const input = await getInput({
 	year: 2015,
@@ -9,7 +9,7 @@ const input = await getInput({
 
 const ns: number[] = [];
 const parsed = JSON.parse(input, (_, val) => {
-	if (typeof val === 'number') ns.push(val);
+	if (typeof val === "number") ns.push(val);
 	return val;
 });
 
@@ -17,9 +17,9 @@ const ns2: number[] = [];
 JSON.stringify(parsed, (_, val) => {
 	if (isObject(val)) {
 		for (const v of Object.values(val)) {
-			if (v === 'red') return;
+			if (v === "red") return;
 		}
-	} else if (typeof val === 'number') {
+	} else if (typeof val === "number") {
 		ns2.push(val);
 	}
 

@@ -1,4 +1,4 @@
-import {getInput} from 'lib/get_input';
+import { getInput } from "lib/get_input";
 
 const input = await getInput({
 	year: 2015,
@@ -9,7 +9,7 @@ let floor = 0;
 let basementEntryIdx: number | null = null;
 
 for (const [idx, char] of Object.entries(input)) {
-	floor += char === '(' ? 1 : -1;
+	floor += char === "(" ? 1 : -1;
 	if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
 }
 

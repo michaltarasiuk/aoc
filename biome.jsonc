@@ -1,0 +1,30 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.7.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"formatter": {
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineEnding": "lf"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noNonNullAssertion": "off",
+				"noCommaOperator": "off"
+			},
+			"suspicious": {
+				"noAssignInExpressions": "off"
+			},
+			"security": {
+				"noGlobalEval": "off"
+			}
+		}
+	},
+	"files": {
+		"ignore": ["node_modules", "bun.lockb"]
+	}
+}

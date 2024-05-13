@@ -1,4 +1,4 @@
-import * as v from 'valibot';
+import * as v from "valibot";
 
 const ENV_SCHEMA = v.object({
 	session: v.string(),

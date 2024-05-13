@@ -1,1 +1,1 @@
-import 'ts-reset';
+import "ts-reset";

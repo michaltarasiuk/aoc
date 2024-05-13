@@ -1,13 +1,20 @@
 {
 	"name": "aoc",
 	"type": "module",
+	"scripts": {
+		"prepare": "lefthook install",
+		"lint": "biome lint --apply .",
+		"format": "biome format --write ."
+	},
 	"dependencies": {
-		"ts-reset": "npm:@total-typescript/ts-reset@^0.5.1",
 		"ts-pattern": "^5.1.1",
+		"ts-reset": "npm:@total-typescript/ts-reset@^0.5.1",
 		"valibot": "^0.30.0"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^1.7.3",
 		"@types/bun": "latest",
+		"lefthook": "^1.6.10",
 		"prettier": "^3.2.5"
 	},
 	"peerDependencies": {
