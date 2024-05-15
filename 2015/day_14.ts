@@ -1,4 +1,4 @@
-import { divideWithRemainder } from "lib/divide_and_remainder";
+import { divideWithRemainder } from "lib/divide_with_remainder";
 import { getInputLines } from "lib/get_input";
 
 const lns = await getInputLines({
@@ -14,12 +14,12 @@ const parse = (ln: string) => {
 	return { speed, speedTime, rest };
 };
 
-const fullTime = 2_503;
+const FULL_TIME = 2_503;
 
 const calcDistance = ({ speed, speedTime, rest }: ReturnType<typeof parse>) => {
 	const timeChunk = speedTime + rest;
 	const [fullTimeChunks, remainTime] = divideWithRemainder(
-		fullTime,
+		FULL_TIME,
 		timeChunk,
 	);
 
@@ -28,11 +28,9 @@ const calcDistance = ({ speed, speedTime, rest }: ReturnType<typeof parse>) => {
 	);
 };
 
-let maxDistance = 0;
-
-for (const ln of lns) {
+const maxDistance = lns.reduce((acc, ln) => {
 	const parsed = parse(ln);
-	maxDistance = Math.max(maxDistance, calcDistance(parsed));
-}
+	return Math.max(acc, calcDistance(parsed));
+}, 0);
 
 console.log(maxDistance);
