@@ -28,7 +28,7 @@ function createPos() {
 					y--;
 					break;
 				default:
-					throw new Error("unknown char");
+					throw new Error("Unknown char");
 			}
 			return this;
 		},
