@@ -1,5 +1,5 @@
 import { atLeastOne } from "lib/at_least_one";
-import { getInput } from "lib/get_input";
+import { getInput } from "lib/input";
 import { raise } from "lib/raise";
 
 const input = await getInput({

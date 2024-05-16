@@ -1,5 +1,5 @@
 import { add } from "lib/add";
-import { getInput } from "lib/get_input";
+import { getInput } from "lib/input";
 import { isObject } from "lib/is_object";
 
 const input = await getInput({

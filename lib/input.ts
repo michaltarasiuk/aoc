@@ -22,7 +22,7 @@ const INPUT_SCHEMA = v.object({
 	]),
 });
 
-export async function getInput(input: { year: number; day: number }) {
+async function fetchInput(input: { year: number; day: number }) {
 	try {
 		v.parse(INPUT_SCHEMA, input);
 		const { year, day } = input;
@@ -57,9 +57,14 @@ export async function getInput(input: { year: number; day: number }) {
 	}
 }
 
+export async function getInput(...params: Parameters<typeof fetchInput>) {
+	const input = await fetchInput(...params);
+	return input.trim();
+}
+
 export async function getInputLines(...params: Parameters<typeof getInput>) {
 	const input = await getInput(...params);
-	return input.trim().split("\n");
+	return input.split("\n");
 }
 
 function getMessageOfValiError(error: v.ValiError) {

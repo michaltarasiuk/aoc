@@ -1,4 +1,4 @@
-import { getInputLines } from "lib/get_input";
+import { getInputLines } from "lib/input";
 
 const lns = await getInputLines({
 	year: 2015,

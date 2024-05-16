@@ -1,12 +1,10 @@
 import { MD5 } from "bun";
-import { getInput } from "lib/get_input";
+import { getInput } from "lib/input";
 
-const input = await getInput({
+const key = await getInput({
 	year: 2015,
 	day: 4,
 });
-
-const key = input.trimEnd();
 
 const md5 = (data: Bun.BlobOrStringOrBuffer) =>
 	new MD5().update(data).digest("hex");

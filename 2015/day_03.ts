@@ -1,4 +1,4 @@
-import { getInput } from "lib/get_input";
+import { getInput } from "lib/input";
 
 const input = await getInput({
 	year: 2015,
@@ -11,7 +11,7 @@ function createPos() {
 
 	return {
 		toString() {
-			return [x, y].join();
+			return `${x},${y}`;
 		},
 		set(char: string) {
 			switch (char) {

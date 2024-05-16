@@ -1,4 +1,4 @@
-import { getInputLines } from "lib/get_input";
+import { getInputLines } from "lib/input";
 import { permute } from "lib/permutate";
 
 const lns = await getInputLines({
