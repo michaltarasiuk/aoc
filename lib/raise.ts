@@ -1,3 +1,3 @@
-export function raise(message?: string): never {
+export function raise(message: string): never {
 	throw new Error(message);
 }

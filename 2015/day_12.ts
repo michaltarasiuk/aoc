@@ -23,5 +23,5 @@ JSON.stringify(parsed, (_, val: unknown) => {
 	return val;
 });
 
-console.log(add(...ns));
-console.log(add(...ns2));
+console.log(add(ns));
+console.log(add(ns2));

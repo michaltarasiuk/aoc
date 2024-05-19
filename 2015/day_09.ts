@@ -3,7 +3,7 @@ import { permute } from "lib/permutate";
 
 const lns = await getInputLines({ year: 2015, day: 9 });
 
-const parseLine = (ln: string) => {
+const parse = (ln: string) => {
 	const lineRe = /^(\w+) to (\w+) = (\d+)$/;
 	const [, a, b, cost] = ln.match(lineRe) ?? [];
 
@@ -12,23 +12,25 @@ const parseLine = (ln: string) => {
 };
 
 // Like {[city]: {[dest]: cost}}
-type FlightCostMap = { [k: string]: Record<string, number> };
+const costMap = lns.reduce<{ [k: string]: Record<string, number> }>(
+	(acc, ln) => {
+		const { a, b, cost } = parse(ln);
 
-const flightCostMap = lns.reduce<FlightCostMap>((acc, ln) => {
-	const { a, b, cost } = parseLine(ln);
-
-	(acc[a] ??= {}), (acc[a]![b] = cost);
-	(acc[b] ??= {}), (acc[b]![a] = cost);
-	return acc;
-}, {});
+		(acc[a] ??= {}), (acc[a][b] = cost);
+		(acc[b] ??= {}), (acc[b][a] = cost);
+		return acc;
+	},
+	{},
+);
+const costMapKeys = Object.keys(costMap);
 
 const costs: number[] = [];
 
-for (const cities of permute(Object.keys(flightCostMap))) {
+for (const cities of permute(costMapKeys)) {
 	let cost = 0;
 	for (const [idx, city] of cities.entries()) {
-		const dest = cities[idx + 1]!;
-		cost += flightCostMap[city]?.[dest] ?? 0;
+		const dest = cities[idx + 1];
+		cost += costMap[city][dest] ?? 0;
 	}
 	costs.push(cost);
 }

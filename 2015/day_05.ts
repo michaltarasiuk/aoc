@@ -18,7 +18,7 @@ const lns = await getInputLines({ year: 2015, day: 5 });
 		containsRepeatedLetters(string) &&
 		containsAllowedSubstrings(string);
 
-	console.log(add(...lns.map(isNiceString)));
+	console.log(add(lns.map(isNiceString)));
 }
 
 {
@@ -32,5 +32,5 @@ const lns = await getInputLines({ year: 2015, day: 5 });
 		containsPairOfAnyTwoLetters(string) &&
 		containsRepeatingLetterWithOneBetween(string);
 
-	console.log(add(...lns.map(isNiceString)));
+	console.log(add(lns.map(isNiceString)));
 }

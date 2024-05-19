@@ -12,7 +12,7 @@ function interleave<T>(item: T, items: T[]): T[][] {
 	}
 	const [first, ...rest] = items;
 	return [
-		[item, first!, ...rest],
-		...interleave(item, rest).map((items) => [first!, ...items]),
+		[item, first, ...rest],
+		...interleave(item, rest).map((items) => [first, ...items]),
 	];
 }
