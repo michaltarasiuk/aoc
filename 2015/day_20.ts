@@ -1,10 +1,7 @@
 import { divisors } from "lib/divisors";
 import { getInput } from "lib/input";
 
-const input = await getInput({
-	year: 2015,
-	day: 20,
-});
+const input = await getInput({ year: 2015, day: 20 });
 
 const houses: { [k: number]: number } = {};
 let i = 0;

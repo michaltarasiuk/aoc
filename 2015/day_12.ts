@@ -2,10 +2,7 @@ import { add } from "lib/add";
 import { getInput } from "lib/input";
 import { isObject } from "lib/is_object";
 
-const input = await getInput({
-	year: 2015,
-	day: 12,
-});
+const input = await getInput({ year: 2015, day: 12 });
 
 const ns: number[] = [];
 const parsed = JSON.parse(input, (_, val: unknown) => {

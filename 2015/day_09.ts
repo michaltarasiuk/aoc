@@ -1,10 +1,7 @@
 import { getInputLines } from "lib/input";
 import { permute } from "lib/permutate";
 
-const lns = await getInputLines({
-	year: 2015,
-	day: 9,
-});
+const lns = await getInputLines({ year: 2015, day: 9 });
 
 const parseLine = (ln: string) => {
 	const lineRe = /^(\w+) to (\w+) = (\d+)$/;

@@ -1,9 +1,6 @@
 import { getInput } from "lib/input";
 
-const input = await getInput({
-	year: 2015,
-	day: 3,
-});
+const input = await getInput({ year: 2015, day: 3 });
 
 function createPos() {
 	let x = 0;

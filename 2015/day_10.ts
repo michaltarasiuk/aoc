@@ -2,10 +2,7 @@ import { atLeastOne } from "lib/at_least_one";
 import { getInput } from "lib/input";
 import { raise } from "lib/raise";
 
-const input = await getInput({
-	year: 2015,
-	day: 10,
-});
+const input = await getInput({ year: 2015, day: 10 });
 
 const repeatedDigitsRe = /(?:(\d)\1*)/g;
 let result = input;

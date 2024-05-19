@@ -1,9 +1,6 @@
 import { getInput } from "lib/input";
 
-const input = await getInput({
-	year: 2015,
-	day: 1,
-});
+const input = await getInput({ year: 2015, day: 1 });
 
 let floor = 0;
 let basementEntryIdx: number | null = null;
