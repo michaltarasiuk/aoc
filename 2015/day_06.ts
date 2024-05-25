@@ -5,12 +5,8 @@ import {raise} from 'lib/raise';
 
 const lns = await getInputLines({year: 2015, day: 6});
 
-type Light = {
+type Light = Record<`${'x' | 'y'}${1 | 2}`, string> & {
     action: string;
-    x1: string;
-    y1: string;
-    x2: string;
-    y2: string;
 };
 
 const parseLn = (ln: string) => {
