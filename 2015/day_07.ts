@@ -7,17 +7,17 @@ const parseLn = (ln: string) => [
     ...(ln.match(/([a-z]|[0-9])+/g) ?? []),
 ];
 
-type Circuit = Record<string, ReturnType<typeof parseLn>>;
+type Circuit = Record<string, string[]>;
 
 const circuit = lns.reduce<Circuit>((acc, ln) => {
     const parsedLn = parseLn(ln);
-    const dest = parsedLn.at(-1);
+    const dest = parsedLn.pop();
 
     if (dest) acc[dest] = parsedLn;
     return acc;
 }, {});
 
-const cache = new Map<string, number>();
+let cache = new Map<string, number>();
 
 function calcSignalOrParse(s: string) {
     const parsed = Number(s);
@@ -49,4 +49,8 @@ function calcSignal(dest: string): number {
     }
 }
 
-console.log(calcSignal('a'));
+const signalA = calcSignal('a');
+
+cache = new Map<string, number>([['b', signalA]]);
+
+console.log([signalA, calcSignal('a')]);
