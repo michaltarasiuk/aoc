@@ -63,7 +63,7 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
     return input.trim();
 }
 
-export async function getInputLines(...params: Parameters<typeof getInput>) {
+export async function getInputLns(...params: Parameters<typeof getInput>) {
     const input = await getInput(...params);
     return input.split('\n');
 }

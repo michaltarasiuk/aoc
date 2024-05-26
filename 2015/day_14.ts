@@ -1,7 +1,7 @@
 import {divideWithRemainder} from 'lib/divide_with_remainder';
-import {getInputLines} from 'lib/input';
+import {getInputLns} from 'lib/input';
 
-const lns = await getInputLines({year: 2015, day: 14});
+const lns = await getInputLns({year: 2015, day: 14});
 
 const parseLn = (ln: string) => {
     const [speed = 0, speedTime = 0, rest = 0] = Array.from(

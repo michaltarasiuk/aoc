@@ -1,6 +1,6 @@
-import {getInputLines} from 'lib/input';
+import {getInputLns} from 'lib/input';
 
-const lns = await getInputLines({year: 2015, day: 2});
+const lns = await getInputLns({year: 2015, day: 2});
 
 function calcPaper({l, w, h}: {l: number; w: number; h: number}) {
     const [lw, wh, hl] = [l * w, w * h, h * l];

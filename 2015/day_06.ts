@@ -1,9 +1,9 @@
 import {add} from 'lib/add';
 import {create2dArr} from 'lib/create_2d_arr';
-import {getInputLines} from 'lib/input';
+import {getInputLns} from 'lib/input';
 import {raise} from 'lib/raise';
 
-const lns = await getInputLines({year: 2015, day: 6});
+const lns = await getInputLns({year: 2015, day: 6});
 
 type Light = Record<`${'x' | 'y'}${1 | 2}`, string> & {
     action: string;
