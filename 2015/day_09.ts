@@ -17,7 +17,6 @@ const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
 
     (acc[a] ??= {}), (acc[a][b] = cost);
     (acc[b] ??= {}), (acc[b][a] = cost);
-
     return acc;
 }, {});
 const costMapKeys = Object.keys(costMap);

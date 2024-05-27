@@ -8,26 +8,40 @@ const parseLn = (ln: string) => [
     ...(ln.match(/(gain|lose|\d+)/g) ?? []),
 ];
 
-type ParsedLns = Record<string, {[name: string]: number}>;
+const guests = lns.reduce<Record<string, {[name: string]: number}>>(
+    (acc, ln) => {
+        const [a, b, type, val] = parseLn(ln);
 
-const parsedLns = lns.reduce<ParsedLns>((acc, ln) => {
-    const [a, b, type, val] = parseLn(ln);
+        acc[a] ??= {};
+        acc[a][b] = type === 'lose' ? -parseInt(val) : parseInt(val);
+        return acc;
+    },
+    {},
+);
 
-    acc[a] ??= {};
-    acc[a][b] = type === 'lose' ? -parseInt(val) : parseInt(val);
+const getGuestNames = () => Object.keys(guests);
 
-    return acc;
-}, {});
+const calcTotalHappiness = (seats: string[]) => {
+    return seats.reduce((acc, name, idx) => {
+        const left = seats.at(idx - 1)!;
+        const right = seats.at((idx + 1) % seats.length)!;
 
-const names = Object.keys(parsedLns);
-
-function calcTotalHappiness(names: string[]) {
-    return names.reduce((acc, name, idx, {length}) => {
-        const left = names.at(idx - 1)!;
-        const right = names.at((idx + 1) % length)!;
-
-        return acc + parsedLns[name][left] + parsedLns[name][right];
+        return acc + guests[name][left] + guests[name][right];
     }, 0);
+};
+
+const names = getGuestNames();
+const result = Math.max(...permute(names).map(calcTotalHappiness));
+
+for (const name of names) {
+    guests.Me ??= {};
+    guests.Me[name] = 0;
+    guests[name].Me = 0;
 }
 
-console.log(Math.max(...permute(names).map(calcTotalHappiness)));
+const result2 = permute(getGuestNames()).reduce(
+    (acc, names) => Math.max(acc, calcTotalHappiness(names)),
+    0,
+);
+
+console.log({result, result2});
