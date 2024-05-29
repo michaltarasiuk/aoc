@@ -7,9 +7,7 @@ const parseLn = (ln: string) => [
     ...(ln.match(/([a-z]|[0-9])+/g) ?? []),
 ];
 
-type Circuit = Record<string, string[]>;
-
-const circuit = lns.reduce<Circuit>((acc, ln) => {
+const circuit = lns.reduce<Record<string, string[]>>((acc, ln) => {
     const parsedLn = parseLn(ln);
     const dest = parsedLn.pop();
 
