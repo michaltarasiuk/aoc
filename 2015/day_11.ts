@@ -9,40 +9,40 @@ const newPassword2 = findNewPassword(newPassword);
 console.log({newPassword, newPassword2});
 
 function findNewPassword(password: string) {
-    let int = parseInt(password, 36);
-    let newPassword = int.toString(36);
+	let int = parseInt(password, 36);
+	let newPassword = int.toString(36);
 
-    do {
-        int++;
-        newPassword = int.toString(36);
-    } while (!isValidPassword(newPassword));
+	do {
+		int++;
+		newPassword = int.toString(36);
+	} while (!isValidPassword(newPassword));
 
-    return newPassword;
+	return newPassword;
 }
 
 function isValidPassword(password: string) {
-    return (
-        containsValidChars(password) &&
-        contains2NonOverlappingPairs(password) &&
-        hasIncreasingStraightOf3Chars(password)
-    );
+	return (
+		containsValidChars(password) &&
+		contains2NonOverlappingPairs(password) &&
+		hasIncreasingStraightOf3Chars(password)
+	);
 }
 
 function containsValidChars(s: string) {
-    return /^[^iol]*$/.test(s) && /^[a-z]*$/.test(s);
+	return /^[^iol]*$/.test(s) && /^[a-z]*$/.test(s);
 }
 
 function contains2NonOverlappingPairs(s: string) {
-    return /.*(\w)\1.*(\w)\2/.test(s);
+	return /.*(\w)\1.*(\w)\2/.test(s);
 }
 
 function hasIncreasingStraightOf3Chars(s: string) {
-    const keys = Object.keys(s.slice(1, s.length - 1));
-    const charCodes = Array.from(s).map(charToCode);
+	const keys = Object.keys(s.slice(1, s.length - 1));
+	const charCodes = Array.from(s).map(charToCode);
 
-    for (const idx of keys.map(Number)) {
-        const [a, b, c] = charCodes.slice(idx, idx + 3);
-        if (b - a === 1 && c - b === 1) return true;
-    }
-    return false;
+	for (const idx of keys.map(Number)) {
+		const [a, b, c] = charCodes.slice(idx, idx + 3);
+		if (b - a === 1 && c - b === 1) return true;
+	}
+	return false;
 }

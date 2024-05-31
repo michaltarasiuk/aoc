@@ -6,11 +6,11 @@ let floor = 0;
 let basementEntryIdx: number | null = null;
 
 for (const [idx, char] of Object.entries(input)) {
-    floor += char === '(' ? 1 : -1;
-    if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
+	floor += char === '(' ? 1 : -1;
+	if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
 }
 
 console.log({
-    floor,
-    basementEntryIdx,
+	floor,
+	basementEntryIdx,
 });
