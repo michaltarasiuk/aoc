@@ -1,3 +1,4 @@
+import {assertKeyIn} from 'lib/assert_key_in';
 import {getInputLns} from 'lib/input';
 import {raise} from 'lib/raise';
 
@@ -5,12 +6,21 @@ const lns = await getInputLns({year: 2015, day: 23});
 
 type Registers = {a: number; b: number};
 
-type Action = (registers: Registers, name: keyof Registers) => Registers;
+type Action = (registers: Registers, ...args: string[]) => Registers;
 
 const actions: Record<string, Action> = {
-	inc: (registers, name) => ({...registers, [name]: registers[name] + 1}),
-	hlf: (registers, name) => ({...registers, [name]: registers[name] / 2}),
-	tpl: (registers, name) => ({...registers, [name]: registers[name] * 3}),
+	inc: (registers, name) => {
+		assertKeyIn(registers, name);
+		return {...registers, [name]: registers[name]++};
+	},
+	hlf: (registers, name) => {
+		assertKeyIn(registers, name);
+		return {...registers, [name]: registers[name] / 2};
+	},
+	tpl: (registers, name) => {
+		assertKeyIn(registers, name);
+		return {...registers, [name]: registers[name] * 3};
+	},
 };
 
 type Jump = (registers: Registers, ...args: string[]) => number;
@@ -18,12 +28,12 @@ type Jump = (registers: Registers, ...args: string[]) => number;
 const jumps: Record<string, Jump> = {
 	jmp: (_registers, offset) => Number(offset),
 	jie: (registers, name, offset) => {
-		const register = registers[name as keyof Registers];
-		return register % 2 === 0 ? Number(offset) : 1;
+		assertKeyIn(registers, name);
+		return registers[name] % 2 === 0 ? Number(offset) : 1;
 	},
 	jio: (registers, name, offset) => {
-		const register = registers[name as keyof Registers];
-		return register === 1 ? Number(offset) : 1;
+		assertKeyIn(registers, name);
+		return registers[name] === 1 ? Number(offset) : 1;
 	},
 };
 
@@ -34,7 +44,7 @@ const getInstructions = (lns: string[]) => {
 
 const runInstructions = (
 	initalRegisters: Registers,
-	instructions: ReturnType<typeof getInstructions>,
+	instructions: string[][],
 ) => {
 	let registers = initalRegisters;
 	let pointer = 0;
@@ -43,12 +53,10 @@ const runInstructions = (
 		const [instruction, ...args] = instructions[pointer];
 
 		if (instruction in actions) {
-			const action = actions[instruction];
-			registers = action(registers, args[0] as keyof Registers);
+			registers = actions[instruction](registers, ...args);
 			pointer++;
 		} else if (instruction in jumps) {
-			const jump = jumps[instruction];
-			pointer += jump(registers, ...args);
+			pointer += jumps[instruction](registers, ...args);
 		}
 	}
 

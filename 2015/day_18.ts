@@ -1,17 +1,21 @@
+import {assertKeyIn} from 'lib/assert_key_in';
 import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 18});
 
-const LIGHT_ON: string = '#';
-const LIGHT_OFF: string = '.';
+const LIGHT_ON = '#';
+const LIGHT_OFF = '.';
 
 const getNeighbors = (state: string[][], {x, y}: {x: number; y: number}) => {
 	const start = Math.max(0, x - 1);
 	const end = x + 2;
 
-	return [state[y][x - 1], state[y][x + 1]]
-		.concat(state[y - 1]?.slice(start, end))
-		.concat(state[y + 1]?.slice(start, end));
+	return [
+		state[y][x - 1],
+		state[y][x + 1],
+		...(state[y - 1]?.slice(start, end) ?? []),
+		...(state[y + 1]?.slice(start, end) ?? []),
+	];
 };
 
 const actions = {
@@ -29,7 +33,10 @@ let state = lns.map((ln) => ln.split(''));
 
 for (let i = 0; i < 100; i++) {
 	state = state.map((row, y) =>
-		row.map((light, x) => actions[light](getNeighbors(state, {x, y}))),
+		row.map((light, x) => {
+			assertKeyIn(actions, light);
+			return actions[light](getNeighbors(state, {x, y}));
+		}),
 	);
 }
 
