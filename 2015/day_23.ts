@@ -5,10 +5,11 @@ import {raise} from 'lib/raise';
 const lns = await getInputLns({year: 2015, day: 23});
 
 type Registers = {a: number; b: number};
+type Instruction<Return> = (registers: Registers, ...args: string[]) => Return;
 
-type Action = (registers: Registers, ...args: string[]) => Registers;
+type Actions = Record<string, Instruction<Registers>>;
 
-const actions: Record<string, Action> = {
+const actions: Actions = {
 	inc: (registers, name) => {
 		assertKeyIn(registers, name);
 		return {...registers, [name]: registers[name] + 1};
@@ -23,9 +24,9 @@ const actions: Record<string, Action> = {
 	},
 };
 
-type Jump = (registers: Registers, ...args: string[]) => number;
+type Jumps = Record<string, Instruction<number>>;
 
-const jumps: Record<string, Jump> = {
+const jumps: Jumps = {
 	jmp: (_registers, offset) => Number(offset),
 	jie: (registers, name, offset) => {
 		assertKeyIn(registers, name);
