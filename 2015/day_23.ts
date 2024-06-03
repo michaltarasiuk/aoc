@@ -11,7 +11,7 @@ type Action = (registers: Registers, ...args: string[]) => Registers;
 const actions: Record<string, Action> = {
 	inc: (registers, name) => {
 		assertKeyIn(registers, name);
-		return {...registers, [name]: registers[name]++};
+		return {...registers, [name]: registers[name] + 1};
 	},
 	hlf: (registers, name) => {
 		assertKeyIn(registers, name);
@@ -43,10 +43,10 @@ const getInstructions = (lns: string[]) => {
 };
 
 const runInstructions = (
-	initalRegisters: Registers,
+	initialRegisters: Registers,
 	instructions: string[][],
 ) => {
-	let registers = initalRegisters;
+	let registers = initialRegisters;
 	let pointer = 0;
 
 	while (pointer < instructions.length) {
