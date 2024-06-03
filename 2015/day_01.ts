@@ -10,7 +10,4 @@ for (const [idx, char] of Object.entries(input)) {
 	if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
 }
 
-console.log({
-	floor,
-	basementEntryIdx,
-});
+console.log({floor, basementEntryIdx});

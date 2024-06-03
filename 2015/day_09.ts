@@ -3,13 +3,12 @@ import {permute} from 'lib/permutate';
 
 const lns = await getInputLns({year: 2015, day: 9});
 
-const parseLn = (ln: string) => {
+function parseLn(ln: string) {
 	const lineRe = /^(\w+) to (\w+) = (\d+)$/;
 	const [, a, b, cost] = ln.match(lineRe) ?? [];
 
-	if (!a || !b || !cost) throw new Error('Invalid line');
 	return {a, b, cost: Number(cost)};
-};
+}
 
 // Like {[city]: {[dest]: cost}}
 const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {

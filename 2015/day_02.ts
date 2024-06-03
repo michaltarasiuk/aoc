@@ -25,7 +25,4 @@ for (const ln of lns) {
 	ribbon += calcRibbon({l, w, h});
 }
 
-console.log({
-	paper,
-	ribbon,
-});
+console.log({paper, ribbon});

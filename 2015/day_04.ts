@@ -4,17 +4,18 @@ import {getInput} from 'lib/input';
 
 const key = await getInput({year: 2015, day: 4});
 
-const md5 = (data: crypto.BinaryLike) =>
-	crypto.createHash('md5').update(data).digest('hex');
+function md5(data: crypto.BinaryLike) {
+	return crypto.createHash('md5').update(data).digest('hex');
+}
 
-const waitUntilStartsWith = (
+function waitUntilStartsWith(
 	{string, searchString}: {string: string; searchString: string},
 	init = 0,
-) => {
+) {
 	let n = init;
 	while (!md5(string + n).startsWith(searchString)) n++;
 	return n;
-};
+}
 
 const result = waitUntilStartsWith({
 	string: key,
@@ -26,7 +27,4 @@ const result2 = waitUntilStartsWith(
 	result,
 );
 
-console.log({
-	result,
-	result2,
-});
+console.log({result, result2});

@@ -1,24 +1,23 @@
 import {assertKeyIn} from 'lib/assert_key_in';
 import {getInputLns} from 'lib/input';
-import {raise} from 'lib/raise';
 
 const lns = await getInputLns({year: 2015, day: 23});
 
 type Registers = {a: number; b: number};
-type Instruction<Return> = (registers: Registers, ...args: string[]) => Return;
+type Instruction<T> = (registers: Registers, ...args: string[]) => T;
 
 type Actions = Record<string, Instruction<Registers>>;
 
 const actions: Actions = {
-	inc: (registers, name) => {
+	inc(registers, name) {
 		assertKeyIn(registers, name);
 		return {...registers, [name]: registers[name] + 1};
 	},
-	hlf: (registers, name) => {
+	hlf(registers, name) {
 		assertKeyIn(registers, name);
 		return {...registers, [name]: registers[name] / 2};
 	},
-	tpl: (registers, name) => {
+	tpl(registers, name) {
 		assertKeyIn(registers, name);
 		return {...registers, [name]: registers[name] * 3};
 	},
@@ -27,26 +26,28 @@ const actions: Actions = {
 type Jumps = Record<string, Instruction<number>>;
 
 const jumps: Jumps = {
-	jmp: (_registers, offset) => Number(offset),
-	jie: (registers, name, offset) => {
+	jmp(_registers, offset) {
+		return Number(offset);
+	},
+	jie(registers, name, offset) {
 		assertKeyIn(registers, name);
 		return registers[name] % 2 === 0 ? Number(offset) : 1;
 	},
-	jio: (registers, name, offset) => {
+	ji(registers, name, offset) {
 		assertKeyIn(registers, name);
 		return registers[name] === 1 ? Number(offset) : 1;
 	},
 };
 
-const getInstructions = (lns: string[]) => {
+function getInstructions(lns: string[]) {
 	const instructionRe = /[+-]?\w+/g;
-	return lns.map((ln) => ln.match(instructionRe) ?? raise('No match found'));
-};
+	return lns.map((ln) => ln.match(instructionRe)!);
+}
 
-const runInstructions = (
+function runInstructions(
 	initialRegisters: Registers,
 	instructions: string[][],
-) => {
+) {
 	let registers = initialRegisters;
 	let pointer = 0;
 
@@ -62,7 +63,7 @@ const runInstructions = (
 	}
 
 	return registers;
-};
+}
 
 const instructions = getInstructions(lns);
 

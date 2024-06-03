@@ -5,20 +5,20 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 6});
 
-const parseLn = (ln: string) => {
+function parseLn(ln: string) {
 	const lineRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
 	const [, action, ...rest] = ln.match(lineRe) ?? [];
 	const [x1, y1, x2, y2] = rest.map(Number);
 
 	return {action, x1, y1, x2, y2};
-};
+}
 
 type Actions = Record<
 	'turn on' | 'turn off' | 'toggle',
 	(val: number) => number
 >;
 
-const countLights = (actions: Actions) => {
+function countLights(actions: Actions) {
 	const acc = create2dArr(1_000, 0);
 
 	for (const ln of lns) {
@@ -32,7 +32,7 @@ const countLights = (actions: Actions) => {
 		}
 	}
 	return add(acc.flat());
-};
+}
 
 const litLightsCounter = countLights({
 	'turn on': () => 1,

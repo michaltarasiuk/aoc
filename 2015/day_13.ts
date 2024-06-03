@@ -21,19 +21,19 @@ const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 
 const getGuestNames = () => Object.keys(guests);
 
-const calcTotalHappiness = (seats: string[]) => {
+function calcTotalHappiness(seats: string[]) {
 	return seats.reduce((acc, name, idx) => {
 		const left = seats.at(idx - 1)!;
 		const right = seats.at((idx + 1) % seats.length)!;
 
 		return acc + guests[name][left] + guests[name][right];
 	}, 0);
-};
+}
 
-const names = getGuestNames();
-const result = Math.max(...permute(names).map(calcTotalHappiness));
+const guestNames = getGuestNames();
+const result = Math.max(...permute(guestNames).map(calcTotalHappiness));
 
-for (const name of names) {
+for (const name of guestNames) {
 	guests.Me ??= {};
 	guests.Me[name] = 0;
 	guests[name].Me = 0;

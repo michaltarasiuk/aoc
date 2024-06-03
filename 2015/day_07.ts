@@ -2,10 +2,12 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 7});
 
-const parseLn = (ln: string) => [
-	...(ln.match(/[A-Z]+/) ?? []),
-	...(ln.match(/([a-z]|[0-9])+/g) ?? []),
-];
+function parseLn(ln: string) {
+	return [
+		...(ln.match(/[A-Z]+/) ?? []),
+		...(ln.match(/([a-z]|[0-9])+/g) ?? []),
+	];
+}
 
 const circuit = lns.reduce<Record<string, string[]>>((acc, ln) => {
 	const parsedLn = parseLn(ln);

@@ -1,1 +1,3 @@
-export const charToCode = (s: string) => s.charCodeAt(0);
+export function charToCode(s: string) {
+	return s.charCodeAt(0);
+}
