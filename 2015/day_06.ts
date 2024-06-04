@@ -1,7 +1,7 @@
-import {add} from 'lib/add';
 import {assertKeyIn} from 'lib/assert_key_in';
 import {create2dArr} from 'lib/create_2d_arr';
 import {getInputLns} from 'lib/input';
+import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2015, day: 6});
 
@@ -31,7 +31,7 @@ function countLights(actions: Actions) {
 			}
 		}
 	}
-	return add(acc.flat());
+	return sum(acc.flat());
 }
 
 const litLightsCounter = countLights({

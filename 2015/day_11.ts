@@ -1,4 +1,3 @@
-import {charToCode} from 'lib/char_to_code';
 import {getInput} from 'lib/input';
 
 const input = await getInput({year: 2015, day: 11});
@@ -38,7 +37,7 @@ function contains2NonOverlappingPairs(s: string) {
 
 function hasIncreasingStraightOf3Chars(s: string) {
 	const keys = Object.keys(s.slice(1, s.length - 1));
-	const charCodes = Array.from(s).map(charToCode);
+	const charCodes = Array.from(s, (char) => char.charCodeAt(0));
 
 	for (const idx of keys.map(Number)) {
 		const [a, b, c] = charCodes.slice(idx, idx + 3);

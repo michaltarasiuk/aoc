@@ -1,7 +1,11 @@
-import {add} from 'lib/add';
 import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 5});
+
+function sum(...vals: boolean[]) {
+	// @ts-expect-error -- Non-string values are coerced to numbers.
+	return vals.reduce((acc, val) => acc + val, 0);
+}
 
 {
 	const containsAtLeastThreeVowels = (string: string) =>
@@ -18,7 +22,7 @@ const lns = await getInputLns({year: 2015, day: 5});
 		containsRepeatedLetters(string) &&
 		containsAllowedSubstrings(string);
 
-	console.log(add(lns.map(isNiceString)));
+	console.log(sum(...lns.map(isNiceString)));
 }
 
 {
@@ -32,5 +36,5 @@ const lns = await getInputLns({year: 2015, day: 5});
 		containsPairOfAnyTwoLetters(string) &&
 		containsRepeatingLetterWithOneBetween(string);
 
-	console.log(add(lns.map(isNiceString)));
+	console.log(sum(...lns.map(isNiceString)));
 }

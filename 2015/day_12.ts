@@ -1,6 +1,6 @@
-import {add} from 'lib/add';
 import {getInput} from 'lib/input';
 import {isObject} from 'lib/is_object';
+import {sum} from 'lib/sum';
 
 const input = await getInput({year: 2015, day: 12});
 
@@ -23,5 +23,5 @@ JSON.stringify(parsed, (_, val: unknown) => {
 	return val;
 });
 
-console.log(add(ns));
-console.log(add(ns2));
+console.log(sum(...ns));
+console.log(sum(...ns2));
