@@ -3,6 +3,23 @@ import * as v from 'valibot';
 
 import {env} from '../env';
 
+export async function getInput(...params: Parameters<typeof fetchInput>) {
+	const input = await fetchInput(...params);
+	return input.trim();
+}
+
+export async function getInputLns(...params: Parameters<typeof getInput>) {
+	const input = await getInput(...params);
+	return input.split('\n');
+}
+
+export async function getParagraphs(...params: Parameters<typeof getInput>) {
+	const input = await getInput(...params);
+	const newlineRe = /\n\n+/;
+
+	return input.split(newlineRe).map((paragraph) => paragraph.split('\n'));
+}
+
 class ResponseError extends Error {
 	constructor(public response: Response) {
 		super();
@@ -56,16 +73,6 @@ async function fetchInput(input: {year: number; day: number}) {
 		console.error(message);
 		process.exit();
 	}
-}
-
-export async function getInput(...params: Parameters<typeof fetchInput>) {
-	const input = await fetchInput(...params);
-	return input.trim();
-}
-
-export async function getInputLns(...params: Parameters<typeof getInput>) {
-	const input = await getInput(...params);
-	return input.split('\n');
 }
 
 function getMessageOfValiError(error: v.ValiError) {
