@@ -1,7 +1,7 @@
-import {getParagraphs} from 'lib/input';
+import {getInputParagraphs} from 'lib/input';
 import {sum} from 'lib/sum';
 
-const paragraphs = await getParagraphs({year: 2022, day: 1});
+const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 
 const elfs = paragraphs
 	.map((paragraph) => sum(...paragraph.map(Number)))

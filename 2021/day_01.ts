@@ -1,14 +1,14 @@
-import {getInputLns} from 'lib/input';
+import {getInputNumbers} from 'lib/input';
 
-const lns = await getInputLns({year: 2021, day: 1});
+const numbers = await getInputNumbers({year: 2021, day: 1});
 
-let num = 0;
+let result = 0;
 
-for (const [idx, ln] of lns.entries()) {
+for (const [idx, num] of numbers.entries()) {
 	if (idx === 0) continue;
-	if (Number(ln) > Number(lns[idx - 1])) {
-		num++;
+	if (num > numbers[idx - 1]) {
+		result++;
 	}
 }
 
-console.log(num);
+console.log(result);

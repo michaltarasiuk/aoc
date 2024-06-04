@@ -13,11 +13,20 @@ export async function getInputLns(...params: Parameters<typeof getInput>) {
 	return input.split('\n');
 }
 
-export async function getParagraphs(...params: Parameters<typeof getInput>) {
+export async function getInputParagraphs(
+	...params: Parameters<typeof getInput>
+) {
 	const input = await getInput(...params);
 	const newlineRe = /\n\n+/;
 
 	return input.split(newlineRe).map((paragraph) => paragraph.split('\n'));
+}
+
+export async function getInputNumbers(...params: Parameters<typeof getInput>) {
+	const input = await getInput(...params);
+	const numberRe = /-?\d+/g;
+
+	return Array.from(input.matchAll(numberRe), (match) => Number(match[0]));
 }
 
 class ResponseError extends Error {
