@@ -1,16 +1,41 @@
-import {atLeastOne} from 'lib/at_least_one';
+import {composeRegexes} from 'lib/compose_regexes';
 import {getInputLns} from 'lib/input';
+import {raise} from 'lib/raise';
 import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2023, day: 1});
 
+const digitRe = /\d/;
+const digitRe2 = new RegExp(`.*(${digitRe.source})`);
+
 const result = sum(
 	...lns.map((ln) => {
-		const matchArray = Array.from(ln.matchAll(/\d/g)).flat();
-		atLeastOne(matchArray);
+		const first = ln.match(digitRe)?.at(0) ?? raise('No digit.');
+		const last = ln.match(digitRe2)?.at(1) ?? first;
 
-		return Number(matchArray.at(0)! + matchArray.at(-1)!);
+		return Number(first + last);
 	}),
 );
 
-console.log(result);
+const spelledDigitRe = /one|two|three|four|five|six|seven|eight|nine/;
+const spelledDigitMap = Object.fromEntries(
+	spelledDigitRe.source.split('|').map((spelled, idx) => [spelled, idx + 1]),
+);
+
+const digitOrSpelledRe = composeRegexes('', digitRe, spelledDigitRe);
+const digitOrSpelledRe2 = new RegExp(`.*(${digitOrSpelledRe.source})`);
+
+const result2 = sum(
+	...lns.map((ln) => {
+		const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit.');
+		const last = ln.match(digitOrSpelledRe2)?.at(1) ?? first;
+
+		return Number(
+			[first, last]
+				.map((digit) => spelledDigitMap[digit] ?? Number(digit))
+				.join(''),
+		);
+	}),
+);
+
+console.log({result, result2});
