@@ -1,29 +1,29 @@
 import {getInputNumbers} from 'lib/input';
 
-const numbers = await getInputNumbers({year: 2020, day: 1});
+const ns = await getInputNumbers({year: 2020, day: 1});
 
 const seen = new Set();
 
 let result = 0;
 let result2 = 0;
 
-for (const num of numbers) {
-	const diff = 2020 - num;
+for (const n of ns) {
+	const diff = 2020 - n;
 	if (seen.has(diff)) {
-		result = num * diff;
+		result = n * diff;
 		break;
 	}
-	seen.add(num);
+	seen.add(n);
 }
 
-loop: for (const num of numbers) {
-	for (const num2 of numbers) {
-		const diff = 2020 - num - num2;
+loop: for (const n of ns) {
+	for (const n2 of ns) {
+		const diff = 2020 - n - n2;
 		if (seen.has(diff)) {
-			result2 = num * num2 * diff;
+			result2 = n * n2 * diff;
 			break loop;
 		}
-		seen.add(num);
+		seen.add(n);
 	}
 }
 
