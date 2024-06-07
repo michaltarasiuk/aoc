@@ -22,6 +22,14 @@ export async function getInputParagraphs(
 	return input.split(newlineRe).map((paragraph) => paragraph.split('\n'));
 }
 
+export async function getInputCSV(...params: Parameters<typeof getInput>) {
+	const input = await getInput(...params);
+	const newlineRe = /\n/;
+	const csvRe = /, /;
+
+	return input.split(newlineRe).map((line) => line.split(csvRe));
+}
+
 export async function getInputNumbers(...params: Parameters<typeof getInput>) {
 	const input = await getInput(...params);
 	const numberRe = /-?\d+/g;
