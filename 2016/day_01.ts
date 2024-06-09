@@ -1,24 +1,40 @@
-import {assertKeyIn} from 'lib/assert_key_in';
 import {getInputCSV} from 'lib/input';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});
 
-let direction = 'n';
-const coordinates = {n: 0, e: 0, s: 0, w: 0};
+type Direction = 'n' | 'e' | 's' | 'w';
 
-for (const instruction of instructions) {
-	const turn = instruction[0];
-	const steps = Number(instruction.slice(1));
+class Coordinates {
+	private static state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
 
-	if (turn === 'L') {
-		direction = {n: 'w', w: 's', s: 'e', e: 'n'}[direction]!;
-	} else {
-		direction = {n: 'e', e: 's', s: 'w', w: 'n'}[direction]!;
+	static set(direction: keyof typeof this.state, steps: number) {
+		this.state[direction] += steps;
 	}
 
-	assertKeyIn(coordinates, direction);
-	coordinates[direction] += steps;
+	static calc() {
+		const {n, e, s, w} = this.state;
+		return Math.abs(n - s) + Math.abs(e - w);
+	}
 }
 
-const {n, e, s, w} = coordinates;
-console.log(Math.abs(n - s) + Math.abs(e - w));
+function parseInstruction(instructions: string) {
+	const turn = instructions[0];
+	const steps = Number(instructions.slice(1));
+	return {turn, steps};
+}
+
+let direction: Direction = 'n';
+
+for (const instruction of instructions) {
+	const {turn, steps} = parseInstruction(instruction);
+
+	if (turn === 'L') {
+		direction = (<const>{n: 'w', e: 'n', s: 'e', w: 's'})[direction]!;
+	} else if (turn === 'R') {
+		direction = (<const>{n: 'e', e: 's', s: 'w', w: 'n'})[direction]!;
+	}
+
+	Coordinates.set(direction, steps);
+}
+
+console.log(Coordinates.calc());
