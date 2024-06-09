@@ -2,6 +2,12 @@ import {getInputCSV} from 'lib/input';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});
 
+function parseInstruction(instructions: string) {
+	const turn = instructions[0];
+	const steps = Number(instructions.slice(1));
+	return {turn, steps};
+}
+
 type Direction = 'n' | 'e' | 's' | 'w';
 
 class Coordinates {
@@ -15,12 +21,6 @@ class Coordinates {
 		const {n, e, s, w} = this.state;
 		return Math.abs(n - s) + Math.abs(e - w);
 	}
-}
-
-function parseInstruction(instructions: string) {
-	const turn = instructions[0];
-	const steps = Number(instructions.slice(1));
-	return {turn, steps};
 }
 
 let direction: Direction = 'n';
