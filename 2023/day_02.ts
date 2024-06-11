@@ -36,4 +36,11 @@ const result = lns.reduce((acc, ln) => {
 	return acc;
 }, 0);
 
-console.log(result);
+const result2 = lns.reduce((acc, ln) => {
+	const [, ...cubes] = parseLn(ln);
+	const {red, green, blue} = collectMaxCubeSizes(cubes);
+
+	return acc + red * green * blue;
+}, 0);
+
+console.log({result, result2});
