@@ -3,10 +3,12 @@ import {permute} from 'lib/permutate';
 
 const lns = await getInputLns({year: 2015, day: 13});
 
-const parseLn = (ln: string) => [
-	...(ln.match(/([A-Z])\w+/g) ?? []),
-	...(ln.match(/(gain|lose|\d+)/g) ?? []),
-];
+function parseLn(ln: string) {
+	return [
+		...(ln.match(/([A-Z])\w+/g) ?? []),
+		...(ln.match(/(gain|lose|\d+)/g) ?? []),
+	];
+}
 
 const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 	(acc, ln) => {
@@ -19,7 +21,9 @@ const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 	{},
 );
 
-const getGuestNames = () => Object.keys(guests);
+function getGuestNames() {
+	return Object.keys(guests);
+}
 
 function calcTotalHappiness(seats: string[]) {
 	return seats.reduce((acc, name, idx) => {
