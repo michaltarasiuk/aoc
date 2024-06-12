@@ -10,28 +10,44 @@ function parseLn(ln: string) {
 	return {cmd, val: Number(val)};
 }
 
-function calcHorizontalPositionAndDepth(
-	cmds: {cmd: string; val: number}[],
-	handlers: Record<
-		'up' | 'down' | 'forward',
-		<Acc extends {x: number; y: number}>(acc: Acc, val: number) => Acc
-	>,
-) {
-	return cmds.reduce(
-		(acc, {cmd, val}) => {
-			assertKeyIn(handlers, cmd);
-			return handlers[cmd](acc, val);
-		},
-		{x: 0, y: 0},
-	);
-}
-
 const cmds = lns.map(parseLn);
 
-const {x, y} = calcHorizontalPositionAndDepth(cmds, {
-	up: (acc, val) => ((acc.y -= val), acc),
-	down: (acc, val) => ((acc.y += val), acc),
-	forward: (acc, val) => ((acc.x += val), acc),
-});
+function calcHorizontalPositionAndDepth<Acc extends Record<string, number>>(
+	initialValue: Acc,
+	handlers: Record<'up' | 'down' | 'forward', (acc: Acc, val: number) => Acc>,
+) {
+	return cmds.reduce((acc, {cmd, val}) => {
+		assertKeyIn(handlers, cmd);
+		return handlers[cmd](acc, val);
+	}, initialValue);
+}
 
-console.log(x * y);
+{
+	const {x, y} = calcHorizontalPositionAndDepth(
+		{x: 0, y: 0},
+		{
+			up: (acc, val) => ((acc.y -= val), acc),
+			down: (acc, val) => ((acc.y += val), acc),
+			forward: (acc, val) => ((acc.x += val), acc),
+		},
+	);
+
+	console.log(Math.abs(x) * y);
+}
+
+{
+	const {x, y} = calcHorizontalPositionAndDepth(
+		{x: 0, y: 0, aim: 0},
+		{
+			up: (acc, val) => ((acc.aim -= val), acc),
+			down: (acc, val) => ((acc.aim += val), acc),
+			forward(acc, val) {
+				acc.x += val;
+				acc.y += val * acc.aim;
+				return acc;
+			},
+		},
+	);
+
+	console.log(Math.abs(x) * y);
+}
