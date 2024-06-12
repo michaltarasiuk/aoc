@@ -2,13 +2,14 @@ import {getInputNumbers} from 'lib/input';
 
 const ns = await getInputNumbers({year: 2021, day: 1});
 
-let result = 0;
+const result = ns.reduce(
+	(acc, num, idx) => (num > ns[idx - 1] ? ++acc : acc),
+	0,
+);
 
-for (const [idx, num] of ns.entries()) {
-	if (idx === 0) continue;
-	if (num > ns[idx - 1]) {
-		result++;
-	}
-}
+const result2 = ns.reduce(
+	(acc, num, idx) => (num > ns[idx - 3] ? ++acc : acc),
+	0,
+);
 
-console.log(result);
+console.log({result, result2});
