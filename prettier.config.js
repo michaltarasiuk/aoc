@@ -4,7 +4,6 @@ const prettierConfig = {
 	bracketSpacing: false,
 	singleQuote: true,
 	useTabs: true,
-	experimentalTernaries: true,
 };
 
 export default prettierConfig;

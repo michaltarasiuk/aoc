@@ -1,4 +1,5 @@
 import {getInput} from 'lib/input';
+import {uniq} from 'lib/uniq';
 
 const input = await getInput({year: 2015, day: 3});
 
@@ -11,55 +12,29 @@ function createPos() {
 			return `${x},${y}`;
 		},
 		set(char: string) {
-			switch (char) {
-				case '>':
-					x++;
-					break;
-				case '<':
-					x--;
-					break;
-				case '^':
-					y++;
-					break;
-				case 'v':
-					y--;
-					break;
-				default:
-					throw new Error('Unknown char');
-			}
+			x += char === '>' ? 1 : char === '<' ? -1 : 0;
+			y += char === '^' ? 1 : char === 'v' ? -1 : 0;
+
 			return this;
 		},
 	};
 }
-
 function getResult() {
 	const santa = createPos();
-	const houses = new Set();
+	const houses = uniq(
+		Array.from(input, (char) => santa.set(char).toString()),
+	);
 
-	for (const char of input) {
-		const v = santa.set(char).toString();
-		houses.add(v);
-	}
-
-	return houses.size;
+	return houses.length;
 }
 
 function getResult2() {
-	const santa = createPos();
-	const robotSanta = createPos();
-	const houses = new Set();
+	const santas = [createPos(), createPos()];
+	const houses = uniq(
+		Array.from(input, (char, idx) => santas[idx % 2].set(char).toString()),
+	);
 
-	for (const [idx, char] of Object.entries(input)) {
-		if (Number(idx) % 2) {
-			const house = robotSanta.set(char).toString();
-			houses.add(house);
-		} else {
-			const house = santa.set(char).toString();
-			houses.add(house);
-		}
-	}
-
-	return houses.size;
+	return houses.length;
 }
 
 const result = getResult();

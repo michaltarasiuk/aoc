@@ -8,20 +8,15 @@ function sum(...vals: boolean[]) {
 }
 
 function isNiceString(string: string) {
-	const hasAtLeastThreeVowels = /(.*[aeuio].*){3}/.test(string);
-	const hasRepeatedLetters = /(?:(\w)\1+)/.test(string);
-	const hasNotForbiddenStrings = !/ab|cd|pq|xy/.test(string);
-
 	return (
-		hasAtLeastThreeVowels && hasRepeatedLetters && hasNotForbiddenStrings
+		/(.*[aeuio].*){3}/.test(string) &&
+		/(?:(\w)\1+)/.test(string) &&
+		!/ab|cd|pq|xy/.test(string)
 	);
 }
 
 function isNiceString2(string: string) {
-	const hasPairOfAnyTwoLetters = /(?:.*(\w{2}).*)\1/.test(string);
-	const hasRepeatedLetterWithOneLetterBetween = /(\w)\w\1/.test(string);
-
-	return hasPairOfAnyTwoLetters && hasRepeatedLetterWithOneLetterBetween;
+	return /(?:.*(\w{2}).*)\1/.test(string) && /(\w)\w\1/.test(string);
 }
 
 const result = sum(...lns.map(isNiceString));
