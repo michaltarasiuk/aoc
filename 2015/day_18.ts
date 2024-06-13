@@ -39,4 +39,5 @@ for (let i = 0; i < 100; i++) {
 }
 
 const result = getLightsOn(state.flat()).length;
+
 console.log(result);

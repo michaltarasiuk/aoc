@@ -4,8 +4,8 @@ import {sum} from 'lib/sum';
 const ns = await getInputNumbers({year: 2018, day: 1});
 
 function findFirstFrequencyReachesTwice(...ns: number[]) {
-	let frequency = 0;
 	const frequencies = new Set<number>();
+	let frequency = 0;
 
 	while (true) {
 		for (const n of ns) {
