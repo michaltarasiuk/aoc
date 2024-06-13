@@ -1,23 +1,7 @@
 import {getInput} from 'lib/input';
+import {stringToCodePoints} from 'lib/string_to_code_points';
 
 const input = await getInput({year: 2015, day: 11});
-
-const newPassword = findNewPassword(input);
-const newPassword2 = findNewPassword(newPassword);
-
-console.log({newPassword, newPassword2});
-
-function findNewPassword(password: string) {
-	let int = parseInt(password, 36);
-	let newPassword = int.toString(36);
-
-	do {
-		int++;
-		newPassword = int.toString(36);
-	} while (!isValidPassword(newPassword));
-
-	return newPassword;
-}
 
 function isValidPassword(password: string) {
 	return (
@@ -36,12 +20,35 @@ function contains2NonOverlappingPairs(s: string) {
 }
 
 function hasIncreasingStraightOf3Chars(s: string) {
-	const keys = Object.keys(s.slice(1, s.length - 1));
-	const charCodes = Array.from(s, (char) => char.charCodeAt(0));
+	return stringToCodePoints(s).some((_, i, codePoints) => {
+		const [a, b, c] = codePoints.slice(i, i + 3);
+		return b - a === 1 && c - b === 1;
+	});
+}
 
-	for (const idx of keys.map(Number)) {
-		const [a, b, c] = charCodes.slice(idx, idx + 3);
-		if (b - a === 1 && c - b === 1) return true;
-	}
-	return false;
+function findNewPassword(password: string) {
+	let int = parseInt(password, 36);
+	let newPassword = int.toString(36);
+
+	do {
+		int++;
+		newPassword = int.toString(36);
+	} while (!isValidPassword(newPassword));
+
+	return newPassword;
+}
+
+const newPassword = findNewPassword(input);
+const newPassword2 = findNewPassword(newPassword);
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(newPassword).toBe('cqjxxyzz');
+	});
+
+	test('part 2', () => {
+		expect(newPassword2).toBe('cqkaabcc');
+	});
 }

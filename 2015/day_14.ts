@@ -30,4 +30,10 @@ const maxDistance = lns.reduce((acc, ln) => {
 	return Math.max(acc, calcDistance(parsed));
 }, 0);
 
-console.log(maxDistance);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(maxDistance).toBe(2640);
+	});
+}

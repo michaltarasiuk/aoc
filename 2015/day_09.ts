@@ -20,18 +20,26 @@ const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
 }, {});
 const costMapKeys = Object.keys(costMap);
 
-const costs: number[] = [];
-
-for (const cities of permute(costMapKeys)) {
+const costs = permute(costMapKeys).reduce<number[]>((acc, cities) => {
 	let cost = 0;
 	for (const [idx, city] of cities.entries()) {
 		const dest = cities[idx + 1];
 		cost += costMap[city][dest] ?? 0;
 	}
-	costs.push(cost);
-}
+	return acc.concat(cost);
+}, []);
 
-console.log({
-	min: Math.min(...costs),
-	max: Math.max(...costs),
-});
+const result = Math.min(...costs);
+const result2 = Math.max(...costs);
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(251);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(898);
+	});
+}

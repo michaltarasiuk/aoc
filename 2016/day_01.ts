@@ -44,4 +44,12 @@ for (const instruction of instructions) {
 	Coordinates.set(direction, steps);
 }
 
-console.log(Coordinates.calcDistance());
+const result = Coordinates.calcDistance();
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(273);
+	});
+}

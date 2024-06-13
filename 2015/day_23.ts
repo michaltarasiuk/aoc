@@ -67,12 +67,17 @@ function runInstructions(
 
 const instructions = getInstructions(lns);
 
-{
-	const {b} = runInstructions({a: 0, b: 0}, instructions);
-	console.log(b);
-}
+const result = runInstructions({a: 0, b: 0}, instructions).b;
+const result2 = runInstructions({a: 1, b: 0}, instructions).b;
 
-{
-	const {b} = runInstructions({a: 1, b: 0}, instructions);
-	console.log(b);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(170);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(247);
+	});
 }

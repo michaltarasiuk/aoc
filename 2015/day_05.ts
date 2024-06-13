@@ -7,34 +7,34 @@ function sum(...vals: boolean[]) {
 	return vals.reduce((acc, val) => acc + val, 0);
 }
 
-{
-	const containsAtLeastThreeVowels = (string: string) =>
-		/(.*[aeuio].*){3}/.test(string);
+function isNiceString(string: string) {
+	const hasAtLeastThreeVowels = /(.*[aeuio].*){3}/.test(string);
+	const hasRepeatedLetters = /(?:(\w)\1+)/.test(string);
+	const hasNotForbiddenStrings = !/ab|cd|pq|xy/.test(string);
 
-	const containsRepeatedLetters = (string: string) =>
-		/(?:(\w)\1+)/.test(string);
-
-	const containsAllowedSubstrings = (string: string) =>
-		!/ab|cd|pq|xy/.test(string);
-
-	const isNiceString = (string: string) =>
-		containsAtLeastThreeVowels(string) &&
-		containsRepeatedLetters(string) &&
-		containsAllowedSubstrings(string);
-
-	console.log(sum(...lns.map(isNiceString)));
+	return (
+		hasAtLeastThreeVowels && hasRepeatedLetters && hasNotForbiddenStrings
+	);
 }
 
-{
-	const containsPairOfAnyTwoLetters = (string: string) =>
-		/(?:.*(\w{2}).*)\1/.test(string);
+function isNiceString2(string: string) {
+	const hasPairOfAnyTwoLetters = /(?:.*(\w{2}).*)\1/.test(string);
+	const hasRepeatedLetterWithOneLetterBetween = /(\w)\w\1/.test(string);
 
-	const containsRepeatingLetterWithOneBetween = (string: string) =>
-		/(\w)\w\1/.test(string);
+	return hasPairOfAnyTwoLetters && hasRepeatedLetterWithOneLetterBetween;
+}
 
-	const isNiceString = (string: string) =>
-		containsPairOfAnyTwoLetters(string) &&
-		containsRepeatingLetterWithOneBetween(string);
+const result = sum(...lns.map(isNiceString));
+const result2 = sum(...lns.map(isNiceString2));
 
-	console.log(sum(...lns.map(isNiceString)));
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(238);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(69);
+	});
 }

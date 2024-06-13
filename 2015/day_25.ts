@@ -17,8 +17,15 @@ function generateCode(prevCode = 20151125) {
 }
 
 let code: number | undefined;
+
 for (let i = 0; i < calcSteps(...parseInput(input)); i++) {
 	code = generateCode(code);
 }
 
-console.log(code);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(code).toBe(9132360);
+	});
+}

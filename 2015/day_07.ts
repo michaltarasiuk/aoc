@@ -49,8 +49,20 @@ function calcSignal(dest: string): number {
 	}
 }
 
-const signalA = calcSignal('a');
+const result = calcSignal('a');
 
-cache = new Map<string, number>([['b', signalA]]);
+cache = new Map<string, number>([['b', result]]);
 
-console.log([signalA, calcSignal('a')]);
+const result2 = calcSignal('a');
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(46065);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(14134);
+	});
+}

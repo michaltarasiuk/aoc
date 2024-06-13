@@ -23,5 +23,17 @@ JSON.stringify(parsed, (_, val: unknown) => {
 	return val;
 });
 
-console.log(sum(...ns));
-console.log(sum(...ns2));
+const result = sum(...ns);
+const result2 = sum(...ns2);
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(191164);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(87842);
+	});
+}

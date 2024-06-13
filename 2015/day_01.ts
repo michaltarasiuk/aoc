@@ -10,4 +10,14 @@ for (const [idx, char] of Object.entries(input)) {
 	if (floor === -1) basementEntryIdx ??= Number(idx) + 1;
 }
 
-console.log({floor, basementEntryIdx});
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(floor).toBe(280);
+	});
+
+	test('part 2', () => {
+		expect(basementEntryIdx).toBe(1797);
+	});
+}

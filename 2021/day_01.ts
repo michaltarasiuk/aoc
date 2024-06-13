@@ -12,4 +12,14 @@ const result2 = ns.reduce(
 	0,
 );
 
-console.log({result, result2});
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(1559);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(1600);
+	});
+}

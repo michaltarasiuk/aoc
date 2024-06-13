@@ -7,7 +7,9 @@
 		"lint": "npm run eslint .",
 		"lint-fix": "npm run eslint . -- --fix",
 		"prettier": "prettier --ignore-unknown --write",
-		"format": "npm run prettier . -- --cache"
+		"format": "npm run prettier . -- --cache",
+		"test": "vitest",
+		"test:watch": "vitest --watch"
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
@@ -25,6 +27,8 @@
 		"lint-staged": "^15.2.2",
 		"prettier": "^3.2.5",
 		"tsx": "^4.10.5",
-		"typescript": "^5.4.5"
+		"typescript": "^5.4.5",
+		"vite-tsconfig-paths": "^4.3.2",
+		"vitest": "^1.6.0"
 	}
 }

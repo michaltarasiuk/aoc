@@ -5,4 +5,10 @@ const ns = await getInputNumbers({year: 2019, day: 1});
 
 const result = sum(...ns.map((mass) => Math.floor(mass / 3) - 2));
 
-console.log(result);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(3273715);
+	});
+}

@@ -22,32 +22,39 @@ function calcHorizontalPositionAndDepth<Acc extends Record<string, number>>(
 	}, initialValue);
 }
 
-{
-	const {x, y} = calcHorizontalPositionAndDepth(
-		{x: 0, y: 0},
-		{
-			up: (acc, val) => ((acc.y -= val), acc),
-			down: (acc, val) => ((acc.y += val), acc),
-			forward: (acc, val) => ((acc.x += val), acc),
+const position = calcHorizontalPositionAndDepth(
+	{x: 0, y: 0},
+	{
+		up: (acc, val) => ((acc.y -= val), acc),
+		down: (acc, val) => ((acc.y += val), acc),
+		forward: (acc, val) => ((acc.x += val), acc),
+	},
+);
+
+const position2 = calcHorizontalPositionAndDepth(
+	{x: 0, y: 0, aim: 0},
+	{
+		up: (acc, val) => ((acc.aim -= val), acc),
+		down: (acc, val) => ((acc.aim += val), acc),
+		forward(acc, val) {
+			acc.x += val;
+			acc.y += val * acc.aim;
+			return acc;
 		},
-	);
+	},
+);
 
-	console.log(Math.abs(x) * y);
-}
+const result = Math.abs(position.x) * position.y;
+const result2 = Math.abs(position2.x) * position2.y;
 
-{
-	const {x, y} = calcHorizontalPositionAndDepth(
-		{x: 0, y: 0, aim: 0},
-		{
-			up: (acc, val) => ((acc.aim -= val), acc),
-			down: (acc, val) => ((acc.aim += val), acc),
-			forward(acc, val) {
-				acc.x += val;
-				acc.y += val * acc.aim;
-				return acc;
-			},
-		},
-	);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
 
-	console.log(Math.abs(x) * y);
+	test('part 1', () => {
+		expect(result).toBe(1714950);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(1281977850);
+	});
 }

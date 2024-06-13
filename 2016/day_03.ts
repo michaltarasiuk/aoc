@@ -6,4 +6,12 @@ const triangles = lns
 	.map((ln) => Array.from(ln.matchAll(/\d+/g), Number))
 	.filter(([a, b, c]) => a + b > c && a + c > b && b + c > a);
 
-console.log(triangles.length);
+const result = triangles.length;
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(993);
+	});
+}

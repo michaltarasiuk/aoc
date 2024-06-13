@@ -27,6 +27,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"lib/*": ["lib/*"]
-		}
+		},
+
+		// Types
+		"types": ["vitest/importMeta"]
 	}
 }

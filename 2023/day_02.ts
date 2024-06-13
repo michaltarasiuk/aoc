@@ -43,4 +43,14 @@ const result2 = lns.reduce((acc, ln) => {
 	return acc + red * green * blue;
 }, 0);
 
-console.log({result, result2});
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(2545);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(78111);
+	});
+}

@@ -32,7 +32,7 @@ function createPos() {
 	};
 }
 
-{
+function getResult() {
 	const santa = createPos();
 	const houses = new Set();
 
@@ -41,10 +41,10 @@ function createPos() {
 		houses.add(v);
 	}
 
-	console.log(houses.size);
+	return houses.size;
 }
 
-{
+function getResult2() {
 	const santa = createPos();
 	const robotSanta = createPos();
 	const houses = new Set();
@@ -59,5 +59,20 @@ function createPos() {
 		}
 	}
 
-	console.log(houses.size);
+	return houses.size;
+}
+
+const result = getResult();
+const result2 = getResult2();
+
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(2565);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(2639);
+	});
 }

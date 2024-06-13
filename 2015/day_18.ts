@@ -40,4 +40,10 @@ for (let i = 0; i < 100; i++) {
 
 const result = getLightsOn(state.flat()).length;
 
-console.log(result);
+if (import.meta.vitest) {
+	const {test, expect} = import.meta.vitest;
+
+	test('part 1', () => {
+		expect(result).toBe(821);
+	});
+}
