@@ -6,5 +6,6 @@ export default defineConfig({
 	plugins: [tsconfigPaths()],
 	test: {
 		includeSource: ['**/*.ts'],
+		setupFiles: ['dotenv/config'],
 	},
 });
