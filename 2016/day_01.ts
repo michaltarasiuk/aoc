@@ -1,24 +1,19 @@
+import {adjacentItems} from 'lib/adjacent_items';
 import {getInputCSV} from 'lib/input';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});
 
 function parseInstruction(instruction: string) {
 	const instructionRe = /([LR])(\d+)/;
-	const match = instruction.match(instructionRe);
+	const [, turn, steps] = instruction.match(instructionRe) ?? [];
 
-	if (!match) {
-		throw new Error(
-			`Invalid instruction: "${instruction}". Expected format: 'L' or 'R' followed by a number.`,
-		);
-	}
-
-	return {turn: match[1], steps: Number(match[2])};
+	return {turn, steps: Number(steps)};
 }
 
 type Direction = 'n' | 'e' | 's' | 'w';
 
 class Coordinates {
-	private static state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
+	static state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
 
 	static set(direction: Direction, steps: number) {
 		this.state[direction] += steps;
@@ -30,17 +25,17 @@ class Coordinates {
 	}
 }
 
-let direction: Direction = 'n';
+const directions = Object.keys(Coordinates.state) as Direction[];
+let direction = directions.at(0)!;
 
 for (const instruction of instructions) {
 	const {turn, steps} = parseInstruction(instruction);
+	const [left, right] = adjacentItems(
+		directions,
+		directions.indexOf(direction),
+	);
 
-	if (turn === 'L') {
-		direction = (<const>{n: 'w', e: 'n', s: 'e', w: 's'})[direction];
-	} else if (turn === 'R') {
-		direction = (<const>{n: 'e', e: 's', s: 'w', w: 'n'})[direction];
-	}
-
+	direction = turn === 'L' ? left : right;
 	Coordinates.set(direction, steps);
 }
 
