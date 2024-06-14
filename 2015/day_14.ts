@@ -4,10 +4,7 @@ import {getInputLns} from 'lib/input';
 const lns = await getInputLns({year: 2015, day: 14});
 
 function parseLn(ln: string) {
-	const [speed = 0, speedTime = 0, rest = 0] = Array.from(
-		ln.matchAll(/\d+/g),
-		Number,
-	);
+	const [speed, speedTime, rest] = Array.from(ln.matchAll(/\d+/g), Number);
 	return {speed, speedTime, rest};
 }
 
@@ -26,8 +23,8 @@ function calcDistance({speed, speedTime, rest}: ReturnType<typeof parseLn>) {
 }
 
 const maxDistance = lns.reduce((acc, ln) => {
-	const parsed = parseLn(ln);
-	return Math.max(acc, calcDistance(parsed));
+	const parsedLn = parseLn(ln);
+	return Math.max(acc, calcDistance(parsedLn));
 }, 0);
 
 if (import.meta.vitest) {

@@ -1,5 +1,6 @@
 import {getInputLns} from 'lib/input';
 import {permute} from 'lib/permutate';
+import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2015, day: 9});
 
@@ -20,17 +21,15 @@ const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
 }, {});
 const costMapKeys = Object.keys(costMap);
 
-function calcRouteCost(cities: string[]) {
-	return cities.reduce((acc, city, i) => {
-		const dest = cities[i + 1];
-		return acc + (costMap[city][dest] ?? 0);
-	}, 0);
-}
-
-const costs = permute(costMapKeys).reduce<number[]>(
-	(acc, cities) => acc.concat(calcRouteCost(cities)),
-	[],
-);
+const costs = permute(costMapKeys).reduce<number[]>((acc, cities) => {
+	const cost = sum(
+		cities.map((city, i) => {
+			const dest = cities[i + 1];
+			return costMap[city][dest] ?? 0;
+		}),
+	);
+	return acc.concat(cost);
+}, []);
 
 const result = Math.min(...costs);
 const result2 = Math.max(...costs);
