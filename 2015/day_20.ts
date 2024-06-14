@@ -6,12 +6,12 @@ const input = await getInput({year: 2015, day: 20});
 const houses: {[k: number]: number} = {};
 let i = 0;
 
-loop: while (++i) {
+outer: while (++i) {
 	for (const j of divisors(i)) {
 		const housePresentsCount = ((houses[i] ??= 0), (houses[i] += 10 * j));
 
 		if (housePresentsCount >= Number(input)) {
-			break loop;
+			break outer;
 		}
 	}
 }

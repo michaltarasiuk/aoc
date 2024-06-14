@@ -9,7 +9,7 @@ const digitRe = /\d/;
 const digitRe2 = new RegExp(`.*(${digitRe.source})`);
 
 const result = sum(
-	...lns.map((ln) => {
+	lns.map((ln) => {
 		const first = ln.match(digitRe)?.at(0) ?? raise('No digit.');
 		const last = ln.match(digitRe2)?.at(1) ?? first;
 

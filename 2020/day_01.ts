@@ -15,12 +15,12 @@ for (const n of ns) {
 	seen.add(n);
 }
 
-loop: for (const n of ns) {
+outer: for (const n of ns) {
 	for (const n2 of ns) {
 		const diff = 2020 - n - n2;
 		if (seen.has(diff)) {
 			result2 = n * n2 * diff;
-			break loop;
+			break outer;
 		}
 		seen.add(n);
 	}

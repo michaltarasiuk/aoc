@@ -1,3 +1,4 @@
+import {adjacentItems} from 'lib/adjacent_items';
 import {getInputLns} from 'lib/input';
 import {permute} from 'lib/permutate';
 
@@ -15,38 +16,35 @@ const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 		const [a, b, type, val] = parseLn(ln);
 
 		acc[a] ??= {};
-		acc[a][b] = type === 'lose' ? -parseInt(val) : parseInt(val);
+		acc[a][b] = parseInt(val) * (type === 'gain' ? 1 : -1);
 		return acc;
 	},
 	{},
 );
 
-function getGuestNames() {
-	return Object.keys(guests);
+function addGuest(name: string) {
+	guests[name] = {};
+	for (const guest of Object.keys(guests)) {
+		guests[guest][name] = 0;
+		guests[name][guest] = 0;
+	}
 }
 
-function calcTotalHappiness(seats: string[]) {
-	return seats.reduce((acc, name, i) => {
-		const left = seats.at(i - 1)!;
-		const right = seats.at((i + 1) % seats.length)!;
+function permuteGuestsNames() {
+	return permute(Object.keys(guests));
+}
 
+function calcTotalHappiness(names: string[]) {
+	return names.reduce((acc, name, i) => {
+		const [left, right] = adjacentItems(names, i);
 		return acc + guests[name][left] + guests[name][right];
 	}, 0);
 }
 
-const guestNames = getGuestNames();
-const result = Math.max(...permute(guestNames).map(calcTotalHappiness));
+const result = Math.max(...permuteGuestsNames().map(calcTotalHappiness));
 
-for (const name of guestNames) {
-	guests.Me ??= {};
-	guests.Me[name] = 0;
-	guests[name].Me = 0;
-}
-
-const result2 = permute(getGuestNames()).reduce(
-	(acc, names) => Math.max(acc, calcTotalHappiness(names)),
-	0,
-);
+addGuest('Me');
+const result2 = Math.max(...permuteGuestsNames().map(calcTotalHappiness));
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;
