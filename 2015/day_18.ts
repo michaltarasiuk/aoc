@@ -12,7 +12,7 @@ function getNeighbors(state: string[][], {x, y}: {x: number; y: number}) {
 	return [
 		state[y][x - 1],
 		state[y][x + 1],
-		...[-1, 1].flatMap((idx) => state[y + idx]?.slice(start, end) ?? []),
+		...[-1, 1].flatMap((i) => state[y + i]?.slice(start, end) ?? []),
 	];
 }
 

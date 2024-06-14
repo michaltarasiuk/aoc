@@ -2,15 +2,9 @@ import {getInputNumbers} from 'lib/input';
 
 const ns = await getInputNumbers({year: 2021, day: 1});
 
-const result = ns.reduce(
-	(acc, num, idx) => (num > ns[idx - 1] ? ++acc : acc),
-	0,
-);
+const result = ns.reduce((acc, num, i) => (num > ns[i - 1] ? ++acc : acc), 0);
 
-const result2 = ns.reduce(
-	(acc, num, idx) => (num > ns[idx - 3] ? ++acc : acc),
-	0,
-);
+const result2 = ns.reduce((acc, num, i) => (num > ns[i - 3] ? ++acc : acc), 0);
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;

@@ -13,12 +13,9 @@ function parseLn(ln: string) {
 	return {action, x1, y1, x2, y2};
 }
 
-type Actions = Record<
-	'turn on' | 'turn off' | 'toggle',
-	(val: number) => number
->;
-
-function countLights(actions: Actions) {
+function countLights(
+	actions: Record<'turn on' | 'turn off' | 'toggle', (val: number) => number>,
+) {
 	const acc = create2dArr(1_000, 0);
 
 	for (const ln of lns) {

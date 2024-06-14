@@ -20,14 +20,17 @@ const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
 }, {});
 const costMapKeys = Object.keys(costMap);
 
-const costs = permute(costMapKeys).reduce<number[]>((acc, cities) => {
-	let cost = 0;
-	for (const [idx, city] of cities.entries()) {
-		const dest = cities[idx + 1];
-		cost += costMap[city][dest] ?? 0;
-	}
-	return acc.concat(cost);
-}, []);
+function calcRouteCost(cities: string[]) {
+	return cities.reduce((acc, city, i) => {
+		const dest = cities[i + 1];
+		return acc + (costMap[city][dest] ?? 0);
+	}, 0);
+}
+
+const costs = permute(costMapKeys).reduce<number[]>(
+	(acc, cities) => acc.concat(calcRouteCost(cities)),
+	[],
+);
 
 const result = Math.min(...costs);
 const result2 = Math.max(...costs);

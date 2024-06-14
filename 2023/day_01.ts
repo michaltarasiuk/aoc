@@ -19,7 +19,7 @@ const result = sum(
 
 const spelledDigitRe = /one|two|three|four|five|six|seven|eight|nine/;
 const spelledDigitMap = Object.fromEntries(
-	spelledDigitRe.source.split('|').map((spelled, idx) => [spelled, idx + 1]),
+	spelledDigitRe.source.split('|').map((spelled, i) => [spelled, i + 1]),
 );
 
 const digitOrSpelledRe = composeRegexes('', digitRe, spelledDigitRe);

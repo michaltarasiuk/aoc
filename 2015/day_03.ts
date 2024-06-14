@@ -31,7 +31,7 @@ function getResult() {
 function getResult2() {
 	const santas = [createPos(), createPos()];
 	const houses = uniq(
-		Array.from(input, (char, idx) => santas[idx % 2].set(char).toString()),
+		Array.from(input, (char, i) => santas[i % 2].set(char).toString()),
 	);
 
 	return houses.length;

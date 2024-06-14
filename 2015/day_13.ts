@@ -26,9 +26,9 @@ function getGuestNames() {
 }
 
 function calcTotalHappiness(seats: string[]) {
-	return seats.reduce((acc, name, idx) => {
-		const left = seats.at(idx - 1)!;
-		const right = seats.at((idx + 1) % seats.length)!;
+	return seats.reduce((acc, name, i) => {
+		const left = seats.at(i - 1)!;
+		const right = seats.at((i + 1) % seats.length)!;
 
 		return acc + guests[name][left] + guests[name][right];
 	}, 0);
