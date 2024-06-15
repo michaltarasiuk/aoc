@@ -1,2 +1,3 @@
-export const create2dArr = <T>(size: number, val: T): T[][] =>
-	[...Array(size)].map(() => Array(size).fill(val));
+export function create2dArr<T>(size: number, val: T) {
+	return [...Array(size)].map(() => Array(size).fill(val));
+}

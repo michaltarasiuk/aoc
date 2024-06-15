@@ -1,4 +1,4 @@
-import {adjacentItems} from 'lib/adjacent_items';
+import {adjacentAt} from 'lib/adjacent_at';
 import {getInputLns} from 'lib/input';
 import {permute} from 'lib/permutate';
 
@@ -22,11 +22,11 @@ const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 	{},
 );
 
-function addGuest(name: string) {
+function addGuest(name: string, score = 0) {
 	guests[name] = {};
 	for (const guest of Object.keys(guests)) {
-		guests[guest][name] = 0;
-		guests[name][guest] = 0;
+		guests[guest][name] = score;
+		guests[name][guest] = score;
 	}
 }
 
@@ -36,7 +36,7 @@ function permuteGuestsNames() {
 
 function calcTotalHappiness(names: string[]) {
 	return names.reduce((acc, name, i) => {
-		const [left, right] = adjacentItems(names, i);
+		const [left, right] = adjacentAt(names, i);
 		return acc + guests[name][left] + guests[name][right];
 	}, 0);
 }

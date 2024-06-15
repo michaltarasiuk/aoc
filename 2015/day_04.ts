@@ -2,7 +2,7 @@ import crypto from 'node:crypto';
 
 import {getInput} from 'lib/input';
 
-const key = await getInput({year: 2015, day: 4});
+const string = await getInput({year: 2015, day: 4});
 
 function md5(data: crypto.BinaryLike) {
 	return crypto.createHash('md5').update(data).digest('hex');
@@ -18,12 +18,12 @@ function waitUntilStartsWith(
 }
 
 const result = waitUntilStartsWith({
-	string: key,
+	string,
 	searchString: '0'.repeat(5),
 });
 
 const result2 = waitUntilStartsWith(
-	{string: key, searchString: '0'.repeat(6)},
+	{string, searchString: '0'.repeat(6)},
 	result,
 );
 

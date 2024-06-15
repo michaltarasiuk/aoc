@@ -2,21 +2,23 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 5});
 
-function sum(...vals: boolean[]) {
-	// @ts-expect-error -- Non-string values are coerced to numbers.
-	return vals.reduce((acc, val) => acc + val, 0);
+function sum(...bools: boolean[]) {
+	return bools.reduce((acc, bool) => acc + Number(bool), 0);
 }
 
 function isNiceString(string: string) {
-	return (
-		/(.*[aeuio].*){3}/.test(string) &&
-		/(?:(\w)\1+)/.test(string) &&
-		!/ab|cd|pq|xy/.test(string)
-	);
+	const hasAtLeastThreeVowels = /(.*[aeuio].*){3}/.test(string);
+	const hasDoubleLetter = /(?:(\w)\1+)/.test(string);
+	const hasNoForbiddenSubstrings = !/ab|cd|pq|xy/.test(string);
+
+	return hasAtLeastThreeVowels && hasDoubleLetter && hasNoForbiddenSubstrings;
 }
 
 function isNiceString2(string: string) {
-	return /(?:.*(\w{2}).*)\1/.test(string) && /(\w)\w\1/.test(string);
+	const hasPairOfTwoLetters = /(\w{2}).*\1/.test(string);
+	const hasRepeatingLetter = /(\w)\w\1/.test(string);
+
+	return hasPairOfTwoLetters && hasRepeatingLetter;
 }
 
 const result = sum(...lns.map(isNiceString));

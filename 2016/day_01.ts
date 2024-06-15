@@ -1,4 +1,4 @@
-import {adjacentItems} from 'lib/adjacent_items';
+import {adjacentAt} from 'lib/adjacent_at';
 import {getInputCSV} from 'lib/input';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});
@@ -30,10 +30,7 @@ let direction = directions.at(0)!;
 
 for (const instruction of instructions) {
 	const {turn, steps} = parseInstruction(instruction);
-	const [left, right] = adjacentItems(
-		directions,
-		directions.indexOf(direction),
-	);
+	const [left, right] = adjacentAt(directions, directions.indexOf(direction));
 
 	direction = turn === 'L' ? left : right;
 	Coordinates.set(direction, steps);
