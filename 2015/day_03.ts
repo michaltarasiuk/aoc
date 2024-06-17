@@ -19,6 +19,7 @@ function createPos() {
 		},
 	};
 }
+
 function getResult() {
 	const santa = createPos();
 	const houses = uniq(

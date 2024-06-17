@@ -13,6 +13,11 @@ export async function getInputLns(...params: Parameters<typeof getInput>) {
 	return input.split('\n');
 }
 
+export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
+	const lns = await getInputLns(...params);
+	return lns.map((ln) => ln.split(''));
+}
+
 export async function getInputParagraphs(
 	...params: Parameters<typeof getInput>
 ) {

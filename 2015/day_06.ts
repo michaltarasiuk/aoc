@@ -34,7 +34,7 @@ function countLights(
 const result = countLights({
 	'turn on': () => 1,
 	'turn off': () => 0,
-	toggle: (val) => (val === 0 ? 1 : 0),
+	toggle: (val) => +!val,
 });
 
 const result2 = countLights({

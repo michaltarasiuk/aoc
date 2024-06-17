@@ -1,44 +1,57 @@
-import {getInputLns} from 'lib/input';
+import {getInputGrid} from 'lib/input';
 
-const lns = await getInputLns({year: 2015, day: 18});
+const grid = await getInputGrid({year: 2015, day: 18});
 
-const LIGHT_ON = '#';
-const LIGHT_OFF = '.';
+const ENABLED_LIGHT = '#';
+const DISABLED_LIGHT = '.';
 
-function getNeighbors(state: string[][], {x, y}: {x: number; y: number}) {
-	const start = Math.max(0, x - 1);
-	const end = x + 2;
+const NEIGHBORS = [
+	[-1, 0, 1],
+	[-1, 1],
+	[-1, 0, 1],
+];
 
-	return [
-		state[y][x - 1],
-		state[y][x + 1],
-		...[-1, 1].flatMap((i) => state[y + i]?.slice(start, end) ?? []),
-	];
+function getNeighbors(lights: string[][], {x, y}: {x: number; y: number}) {
+	return NEIGHBORS.reduce<string[][]>((acc, offsets, i) => {
+		acc.push(
+			offsets.flatMap((offset) => lights[y + i - 1]?.[x + offset] ?? []),
+		);
+		return acc;
+	}, []);
 }
 
-function getLightsOn(lights: string[]) {
-	return lights.filter((light) => light === LIGHT_ON);
+function countEnabledLights(lights: string[][]) {
+	const enabledLightsRe = new RegExp(ENABLED_LIGHT, 'g');
+	return Array.from(lights.join().matchAll(enabledLightsRe)).length;
 }
 
-function getNewLight(light: string, {x, y}: {x: number; y: number}) {
-	const neighbors = getNeighbors(state, {x, y});
-	const neighborsOn = getLightsOn(neighbors).length;
-
-	if (light === LIGHT_ON) {
-		return neighborsOn === 2 || neighborsOn === 3 ? LIGHT_ON : LIGHT_OFF;
+function switchLight(light: string, enabledLightsCount: number) {
+	if (light === ENABLED_LIGHT) {
+		return enabledLightsCount === 2 || enabledLightsCount === 3
+			? ENABLED_LIGHT
+			: DISABLED_LIGHT;
 	}
-	return neighborsOn === 3 ? LIGHT_ON : LIGHT_OFF;
+	return enabledLightsCount === 3 ? ENABLED_LIGHT : DISABLED_LIGHT;
 }
 
-let state = lns.map((ln) => ln.split(''));
+function animate(lights: string[][]) {
+	return lights.map((row, y) =>
+		row.map((light, x) => {
+			const neighbors = getNeighbors(lights, {x, y});
+			const enabledLightsCount = countEnabledLights(neighbors);
 
-for (let i = 0; i < 100; i++) {
-	state = state.map((lights, y) =>
-		lights.map((light, x) => getNewLight(light, {x, y})),
+			return switchLight(light, enabledLightsCount);
+		}),
 	);
 }
 
-const result = getLightsOn(state.flat()).length;
+let lights = grid;
+
+for (let i = 0; i < 100; i++) {
+	lights = animate(lights);
+}
+
+const result = countEnabledLights(lights);
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;
