@@ -4,10 +4,10 @@
 	"scripts": {
 		"prepare": "husky",
 		"eslint": "eslint --no-warn-ignored --max-warnings=0",
-		"lint": "npm run eslint .",
-		"lint-fix": "npm run eslint . -- --fix",
+		"lint": "bun run eslint .",
+		"lint-fix": "bun run eslint . -- --fix",
 		"prettier": "prettier --ignore-unknown --write",
-		"format": "npm run prettier -- --cache .",
+		"format": "bun run prettier -- --cache .",
 		"test": "vitest --run"
 	},
 	"dependencies": {
