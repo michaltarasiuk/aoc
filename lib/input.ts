@@ -2,6 +2,7 @@ import {match, P} from 'ts-pattern';
 import * as v from 'valibot';
 
 import {env} from '../env';
+import {withIndex} from './with_index';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
 	const input = await fetchInput(...params);
@@ -11,6 +12,15 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
 export async function getInputLns(...params: Parameters<typeof getInput>) {
 	const input = await getInput(...params);
 	return input.split('\n');
+}
+
+export async function getInputCols(...params: Parameters<typeof getInputLns>) {
+	const lns = await getInputLns(...params);
+
+	return lns.flatMap(withIndex).reduce<string[][]>((acc, [char, i]) => {
+		(acc[i] ??= []).push(char);
+		return acc;
+	}, []);
 }
 
 export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
@@ -39,7 +49,7 @@ export async function getInputNumbers(...params: Parameters<typeof getInput>) {
 	const input = await getInput(...params);
 	const numberRe = /-?\d+/g;
 
-	return Array.from(input.matchAll(numberRe), (match) => Number(match[0]));
+	return Array.from(input.matchAll(numberRe), Number);
 }
 
 class ResponseError extends Error {
