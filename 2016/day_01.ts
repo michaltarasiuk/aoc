@@ -13,27 +13,30 @@ function parseInstruction(instruction: string) {
 type Direction = 'n' | 'e' | 's' | 'w';
 
 class Coordinates {
-	static state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
+	static #state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
 
-	static set(direction: Direction, steps: number) {
-		this.state[direction] += steps;
+	static #directions = Object.keys(this.#state) as Direction[];
+	static #direction = this.#directions.at(0)!;
+
+	static set(turn: string, steps: number) {
+		const [left, right] = adjacentAt(
+			this.#directions,
+			this.#directions.indexOf(this.#direction),
+		);
+
+		this.#direction = turn === 'L' ? left : right;
+		this.#state[this.#direction] += steps;
 	}
 
 	static calcDistance() {
-		const {n, e, s, w} = this.state;
+		const {n, e, s, w} = this.#state;
 		return Math.abs(n - s) + Math.abs(e - w);
 	}
 }
 
-const directions = Object.keys(Coordinates.state) as Direction[];
-let direction = directions.at(0)!;
-
 for (const instruction of instructions) {
 	const {turn, steps} = parseInstruction(instruction);
-	const [left, right] = adjacentAt(directions, directions.indexOf(direction));
-
-	direction = turn === 'L' ? left : right;
-	Coordinates.set(direction, steps);
+	Coordinates.set(turn, steps);
 }
 
 const result = Coordinates.calcDistance();
