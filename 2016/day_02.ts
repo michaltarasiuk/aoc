@@ -8,22 +8,27 @@ const KEYPAD = [
 	['7', '8', '9'],
 ];
 
+const X_BOUND = KEYPAD[0].length - 1;
+const Y_BOUND = KEYPAD.length - 1;
+
 function move(x: number, y: number, direction: string) {
 	switch (direction) {
 		case 'U':
 			return [x, Math.max(y - 1, 0)];
 		case 'D':
-			return [x, Math.min(y + 1, 2)];
+			return [x, Math.min(y + 1, Y_BOUND)];
 		case 'L':
 			return [Math.max(x - 1, 0), y];
 		case 'R':
-			return [Math.min(x + 1, 2), y];
+			return [Math.min(x + 1, X_BOUND), y];
 		default:
 			throw new Error('Invalid direction');
 	}
 }
 
-let [x, y] = [1, 1];
+const START_POINT = [1, 1];
+
+let [x, y] = START_POINT;
 let result = '';
 
 for (const ln of lns) {
