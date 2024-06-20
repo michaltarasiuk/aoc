@@ -24,7 +24,7 @@ function calcChecksum(...chars: string[]) {
 		.join('');
 }
 
-function rotateLetterForward(codePoint: number, shift: number) {
+function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 	return ((codePoint - 97 + shift) % 26) + 97;
 }
 
@@ -35,17 +35,18 @@ const result = sum(
 	}),
 );
 
+const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
 let result2: number | undefined;
 
 for (const ln of lns) {
 	const {name, id} = parseLn(ln);
 	const decoded = String.fromCodePoint(
 		...stringToCodePoints(name, (codePoint) =>
-			rotateLetterForward(codePoint, id),
+			shiftAlphabetCodePoint(codePoint, id),
 		),
 	);
 
-	if (decoded === 'northpoleobjectstorage') {
+	if (decoded === NORTH_POLE_OBJECT_STORAGE) {
 		result2 = id;
 		break;
 	}

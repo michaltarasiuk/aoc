@@ -17,7 +17,7 @@ export async function getInputCols(...params: Parameters<typeof getInputLns>) {
 	const lns = await getInputLns(...params);
 	const cols: string[] = [];
 
-	for (let i = 0, length = lns[0].length; i < length; ++i) {
+	for (let i = 0, length = lns[0].length; i < length; i++) {
 		cols.push(lns.map((l) => l.at(i)).join(''));
 	}
 	return cols;
