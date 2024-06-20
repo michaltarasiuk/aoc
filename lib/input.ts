@@ -2,7 +2,6 @@ import {match, P} from 'ts-pattern';
 import * as v from 'valibot';
 
 import {env} from '../env';
-import {withIndex} from './with_index';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
 	const input = await fetchInput(...params);
@@ -16,11 +15,12 @@ export async function getInputLns(...params: Parameters<typeof getInput>) {
 
 export async function getInputCols(...params: Parameters<typeof getInputLns>) {
 	const lns = await getInputLns(...params);
+	const cols: string[] = [];
 
-	return lns.flatMap(withIndex).reduce<string[][]>((acc, [char, i]) => {
-		(acc[i] ??= []).push(char);
-		return acc;
-	}, []);
+	for (let i = 0, length = lns[0].length; i < length; ++i) {
+		cols.push(lns.map((l) => l.at(i)).join(''));
+	}
+	return cols;
 }
 
 export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
