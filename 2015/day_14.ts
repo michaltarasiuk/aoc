@@ -1,31 +1,24 @@
-import {divideWithRemainder} from 'lib/divide_with_remainder';
+import {extractInts} from 'lib/extract_ints';
 import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 14});
 
-function parseLn(ln: string) {
-	const [speed, speedTime, rest] = Array.from(ln.matchAll(/\d+/g), Number);
-	return {speed, speedTime, rest};
-}
-
 const FULL_TIME = 2_503;
 
-function calcDistance({speed, speedTime, rest}: ReturnType<typeof parseLn>) {
-	const timeChunk = speedTime + rest;
-	const [fullTimeChunks, remainTime] = divideWithRemainder(
-		FULL_TIME,
-		timeChunk,
-	);
+function calcDistance(speed: number, speedTime: number, restTime: number) {
+	const timeChunk = speedTime + restTime;
+	const fullChunks = Math.floor(FULL_TIME / timeChunk);
+	const remainTime = FULL_TIME % timeChunk;
 
-	return (
-		speed * (fullTimeChunks * speedTime + Math.min(speedTime, remainTime))
-	);
+	return speed * (fullChunks * speedTime + Math.min(speedTime, remainTime));
 }
 
-const maxDistance = lns.reduce((acc, ln) => {
-	const parsedLn = parseLn(ln);
-	return Math.max(acc, calcDistance(parsedLn));
-}, 0);
+const maxDistance = Math.max(
+	...lns.map((ln) => {
+		const [speed, speedTime, restTime] = extractInts(ln);
+		return calcDistance(speed, speedTime, restTime);
+	}),
+);
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;

@@ -1,6 +1,6 @@
-import {getInputNumbers} from 'lib/input';
+import {getInputInts} from 'lib/input';
 
-const ns = await getInputNumbers({year: 2021, day: 1});
+const ns = await getInputInts({year: 2021, day: 1});
 
 const result = ns.reduce((acc, num, i) => (num > ns[i - 1] ? ++acc : acc), 0);
 const result2 = ns.reduce((acc, num, i) => (num > ns[i - 3] ? ++acc : acc), 0);

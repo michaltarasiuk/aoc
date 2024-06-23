@@ -2,6 +2,7 @@ import {match, P} from 'ts-pattern';
 import * as v from 'valibot';
 
 import {env} from '../env';
+import {extractInts} from './extract_ints';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
 	const input = await fetchInput(...params);
@@ -45,11 +46,9 @@ export async function getInputCSV(...params: Parameters<typeof getInput>) {
 	return input.split(newlineRe).map((line) => line.split(csvRe));
 }
 
-export async function getInputNumbers(...params: Parameters<typeof getInput>) {
+export async function getInputInts(...params: Parameters<typeof getInput>) {
 	const input = await getInput(...params);
-	const numberRe = /-?\d+/g;
-
-	return Array.from(input.matchAll(numberRe), Number);
+	return extractInts(input);
 }
 
 class ResponseError extends Error {

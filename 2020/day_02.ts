@@ -4,7 +4,7 @@ const lns = await getInputLns({year: 2020, day: 2});
 
 function parseLn(ln: string) {
 	const lineRe = /^(\d+)-(\d+) (\w): (\w+)$/;
-	const [, min, max, char, password] = ln.match(lineRe) ?? [];
+	const [, min, max, char, password] = ln.match(lineRe)!;
 
 	return {min: Number(min), max: Number(max), char, password};
 }

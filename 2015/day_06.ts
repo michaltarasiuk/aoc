@@ -7,7 +7,7 @@ const lns = await getInputLns({year: 2015, day: 6});
 
 function parseLn(ln: string) {
 	const lineRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
-	const [, action, ...rest] = ln.match(lineRe) ?? [];
+	const [, action, ...rest] = ln.match(lineRe)!;
 	const [x1, y1, x2, y2] = rest.map(Number);
 
 	return {action, x1, y1, x2, y2};

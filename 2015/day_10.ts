@@ -7,7 +7,7 @@ const repeatedDigitsRe = /(?:(\d)\1*)/g;
 const results: number[] = [];
 
 while (++count <= 50) {
-	const match = input.match(repeatedDigitsRe) ?? [];
+	const match = input.match(repeatedDigitsRe)!;
 
 	input = match
 		.map(([...digits]) => {

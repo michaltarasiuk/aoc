@@ -5,7 +5,7 @@ const [instructions] = await getInputCSV({year: 2016, day: 1});
 
 function parseInstruction(instruction: string) {
 	const instructionRe = /([LR])(\d+)/;
-	const [, turn, steps] = instruction.match(instructionRe) ?? [];
+	const [, turn, steps] = instruction.match(instructionRe)!;
 
 	return {turn, steps: Number(steps)};
 }

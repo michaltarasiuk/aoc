@@ -6,7 +6,7 @@ const lns = await getInputLns({year: 2023, day: 2});
 
 function parseLn(ln: string) {
 	const gameRe = /(\d+)(?: (\w+))?/g;
-	const gameMatch = ln.matchAll(gameRe) ?? [];
+	const gameMatch = ln.matchAll(gameRe);
 
 	return Array.from(
 		gameMatch,

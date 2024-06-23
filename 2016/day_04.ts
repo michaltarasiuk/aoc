@@ -7,7 +7,7 @@ const lns = await getInputLns({year: 2016, day: 4});
 
 function parseLn(ln: string) {
 	const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
-	const [, name, id, checksum] = ln.match(roomRe) ?? [];
+	const [, name, id, checksum] = ln.match(roomRe)!;
 
 	return {name: name.replace(/-/g, ''), id: Number(id), checksum};
 }

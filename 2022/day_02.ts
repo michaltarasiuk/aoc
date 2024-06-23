@@ -27,16 +27,16 @@ const ME_CHARS: Record<string, number> = {
 
 function parseLn(ln: string) {
 	const roundRe = /^([ABC]) ([XYZ])$/;
-	const [, them, me] = roundRe.exec(ln) ?? [];
+	const [, them, me] = roundRe.exec(ln)!;
 
 	return {them: THEM_CHARS[them], me: ME_CHARS[me]};
 }
 
 function roundOutcome(them: number, me: number) {
-	if (them === me) return POINTS.DRAW;
+	if (them === me) return POINTS.DRAW + me;
 
 	const [lose] = adjacentAt(HAND_SHAPE, HAND_SHAPE.indexOf(me));
-	return them === lose ? POINTS.WIN : POINTS.LOSE;
+	return (them === lose ? POINTS.WIN : POINTS.LOSE) + me;
 }
 
 function roundOutcome2(them: number, me: number) {
@@ -44,9 +44,9 @@ function roundOutcome2(them: number, me: number) {
 
 	switch (me) {
 		case WIN:
-			return beat + POINTS.WIN;
+			return POINTS.WIN + beat;
 		case DRAW:
-			return them + POINTS.DRAW;
+			return POINTS.DRAW + them;
 		case LOSE:
 			return lose;
 		default:
@@ -56,7 +56,7 @@ function roundOutcome2(them: number, me: number) {
 
 const result = lns.reduce((acc, ln) => {
 	const {them, me} = parseLn(ln);
-	return acc + roundOutcome(them, me) + me;
+	return acc + roundOutcome(them, me);
 }, 0);
 
 const result2 = lns.reduce((acc, ln) => {

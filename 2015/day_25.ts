@@ -1,9 +1,10 @@
+import {extractInts} from 'lib/extract_ints';
 import {getInput} from 'lib/input';
 
 const input = await getInput({year: 2015, day: 25});
 
 function parseInput(input: string) {
-	const [row, col] = input.match(/\d+/g)!.map(Number);
+	const [row, col] = extractInts(input);
 	return [row, col] as const;
 }
 

@@ -5,10 +5,7 @@ import {permute} from 'lib/permutate';
 const lns = await getInputLns({year: 2015, day: 13});
 
 function parseLn(ln: string) {
-	return [
-		...(ln.match(/([A-Z])\w+/g) ?? []),
-		...(ln.match(/(gain|lose|\d+)/g) ?? []),
-	];
+	return [...ln.match(/([A-Z])\w+/g)!, ...ln.match(/(gain|lose|\d+)/g)!];
 }
 
 const guests = lns.reduce<Record<string, {[name: string]: number}>>(

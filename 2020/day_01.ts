@@ -1,6 +1,6 @@
-import {getInputNumbers} from 'lib/input';
+import {getInputInts} from 'lib/input';
 
-const ns = await getInputNumbers({year: 2020, day: 1});
+const ns = await getInputInts({year: 2020, day: 1});
 
 const seen = new Set();
 let result = 0;
