@@ -33,10 +33,18 @@ function parseLn(ln: string) {
 }
 
 function roundOutcome(them: number, me: number) {
-	if (them === me) return POINTS.DRAW + me;
+	const [lose, beat] = adjacentAt(HAND_SHAPE, HAND_SHAPE.indexOf(me));
 
-	const [lose] = adjacentAt(HAND_SHAPE, HAND_SHAPE.indexOf(me));
-	return (them === lose ? POINTS.WIN : POINTS.LOSE) + me;
+	switch (them) {
+		case lose:
+			return POINTS.WIN + me;
+		case me:
+			return POINTS.DRAW + me;
+		case beat:
+			return POINTS.LOSE + me;
+		default:
+			throw new Error('Invalid hand shape');
+	}
 }
 
 function roundOutcome2(them: number, me: number) {
