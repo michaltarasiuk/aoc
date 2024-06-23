@@ -11,7 +11,6 @@ function parseLn(ln: string) {
 	return {a, b, cost: Number(cost)};
 }
 
-// Like {[city]: {[dest]: cost}}
 const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
 	const {a, b, cost} = parseLn(ln);
 

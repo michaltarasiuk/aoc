@@ -22,7 +22,7 @@ const result = lns.reduce((acc, ln) => {
 	return acc;
 }, 0);
 
-const abaRe = /supernets: .*(\w)((?!\1)\w)\1.*, hypernets: .*\2\1\2.*/;
+const abaRe = /^supernets: .*(\w)((?!\1)\w)\1.*, hypernets: .*\2\1\2.*$/;
 
 const result2 = lns.reduce((acc, ln) => {
 	const {supernets = [], hypernets = []} = parseLn(ln);
