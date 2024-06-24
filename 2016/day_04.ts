@@ -5,9 +5,9 @@ import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2016, day: 4});
 
-function parseLn(ln: string) {
+function parseRoom(room: string) {
 	const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
-	const [, name, id, checksum] = ln.match(roomRe)!;
+	const [, name, id, checksum] = room.match(roomRe)!;
 
 	return {name: name.replace(/-/g, ''), id: Number(id), checksum};
 }
@@ -30,7 +30,7 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 
 const result = sum(
 	...lns.map((ln) => {
-		const {name, id, checksum} = parseLn(ln);
+		const {name, id, checksum} = parseRoom(ln);
 		return checksum === calcChecksum(...name) ? id : 0;
 	}),
 );
@@ -39,7 +39,7 @@ const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
 let result2: number | undefined;
 
 for (const ln of lns) {
-	const {name, id} = parseLn(ln);
+	const {name, id} = parseRoom(ln);
 	const decoded = String.fromCodePoint(
 		...stringToCodePoints(name, (codePoint) =>
 			shiftAlphabetCodePoint(codePoint, id),

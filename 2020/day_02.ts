@@ -2,15 +2,15 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2020, day: 2});
 
-function parseLn(ln: string) {
-	const lineRe = /^(\d+)-(\d+) (\w): (\w+)$/;
-	const [, min, max, char, password] = ln.match(lineRe)!;
+function parsePassword(s: string) {
+	const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
+	const [, min, max, char, password] = s.match(passwordRe)!;
 
 	return {min: Number(min), max: Number(max), char, password};
 }
 
 const result = lns.reduce((acc, ln) => {
-	const {min, max, char, password} = parseLn(ln);
+	const {min, max, char, password} = parsePassword(ln);
 	const count = password.split(char).length - 1;
 
 	if (count >= min && count <= max) {
@@ -20,7 +20,7 @@ const result = lns.reduce((acc, ln) => {
 }, 0);
 
 const result2 = lns.reduce((acc, ln) => {
-	const {min, max, char, password} = parseLn(ln);
+	const {min, max, char, password} = parsePassword(ln);
 	const a = password[min - 1] === char;
 	const b = password[max - 1] === char;
 

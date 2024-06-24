@@ -4,15 +4,15 @@ import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2015, day: 9});
 
-function parseLn(ln: string) {
-	const lineRe = /^(\w+) to (\w+) = (\d+)$/;
-	const [, a, b, cost] = ln.match(lineRe)!;
+function parseDistance(distance: string) {
+	const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
+	const [, a, b, cost] = distance.match(distanceRe)!;
 
 	return {a, b, cost: Number(cost)};
 }
 
 const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
-	const {a, b, cost} = parseLn(ln);
+	const {a, b, cost} = parseDistance(ln);
 
 	(acc[a] ??= {}), (acc[a][b] = cost);
 	(acc[b] ??= {}), (acc[b][a] = cost);

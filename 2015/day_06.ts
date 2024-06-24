@@ -5,9 +5,9 @@ import {sum} from 'lib/sum';
 
 const lns = await getInputLns({year: 2015, day: 6});
 
-function parseLn(ln: string) {
-	const lineRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
-	const [, action, ...rest] = ln.match(lineRe)!;
+function parseInstruction(instruction: string) {
+	const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
+	const [, action, ...rest] = instruction.match(instructionRe)!;
 	const [x1, y1, x2, y2] = rest.map(Number);
 
 	return {action, x1, y1, x2, y2};
@@ -19,7 +19,7 @@ function countLights(
 	const acc = create2dArr(1_000, 0);
 
 	for (const ln of lns) {
-		const {action, x1, y1, x2, y2} = parseLn(ln);
+		const {action, x1, y1, x2, y2} = parseInstruction(ln);
 
 		for (let x = x1; x <= x2; x++) {
 			for (let y = y1; y <= y2; y++) {

@@ -2,17 +2,17 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2017, day: 2});
 
-function parseLn(ln: string) {
-	return ln.split('\t').map(Number);
+function parseRow(row: string) {
+	return row.split('\t').map(Number);
 }
 
 const result = lns.reduce((acc, ln) => {
-	const ns = parseLn(ln);
+	const ns = parseRow(ln);
 	return acc + Math.max(...ns) - Math.min(...ns);
 }, 0);
 
 const result2 = lns.reduce((acc, ln) => {
-	const ns = parseLn(ln);
+	const ns = parseRow(ln);
 
 	for (const n of ns) {
 		for (const m of ns) {

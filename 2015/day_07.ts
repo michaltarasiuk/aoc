@@ -2,18 +2,20 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 7});
 
-function parseLn(ln: string) {
+function parseInstruction(instruction: string) {
 	return [
-		...(ln.match(/[A-Z]+/) ?? []),
-		...(ln.match(/([a-z]|[0-9])+/g) ?? []),
+		...(instruction.match(/[A-Z]+/) ?? []),
+		...(instruction.match(/([a-z]|[0-9])+/g) ?? []),
 	];
 }
 
 const circuit = lns.reduce<Record<string, string[]>>((acc, ln) => {
-	const parsedLn = parseLn(ln);
-	const dest = parsedLn.pop();
+	const instruction = parseInstruction(ln);
+	const dest = instruction.pop();
 
-	if (dest) acc[dest] = parsedLn;
+	if (dest) {
+		acc[dest] = instruction;
+	}
 	return acc;
 }, {});
 

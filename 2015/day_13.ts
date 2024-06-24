@@ -4,13 +4,16 @@ import {permute} from 'lib/permutate';
 
 const lns = await getInputLns({year: 2015, day: 13});
 
-function parseLn(ln: string) {
-	return [...ln.match(/([A-Z])\w+/g)!, ...ln.match(/(gain|lose|\d+)/g)!];
+function parseSeatingHappiness(seatingHappiness: string) {
+	return [
+		...seatingHappiness.match(/([A-Z])\w+/g)!,
+		...seatingHappiness.match(/(gain|lose|\d+)/g)!,
+	];
 }
 
 const guests = lns.reduce<Record<string, {[name: string]: number}>>(
 	(acc, ln) => {
-		const [a, b, type, val] = parseLn(ln);
+		const [a, b, type, val] = parseSeatingHappiness(ln);
 
 		acc[a] ??= {};
 		acc[a][b] = parseInt(val) * (type === 'gain' ? 1 : -1);

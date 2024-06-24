@@ -4,9 +4,9 @@ import {isDefined} from 'lib/is_defined';
 
 const lns = await getInputLns({year: 2023, day: 2});
 
-function parseLn(ln: string) {
+function parseGame(game: string) {
 	const gameRe = /(\d+)(?: (\w+))?/g;
-	const gameMatch = ln.matchAll(gameRe);
+	const gameMatch = game.matchAll(gameRe);
 
 	return Array.from(
 		gameMatch,
@@ -26,8 +26,8 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
 	);
 }
 
-const result = lns.reduce((acc, ln) => {
-	const [[id], ...cubes] = parseLn(ln);
+const result = lns.reduce((acc, game) => {
+	const [[id], ...cubes] = parseGame(game);
 	const {red, green, blue} = collectMaxCubeSizes(cubes);
 
 	if (red <= 12 && green <= 13 && blue <= 14) {
@@ -36,8 +36,8 @@ const result = lns.reduce((acc, ln) => {
 	return acc;
 }, 0);
 
-const result2 = lns.reduce((acc, ln) => {
-	const [, ...cubes] = parseLn(ln);
+const result2 = lns.reduce((acc, game) => {
+	const [, ...cubes] = parseGame(game);
 	const {red, green, blue} = collectMaxCubeSizes(cubes);
 
 	return acc + red * green * blue;
