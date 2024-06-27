@@ -6,7 +6,7 @@ import {extractInts} from './extract_ints';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
 	const input = await fetchInput(...params);
-	return input.trim();
+	return input.trimEnd();
 }
 
 export async function getInputLns(...params: Parameters<typeof getInput>) {
@@ -85,7 +85,9 @@ async function fetchInput(input: {year: number; day: number}) {
 				},
 			},
 		);
-		if (!response.ok) throw new ResponseError(response);
+		if (!response.ok) {
+			throw new ResponseError(response);
+		}
 
 		return await response.text();
 	} catch (value) {
