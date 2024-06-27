@@ -1,5 +1,6 @@
 import 'core-js/proposals/set-methods';
 
+import {chunkEvery} from 'lib/chunk_every';
 import {getInputLns} from 'lib/input';
 
 declare global {
@@ -20,19 +21,24 @@ function splitRucksack(rucksack: string) {
 function calcPriority(char: string) {
 	const codePoint = char.codePointAt(0)!;
 
-	if (char >= 'A' && char <= 'Z') {
-		return codePoint - 'A'.charCodeAt(0) + 1;
-	} else if (char >= 'a' && char <= 'z') {
-		return codePoint - 'a'.charCodeAt(0) + 27;
+	if (char >= 'a' && char <= 'z') {
+		return codePoint - 'a'.codePointAt(0)! + 1;
+	} else if (char >= 'A' && char <= 'Z') {
+		return codePoint - 'A'.codePointAt(0)! + 27;
 	}
 	throw new Error(`Invalid char: ${char}`);
 }
 
 const result = lns.reduce((acc, rucksack) => {
 	const [a, b] = splitRucksack(rucksack);
-	const [commonItemType] = Array.from(a.intersection(b));
+	const [char] = a.intersection(b);
 
-	return acc + calcPriority(commonItemType);
+	return acc + calcPriority(char);
+}, 0);
+
+const result2 = chunkEvery(lns, 3).reduce((acc, [a, b, c]) => {
+	const [char] = new Set(a).intersection(new Set(b)).intersection(new Set(c));
+	return acc + calcPriority(char);
 }, 0);
 
 if (import.meta.vitest) {
@@ -40,5 +46,9 @@ if (import.meta.vitest) {
 
 	test('part 1', () => {
 		expect(result).toBe(8153);
+	});
+
+	test('part 2', () => {
+		expect(result2).toBe(2342);
 	});
 }
