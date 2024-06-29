@@ -2,7 +2,7 @@ import {getInputInts} from 'lib/input';
 
 const ints = await getInputInts({year: 2017, day: 5});
 
-function howManyStepsToExit(
+function stepsToExit(
 	[...ints]: number[],
 	jump: (ints: number[], offset: number) => number,
 ) {
@@ -16,8 +16,8 @@ function howManyStepsToExit(
 	return steps;
 }
 
-const result = howManyStepsToExit(ints, (ints, offset) => ints[offset]++);
-const result2 = howManyStepsToExit(ints, (ints, offset) =>
+const result = stepsToExit(ints, (ints, offset) => ints[offset]++);
+const result2 = stepsToExit(ints, (ints, offset) =>
 	ints[offset] >= 3 ? ints[offset]-- : ints[offset]++,
 );
 
