@@ -1,6 +1,6 @@
 import {getInputInts} from 'lib/input';
 
-const memoryBanks = await getInputInts({year: 2017, day: 6});
+const initialMemoryBanks = await getInputInts({year: 2017, day: 6});
 
 function redistributeMemoryBlocks([...memoryBanks]: number[]) {
 	const seen = new Set<string>();
@@ -21,15 +21,20 @@ function redistributeMemoryBlocks([...memoryBanks]: number[]) {
 			memoryBanks[(mostBlocksIndex + i) % memoryBanks.length]++;
 		}
 	}
-	return seen.size;
+	return [seen.size, memoryBanks] as const;
 }
 
-const result = redistributeMemoryBlocks(memoryBanks);
+const [cycles, memoryBanks] = redistributeMemoryBlocks(initialMemoryBanks);
+const [cycles2] = redistributeMemoryBlocks(memoryBanks);
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;
 
 	test('part 1', () => {
-		expect(result).toBe(11137);
+		expect(cycles).toBe(11137);
+	});
+
+	test('part 2', () => {
+		expect(cycles2).toBe(1037);
 	});
 }
