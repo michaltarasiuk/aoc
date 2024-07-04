@@ -38,7 +38,6 @@ class Board {
 }
 
 const boards = inits.map((init) => new Board(init));
-
 let result: number | undefined;
 
 outer: for (const int of extractInts(drawn)) {
