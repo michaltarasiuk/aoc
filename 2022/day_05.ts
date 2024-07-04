@@ -27,7 +27,7 @@ function parseStacks([...stacks]: string[]) {
 
 function stacksToString(stacks: ReturnType<typeof parseStacks>) {
 	return Object.values(stacks)
-		.flatMap((crates) => crates.at(0) ?? [])
+		.map(([crate]) => crate)
 		.join('');
 }
 
