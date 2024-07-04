@@ -3,12 +3,10 @@ import {getInput} from 'lib/input';
 const input = await getInput({year: 2022, day: 6});
 
 function findLastIndexOfFirstMarker(markerSize: number) {
-	let lastIndex: number | undefined = undefined;
+	let lastIndex: number | undefined;
 
-	for (const i of Array.from(input, (_, i) => i)) {
-		const marker = new Set(input.slice(i, i + markerSize));
-
-		if (marker.size === markerSize) {
+	for (let i = 0; i < input.length; i++) {
+		if (new Set(input.slice(i, i + markerSize)).size === markerSize) {
 			lastIndex = i + markerSize;
 			break;
 		}
