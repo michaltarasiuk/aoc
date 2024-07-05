@@ -18,23 +18,41 @@ function evalCondition(registers: Registers, cond: string) {
 	return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
 
-const registers: Registers = {};
+function instruct(
+	{...registers}: Registers,
+	{reg, op, val}: {reg: string; op: string; val: number},
+) {
+	registers[reg] ??= 0;
+	registers[reg] += op === 'inc' ? val : -val;
+	return registers;
+}
+
+function findMaxRegister(registers: Registers) {
+	return Math.max(...Object.values(registers));
+}
+
+let registers: Registers = {};
+let maxHeldRegister = -Infinity;
 
 for (const ln of lns) {
 	const {reg, op, val, cond} = parseInstruction(ln);
 
 	if (evalCondition(registers, cond)) {
-		registers[reg] ??= 0;
-		registers[reg] += op === 'inc' ? val : -val;
+		registers = instruct(registers, {reg, op, val});
+		maxHeldRegister = Math.max(maxHeldRegister, registers[reg]);
 	}
 }
 
-const result = Math.max(...Object.values(registers));
+const maxFinalRegister = findMaxRegister(registers);
 
 if (import.meta.vitest) {
 	const {test, expect} = import.meta.vitest;
 
 	test('part 1', () => {
-		expect(result).toBe(5966);
+		expect(maxFinalRegister).toBe(5966);
+	});
+
+	test('part 2', () => {
+		expect(maxHeldRegister).toBe(6347);
 	});
 }
