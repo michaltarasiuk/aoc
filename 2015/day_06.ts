@@ -7,28 +7,27 @@ const lns = await getInputLns({year: 2015, day: 6});
 
 function parseInstruction(instruction: string) {
 	const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
-	const [, action, ...rest] = instruction.match(instructionRe)!;
-	const [x1, y1, x2, y2] = rest.map(Number);
+	const [, action, ...dimensions] = instruction.match(instructionRe)!;
 
-	return {action, x1, y1, x2, y2};
+	return [action, ...dimensions.map(Number)] as const;
 }
 
 function countLights(
 	actions: Record<'turn on' | 'turn off' | 'toggle', (val: number) => number>,
 ) {
-	const acc = create2dArr(1_000, 0);
+	const lights = create2dArr(1_000, 0);
 
 	for (const ln of lns) {
-		const {action, x1, y1, x2, y2} = parseInstruction(ln);
+		const [action, x1, y1, x2, y2] = parseInstruction(ln);
 
 		for (let x = x1; x <= x2; x++) {
 			for (let y = y1; y <= y2; y++) {
 				assertKeyIn(actions, action);
-				acc[y][x] = actions[action](acc[y][x]);
+				lights[y][x] = actions[action](lights[y][x]);
 			}
 		}
 	}
-	return sum(acc.flat());
+	return sum(lights.flat());
 }
 
 const result = countLights({

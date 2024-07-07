@@ -21,10 +21,8 @@ const result = lns.reduce((acc, ln) => {
 
 const result2 = lns.reduce((acc, ln) => {
 	const {min, max, char, password} = parsePassword(ln);
-	const a = password[min - 1] === char;
-	const b = password[max - 1] === char;
 
-	if (a !== b) {
+	if ((password[min - 1] === char) !== (password[max - 1] === char)) {
 		acc++;
 	}
 	return acc;
