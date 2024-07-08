@@ -12,13 +12,13 @@ const ns3 = lns.map((ln) => JSON.stringify(ln).length);
 const result2 = sum(...ns3) - sum(...ns);
 
 if (import.meta.vitest) {
-	const {test, expect} = import.meta.vitest;
+  const {test, expect} = import.meta.vitest;
 
-	test('part 1', () => {
-		expect(result).toBe(1350);
-	});
+  test('part 1', () => {
+    expect(result).toBe(1350);
+  });
 
-	test('part 2', () => {
-		expect(result2).toBe(2085);
-	});
+  test('part 2', () => {
+    expect(result2).toBe(2085);
+  });
 }

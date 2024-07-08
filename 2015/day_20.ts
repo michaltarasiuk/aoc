@@ -7,19 +7,19 @@ const houses: {[k: number]: number} = {};
 let i = 0;
 
 outer: while (++i) {
-	for (const j of divisors(i)) {
-		const housePresentsCount = ((houses[i] ??= 0), (houses[i] += 10 * j));
+  for (const j of divisors(i)) {
+    const housePresentsCount = ((houses[i] ??= 0), (houses[i] += 10 * j));
 
-		if (housePresentsCount >= Number(input)) {
-			break outer;
-		}
-	}
+    if (housePresentsCount >= Number(input)) {
+      break outer;
+    }
+  }
 }
 
 if (import.meta.vitest) {
-	const {test, expect} = import.meta.vitest;
+  const {test, expect} = import.meta.vitest;
 
-	test('part 1', () => {
-		expect(i).toBe(665280);
-	});
+  test('part 1', () => {
+    expect(i).toBe(665280);
+  });
 }

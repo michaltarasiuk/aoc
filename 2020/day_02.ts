@@ -3,39 +3,39 @@ import {getInputLns} from 'lib/input';
 const lns = await getInputLns({year: 2020, day: 2});
 
 function parsePassword(s: string) {
-	const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
-	const [, min, max, char, password] = s.match(passwordRe)!;
+  const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
+  const [, min, max, char, password] = s.match(passwordRe)!;
 
-	return {min: Number(min), max: Number(max), char, password};
+  return {min: Number(min), max: Number(max), char, password};
 }
 
 const result = lns.reduce((acc, ln) => {
-	const {min, max, char, password} = parsePassword(ln);
-	const count = password.split(char).length - 1;
+  const {min, max, char, password} = parsePassword(ln);
+  const count = password.split(char).length - 1;
 
-	if (count >= min && count <= max) {
-		acc++;
-	}
-	return acc;
+  if (count >= min && count <= max) {
+    acc++;
+  }
+  return acc;
 }, 0);
 
 const result2 = lns.reduce((acc, ln) => {
-	const {min, max, char, password} = parsePassword(ln);
+  const {min, max, char, password} = parsePassword(ln);
 
-	if ((password[min - 1] === char) !== (password[max - 1] === char)) {
-		acc++;
-	}
-	return acc;
+  if ((password[min - 1] === char) !== (password[max - 1] === char)) {
+    acc++;
+  }
+  return acc;
 }, 0);
 
 if (import.meta.vitest) {
-	const {test, expect} = import.meta.vitest;
+  const {test, expect} = import.meta.vitest;
 
-	test('part 1', () => {
-		expect(result).toBe(445);
-	});
+  test('part 1', () => {
+    expect(result).toBe(445);
+  });
 
-	test('part 2', () => {
-		expect(result2).toBe(491);
-	});
+  test('part 2', () => {
+    expect(result2).toBe(491);
+  });
 }

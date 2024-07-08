@@ -8,51 +8,51 @@ const LIGHT_OFF = '.';
 type Lights = string[][];
 
 function getNeighbors(lights: Lights, {x, y}: {x: number; y: number}) {
-	const NEIGHBORS = [
-		[-1, 0, 1],
-		[-1, 1],
-		[-1, 0, 1],
-	];
-	return NEIGHBORS.map((offsets, i) =>
-		offsets.flatMap((offset) => lights[y + i - 1]?.[x + offset] ?? []),
-	);
+  const NEIGHBORS = [
+    [-1, 0, 1],
+    [-1, 1],
+    [-1, 0, 1],
+  ];
+  return NEIGHBORS.map((offsets, i) =>
+    offsets.flatMap((offset) => lights[y + i - 1]?.[x + offset] ?? []),
+  );
 }
 
 function countLightsOn(lights: Lights) {
-	const lightsOnRe = new RegExp(LIGHT_ON, 'g');
-	return Array.from(lights.join().matchAll(lightsOnRe)).length;
+  const lightsOnRe = new RegExp(LIGHT_ON, 'g');
+  return Array.from(lights.join().matchAll(lightsOnRe)).length;
 }
 
 function switchLight(light: string, neighbors: Lights) {
-	const count = countLightsOn(neighbors);
-	switch (light) {
-		case LIGHT_ON:
-			return count === 2 || count === 3 ? LIGHT_ON : LIGHT_OFF;
-		case LIGHT_OFF:
-			return count === 3 ? LIGHT_ON : LIGHT_OFF;
-		default:
-			throw new Error('Invalid light');
-	}
+  const count = countLightsOn(neighbors);
+  switch (light) {
+    case LIGHT_ON:
+      return count === 2 || count === 3 ? LIGHT_ON : LIGHT_OFF;
+    case LIGHT_OFF:
+      return count === 3 ? LIGHT_ON : LIGHT_OFF;
+    default:
+      throw new Error('Invalid light');
+  }
 }
 
 function animate(lights: Lights) {
-	return lights.map((row, y) =>
-		row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y}))),
-	);
+  return lights.map((row, y) =>
+    row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y}))),
+  );
 }
 
 let lights = grid;
 
 for (let i = 0; i < 100; i++) {
-	lights = animate(lights);
+  lights = animate(lights);
 }
 
 const result = countLightsOn(lights);
 
 if (import.meta.vitest) {
-	const {test, expect} = import.meta.vitest;
+  const {test, expect} = import.meta.vitest;
 
-	test('part 1', () => {
-		expect(result).toBe(821);
-	});
+  test('part 1', () => {
+    expect(result).toBe(821);
+  });
 }

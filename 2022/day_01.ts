@@ -4,20 +4,20 @@ import {sum} from 'lib/sum';
 const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 
 const elfs = paragraphs
-	.map((paragraph) => sum(...paragraph.map(Number)))
-	.toSorted((a, b) => b - a);
+  .map((paragraph) => sum(...paragraph.map(Number)))
+  .toSorted((a, b) => b - a);
 
 const result = elfs[0];
 const result2 = elfs[0] + elfs[1] + elfs[2];
 
 if (import.meta.vitest) {
-	const {test, expect} = import.meta.vitest;
+  const {test, expect} = import.meta.vitest;
 
-	test('part 1', () => {
-		expect(result).toBe(66306);
-	});
+  test('part 1', () => {
+    expect(result).toBe(66306);
+  });
 
-	test('part 2', () => {
-		expect(result2).toBe(195292);
-	});
+  test('part 2', () => {
+    expect(result2).toBe(195292);
+  });
 }

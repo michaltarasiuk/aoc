@@ -1,33 +1,33 @@
 {
-	"name": "aoc",
-	"type": "module",
-	"scripts": {
-		"prepare": "husky",
-		"eslint": "eslint --no-warn-ignored --max-warnings=0",
-		"lint": "bun run eslint .",
-		"lint-fix": "bun run eslint . -- --fix",
-		"prettier": "prettier --ignore-unknown --write",
-		"format": "bun run prettier -- --cache .",
-		"test": "vitest --run"
-	},
-	"dependencies": {
-		"core-js": "^3.37.1",
-		"ts-pattern": "^5.1.1",
-		"valibot": "^0.30.0"
-	},
-	"devDependencies": {
-		"@eslint/js": "^9.3.0",
-		"@eslint/ts": "npm:typescript-eslint@^7.10.0",
-		"@types/node": "^20.12.12",
-		"dotenv": "^16.4.5",
-		"eslint": "^9.3.0",
-		"eslint-plugin-simple-import-sort": "^12.1.0",
-		"globals": "^15.3.0",
-		"husky": "^9.0.11",
-		"lint-staged": "^15.2.2",
-		"prettier": "^3.2.5",
-		"typescript": "^5.4.5",
-		"vite-tsconfig-paths": "^4.3.2",
-		"vitest": "^1.6.0"
-	}
+  "name": "aoc",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "eslint": "eslint --no-warn-ignored --max-warnings=0",
+    "lint": "bun run eslint .",
+    "lint-fix": "bun run eslint . -- --fix",
+    "prettier": "prettier --ignore-unknown --write",
+    "format": "bun run prettier -- --cache .",
+    "test": "vitest --run"
+  },
+  "dependencies": {
+    "core-js": "^3.37.1",
+    "ts-pattern": "^5.1.1",
+    "valibot": "^0.30.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "@eslint/ts": "npm:typescript-eslint@^7.10.0",
+    "@types/node": "^20.12.12",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.3.0",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "globals": "^15.3.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  }
 }
