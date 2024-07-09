@@ -13,8 +13,8 @@ const lns = await getInputLns({year: 2022, day: 3});
 
 function splitRucksack(rucksack: string) {
   return [
-    new Set(rucksack.slice(0, rucksack.length / 2)),
-    new Set(rucksack.slice(rucksack.length / 2)),
+    rucksack.slice(0, rucksack.length / 2),
+    rucksack.slice(rucksack.length / 2),
   ] as const;
 }
 
@@ -31,7 +31,7 @@ function calcPriority(char: string) {
 
 const result = lns.reduce((acc, rucksack) => {
   const [a, b] = splitRucksack(rucksack);
-  const [char] = a.intersection(b);
+  const [char] = new Set(a).intersection(new Set(b));
 
   return acc + calcPriority(char);
 }, 0);

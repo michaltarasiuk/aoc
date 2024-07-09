@@ -13,12 +13,12 @@ function redistributeMemoryBlocks([...memoryBanks]: number[]) {
       seen.add(snapshot);
     }
 
-    const mostBlocksCount = Math.max(...memoryBanks);
-    const mostBlocksIndex = memoryBanks.indexOf(mostBlocksCount);
+    const max = Math.max(...memoryBanks);
+    const maxIndex = memoryBanks.indexOf(max);
 
-    memoryBanks[mostBlocksIndex] = 0;
-    for (let i = 1; i <= mostBlocksCount; i++) {
-      memoryBanks[(mostBlocksIndex + i) % memoryBanks.length]++;
+    memoryBanks[maxIndex] = 0;
+    for (let i = 0; i < max; i++) {
+      memoryBanks[(maxIndex + 1 + i) % memoryBanks.length]++;
     }
   }
   return [seen.size, memoryBanks] as const;
