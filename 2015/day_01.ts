@@ -2,6 +2,8 @@ import {getInput} from 'lib/input';
 
 const input = await getInput({year: 2015, day: 1});
 
+console.log(input);
+
 let floor = 0;
 let basementEntryIdx: number | undefined;
 

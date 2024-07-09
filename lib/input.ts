@@ -1,4 +1,3 @@
-import {match, P} from 'ts-pattern';
 import * as v from 'valibot';
 
 import {env} from '../env';
@@ -90,27 +89,16 @@ async function fetchInput(input: {year: number; day: number}) {
     }
 
     return await response.text();
-  } catch (value) {
-    const errorMessage = await match(value)
-      .with(P.instanceOf(v.ValiError), (valiError) =>
-        getMessageOfValiError(valiError),
-      )
-      .with(P.instanceOf(ResponseError), (responseError) =>
-        getMessageOfResponseError(responseError),
-      )
-      .with(P.instanceOf(Error), (error) => error.message)
-      .run();
+  } catch (error) {
+    let errorMessage: string | undefined;
 
-    console.error(errorMessage);
-    process.exit();
+    if (error instanceof v.ValiError) {
+      errorMessage = `Invalid input: ${error.message}`;
+    } else if (error instanceof ResponseError) {
+      errorMessage = `Failed to fetch input: ${error.response.statusText}`;
+    } else if (error instanceof Error) {
+      errorMessage = `Error: ${error.message}`;
+    }
+    throw new Error(errorMessage ?? 'An unknown error occurred.');
   }
-}
-
-function getMessageOfValiError(error: v.ValiError) {
-  return error.issues.map((issue) => `[ValiError] ${issue.message}`).join('\n');
-}
-
-async function getMessageOfResponseError(error: ResponseError) {
-  const text = await error.response.text();
-  return `[ResponseError] ${text}`;
 }

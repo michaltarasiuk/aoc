@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "core-js": "^3.37.1",
-    "ts-pattern": "^5.1.1",
     "valibot": "^0.30.0"
   },
   "devDependencies": {

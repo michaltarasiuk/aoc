@@ -10,7 +10,7 @@ const digitRe2 = new RegExp(`.*(${digitRe.source})`);
 
 const result = sum(
   lns.map((ln) => {
-    const first = ln.match(digitRe)?.at(0) ?? raise('No digit.');
+    const first = ln.match(digitRe)?.at(0) ?? raise('No digit');
     const last = ln.match(digitRe2)?.at(1) ?? first;
 
     return Number(first + last);
@@ -27,7 +27,7 @@ const digitOrSpelledRe2 = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const result2 = sum(
   ...lns.map((ln) => {
-    const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit.');
+    const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
     const last = ln.match(digitOrSpelledRe2)?.at(1) ?? first;
 
     return Number(
