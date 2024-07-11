@@ -8,21 +8,25 @@ let result2 = 0;
 
 for (const n of ns) {
   const diff = 2020 - n;
+
   if (seen.has(diff)) {
     result = n * diff;
     break;
+  } else {
+    seen.add(n);
   }
-  seen.add(n);
 }
 
 outer: for (const n of ns) {
   for (const n2 of ns) {
     const diff = 2020 - n - n2;
+
     if (seen.has(diff)) {
       result2 = n * n2 * diff;
       break outer;
+    } else {
+      seen.add(n);
     }
-    seen.add(n);
   }
 }
 

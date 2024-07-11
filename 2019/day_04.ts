@@ -1,8 +1,9 @@
+import {extractUints} from 'lib/extract_ints';
 import {getInput} from 'lib/input';
 
 const input = await getInput({year: 2019, day: 4});
 
-const [start, end] = input.split('-').map(Number);
+const [start, end] = extractUints(input);
 const twoAdjacentDigitsRe = /(\d)\1/;
 
 let result = 0;
