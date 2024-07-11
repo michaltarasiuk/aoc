@@ -6,7 +6,9 @@ function findLastIndexOfFirstMarker(markerSize: number) {
   let lastIndex: number | undefined;
 
   for (let i = 0; i < input.length; i++) {
-    if (new Set(input.slice(i, i + markerSize)).size === markerSize) {
+    const marker = new Set(input.slice(i, i + markerSize));
+
+    if (marker.size === markerSize) {
       lastIndex = i + markerSize;
       break;
     }

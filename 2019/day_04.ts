@@ -10,10 +10,7 @@ let result = 0;
 for (let i = start; i <= end; i++) {
   const s = String(i);
 
-  if (
-    twoAdjacentDigitsRe.test(s) &&
-    [...s].every((c, i, arr) => i === 0 || c >= arr[i - 1])
-  ) {
+  if (twoAdjacentDigitsRe.test(s) && s === Array.from(s).toSorted().join('')) {
     result++;
   }
 }

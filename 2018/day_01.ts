@@ -13,9 +13,8 @@ function findFirstFrequencyReachesTwice(...ns: number[]) {
 
       if (frequencies.has(frequency)) {
         return frequency;
-      } else {
-        frequencies.add(frequency);
       }
+      frequencies.add(frequency);
     }
   }
 }
