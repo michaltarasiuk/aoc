@@ -6,11 +6,10 @@ const lns = await getInputLns({year: 2015, day: 14});
 const FULL_TIME = 2_503;
 
 function calcDistance(speed: number, speedTime: number, restTime: number) {
-  const timeChunk = speedTime + restTime;
-  const fullChunks = Math.floor(FULL_TIME / timeChunk);
-  const remainTime = FULL_TIME % timeChunk;
+  const intervals = Math.floor(FULL_TIME / (speedTime + restTime));
+  const leftover = FULL_TIME % (speedTime + restTime);
 
-  return speed * (fullChunks * speedTime + Math.min(speedTime, remainTime));
+  return speed * (intervals * speedTime + Math.min(speedTime, leftover));
 }
 
 const maxDistance = Math.max(

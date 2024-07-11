@@ -3,7 +3,7 @@ import {getInputLns} from 'lib/input';
 const lns = await getInputLns({year: 2017, day: 4});
 
 const result = lns.reduce((acc, ln) => {
-  const words = ln.split(' ');
+  const words = ln.split(/\s/);
   const uniqueWords = new Set(words);
 
   if (words.length === uniqueWords.size) {
@@ -13,7 +13,7 @@ const result = lns.reduce((acc, ln) => {
 }, 0);
 
 const result2 = lns.reduce((acc, ln) => {
-  const words = ln.split(' ');
+  const words = ln.split(/\s/);
   const uniqueWords = new Set(
     words.map(([...chars]) => chars.toSorted().join('')),
   );

@@ -30,21 +30,21 @@ function addGuest(name: string, score = 0) {
   }
 }
 
-function permuteGuestsNames() {
-  return permute(Object.keys(guests));
-}
-
-function calcTotalHappiness(names: string[]) {
-  return names.reduce((acc, name, i) => {
-    const [left, right] = adjacentAt(names, i);
-    return acc + guests[name][left] + guests[name][right];
+function calcHappiness(seats: string[]) {
+  return seats.reduce((acc, seat, i) => {
+    const [left, right] = adjacentAt(seats, i);
+    return acc + guests[seat][left] + guests[seat][right];
   }, 0);
 }
 
-const result = Math.max(...permuteGuestsNames().map(calcTotalHappiness));
+function calcMaxHappiness() {
+  return Math.max(...permute(Object.keys(guests)).map(calcHappiness));
+}
+
+const result = calcMaxHappiness();
 
 addGuest('Me');
-const result2 = Math.max(...permuteGuestsNames().map(calcTotalHappiness));
+const result2 = calcMaxHappiness();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
