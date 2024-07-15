@@ -1,4 +1,4 @@
-import {composeRegexes} from 'lib/compose_regexes';
+import {combineRe} from 'lib/combine_re';
 import {getInputLns} from 'lib/input';
 import {raise} from 'lib/raise';
 import {sum} from 'lib/sum';
@@ -22,7 +22,7 @@ const spelledDigitMap = Object.fromEntries(
   spelledDigitRe.source.split('|').map((spelled, i) => [spelled, i + 1]),
 );
 
-const digitOrSpelledRe = composeRegexes('', digitRe, spelledDigitRe);
+const digitOrSpelledRe = combineRe('', digitRe, spelledDigitRe);
 const digitOrSpelledRe2 = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const result2 = sum(
