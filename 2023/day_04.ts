@@ -11,20 +11,43 @@ declare global {
 
 const lns = await getInputLns({year: 2023, day: 4});
 
-const points = lns.reduce((acc, ln) => {
-  const [[, ...a], b] = ln.split('|').map(extractInts);
-  const matches = new Set(a).intersection(new Set(b));
+const cards = new Map(
+  lns.map((ln) => {
+    const [[id, ...a], b] = ln.split('|').map(extractInts);
+    return [id, new Set(a).intersection(new Set(b))] as const;
+  }),
+);
 
+let points = 0;
+for (const [, matches] of cards) {
   if (matches.size) {
-    acc += Math.pow(2, matches.size - 1);
+    points += Math.pow(2, matches.size - 1);
   }
-  return acc;
-}, 0);
+}
+
+function findTotalCards(ids = Array.from(cards.keys())) {
+  let count = 0;
+
+  for (const id of ids) {
+    const scratchcards = Array.from(
+      {length: cards.get(id)!.size},
+      (_, i) => id + i + 1,
+    );
+    count += findTotalCards(scratchcards);
+  }
+  return count + ids.length;
+}
+
+const totalCards = findTotalCards();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(points).toBe(26218);
+  });
+
+  test('part 2', () => {
+    expect(totalCards).toBe(9997537);
   });
 }
