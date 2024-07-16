@@ -9,9 +9,7 @@ function parseProgram(ln: string) {
   return {name, weight: Number(weight), children};
 }
 
-type Programs = typeof programs;
-
-function findRoot(programs: Programs) {
+function findRoot(programs: ReturnType<typeof parseProgram>[]) {
   const children = new Set(programs.flatMap((p) => p.children));
 
   for (const program of programs) {

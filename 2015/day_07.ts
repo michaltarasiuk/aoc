@@ -53,7 +53,7 @@ function calcSignal(dest: string): number {
 
 const result = calcSignal('a');
 
-cache = new Map<string, number>([['b', result]]);
+cache = new Map([['b', result]]);
 
 const result2 = calcSignal('a');
 
