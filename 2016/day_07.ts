@@ -2,10 +2,10 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2016, day: 7});
 
-function parseIPAddress(ln: string) {
+function parseIPAddress(ipAddress: string) {
   const squareBracketRe = /\[|\]/;
   const {supernets = [], hypernets = []} = Object.groupBy(
-    ln.split(squareBracketRe),
+    ipAddress.split(squareBracketRe),
     (_, i) => (i % 2 === 0 ? 'supernets' : 'hypernets'),
   );
 

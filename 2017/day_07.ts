@@ -2,9 +2,9 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2017, day: 7});
 
-function parseProgram(ln: string) {
+function parseProgram(program: string) {
   const programRe = /(\w+|\d+)/g;
-  const [name, weight, ...children] = ln.match(programRe)!;
+  const [name, weight, ...children] = program.match(programRe)!;
 
   return {name, weight: Number(weight), children};
 }

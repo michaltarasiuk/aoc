@@ -4,9 +4,9 @@ const lns = await getInputLns({year: 2017, day: 8});
 
 type Registers = Record<string, number>;
 
-function parseInstruction(ln: string) {
+function parseInstruction(instruction: string) {
   const instructionRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
-  const [, reg, op, val, cond] = instructionRe.exec(ln)!;
+  const [, reg, op, val, cond] = instructionRe.exec(instruction)!;
 
   return {reg, op, val: Number(val), cond};
 }
