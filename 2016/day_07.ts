@@ -14,7 +14,7 @@ function parseIPAddress(ipAddress: string) {
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 
-const result = lns.reduce((acc, ln) => {
+const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
   const {supernets, hypernets} = parseIPAddress(ln);
 
   return acc + +(abbaRe.test(supernets) && !abbaRe.test(hypernets));
@@ -22,7 +22,7 @@ const result = lns.reduce((acc, ln) => {
 
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
 
-const result2 = lns.reduce((acc, ln) => {
+const sslSupportedIpsCount = lns.reduce((acc, ln) => {
   const {supernets, hypernets} = parseIPAddress(ln);
 
   return acc + +abaRe.test(`${supernets}, ${hypernets}`);
@@ -32,10 +32,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(110);
+    expect(tlsSupportedIpsCount).toBe(110);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(242);
+    expect(sslSupportedIpsCount).toBe(242);
   });
 }

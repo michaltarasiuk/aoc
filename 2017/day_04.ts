@@ -2,7 +2,7 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2017, day: 4});
 
-const result = lns.reduce((acc, ln) => {
+const validPassphrasesCount = lns.reduce((acc, ln) => {
   const words = ln.split(/\s/);
   const uniqueWords = new Set(words);
 
@@ -12,7 +12,7 @@ const result = lns.reduce((acc, ln) => {
   return acc;
 }, 0);
 
-const result2 = lns.reduce((acc, ln) => {
+const validPassphrasesCount2 = lns.reduce((acc, ln) => {
   const words = ln.split(/\s/);
   const uniqueWords = new Set(
     words.map(([...chars]) => chars.toSorted().join('')),
@@ -28,10 +28,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(455);
+    expect(validPassphrasesCount).toBe(455);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(186);
+    expect(validPassphrasesCount2).toBe(186);
   });
 }

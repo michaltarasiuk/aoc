@@ -15,12 +15,12 @@ for (const ln of lns) {
   if (counts.has(3)) threes++;
 }
 
-const result = twos * threes;
+const checksum = twos * threes;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(5880);
+    expect(checksum).toBe(5880);
   });
 }

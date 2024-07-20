@@ -30,13 +30,13 @@ function countLights(
   return sum(lights.flat());
 }
 
-const result = countLights({
+const litLightsCount = countLights({
   'turn on': () => 1,
   'turn off': () => 0,
   toggle: (val) => +!val,
 });
 
-const result2 = countLights({
+const totalBrightness = countLights({
   'turn on': (val) => val + 1,
   'turn off': (val) => Math.max(val - 1, 0),
   toggle: (val) => val + 2,
@@ -46,10 +46,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(400410);
+    expect(litLightsCount).toBe(400410);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(15343601);
+    expect(totalBrightness).toBe(15343601);
   });
 }

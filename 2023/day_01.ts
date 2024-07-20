@@ -8,7 +8,7 @@ const lns = await getInputLns({year: 2023, day: 1});
 const digitRe = /\d/;
 const digitRe2 = new RegExp(`.*(${digitRe.source})`);
 
-const result = sum(
+const calibrationValuesSum = sum(
   lns.map((ln) => {
     const first = ln.match(digitRe)?.at(0) ?? raise('No digit');
     const last = ln.match(digitRe2)?.at(1) ?? first;
@@ -25,7 +25,7 @@ const spelledDigitMap = Object.fromEntries(
 const digitOrSpelledRe = combineRe('', digitRe, spelledDigitRe);
 const digitOrSpelledRe2 = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
-const result2 = sum(
+const calibrationValuesSum2 = sum(
   ...lns.map((ln) => {
     const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
     const last = ln.match(digitOrSpelledRe2)?.at(1) ?? first;
@@ -42,10 +42,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(55621);
+    expect(calibrationValuesSum).toBe(55621);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(53592);
+    expect(calibrationValuesSum2).toBe(53592);
   });
 }

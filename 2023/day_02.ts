@@ -26,7 +26,7 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   );
 }
 
-const result = lns.reduce((acc, game) => {
+const gamesIdsSum = lns.reduce((acc, game) => {
   const [[id], ...cubes] = parseGame(game);
   const {red, green, blue} = collectMaxCubeSizes(cubes);
 
@@ -36,7 +36,7 @@ const result = lns.reduce((acc, game) => {
   return acc;
 }, 0);
 
-const result2 = lns.reduce((acc, game) => {
+const setsPowerSum = lns.reduce((acc, game) => {
   const [, ...cubes] = parseGame(game);
   const {red, green, blue} = collectMaxCubeSizes(cubes);
 
@@ -47,10 +47,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(2545);
+    expect(gamesIdsSum).toBe(2545);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(78111);
+    expect(setsPowerSum).toBe(78111);
   });
 }

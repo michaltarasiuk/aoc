@@ -51,20 +51,20 @@ function calcSignal(dest: string): number {
   }
 }
 
-const result = calcSignal('a');
+const wireASignal = calcSignal('a');
 
-cache = new Map([['b', result]]);
+cache = new Map([['b', wireASignal]]);
 
-const result2 = calcSignal('a');
+const finalWireASignal = calcSignal('a');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(46065);
+    expect(wireASignal).toBe(46065);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(14134);
+    expect(finalWireASignal).toBe(14134);
   });
 }

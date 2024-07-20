@@ -30,17 +30,17 @@ const costs = permute(costMapKeys).reduce<number[]>((acc, cities) => {
   return acc.concat(cost);
 }, []);
 
-const result = Math.min(...costs);
-const result2 = Math.max(...costs);
+const minCost = Math.min(...costs);
+const maxCost = Math.max(...costs);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(251);
+    expect(minCost).toBe(251);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(898);
+    expect(maxCost).toBe(898);
   });
 }

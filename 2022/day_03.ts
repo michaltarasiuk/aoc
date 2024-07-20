@@ -29,14 +29,14 @@ function calcPriority(char: string) {
   throw new Error(`Invalid char: ${char}`);
 }
 
-const result = lns.reduce((acc, rucksack) => {
+const prioritiesSum = lns.reduce((acc, rucksack) => {
   const [a, b] = splitRucksack(rucksack);
   const [char] = new Set(a).intersection(new Set(b));
 
   return acc + calcPriority(char);
 }, 0);
 
-const result2 = chunkEvery(lns, 3).reduce((acc, [a, b, c]) => {
+const prioritiesSum2 = chunkEvery(lns, 3).reduce((acc, [a, b, c]) => {
   const [char] = new Set(a).intersection(new Set(b)).intersection(new Set(c));
   return acc + calcPriority(char);
 }, 0);
@@ -45,10 +45,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(8153);
+    expect(prioritiesSum).toBe(8153);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(2342);
+    expect(prioritiesSum2).toBe(2342);
   });
 }

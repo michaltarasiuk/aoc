@@ -28,7 +28,7 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
   return ((codePoint - 97 + shift) % 26) + 97;
 }
 
-const result = sum(
+const realRoomSectorIDsSum = sum(
   ...lns.map((ln) => {
     const {name, id, checksum} = parseRoom(ln);
     return checksum === calcChecksum(...name) ? id : 0;
@@ -36,7 +36,7 @@ const result = sum(
 );
 
 const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
-let result2: number | undefined;
+let northPoleSectorID: number | undefined;
 
 for (const ln of lns) {
   const {name, id} = parseRoom(ln);
@@ -47,7 +47,7 @@ for (const ln of lns) {
   );
 
   if (decoded === NORTH_POLE_OBJECT_STORAGE) {
-    result2 = id;
+    northPoleSectorID = id;
     break;
   }
 }
@@ -56,10 +56,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(409147);
+    expect(realRoomSectorIDsSum).toBe(409147);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(991);
+    expect(northPoleSectorID).toBe(991);
   });
 }

@@ -21,17 +21,17 @@ function isNiceString2(string: string) {
   return hasPairOfTwoLetters && hasRepeatingLetter;
 }
 
-const result = sum(...lns.map(isNiceString));
-const result2 = sum(...lns.map(isNiceString2));
+const niceStringsCount = sum(...lns.map(isNiceString));
+const niceStringsCount2 = sum(...lns.map(isNiceString2));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(238);
+    expect(niceStringsCount).toBe(238);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(69);
+    expect(niceStringsCount2).toBe(69);
   });
 }

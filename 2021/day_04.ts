@@ -38,13 +38,13 @@ class Board {
 }
 
 const boards = inits.map((init) => new Board(init));
-let result: number | undefined;
+let score: number | undefined;
 
 outer: for (const int of extractInts(drawn)) {
   for (const board of boards) {
     board.draw(int);
     if (board.bingo()) {
-      result = sum(...board.unmarked()) * int;
+      score = sum(...board.unmarked()) * int;
       break outer;
     }
   }
@@ -54,6 +54,6 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(23177);
+    expect(score).toBe(23177);
   });
 }

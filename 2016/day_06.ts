@@ -14,17 +14,17 @@ function getErrorCorrectedMessage(compareFn: (a: number, b: number) => number) {
   }, '');
 }
 
-const result = getErrorCorrectedMessage((a, b) => b - a);
-const result2 = getErrorCorrectedMessage((a, b) => a - b);
+const errorCorrectedMessage = getErrorCorrectedMessage((a, b) => b - a);
+const orginalErrorCorrectedMessage = getErrorCorrectedMessage((a, b) => a - b);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe('cyxeoccr');
+    expect(errorCorrectedMessage).toBe('cyxeoccr');
   });
 
   test('part 2', () => {
-    expect(result2).toBe('batwpask');
+    expect(orginalErrorCorrectedMessage).toBe('batwpask');
   });
 }

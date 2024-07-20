@@ -17,24 +17,21 @@ function waitUntilStartsWith(
   return n;
 }
 
-const result = waitUntilStartsWith({
+const coin = waitUntilStartsWith({
   string,
   searchString: '0'.repeat(5),
 });
 
-const result2 = waitUntilStartsWith(
-  {string, searchString: '0'.repeat(6)},
-  result,
-);
+const coin2 = waitUntilStartsWith({string, searchString: '0'.repeat(6)}, coin);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(346386);
+    expect(coin).toBe(346386);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(9958218);
+    expect(coin2).toBe(9958218);
   });
 }

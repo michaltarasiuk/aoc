@@ -29,7 +29,7 @@ function roundOutcome(them: number, me: number) {
   throw new Error('Invalid round outcome');
 }
 
-const result = lns.reduce((acc, ln) => {
+const score = lns.reduce((acc, ln) => {
   const [them, me] = parseRound(ln);
   return acc + roundOutcome(them, me) + me;
 }, 0);
@@ -38,6 +38,6 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(12855);
+    expect(score).toBe(12855);
   });
 }

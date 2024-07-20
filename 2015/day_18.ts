@@ -18,13 +18,13 @@ function getNeighbors(lights: Lights, {x, y}: {x: number; y: number}) {
   );
 }
 
-function countLightsOn(lights: Lights) {
+function calcLightsOn(lights: Lights) {
   const lightsOnRe = new RegExp(LIGHT_ON, 'g');
   return Array.from(lights.join().matchAll(lightsOnRe)).length;
 }
 
 function switchLight(light: string, neighbors: Lights) {
-  const count = countLightsOn(neighbors);
+  const count = calcLightsOn(neighbors);
   switch (light) {
     case LIGHT_ON:
       return count === 2 || count === 3 ? LIGHT_ON : LIGHT_OFF;
@@ -47,12 +47,12 @@ for (let i = 0; i < 100; i++) {
   lights = animate(lights);
 }
 
-const result = countLightsOn(lights);
+const lightsOnCount = calcLightsOn(lights);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(821);
+    expect(lightsOnCount).toBe(821);
   });
 }

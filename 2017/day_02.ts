@@ -6,12 +6,12 @@ function parseRow(row: string) {
   return row.split('\t').map(Number);
 }
 
-const result = lns.reduce((acc, ln) => {
+const spreadsheetChecksum = lns.reduce((acc, ln) => {
   const ns = parseRow(ln);
   return acc + Math.max(...ns) - Math.min(...ns);
 }, 0);
 
-const result2 = lns.reduce((acc, ln) => {
+const rowsSum = lns.reduce((acc, ln) => {
   const ns = parseRow(ln);
 
   for (const n of ns) {
@@ -28,10 +28,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(44216);
+    expect(spreadsheetChecksum).toBe(44216);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(320);
+    expect(rowsSum).toBe(320);
   });
 }

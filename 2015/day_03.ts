@@ -20,14 +20,14 @@ function createPos() {
   };
 }
 
-function getResult() {
+function getVisitedHousesCount() {
   const santa = createPos();
   const houses = uniq(Array.from(input, (char) => santa.set(char).toString()));
 
   return houses.length;
 }
 
-function getResult2() {
+function getVisitedHousesCount2() {
   const santas = [createPos(), createPos()];
   const houses = uniq(
     Array.from(input, (char, i) => santas[i % 2].set(char).toString()),
@@ -36,17 +36,17 @@ function getResult2() {
   return houses.length;
 }
 
-const result = getResult();
-const result2 = getResult2();
+const visitedHousesCount = getVisitedHousesCount();
+const visitedHousesCount2 = getVisitedHousesCount2();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(2565);
+    expect(visitedHousesCount).toBe(2565);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(2639);
+    expect(visitedHousesCount2).toBe(2639);
   });
 }

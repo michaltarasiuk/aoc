@@ -29,19 +29,19 @@ function move(x: number, y: number, direction: string) {
 const START_POINT = [1, 1];
 
 let [x, y] = START_POINT;
-let result = '';
+let bathroomCode = '';
 
 for (const ln of lns) {
   for (const char of ln) {
     [x, y] = move(x, y, char);
   }
-  result += KEYPAD[y][x];
+  bathroomCode += KEYPAD[y][x];
 }
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe('19636');
+    expect(bathroomCode).toBe('19636');
   });
 }

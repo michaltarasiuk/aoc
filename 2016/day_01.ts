@@ -39,12 +39,12 @@ for (const instruction of instructions) {
   Coordinates.set(turn, steps);
 }
 
-const result = Coordinates.calcDistance();
+const distance = Coordinates.calcDistance();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(273);
+    expect(distance).toBe(273);
   });
 }

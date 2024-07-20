@@ -3,12 +3,12 @@ import {sum} from 'lib/sum';
 
 const ns = await getInputInts({year: 2019, day: 1});
 
-const result = sum(...ns.map((n) => Math.floor(n / 3) - 2));
+const fuelRequirementsSum = sum(...ns.map((n) => Math.floor(n / 3) - 2));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(3273715);
+    expect(fuelRequirementsSum).toBe(3273715);
   });
 }

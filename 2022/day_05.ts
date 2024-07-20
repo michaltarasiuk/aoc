@@ -45,17 +45,17 @@ const finalStacks2 = instructions.reduce((acc, instruction) => {
   return acc;
 }, parseStacks(stacks));
 
-const result = stacksToString(finalStacks);
-const result2 = stacksToString(finalStacks2);
+const serializedStacks = stacksToString(finalStacks);
+const serializedStacks2 = stacksToString(finalStacks2);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe('QGTHFZBHV');
+    expect(serializedStacks).toBe('QGTHFZBHV');
   });
 
   test('part 2', () => {
-    expect(result2).toBe('MGDMPSZTM');
+    expect(serializedStacks2).toBe('MGDMPSZTM');
   });
 }

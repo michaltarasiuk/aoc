@@ -41,19 +41,19 @@ function calcMaxHappiness() {
   return Math.max(...permute(Object.keys(guests)).map(calcHappiness));
 }
 
-const result = calcMaxHappiness();
+const maxHappiness = calcMaxHappiness();
 
 addGuest('Me');
-const result2 = calcMaxHappiness();
+const maxHappiness2 = calcMaxHappiness();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(664);
+    expect(maxHappiness).toBe(664);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(640);
+    expect(maxHappiness2).toBe(640);
   });
 }

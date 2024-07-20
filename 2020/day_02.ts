@@ -9,7 +9,7 @@ function parsePassword(s: string) {
   return {min: Number(min), max: Number(max), char, password};
 }
 
-const result = lns.reduce((acc, ln) => {
+const validPasswordsCount = lns.reduce((acc, ln) => {
   const {min, max, char, password} = parsePassword(ln);
   const count = password.split(char).length - 1;
 
@@ -19,7 +19,7 @@ const result = lns.reduce((acc, ln) => {
   return acc;
 }, 0);
 
-const result2 = lns.reduce((acc, ln) => {
+const validPasswordsCount2 = lns.reduce((acc, ln) => {
   const {min, max, char, password} = parsePassword(ln);
   const minChar = password[min - 1];
   const maxChar = password[max - 1];
@@ -34,10 +34,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(445);
+    expect(validPasswordsCount).toBe(445);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(491);
+    expect(validPasswordsCount2).toBe(491);
   });
 }
