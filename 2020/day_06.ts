@@ -1,15 +1,33 @@
+import 'core-js/proposals/set-methods';
+
 import {getInputParagraphs} from 'lib/input';
 import {sum} from 'lib/sum';
 import {uniq} from 'lib/uniq';
+
+declare global {
+  interface Set<T> {
+    intersection(other: Set<T>): Set<T>;
+  }
+}
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 
 const questionRe = /[a-z]/g;
 
+const questions = paragraphs.map((paragraph) =>
+  paragraph.map((line): string[] => line.match(questionRe) ?? []),
+);
+
 const questionsCount = sum(
-  ...paragraphs.map((paragraph) => {
-    const questions = paragraph.join().match(questionRe) ?? [];
-    return uniq(questions).length;
+  ...questions.map((group) => uniq(group.flat()).length),
+);
+
+const questionsCount2 = sum(
+  ...questions.flatMap((group) => {
+    const common = group.reduce((acc, questions) =>
+      Array.from(new Set(questions).intersection(new Set(acc))),
+    );
+    return common.length;
   }),
 );
 
@@ -18,5 +36,9 @@ if (import.meta.vitest) {
 
   test('part 1', () => {
     expect(questionsCount).toBe(6310);
+  });
+
+  test('part 2', () => {
+    expect(questionsCount2).toBe(3193);
   });
 }
