@@ -11,11 +11,38 @@ const passports = paragraphs.map((paragraph) =>
   ),
 );
 
-const REQUIRED_FIELDS = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
+const REQUIRED_FIELDS = {
+  byr: /^(19[2-9]\d|200[0-2])$/,
+  iyr: /^(201\d|2020)$/,
+  eyr: /^(202\d|2030)$/,
+  hgt: /^((1[5-8]\d|19[0-3])cm|(59|6\d|7[0-6])in)$/,
+  hcl: /^#[0-9a-f]{6}$/,
+  ecl: /^(amb|blu|brn|gry|grn|hzl|oth)$/,
+  pid: /^\d{9}$/,
+};
 
 const validPassportsCount = passports.reduce((acc, passport) => {
   const fields = passport.map(([key]) => key);
-  return acc + +REQUIRED_FIELDS.every((field) => fields.includes(field));
+  const hasRequiredFields = Object.keys(REQUIRED_FIELDS).every((key) =>
+    fields.includes(key),
+  );
+
+  if (hasRequiredFields) {
+    acc++;
+  }
+  return acc;
+}, 0);
+
+const validPassportsCount2 = passports.reduce((acc, passport) => {
+  const parsedPassport = Object.fromEntries(passport);
+  const hasRequiredFields = Object.entries(REQUIRED_FIELDS).every(
+    ([key, pattern]) => pattern.test(parsedPassport[key]),
+  );
+
+  if (hasRequiredFields) {
+    acc++;
+  }
+  return acc;
 }, 0);
 
 if (import.meta.vitest) {
@@ -23,5 +50,9 @@ if (import.meta.vitest) {
 
   test('part 1', () => {
     expect(validPassportsCount).toBe(208);
+  });
+
+  test('part 2', () => {
+    expect(validPassportsCount2).toBe(167);
   });
 }

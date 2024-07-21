@@ -17,7 +17,10 @@ const abbaRe = /(\w)((?!\1)\w)\2\1/;
 const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
   const {supernets, hypernets} = parseIPAddress(ln);
 
-  return acc + +(abbaRe.test(supernets) && !abbaRe.test(hypernets));
+  if (abbaRe.test(supernets) && !abbaRe.test(hypernets)) {
+    acc++;
+  }
+  return acc;
 }, 0);
 
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
@@ -25,7 +28,10 @@ const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
 const sslSupportedIpsCount = lns.reduce((acc, ln) => {
   const {supernets, hypernets} = parseIPAddress(ln);
 
-  return acc + +abaRe.test(`${supernets}, ${hypernets}`);
+  if (abaRe.test(`${supernets}, ${hypernets}`)) {
+    acc++;
+  }
+  return acc;
 }, 0);
 
 if (import.meta.vitest) {
