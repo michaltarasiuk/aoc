@@ -5,9 +5,11 @@ const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 const pairRe = /(\w+):([^\s]+)/g;
 
 const passports = paragraphs.map((paragraph) =>
-  Array.from(
-    paragraph.join(' ').matchAll(pairRe),
-    ([, key, value]) => [key, value] as const,
+  Object.fromEntries(
+    Array.from(
+      paragraph.join(' ').matchAll(pairRe),
+      ([, key, value]) => [key, value] as const,
+    ),
   ),
 );
 
@@ -22,27 +24,19 @@ const REQUIRED_FIELDS = {
 };
 
 const validPassportsCount = passports.reduce((acc, passport) => {
-  const fields = passport.map(([key]) => key);
   const hasRequiredFields = Object.keys(REQUIRED_FIELDS).every((key) =>
-    fields.includes(key),
+    Object.hasOwn(passport, key),
   );
 
-  if (hasRequiredFields) {
-    acc++;
-  }
-  return acc;
+  return acc + Number(hasRequiredFields);
 }, 0);
 
 const validPassportsCount2 = passports.reduce((acc, passport) => {
-  const parsedPassport = Object.fromEntries(passport);
   const hasRequiredFields = Object.entries(REQUIRED_FIELDS).every(
-    ([key, pattern]) => pattern.test(parsedPassport[key]),
+    ([key, pattern]) => pattern.test(passport[key]),
   );
 
-  if (hasRequiredFields) {
-    acc++;
-  }
-  return acc;
+  return acc + Number(hasRequiredFields);
 }, 0);
 
 if (import.meta.vitest) {
