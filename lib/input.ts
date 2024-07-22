@@ -18,14 +18,15 @@ export async function getInputCols(...params: Parameters<typeof getInputLns>) {
   const cols: string[] = [];
 
   for (let i = 0, length = lns[0].length; i < length; i++) {
-    cols.push(lns.map((l) => l.at(i)).join(''));
+    const col = lns.map((l) => l.at(i)).join('');
+    cols.push(col);
   }
   return cols;
 }
 
 export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
   const lns = await getInputLns(...params);
-  return lns.map((ln) => ln.split(''));
+  return lns.map(([...chars]) => chars);
 }
 
 export async function getInputParagraphs(
@@ -90,15 +91,13 @@ async function fetchInput(input: {year: number; day: number}) {
 
     return await response.text();
   } catch (error) {
-    let errorMessage: string | undefined;
+    let errorMessage = "Couldn't fetch the input.";
 
-    if (error instanceof v.ValiError) {
-      errorMessage = `Invalid input: ${error.message}`;
-    } else if (error instanceof ResponseError) {
-      errorMessage = `Failed to fetch input: ${error.response.statusText}`;
+    if (error instanceof ResponseError) {
+      errorMessage = await error.response.text();
     } else if (error instanceof Error) {
-      errorMessage = `Error: ${error.message}`;
+      errorMessage = error.message;
     }
-    throw new Error(errorMessage ?? 'An unknown error occurred.');
+    throw new Error(errorMessage);
   }
 }
