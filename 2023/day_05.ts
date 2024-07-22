@@ -6,7 +6,7 @@ const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 const maps = paragraphs.map(([, ...maps]) => maps.map(extractInts));
 
 function findLocation(value: number, level = 0) {
-  if (!(level in maps)) {
+  if (level === maps.length) {
     return value;
   }
 
