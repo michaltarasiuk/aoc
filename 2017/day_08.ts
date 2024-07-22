@@ -18,27 +18,20 @@ function evalCondition(registers: Registers, cond: string) {
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
 
-function instruct(
-  {...registers}: Registers,
-  {reg, op, val}: {reg: string; op: string; val: number},
-) {
-  registers[reg] ??= 0;
-  registers[reg] += op === 'inc' ? val : -val;
-  return registers;
-}
-
 function findMaxRegister(registers: Registers) {
   return Math.max(...Object.values(registers));
 }
 
-let registers: Registers = {};
+const registers: Registers = {};
 let maxHeldRegister = -Infinity;
 
 for (const ln of lns) {
   const {reg, op, val, cond} = parseInstruction(ln);
 
   if (evalCondition(registers, cond)) {
-    registers = instruct(registers, {reg, op, val});
+    registers[reg] ??= 0;
+    registers[reg] += op === 'inc' ? val : -val;
+
     maxHeldRegister = Math.max(maxHeldRegister, registers[reg]);
   }
 }
