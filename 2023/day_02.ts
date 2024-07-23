@@ -19,6 +19,7 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   return cubes.reduce(
     (acc, [count, cube]) => {
       assertKeyIn(acc, cube);
+
       acc[cube] = Math.max(acc[cube], count);
       return acc;
     },

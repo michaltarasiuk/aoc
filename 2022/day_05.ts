@@ -3,47 +3,45 @@ import {getInputParagraphs} from 'lib/input';
 
 const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
 
-const EMPTY_CRATE = ' ';
-
-function emptyCrateToUndefined(crate: string) {
-  return crate === EMPTY_CRATE ? undefined : crate;
+function parseCrate(crate: string) {
+  const emptyCrateRe = /\s/;
+  return emptyCrateRe.test(crate) ? undefined : crate;
 }
 
-function cratesByIndex(stacks: string[], i: number) {
-  return stacks.flatMap(
-    (crates) => emptyCrateToUndefined(crates.at(i) || EMPTY_CRATE) ?? [],
-  );
+function parseStacks([ids, ...supplies]: string[]) {
+  return extractInts(ids).reduce<Record<string, string[]>>((acc, id) => {
+    const i = ids.indexOf(String(id));
+
+    acc[id] = supplies.flatMap((crates) => parseCrate(crates[i]) ?? []);
+    return acc;
+  }, {});
 }
 
-function parseStacks([...stacks]: string[]) {
-  const ids = stacks.pop()!;
-  const parsedStacks: Record<string, string[]> = {};
-
-  for (const id of extractInts(ids)) {
-    parsedStacks[id] = cratesByIndex(stacks, ids.indexOf(String(id)));
-  }
-  return parsedStacks;
-}
-
-function stacksToString(stacks: ReturnType<typeof parseStacks>) {
+function stacksToString(stacks: Record<string, string[]>) {
   return Object.values(stacks)
-    .map(([crate]) => crate)
+    .flatMap((crates) => crates.at(-1) ?? [])
     .join('');
 }
 
-const finalStacks = instructions.reduce((acc, instruction) => {
-  const [count, from, to] = extractInts(instruction);
+function rearrangStacks(
+  stacks: string[],
+  mapfn = (crates: string[]) => crates,
+) {
+  return instructions.reduce((acc, instruction) => {
+    const [count, from, to] = extractInts(instruction);
+    const crates = acc[from].splice(-count);
 
-  acc[to].unshift(...acc[from].splice(0, count).toReversed());
-  return acc;
-}, parseStacks(stacks));
+    acc[to].push(...mapfn(crates));
+    return acc;
+  }, parseStacks(stacks));
+}
 
-const finalStacks2 = instructions.reduce((acc, instruction) => {
-  const [count, from, to] = extractInts(instruction);
+const reversedStacks = stacks.toReversed();
 
-  acc[to].unshift(...acc[from].splice(0, count));
-  return acc;
-}, parseStacks(stacks));
+const finalStacks = rearrangStacks(reversedStacks, (crates) =>
+  crates.toReversed(),
+);
+const finalStacks2 = rearrangStacks(reversedStacks);
 
 const serializedStacks = stacksToString(finalStacks);
 const serializedStacks2 = stacksToString(finalStacks2);
