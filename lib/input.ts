@@ -1,4 +1,4 @@
-import * as v from 'valibot';
+import {z} from 'zod';
 
 import {env} from '../env';
 import {extractInts} from './extract_ints';
@@ -58,22 +58,22 @@ class ResponseError extends Error {
   }
 }
 
-const INPUT_SCHEMA = v.object({
-  year: v.number([
-    v.integer('The year must be an integer.'),
-    v.minValue(2015, 'The year must be at least 2015.'),
-    v.maxValue(2023, 'The year must not exceed 2023.'),
-  ]),
-  day: v.number([
-    v.integer('The day must be an integer.'),
-    v.minValue(1, 'The day must be at least 1.'),
-    v.maxValue(25, 'The day must not exceed 25.'),
-  ]),
+const INPUT_SCHEMA = z.object({
+  year: z
+    .number()
+    .int('The day must be an integer.')
+    .min(2015, 'The year must be at least 2015.')
+    .max(2023, 'The year must not exceed 2023.'),
+  day: z
+    .number()
+    .int('The day must be an integer.')
+    .min(1, 'The day must be at least 1.')
+    .max(25, 'The day must not exceed 25.'),
 });
 
 async function fetchInput(input: {year: number; day: number}) {
   try {
-    v.parse(INPUT_SCHEMA, input);
+    INPUT_SCHEMA.parse(input);
     const {year, day} = input;
 
     const response = await fetch(

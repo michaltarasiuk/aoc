@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "core-js": "^3.37.1",
-    "valibot": "^0.30.0"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
