@@ -1,13 +1,5 @@
-import 'core-js/proposals/set-methods';
-
 import {chunkEvery} from 'lib/chunk_every';
 import {getInputLns} from 'lib/input';
-
-declare global {
-  interface Set<T> {
-    intersection(other: Set<T>): Set<T>;
-  }
-}
 
 const lns = await getInputLns({year: 2022, day: 3});
 

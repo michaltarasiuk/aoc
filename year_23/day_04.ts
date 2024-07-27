@@ -1,13 +1,5 @@
-import 'core-js/proposals/set-methods';
-
 import {extractInts} from 'lib/extract_ints';
 import {getInputLns} from 'lib/input';
-
-declare global {
-  interface Set<T> {
-    intersection(other: Set<T>): Set<T>;
-  }
-}
 
 const lns = await getInputLns({year: 2023, day: 4});
 

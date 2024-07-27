@@ -1,14 +1,6 @@
-import 'core-js/proposals/set-methods';
-
 import {getInputParagraphs} from 'lib/input';
 import {sum} from 'lib/sum';
 import {uniq} from 'lib/uniq';
-
-declare global {
-  interface Set<T> {
-    intersection(other: Set<T>): Set<T>;
-  }
-}
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 
