@@ -2,6 +2,7 @@ import {z} from 'zod';
 
 import {env} from '../env';
 import {extractInts} from './extract_ints';
+import {getCols} from './get_cols';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);
@@ -15,13 +16,7 @@ export async function getInputLns(...params: Parameters<typeof getInput>) {
 
 export async function getInputCols(...params: Parameters<typeof getInputLns>) {
   const lns = await getInputLns(...params);
-  const cols: string[] = [];
-
-  for (let i = 0, length = lns[0].length; i < length; i++) {
-    const col = lns.map((l) => l.at(i)).join('');
-    cols.push(col);
-  }
-  return cols;
+  return getCols(lns.map(([...chars]) => chars));
 }
 
 export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
@@ -61,14 +56,14 @@ class ResponseError extends Error {
 const INPUT_SCHEMA = z.object({
   year: z
     .number()
-    .int('The day must be an integer.')
-    .min(2015, 'The year must be at least 2015.')
-    .max(2023, 'The year must not exceed 2023.'),
+    .int('The day must be an integer')
+    .min(2015, 'The year must be at least 2015')
+    .max(2023, 'The year must not exceed 2023'),
   day: z
     .number()
-    .int('The day must be an integer.')
-    .min(1, 'The day must be at least 1.')
-    .max(25, 'The day must not exceed 25.'),
+    .int('The day must be an integer')
+    .min(1, 'The day must be at least 1')
+    .max(25, 'The day must not exceed 25'),
 });
 
 async function fetchInput(input: {year: number; day: number}) {
@@ -91,10 +86,10 @@ async function fetchInput(input: {year: number; day: number}) {
 
     return await response.text();
   } catch (error) {
-    let errorMessage = "Couldn't fetch the input.";
+    let errorMessage = 'Failed to fetch input';
 
     if (error instanceof ResponseError) {
-      errorMessage = await error.response.text();
+      errorMessage = error.response.statusText;
     } else if (error instanceof Error) {
       errorMessage = error.message;
     }

@@ -14,21 +14,27 @@ function parseDistance(distance: string) {
 const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
   const {a, b, cost} = parseDistance(ln);
 
-  (acc[a] ??= {}), (acc[a][b] = cost);
-  (acc[b] ??= {}), (acc[b][a] = cost);
+  acc[a] ??= {};
+  acc[b] ??= {};
+  acc[a][b] = cost;
+  acc[b][a] = cost;
   return acc;
 }, {});
 const costMapKeys = Object.keys(costMap);
 
-const costs = permute(costMapKeys).reduce<number[]>((acc, cities) => {
-  const cost = sum(
+function calcRouteCost(cities: string[]) {
+  return sum(
     cities.map((city, i) => {
       const dest = cities[i + 1];
       return costMap[city][dest] ?? 0;
     }),
   );
-  return acc.concat(cost);
-}, []);
+}
+
+const costs = permute(costMapKeys).reduce<number[]>(
+  (acc, cities) => acc.concat(calcRouteCost(cities)),
+  [],
+);
 
 const minCost = Math.min(...costs);
 const maxCost = Math.max(...costs);

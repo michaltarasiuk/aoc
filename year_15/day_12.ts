@@ -6,7 +6,9 @@ const input = await getInput({year: 2015, day: 12});
 
 const ns: number[] = [];
 const parsed = JSON.parse(input, (_, val: unknown) => {
-  if (typeof val === 'number') ns.push(val);
+  if (typeof val === 'number') {
+    ns.push(val);
+  }
   return val;
 });
 

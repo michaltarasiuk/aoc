@@ -9,13 +9,13 @@ function parseIPAddress(ipAddress: string) {
     (_, i) => (i % 2 === 0 ? 'supernets' : 'hypernets'),
   );
 
-  return {supernets: String(supernets), hypernets: String(hypernets)};
+  return [String(supernets), String(hypernets)] as const;
 }
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 
 const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
-  const {supernets, hypernets} = parseIPAddress(ln);
+  const [supernets, hypernets] = parseIPAddress(ln);
 
   if (abbaRe.test(supernets) && !abbaRe.test(hypernets)) {
     acc++;
@@ -26,9 +26,9 @@ const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
 
 const sslSupportedIpsCount = lns.reduce((acc, ln) => {
-  const {supernets, hypernets} = parseIPAddress(ln);
+  const parsedIPAddress = parseIPAddress(ln);
 
-  if (abaRe.test(`${supernets}, ${hypernets}`)) {
+  if (abaRe.test(parsedIPAddress.join(', '))) {
     acc++;
   }
   return acc;

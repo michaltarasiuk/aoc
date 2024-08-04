@@ -1,4 +1,5 @@
 import {getInputInts} from 'lib/input';
+import {isDefined} from 'lib/is_defined';
 
 const ns = await getInputInts({year: 2020, day: 1});
 
@@ -17,10 +18,10 @@ function findTwoNumbers(ns: number[], target: number) {
 }
 
 function findThreeNumbers(ns: number[], target: number) {
-  for (let i = 0; i < ns.length; i++) {
+  for (const i of ns.keys()) {
     const [a, b] = findTwoNumbers(ns.slice(i + 1), target - ns[i]);
 
-    if (a && b) {
+    if (isDefined(a) && isDefined(b)) {
       return [ns[i], a, b];
     }
   }

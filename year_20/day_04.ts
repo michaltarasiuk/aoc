@@ -1,3 +1,4 @@
+import {assertHasOwn} from 'lib/assert_has_own';
 import {getInputParagraphs} from 'lib/input';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
@@ -13,7 +14,7 @@ const passports = paragraphs.map((paragraph) =>
   ),
 );
 
-const REQUIRED_FIELDS = {
+const PASSPORT_FIELDS = {
   byr: /^(19[2-9]\d|200[0-2])$/,
   iyr: /^(201\d|2020)$/,
   eyr: /^(202\d|2030)$/,
@@ -23,21 +24,24 @@ const REQUIRED_FIELDS = {
   pid: /^\d{9}$/,
 };
 
-const validPassportsCount = passports.reduce((acc, passport) => {
-  const hasRequiredFields = Object.keys(REQUIRED_FIELDS).every((key) =>
-    Object.hasOwn(passport, key),
-  );
+function countValidPassports(
+  predicate: (passport: Record<string, string>, key: string) => boolean,
+) {
+  return passports.reduce((acc, passport) => {
+    const allFieldsValid = Object.keys(PASSPORT_FIELDS).every((key) =>
+      predicate(passport, key),
+    );
+    return acc + Number(allFieldsValid);
+  }, 0);
+}
 
-  return acc + Number(hasRequiredFields);
-}, 0);
-
-const validPassportsCount2 = passports.reduce((acc, passport) => {
-  const hasRequiredFields = Object.entries(REQUIRED_FIELDS).every(
-    ([key, pattern]) => pattern.test(passport[key]),
-  );
-
-  return acc + Number(hasRequiredFields);
-}, 0);
+const validPassportsCount = countValidPassports((passport, key) =>
+  Object.hasOwn(passport, key),
+);
+const validPassportsCount2 = countValidPassports((passport, key) => {
+  assertHasOwn(PASSPORT_FIELDS, key);
+  return PASSPORT_FIELDS[key].test(passport[key]);
+});
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

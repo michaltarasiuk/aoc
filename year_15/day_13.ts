@@ -1,8 +1,9 @@
 import {adjacentAt} from 'lib/adjacent_at';
 import {getInputLns} from 'lib/input';
 import {permute} from 'lib/permutate';
+import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2015, day: 13});
+const seats = await getInputLns({year: 2015, day: 13});
 
 function parseSeatingHappiness(seatingHappiness: string) {
   return [
@@ -11,40 +12,49 @@ function parseSeatingHappiness(seatingHappiness: string) {
   ];
 }
 
-const guests = lns.reduce<Record<string, {[name: string]: number}>>(
-  (acc, ln) => {
-    const [a, b, type, val] = parseSeatingHappiness(ln);
+function createGuests(seats: string[]) {
+  const guests = seats.reduce<Record<string, Record<string, number>>>(
+    (acc, seat) => {
+      const [a, b, type, val] = parseSeatingHappiness(seat);
 
-    acc[a] ??= {};
-    acc[a][b] = parseInt(val) * (type === 'gain' ? 1 : -1);
-    return acc;
-  },
-  {},
-);
+      acc[a] ??= {};
+      acc[a][b] = Number(val) * (type === 'gain' ? 1 : -1);
+      return acc;
+    },
+    {},
+  );
 
-function addGuest(name: string, score = 0) {
-  guests[name] = {};
-  for (const guest of Object.keys(guests)) {
-    guests[guest][name] = score;
-    guests[name][guest] = score;
+  function addGuest(newGuest: string, score = 0) {
+    guests[newGuest] = {};
+    for (const guest of Object.keys(guests)) {
+      guests[guest][newGuest] = score;
+      guests[newGuest][guest] = score;
+    }
   }
+
+  function calcHappiness(seats: string[]) {
+    const happiness = seats.flatMap((seat, i) =>
+      adjacentAt(seats, i).map((adjacent) => guests[seat][adjacent]),
+    );
+    return sum(happiness);
+  }
+
+  function calcMaxHappiness() {
+    const guestNames = Object.keys(guests);
+    return Math.max(
+      ...permute(guestNames).map((seats) => calcHappiness(seats)),
+    );
+  }
+
+  return {addGuest, calcMaxHappiness};
 }
 
-function calcHappiness(seats: string[]) {
-  return seats.reduce((acc, seat, i) => {
-    const [left, right] = adjacentAt(seats, i);
-    return acc + guests[seat][left] + guests[seat][right];
-  }, 0);
-}
+const guests = createGuests(seats);
 
-function calcMaxHappiness() {
-  return Math.max(...permute(Object.keys(guests)).map(calcHappiness));
-}
+const maxHappiness = guests.calcMaxHappiness();
 
-const maxHappiness = calcMaxHappiness();
-
-addGuest('Me');
-const maxHappiness2 = calcMaxHappiness();
+guests.addGuest('Me');
+const maxHappiness2 = guests.calcMaxHappiness();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

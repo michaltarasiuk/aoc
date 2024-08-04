@@ -1,18 +1,9 @@
 import {chunkEvery} from 'lib/chunk_every';
 import {extractInts} from 'lib/extract_ints';
+import {getCols} from 'lib/get_cols';
 import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2016, day: 3});
-
-function getCols<T>(lns: T[][]) {
-  return lns.reduce<T[][]>((acc, row) => {
-    row.forEach((val, i) => {
-      acc[i] ??= [];
-      acc[i].push(val);
-    });
-    return acc;
-  }, []);
-}
 
 function isPossibleTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;

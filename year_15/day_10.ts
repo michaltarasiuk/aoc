@@ -3,10 +3,13 @@ import {getInput} from 'lib/input';
 let input = await getInput({year: 2015, day: 10});
 let count = 0;
 
+const PROCESS_COUNT = 40;
+const PROCESS_COUNT_2 = 50;
+
 const repeatedDigitsRe = /(?:(\d)\1*)/g;
 const results: number[] = [];
 
-while (++count <= 50) {
+while (++count <= PROCESS_COUNT_2) {
   const match = input.match(repeatedDigitsRe)!;
 
   input = match
@@ -15,7 +18,7 @@ while (++count <= 50) {
     })
     .join('');
 
-  if (count === 40 || count === 50) {
+  if (count === PROCESS_COUNT || count === PROCESS_COUNT_2) {
     results.push(input.length);
   }
 }

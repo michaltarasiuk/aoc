@@ -1,4 +1,3 @@
-import {combineRe} from 'lib/combine_re';
 import {getInputLns} from 'lib/input';
 import {raise} from 'lib/raise';
 import {sum} from 'lib/sum';
@@ -6,33 +5,35 @@ import {sum} from 'lib/sum';
 const lns = await getInputLns({year: 2023, day: 1});
 
 const digitRe = /\d/;
-const digitRe2 = new RegExp(`.*(${digitRe.source})`);
+const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
 
 const calibrationValuesSum = sum(
   lns.map((ln) => {
     const first = ln.match(digitRe)?.at(0) ?? raise('No digit');
-    const last = ln.match(digitRe2)?.at(1) ?? first;
+    const last = ln.match(lastdigitRe)?.at(1) ?? first;
 
     return Number(first + last);
   }),
 );
 
 const spelledDigitRe = /one|two|three|four|five|six|seven|eight|nine/;
-const spelledDigitMap = Object.fromEntries(
+const spelledDigitMap = new Map(
   spelledDigitRe.source.split('|').map((spelled, i) => [spelled, i + 1]),
 );
 
-const digitOrSpelledRe = combineRe('', digitRe, spelledDigitRe);
-const digitOrSpelledRe2 = new RegExp(`.*(${digitOrSpelledRe.source})`);
+const digitOrSpelledRe = new RegExp(
+  `${digitRe.source}|${spelledDigitRe.source}`,
+);
+const lastDigitOrSpelledRe = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const calibrationValuesSum2 = sum(
   ...lns.map((ln) => {
     const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
-    const last = ln.match(digitOrSpelledRe2)?.at(1) ?? first;
+    const last = ln.match(lastDigitOrSpelledRe)?.at(1) ?? first;
 
     return Number(
       [first, last]
-        .map((digit) => spelledDigitMap[digit] ?? Number(digit))
+        .map((digit) => spelledDigitMap.get(digit) ?? Number(digit))
         .join(''),
     );
   }),

@@ -1,4 +1,4 @@
-import {assertKeyIn} from 'lib/assert_key_in';
+import {assertHasOwn} from 'lib/assert_has_own';
 import {create2dArr} from 'lib/create_2d_arr';
 import {getInputLns} from 'lib/input';
 import {sum} from 'lib/sum';
@@ -22,7 +22,7 @@ function countLights(
 
     for (let x = x1; x <= x2; x++) {
       for (let y = y1; y <= y2; y++) {
-        assertKeyIn(actions, action);
+        assertHasOwn(actions, action);
         lights[y][x] = actions[action](lights[y][x]);
       }
     }

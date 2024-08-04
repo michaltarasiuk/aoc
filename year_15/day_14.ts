@@ -3,9 +3,8 @@ import {getInputLns} from 'lib/input';
 
 const lns = await getInputLns({year: 2015, day: 14});
 
-const FULL_TIME = 2_503;
-
 function calcDistance(speed: number, speedTime: number, restTime: number) {
+  const FULL_TIME = 2_503;
   const intervals = Math.floor(FULL_TIME / (speedTime + restTime));
   const leftover = FULL_TIME % (speedTime + restTime);
 

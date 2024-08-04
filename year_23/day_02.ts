@@ -1,4 +1,4 @@
-import {assertKeyIn} from 'lib/assert_key_in';
+import {assertHasOwn} from 'lib/assert_has_own';
 import {getInputLns} from 'lib/input';
 import {isDefined} from 'lib/is_defined';
 
@@ -18,7 +18,7 @@ function parseGame(game: string) {
 function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   return cubes.reduce(
     (acc, [count, cube]) => {
-      assertKeyIn(acc, cube);
+      assertHasOwn(acc, cube);
 
       acc[cube] = Math.max(acc[cube], count);
       return acc;
