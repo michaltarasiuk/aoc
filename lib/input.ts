@@ -1,8 +1,8 @@
 import {z} from 'zod';
 
 import {env} from '../env';
-import {extractInts} from './extract_ints';
-import {getCols} from './get_cols';
+import {matchInts} from './match_ints';
+import {transpose} from './transpose';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);
@@ -16,7 +16,7 @@ export async function getInputLns(...params: Parameters<typeof getInput>) {
 
 export async function getInputCols(...params: Parameters<typeof getInputLns>) {
   const lns = await getInputLns(...params);
-  return getCols(lns.map(([...chars]) => chars));
+  return transpose(lns.map(([...chars]) => chars));
 }
 
 export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
@@ -43,7 +43,7 @@ export async function getInputCSV(...params: Parameters<typeof getInput>) {
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
-  return extractInts(input);
+  return matchInts(input);
 }
 
 class ResponseError extends Error {

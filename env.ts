@@ -1,7 +1,7 @@
-import * as v from 'valibot';
+import {z} from 'zod';
 
-const ENV_SCHEMA = v.object({
-  session: v.string(),
+const ENV_SCHEMA = z.object({
+  session: z.string(),
 });
 
-export const env = v.parse(ENV_SCHEMA, process.env);
+export const env = ENV_SCHEMA.parse(process.env);

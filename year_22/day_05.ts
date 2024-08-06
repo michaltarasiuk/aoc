@@ -1,5 +1,5 @@
-import {extractInts} from 'lib/extract_ints';
 import {getInputParagraphs} from 'lib/input';
+import {matchInts} from 'lib/match_ints';
 
 const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
 
@@ -9,7 +9,7 @@ function parseCrate(crate: string) {
 }
 
 function parseStacks([ids, ...supplies]: string[]) {
-  return extractInts(ids).reduce<Record<string, string[]>>((acc, id) => {
+  return matchInts(ids).reduce<Record<string, string[]>>((acc, id) => {
     const i = ids.indexOf(String(id));
 
     acc[id] = supplies.flatMap((crates) => parseCrate(crates[i]) ?? []);
@@ -28,7 +28,7 @@ function rearrangStacks(
   mapfn = (crates: string[]) => crates,
 ) {
   return instructions.reduce((acc, instruction) => {
-    const [count, from, to] = extractInts(instruction);
+    const [count, from, to] = matchInts(instruction);
     const crates = acc[from].splice(-count);
 
     acc[to].push(...mapfn(crates));

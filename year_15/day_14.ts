@@ -1,5 +1,5 @@
-import {extractInts} from 'lib/extract_ints';
 import {getInputLns} from 'lib/input';
+import {matchInts} from 'lib/match_ints';
 
 const lns = await getInputLns({year: 2015, day: 14});
 
@@ -13,7 +13,7 @@ function calcDistance([speed, time]: [number, number], rest: number) {
 
 const maxDistance = Math.max(
   ...lns.map((ln) => {
-    const [speed, time, rest] = extractInts(ln);
+    const [speed, time, rest] = matchInts(ln);
     return calcDistance([speed, time], rest);
   }),
 );

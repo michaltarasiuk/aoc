@@ -36,7 +36,7 @@ function createGuests(seats: string[]) {
     const happiness = seats.flatMap((seat, i) =>
       adjacentAt(seats, i).map((adjacent) => guests[seat][adjacent]),
     );
-    return sum(happiness);
+    return sum(...happiness);
   }
 
   function calcMaxHappiness() {

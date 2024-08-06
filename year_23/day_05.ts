@@ -1,9 +1,9 @@
-import {extractInts} from 'lib/extract_ints';
 import {getInputParagraphs} from 'lib/input';
+import {matchInts} from 'lib/match_ints';
 
 const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 
-const maps = paragraphs.map(([, ...maps]) => maps.map(extractInts));
+const maps = paragraphs.map(([, ...maps]) => maps.map(matchInts));
 
 function findLocation(value: number, level = 0) {
   if (level === maps.length) {
@@ -19,7 +19,7 @@ function findLocation(value: number, level = 0) {
 }
 
 const lowestLocation = Math.min(
-  ...extractInts(seeds).map((seed) => findLocation(seed)),
+  ...matchInts(seeds).map((seed) => findLocation(seed)),
 );
 
 if (import.meta.vitest) {

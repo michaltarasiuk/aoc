@@ -1,11 +1,11 @@
-import {extractInts} from 'lib/extract_ints';
 import {getInputLns} from 'lib/input';
+import {matchInts} from 'lib/match_ints';
 
 const lns = await getInputLns({year: 2023, day: 4});
 
 const cards = new Map(
   lns.map((ln) => {
-    const [[id, ...a], b] = ln.split('|').map(extractInts);
+    const [[id, ...a], b] = ln.split('|').map(matchInts);
     return [id, new Set(a).intersection(new Set(b))] as const;
   }),
 );
