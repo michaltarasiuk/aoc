@@ -3,11 +3,11 @@ import {getInputInts} from 'lib/input';
 const ns = await getInputInts({year: 2021, day: 1});
 
 const increasingMeasurementsCount = ns.reduce(
-  (acc, num, i) => (num > ns[i - 1] ? acc + 1 : acc),
+  (acc, num, i) => (num > ns[i - 1] ? ++acc : acc),
   0,
 );
 const increasingMeasurementsSumCount = ns.reduce(
-  (acc, num, i) => (num > ns[i - 3] ? acc + 1 : acc),
+  (acc, num, i) => (num > ns[i - 3] ? ++acc : acc),
   0,
 );
 

@@ -8,9 +8,10 @@ let i = 0;
 
 outer: while (++i) {
   for (const j of divisors(i)) {
-    const housePresentsCount = ((houses[i] ??= 0), (houses[i] += 10 * j));
+    houses[i] ??= 0;
+    houses[i] += 10 * j;
 
-    if (housePresentsCount >= Number(input)) {
+    if (houses[i] >= Number(input)) {
       break outer;
     }
   }

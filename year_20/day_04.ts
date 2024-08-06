@@ -31,7 +31,11 @@ function countValidPassports(
     const allFieldsValid = Object.keys(PASSPORT_FIELDS).every((key) =>
       predicate(passport, key),
     );
-    return acc + Number(allFieldsValid);
+
+    if (allFieldsValid) {
+      acc++;
+    }
+    return acc;
   }, 0);
 }
 

@@ -41,9 +41,7 @@ function createGuests(seats: string[]) {
 
   function calcMaxHappiness() {
     const guestNames = Object.keys(guests);
-    return Math.max(
-      ...permute(guestNames).map((seats) => calcHappiness(seats)),
-    );
+    return Math.max(...permute(guestNames).map(calcHappiness));
   }
 
   return {addGuest, calcMaxHappiness};
