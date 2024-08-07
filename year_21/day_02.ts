@@ -1,35 +1,62 @@
+import {assertHasOwn} from 'lib/assert_has_own';
 import {getInputLns} from 'lib/input';
 
 const commands = await getInputLns({year: 2021, day: 2});
 
-const {horizontal, depth} = commands.reduce(
-  (acc, command) => {
-    const [instruct, units] = command.split(' ');
+function calcDistance<Position extends {horizontal: number; depth: number}>(
+  instructs: Record<
+    'forward' | 'down' | 'up',
+    (position: Position, units: number) => void
+  >,
+  position = {horizontal: 0, depth: 0} as Position,
+) {
+  const {horizontal, depth} = commands.reduce((acc, command) => {
+    const [instruct, units] = command.split(/\s/);
 
-    switch (instruct) {
-      case 'forward':
-        acc.horizontal += Number(units);
-        break;
-      case 'down':
-        acc.depth += Number(units);
-        break;
-      case 'up':
-        acc.depth -= Number(units);
-        break;
-      default:
-        throw new Error(`Unknown instruction: ${instruct}`);
-    }
+    assertHasOwn(instructs, instruct);
+    instructs[instruct](acc, Number(units));
     return acc;
-  },
-  {horizontal: 0, depth: 0},
-);
+  }, position);
 
-const distance = horizontal * depth;
+  return horizontal * depth;
+}
+
+const distance = calcDistance({
+  forward(acc, units) {
+    acc.horizontal += units;
+  },
+  down(acc, units) {
+    acc.depth += units;
+  },
+  up(acc, units) {
+    acc.depth -= units;
+  },
+});
+
+const distance2 = calcDistance(
+  {
+    forward(acc, units) {
+      acc.horizontal += units;
+      acc.depth += acc.aim * units;
+    },
+    down(acc, units) {
+      acc.aim += units;
+    },
+    up(acc, units) {
+      acc.aim -= units;
+    },
+  },
+  {horizontal: 0, depth: 0, aim: 0},
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(distance).toBe(1714950);
+  });
+
+  test('part 2', () => {
+    expect(distance2).toBe(1281977850);
   });
 }
