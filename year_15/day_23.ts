@@ -3,48 +3,63 @@ import {getInputLns} from 'lib/input';
 
 const instructions = await getInputLns({year: 2015, day: 23});
 
-const registers: Record<string, number> = {a: 0, b: 0};
-let offset = 0;
+type Registers = Record<string, number>;
+type Instruct = (
+  this: {registers: Registers; offset: number},
+  ...payload: string[]
+) => number | void;
 
-const instructs: Record<string, (...payload: string[]) => number | void> = {
+const instructs: Record<string, Instruct> = {
   hlf(register) {
-    registers[register] /= 2;
+    this.registers[register] /= 2;
   },
   tpl(register) {
-    registers[register] *= 3;
+    this.registers[register] *= 3;
   },
   inc(register) {
-    registers[register] += 1;
+    this.registers[register] += 1;
   },
   jmp(away) {
-    return offset + Number(away);
+    return this.offset + Number(away);
   },
   jie(register, away) {
-    if (registers[register] % 2 === 0) {
-      return offset + Number(away);
+    if (this.registers[register] % 2 === 0) {
+      return this.offset + Number(away);
     }
   },
   jio(register, away) {
-    if (registers[register] === 1) {
-      return offset + Number(away);
+    if (this.registers[register] === 1) {
+      return this.offset + Number(away);
     }
   },
 };
 
-while (offset < instructions.length) {
-  const instructionRe = /(\w+|[+-]\d+)/g;
-  const [action, ...payload] = instructions[offset].match(instructionRe)!;
+function executeProgram(registers: Registers = {a: 0, b: 0}) {
+  let offset = 0;
 
-  assertHasOwn(instructs, action);
-  const instruct = instructs[action];
+  while (offset < instructions.length) {
+    const instructionRe = /(\w+|[+-]\d+)/g;
+    const [action, ...payload] = instructions[offset].match(instructionRe)!;
 
-  offset = instruct(...payload) ?? offset + 1;
+    assertHasOwn(instructs, action);
+    const instruct = instructs[action];
+
+    offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;
+  }
+  return registers;
 }
+
+const registers = executeProgram();
+const registers2 = executeProgram({a: 1, b: 0});
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(registers.b).toBe(184);
+  });
+
+  test('part 2', () => {
+    expect(registers2.b).toBe(231);
   });
 }
