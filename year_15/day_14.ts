@@ -3,18 +3,26 @@ import {matchInts} from 'lib/match_ints';
 
 const lns = await getInputLns({year: 2015, day: 14});
 
-function calcDistance([speed, time]: [number, number], rest: number) {
+function calcDistance(speed: {value: number; time: number}, restTime: number) {
   const FULL_TIME = 2_503;
-  const intervals = Math.floor(FULL_TIME / (time + rest));
-  const leftover = FULL_TIME % (time + rest);
+  const intervals = Math.floor(FULL_TIME / (speed.time + restTime));
+  const leftover = FULL_TIME % (speed.time + restTime);
 
-  return speed * (intervals * time + Math.min(time, leftover));
+  return (
+    speed.value * (intervals * speed.time + Math.min(speed.time, leftover))
+  );
 }
 
 const maxDistance = Math.max(
   ...lns.map((ln) => {
-    const [speed, time, rest] = matchInts(ln);
-    return calcDistance([speed, time], rest);
+    const [speedValue, speedTime, restTime] = matchInts(ln);
+    return calcDistance(
+      {
+        value: speedValue,
+        time: speedTime,
+      },
+      restTime,
+    );
   }),
 );
 

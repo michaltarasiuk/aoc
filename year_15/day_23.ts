@@ -39,10 +39,10 @@ function executeProgram(registers: Registers = {a: 0, b: 0}) {
 
   while (offset < instructions.length) {
     const instructionRe = /(\w+|[+-]\d+)/g;
-    const [action, ...payload] = instructions[offset].match(instructionRe)!;
+    const [name, ...payload] = instructions[offset].match(instructionRe)!;
 
-    assertHasOwn(instructs, action);
-    const instruct = instructs[action];
+    assertHasOwn(instructs, name);
+    const instruct = instructs[name];
 
     offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;
   }
