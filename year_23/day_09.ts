@@ -1,0 +1,27 @@
+import {getInputLns} from 'lib/input';
+import {matchInts} from 'lib/match_ints';
+import {pairwise} from 'lib/pairwise';
+import {sum} from 'lib/sum';
+
+const lns = await getInputLns({year: 2023, day: 9});
+
+function extrapolate(ns: number[]): number[] {
+  const differences = pairwise(ns).map(([a, b]) => b - a);
+  if (differences.every((difference) => difference === 0)) {
+    return [ns.at(-1)!];
+  }
+
+  return [ns.at(-1)!, ...extrapolate(differences)];
+}
+
+const extrapolatedValuesSum = sum(
+  lns.map((ln) => sum(...extrapolate(matchInts(ln)))),
+);
+
+if (import.meta.vitest) {
+  const {test, expect} = import.meta.vitest;
+
+  test('part 1', () => {
+    expect(extrapolatedValuesSum).toBe(1939607039);
+  });
+}
