@@ -9,7 +9,7 @@ function calcDistance<Position extends {horizontal: number; depth: number}>(
     'forward' | 'down' | 'up',
     (position: Position, units: number) => void
   >,
-  position = {horizontal: 0, depth: 0} as Position,
+  position: Position,
 ) {
   const {horizontal, depth} = commands.reduce((acc, command) => {
     const [instruct, units] = command.split(/\s/);
@@ -22,17 +22,20 @@ function calcDistance<Position extends {horizontal: number; depth: number}>(
   return horizontal * depth;
 }
 
-const distance = calcDistance({
-  forward(acc, units) {
-    acc.horizontal += units;
+const distance = calcDistance(
+  {
+    forward(acc, units) {
+      acc.horizontal += units;
+    },
+    down(acc, units) {
+      acc.depth += units;
+    },
+    up(acc, units) {
+      acc.depth -= units;
+    },
   },
-  down(acc, units) {
-    acc.depth += units;
-  },
-  up(acc, units) {
-    acc.depth -= units;
-  },
-});
+  {horizontal: 0, depth: 0},
+);
 
 const distance2 = calcDistance(
   {
