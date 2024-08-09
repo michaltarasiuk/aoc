@@ -1,6 +1,7 @@
 import {assert} from 'lib/assert';
 import {getInputParagraphs} from 'lib/input';
 import {isKeyOf} from 'lib/is_key_of';
+import {sum} from 'lib/sum';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
@@ -26,24 +27,21 @@ const PASSPORT_FIELDS = {
 };
 
 function countValidPassports(
+  passports: Record<string, string>[],
   predicate: (passport: Record<string, string>, key: string) => boolean,
 ) {
-  return passports.reduce((acc, passport) => {
-    const allFieldsValid = Object.keys(PASSPORT_FIELDS).every((key) =>
-      predicate(passport, key),
-    );
-
-    if (allFieldsValid) {
-      acc++;
-    }
-    return acc;
-  }, 0);
+  return sum(
+    passports.map((passport) => {
+      const allFieldsValid = Object.keys(PASSPORT_FIELDS).every((key) =>
+        predicate(passport, key),
+      );
+      return Number(allFieldsValid);
+    }),
+  );
 }
 
-const validPassportsCount = countValidPassports((passport, key) =>
-  Object.hasOwn(passport, key),
-);
-const validPassportsCount2 = countValidPassports((passport, key) => {
+const validPassportsCount = countValidPassports(passports, isKeyOf);
+const validPassportsCount2 = countValidPassports(passports, (passport, key) => {
   assert(isKeyOf(PASSPORT_FIELDS, key));
   return PASSPORT_FIELDS[key].test(passport[key]);
 });

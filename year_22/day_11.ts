@@ -58,7 +58,7 @@ class SimianShenanigas {
       const throwTo = monkey[`throwTo_${item % monkey.divider === 0}`];
 
       monkey.inspects++;
-      this.#monkeys.get(throwTo)!.items.push(item);
+      this.#monkeys.get(throwTo)?.items.push(item);
     }
   }
 
