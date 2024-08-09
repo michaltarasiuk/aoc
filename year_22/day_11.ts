@@ -50,15 +50,14 @@ class SimianShenanigas {
   }
 
   #stuffSlinging(monkey: Monkey & {inspects: number}) {
-    while (monkey.items.length) {
-      const old = monkey.items.pop()!;
+    for (const old of monkey.items.splice(0)) {
       const item = this.#reduceWorryLevel(
         this.#evalOperation(monkey.operation, old),
       );
-      const throwTo = monkey[`throwTo_${item % monkey.divider === 0}`];
+      const target = monkey[`throwTo_${item % monkey.divider === 0}`];
 
+      this.#monkeys.get(target)?.items.push(item);
       monkey.inspects++;
-      this.#monkeys.get(throwTo)?.items.push(item);
     }
   }
 
