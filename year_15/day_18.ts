@@ -25,6 +25,7 @@ function calcLightsOn(lights: Lights) {
 
 function switchLight(light: string, neighbors: Lights) {
   const count = calcLightsOn(neighbors);
+
   switch (light) {
     case LIGHT_ON:
       return count === 2 || count === 3 ? LIGHT_ON : LIGHT_OFF;
