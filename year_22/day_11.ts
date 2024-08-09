@@ -21,59 +21,72 @@ const MONKEY_SCHEMA = z.object({
   throwTo_false: z.string().transform(Number),
 });
 
+type Monkey = z.infer<typeof MONKEY_SCHEMA>;
+
 function parseMonkey(paragraph: string[]) {
   const groups = paragraph.join('\n').match(monkeyRe)?.groups;
-  return {inspects: 0, ...MONKEY_SCHEMA.parse(groups)};
+  return MONKEY_SCHEMA.parse(groups);
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars
+class SimianShenanigas {
+  #monkeys: Map<Monkey['id'], Monkey & {inspects: number}>;
+
+  constructor(monkeys: Monkey[]) {
+    this.#monkeys = new Map(
+      monkeys.map((monkey) => [monkey.id, {inspects: 0, ...monkey}]),
+    );
+  }
+
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars
   -- used by eval expression
   -- operation example: "1 + old"
-*/
-function evalOperation(operation: string, old: number) {
-  return eval(operation);
-}
+  */
+  #evalOperation(operation: string, old: number) {
+    return eval(operation);
+  }
 
-function reduceWorryLevel(worryLevel: number) {
-  return Math.floor(worryLevel / 3);
-}
+  #reduceWorryLevel(worryLevel: number) {
+    return Math.floor(worryLevel / 3);
+  }
 
-function distributeItems(monkey: ReturnType<typeof parseMonkey>) {
-  while (monkey.items.length) {
-    const old = monkey.items.pop()!;
-    const item = reduceWorryLevel(evalOperation(monkey.operation, old));
-    const divisible = item % monkey.divider === 0;
-    const throwTo = monkey[`throwTo_${divisible}`];
+  #stuffSlinging(monkey: Monkey & {inspects: number}) {
+    while (monkey.items.length) {
+      const old = monkey.items.pop()!;
+      const item = this.#reduceWorryLevel(
+        this.#evalOperation(monkey.operation, old),
+      );
+      const throwTo = monkey[`throwTo_${item % monkey.divider === 0}`];
 
-    monkey.inspects++;
-    monkeys.get(throwTo)?.items.push(item);
+      monkey.inspects++;
+      this.#monkeys.get(throwTo)!.items.push(item);
+    }
+  }
+
+  stuffSlinging(rounds = 20) {
+    for (let i = 0; i < rounds; i++) {
+      for (const monkey of this.#monkeys.values()) {
+        this.#stuffSlinging(monkey);
+      }
+    }
+    return this;
+  }
+
+  businessLevel() {
+    const [a, b] = Array.from(this.#monkeys.values()).toSorted(
+      (a, b) => b.inspects - a.inspects,
+    );
+    return a.inspects * b.inspects;
   }
 }
 
-const monkeys = new Map(
-  paragraphs.map((p) => {
-    const monkey = parseMonkey(p);
-    return [monkey.id, monkey];
-  }),
-);
-
-const ROUND_COUNT = 20;
-
-for (let i = 1; i <= ROUND_COUNT; i++) {
-  for (const monkey of monkeys.values()) {
-    distributeItems(monkey);
-  }
-}
-
-const [a, b] = Array.from(monkeys.values()).toSorted(
-  (a, b) => b.inspects - a.inspects,
-);
-const monkeyBusinessLevel = a.inspects * b.inspects;
+const businessLevel = new SimianShenanigas(paragraphs.map(parseMonkey))
+  .stuffSlinging()
+  .businessLevel();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(monkeyBusinessLevel).toBe(55458);
+    expect(businessLevel).toBe(55458);
   });
 }
