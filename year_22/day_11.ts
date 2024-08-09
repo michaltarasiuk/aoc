@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {matchInts} from 'lib/match_ints';
+import {matchInts} from 'lib/ints';
 import {z} from 'zod';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 11});

@@ -1,5 +1,5 @@
 import {getInputLines} from 'lib/input';
-import {matchUints} from 'lib/match_ints';
+import {matchUints} from 'lib/ints';
 
 const lines = await getInputLines({year: 2022, day: 4});
 

@@ -1,4 +1,4 @@
-import {lcm} from 'lib/divisors';
+import {leastCommonMultiple} from 'lib/divisors';
 import {getInputParagraphs} from 'lib/input';
 
 const [[instructions], maps] = await getInputParagraphs({year: 2023, day: 8});
@@ -32,7 +32,7 @@ function countStepsToNodes(
   const steps = startingNodes.map((start) =>
     countStepsToNode(start, predicate),
   );
-  return lcm(...steps);
+  return leastCommonMultiple(...steps);
 }
 
 function nodeEndsWith(node: string, char: string) {

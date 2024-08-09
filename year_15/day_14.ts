@@ -1,35 +1,38 @@
 import {getInputLines} from 'lib/input';
-import {matchInts} from 'lib/match_ints';
+import {raise} from 'lib/raise';
 
-const lines = await getInputLines({year: 2015, day: 14});
+const reindeers = await getInputLines({year: 2015, day: 14});
 
-function calcDistance(speed: {value: number; time: number}, restTime: number) {
-  const FULL_TIME = 2_503;
-  const intervals = Math.floor(FULL_TIME / (speed.time + restTime));
-  const leftover = FULL_TIME % (speed.time + restTime);
+function parseReindeer(reindeer: string) {
+  const reindeerRe =
+    /^\w+ can fly (\d+) km\/s for (\d+) seconds?, but then must rest for (\d+) seconds?\.$/;
+  const [, ...groups] = reindeer.match(reindeerRe) ?? raise('Invalid reindeer');
+  const [speed, time, rest] = groups.map(Number);
 
-  return (
-    speed.value * (intervals * speed.time + Math.min(speed.time, leftover))
-  );
+  return {speed, time, rest};
 }
 
-const maxDistance = Math.max(
-  ...lines.map((line) => {
-    const [speedValue, speedTime, restTime] = matchInts(line);
-    return calcDistance(
-      {
-        value: speedValue,
-        time: speedTime,
-      },
-      restTime,
-    );
-  }),
-);
+function calcFlyTime({time, rest}: {time: number; rest: number}) {
+  const TOTAL_TIME = 2_503;
+  const cycle = Math.floor(TOTAL_TIME / (time + rest));
+  const remaining = TOTAL_TIME % (time + rest);
+
+  return cycle * time + Math.min(time, remaining);
+}
+
+let winningReindeer: number | undefined;
+
+for (const reindeer of reindeers) {
+  const {speed, time, rest} = parseReindeer(reindeer);
+  const distanceTraveled = speed * calcFlyTime({time, rest});
+
+  winningReindeer = Math.max(winningReindeer ?? 0, distanceTraveled);
+}
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(maxDistance).toBe(2640);
+    expect(winningReindeer).toBe(2640);
   });
 }

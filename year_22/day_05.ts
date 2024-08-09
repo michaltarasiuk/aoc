@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {matchInts} from 'lib/match_ints';
+import {matchInts} from 'lib/ints';
 
 const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
 

@@ -1,9 +1,11 @@
 export function transpose<T>(matrix: T[][]) {
-  return matrix.reduce<T[][]>((acc, row) => {
-    row.forEach((item, i) => {
-      acc[i] ??= [];
-      acc[i].push(item);
-    });
-    return acc;
-  }, []);
+  const transposed: T[][] = [];
+
+  for (const row of matrix) {
+    for (const [i, item] of row.entries()) {
+      transposed[i] ??= [];
+      transposed[i].push(item);
+    }
+  }
+  return transposed;
 }

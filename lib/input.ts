@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
 import {env} from '../env';
-import {matchInts} from './match_ints';
+import {matchInts} from './ints';
 import {transpose} from './transpose';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {

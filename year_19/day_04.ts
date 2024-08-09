@@ -1,5 +1,5 @@
 import {getInput} from 'lib/input';
-import {matchUints} from 'lib/match_ints';
+import {matchUints} from 'lib/ints';
 
 const input = await getInput({year: 2019, day: 4});
 

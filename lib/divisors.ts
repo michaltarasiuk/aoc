@@ -9,18 +9,18 @@ export function divisors(n: number) {
   return Array.from(divisors_(n));
 }
 
-function greatestCommonDivisor(a: number, b: number): number {
-  return b ? greatestCommonDivisor(b, a % b) : a;
+function greatestCommonDivisor_(a: number, b: number): number {
+  return b ? greatestCommonDivisor_(b, a % b) : a;
 }
 
-export function gcd(...ns: number[]) {
-  return ns.reduce(greatestCommonDivisor);
+export function greatestCommonDivisor(...ns: number[]) {
+  return ns.reduce(greatestCommonDivisor_);
 }
 
-function leastCommonMultiple(a: number, b: number) {
+function leastCommonMultiple_(a: number, b: number) {
   return a * (b / greatestCommonDivisor(a, b));
 }
 
-export function lcm(...ns: number[]) {
-  return ns.reduce(leastCommonMultiple);
+export function leastCommonMultiple(...ns: number[]) {
+  return ns.reduce(leastCommonMultiple_);
 }

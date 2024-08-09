@@ -1,6 +1,6 @@
 import {chunkEvery} from 'lib/chunk_every';
 import {getInputLines} from 'lib/input';
-import {matchInts} from 'lib/match_ints';
+import {matchInts} from 'lib/ints';
 import {transpose} from 'lib/transpose';
 
 const lines = await getInputLines({year: 2016, day: 3});
