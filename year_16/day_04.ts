@@ -1,9 +1,9 @@
 import {frequencies} from 'lib/frequencies';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {stringToCodePoints} from 'lib/string_to_code_points';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2016, day: 4});
+const lines = await getInputLines({year: 2016, day: 4});
 
 function parseRoom(room: string) {
   const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
@@ -29,8 +29,8 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 }
 
 const realRoomSectorIDsSum = sum(
-  ...lns.map((ln) => {
-    const {name, id, checksum} = parseRoom(ln);
+  ...lines.map((line) => {
+    const {name, id, checksum} = parseRoom(line);
     return checksum === calcChecksum(...name) ? id : 0;
   }),
 );
@@ -38,8 +38,8 @@ const realRoomSectorIDsSum = sum(
 const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
 let northPoleSectorID: number | undefined;
 
-for (const ln of lns) {
-  const {name, id} = parseRoom(ln);
+for (const line of lines) {
+  const {name, id} = parseRoom(line);
   const decoded = String.fromCodePoint(
     ...stringToCodePoints(name, (codePoint) =>
       shiftAlphabetCodePoint(codePoint, id),

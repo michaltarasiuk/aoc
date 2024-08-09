@@ -1,18 +1,18 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2017, day: 2});
+const lines = await getInputLines({year: 2017, day: 2});
 
 function parseRow(row: string) {
   return row.split('\t').map(Number);
 }
 
-const spreadsheetChecksum = lns.reduce((acc, ln) => {
-  const ns = parseRow(ln);
+const spreadsheetChecksum = lines.reduce((acc, line) => {
+  const ns = parseRow(line);
   return acc + Math.max(...ns) - Math.min(...ns);
 }, 0);
 
-const rowsSum = lns.reduce((acc, ln) => {
-  const ns = parseRow(ln);
+const rowsSum = lines.reduce((acc, line) => {
+  const ns = parseRow(line);
 
   for (const n of ns) {
     for (const m of ns) {

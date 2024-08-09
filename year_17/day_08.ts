@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2017, day: 8});
+const lines = await getInputLines({year: 2017, day: 8});
 
 type Registers = Record<string, number>;
 
@@ -25,8 +25,8 @@ function findMaxRegister(registers: Registers) {
 const registers: Registers = {};
 let maxHeldRegister = -Infinity;
 
-for (const ln of lns) {
-  const {reg, op, val, cond} = parseInstruction(ln);
+for (const line of lines) {
+  const {reg, op, val, cond} = parseInstruction(line);
 
   if (evalCondition(registers, cond)) {
     registers[reg] ??= 0;

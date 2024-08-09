@@ -1,9 +1,9 @@
 import {adjacentAt} from 'lib/adjacent_at';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {permute} from 'lib/permutate';
 import {sum} from 'lib/sum';
 
-const seats = await getInputLns({year: 2015, day: 13});
+const seats = await getInputLines({year: 2015, day: 13});
 
 function parseSeatingHappiness(seatingHappiness: string) {
   return [

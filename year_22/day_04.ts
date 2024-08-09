@@ -1,9 +1,9 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {matchUints} from 'lib/match_ints';
 
-const lns = await getInputLns({year: 2022, day: 4});
+const lines = await getInputLines({year: 2022, day: 4});
 
-const pairsFullyCoveredCount = lns.reduce((acc, pairs) => {
+const pairsFullyCoveredCount = lines.reduce((acc, pairs) => {
   const [a, b, a1, b2] = matchUints(pairs);
 
   if ((a <= a1 && b >= b2) || (a1 <= a && b2 >= b)) {

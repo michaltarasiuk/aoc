@@ -1,7 +1,7 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {matchInts} from 'lib/match_ints';
 
-const lns = await getInputLns({year: 2015, day: 14});
+const lines = await getInputLines({year: 2015, day: 14});
 
 function calcDistance(speed: {value: number; time: number}, restTime: number) {
   const FULL_TIME = 2_503;
@@ -14,8 +14,8 @@ function calcDistance(speed: {value: number; time: number}, restTime: number) {
 }
 
 const maxDistance = Math.max(
-  ...lns.map((ln) => {
-    const [speedValue, speedTime, restTime] = matchInts(ln);
+  ...lines.map((line) => {
+    const [speedValue, speedTime, restTime] = matchInts(line);
     return calcDistance(
       {
         value: speedValue,

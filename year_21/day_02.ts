@@ -1,7 +1,7 @@
 import {assertHasOwn} from 'lib/assert_has_own';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const commands = await getInputLns({year: 2021, day: 2});
+const commands = await getInputLines({year: 2021, day: 2});
 
 function calcDistance<Position extends {horizontal: number; depth: number}>(
   instructs: Record<

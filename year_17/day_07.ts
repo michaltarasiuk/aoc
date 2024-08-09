@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2017, day: 7});
+const lines = await getInputLines({year: 2017, day: 7});
 
 function parseProgram(program: string) {
   const programRe = /(\w+|\d+)/g;
@@ -20,7 +20,7 @@ function findRoot(programs: ReturnType<typeof parseProgram>[]) {
   throw new Error('Root not found');
 }
 
-const programs = lns.map(parseProgram);
+const programs = lines.map(parseProgram);
 const root = findRoot(programs);
 
 if (import.meta.vitest) {

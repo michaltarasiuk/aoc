@@ -1,7 +1,7 @@
 import {assertHasOwn} from 'lib/assert_has_own';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const instructions = await getInputLns({year: 2015, day: 23});
+const instructions = await getInputLines({year: 2015, day: 23});
 
 type Registers = Record<string, number>;
 type Instruct = (

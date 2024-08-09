@@ -1,9 +1,9 @@
 import {assertHasOwn} from 'lib/assert_has_own';
 import {create2dArr} from 'lib/create_2d_arr';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2015, day: 6});
+const lines = await getInputLines({year: 2015, day: 6});
 
 function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
@@ -17,8 +17,8 @@ function countLights(
 ) {
   const lights = create2dArr(1_000, 0);
 
-  for (const ln of lns) {
-    const [action, x1, y1, x2, y2] = parseInstruction(ln);
+  for (const line of lines) {
+    const [action, x1, y1, x2, y2] = parseInstruction(line);
 
     for (let x = x1; x <= x2; x++) {
       for (let y = y1; y <= y2; y++) {

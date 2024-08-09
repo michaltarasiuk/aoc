@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2016, day: 2});
+const lines = await getInputLines({year: 2016, day: 2});
 
 const KEYPAD = [
   ['1', '2', '3'],
@@ -31,8 +31,8 @@ const START_POINT = [1, 1];
 let [x, y] = START_POINT;
 let bathroomCode = '';
 
-for (const ln of lns) {
-  for (const char of ln) {
+for (const line of lines) {
+  for (const char of line) {
     [x, y] = move(x, y, char);
   }
   bathroomCode += KEYPAD[y][x];

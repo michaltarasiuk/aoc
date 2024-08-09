@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2015, day: 7});
+const lines = await getInputLines({year: 2015, day: 7});
 
 function parseInstruction(instruction: string) {
   return [
@@ -9,8 +9,8 @@ function parseInstruction(instruction: string) {
   ];
 }
 
-const circuit = lns.reduce<Record<string, string[]>>((acc, ln) => {
-  const instruction = parseInstruction(ln);
+const circuit = lines.reduce<Record<string, string[]>>((acc, line) => {
+  const instruction = parseInstruction(line);
   const dest = instruction.pop();
 
   if (dest) {

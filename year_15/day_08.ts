@@ -1,14 +1,14 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2015, day: 8});
+const lines = await getInputLines({year: 2015, day: 8});
 
-const ns = lns.map(({length}) => length);
+const ns = lines.map(({length}) => length);
 
-const ns2 = (<string[]>eval(`[${lns.join()}]`)).map(({length}) => length);
+const ns2 = (<string[]>eval(`[${lines.join()}]`)).map(({length}) => length);
 const stringLiteralMemoryDiff = sum(...ns) - sum(...ns2);
 
-const ns3 = lns.map((ln) => JSON.stringify(ln).length);
+const ns3 = lines.map((line) => JSON.stringify(line).length);
 const stringLiteralMemoryDiff2 = sum(...ns3) - sum(...ns);
 
 if (import.meta.vitest) {

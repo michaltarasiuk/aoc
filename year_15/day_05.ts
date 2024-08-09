@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2015, day: 5});
+const lines = await getInputLines({year: 2015, day: 5});
 
 function sum(...bools: boolean[]) {
   return bools.reduce((acc, bool) => acc + Number(bool), 0);
@@ -21,8 +21,8 @@ function isNiceString2(string: string) {
   return hasPairOfTwoLetters && hasRepeatingLetter;
 }
 
-const niceStringsCount = sum(...lns.map(isNiceString));
-const niceStringsCount2 = sum(...lns.map(isNiceString2));
+const niceStringsCount = sum(...lines.map(isNiceString));
+const niceStringsCount2 = sum(...lines.map(isNiceString2));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

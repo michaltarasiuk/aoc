@@ -1,16 +1,16 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {raise} from 'lib/raise';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2023, day: 1});
+const lines = await getInputLines({year: 2023, day: 1});
 
 const digitRe = /\d/;
 const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
 
 const calibrationValuesSum = sum(
-  lns.map((ln) => {
-    const first = ln.match(digitRe)?.at(0) ?? raise('No digit');
-    const last = ln.match(lastdigitRe)?.at(1) ?? first;
+  lines.map((line) => {
+    const first = line.match(digitRe)?.at(0) ?? raise('No digit');
+    const last = line.match(lastdigitRe)?.at(1) ?? first;
 
     return Number(first + last);
   }),
@@ -27,9 +27,9 @@ const digitOrSpelledRe = new RegExp(
 const lastDigitOrSpelledRe = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const calibrationValuesSum2 = sum(
-  ...lns.map((ln) => {
-    const first = ln.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
-    const last = ln.match(lastDigitOrSpelledRe)?.at(1) ?? first;
+  ...lines.map((line) => {
+    const first = line.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
+    const last = line.match(lastDigitOrSpelledRe)?.at(1) ?? first;
 
     return Number(
       [first, last]

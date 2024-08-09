@@ -1,9 +1,9 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {matchInts} from 'lib/match_ints';
 import {pairwise} from 'lib/pairwise';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2023, day: 9});
+const lines = await getInputLines({year: 2023, day: 9});
 
 function extrapolate(...ns: number[]): number[] {
   const differences = pairwise(ns).map(([a, b]) => b - a);
@@ -16,7 +16,7 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 const extrapolatedValuesSum = sum(
-  lns.map((ln) => sum(...extrapolate(...matchInts(ln)))),
+  lines.map((line) => sum(...extrapolate(...matchInts(line)))),
 );
 
 if (import.meta.vitest) {

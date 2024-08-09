@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2015, day: 2});
+const lines = await getInputLines({year: 2015, day: 2});
 
 function calcPaper({l, w, h}: {l: number; w: number; h: number}) {
   const [lw, wh, hl] = [l * w, w * h, h * l];
@@ -18,8 +18,8 @@ function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
 let paper = 0;
 let ribbon = 0;
 
-for (const ln of lns) {
-  const [l = 0, w = 0, h = 0] = ln.split('x').map(Number);
+for (const line of lines) {
+  const [l = 0, w = 0, h = 0] = line.split('x').map(Number);
 
   paper += calcPaper({l, w, h});
   ribbon += calcRibbon({l, w, h});

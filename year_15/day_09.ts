@@ -1,8 +1,8 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {permute} from 'lib/permutate';
 import {sum} from 'lib/sum';
 
-const lns = await getInputLns({year: 2015, day: 9});
+const lines = await getInputLines({year: 2015, day: 9});
 
 function parseDistance(distance: string) {
   const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
@@ -11,15 +11,18 @@ function parseDistance(distance: string) {
   return {a, b, cost: Number(cost)};
 }
 
-const costMap = lns.reduce<{[k: string]: Record<string, number>}>((acc, ln) => {
-  const {a, b, cost} = parseDistance(ln);
+const costMap = lines.reduce<{[k: string]: Record<string, number>}>(
+  (acc, line) => {
+    const {a, b, cost} = parseDistance(line);
 
-  acc[a] ??= {};
-  acc[b] ??= {};
-  acc[a][b] = cost;
-  acc[b][a] = cost;
-  return acc;
-}, {});
+    acc[a] ??= {};
+    acc[b] ??= {};
+    acc[a][b] = cost;
+    acc[b][a] = cost;
+    return acc;
+  },
+  {},
+);
 const costMapKeys = Object.keys(costMap);
 
 function calcRouteCost(cities: string[]) {

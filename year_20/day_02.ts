@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2020, day: 2});
+const lines = await getInputLines({year: 2020, day: 2});
 
 function parsePassword(s: string) {
   const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
@@ -9,8 +9,8 @@ function parsePassword(s: string) {
   return {min: Number(min), max: Number(max), char, password};
 }
 
-const validPasswordsCount = lns.reduce((acc, ln) => {
-  const {min, max, char, password} = parsePassword(ln);
+const validPasswordsCount = lines.reduce((acc, line) => {
+  const {min, max, char, password} = parsePassword(line);
   const count = password.split(char).length - 1;
 
   if (count >= min && count <= max) {
@@ -19,8 +19,8 @@ const validPasswordsCount = lns.reduce((acc, ln) => {
   return acc;
 }, 0);
 
-const validPasswordsCount2 = lns.reduce((acc, ln) => {
-  const {min, max, char, password} = parsePassword(ln);
+const validPasswordsCount2 = lines.reduce((acc, line) => {
+  const {min, max, char, password} = parsePassword(line);
   const minChar = password[min - 1];
   const maxChar = password[max - 1];
 

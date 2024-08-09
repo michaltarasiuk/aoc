@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2022, day: 2});
+const lines = await getInputLines({year: 2022, day: 2});
 
 const SHAPES_COUNT = 3;
 const POINTS = {WIN: 6, DRAW: 3, LOSE: 0};
@@ -29,8 +29,8 @@ function roundOutcome(them: number, me: number) {
   throw new Error('Invalid round outcome');
 }
 
-const score = lns.reduce((acc, ln) => {
-  const [them, me] = parseRound(ln);
+const score = lines.reduce((acc, line) => {
+  const [them, me] = parseRound(line);
   return acc + roundOutcome(them, me) + me;
 }, 0);
 

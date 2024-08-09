@@ -9,19 +9,23 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
   return input.trimEnd();
 }
 
-export async function getInputLns(...params: Parameters<typeof getInput>) {
+export async function getInputLines(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
   return input.split('\n');
 }
 
-export async function getInputCols(...params: Parameters<typeof getInputLns>) {
-  const lns = await getInputLns(...params);
-  return transpose(lns.map(([...chars]) => chars));
+export async function getInputCols(
+  ...params: Parameters<typeof getInputLines>
+) {
+  const lines = await getInputLines(...params);
+  return transpose(lines.map(([...chars]) => chars));
 }
 
-export async function getInputGrid(...params: Parameters<typeof getInputLns>) {
-  const lns = await getInputLns(...params);
-  return lns.map(([...chars]) => chars);
+export async function getInputGrid(
+  ...params: Parameters<typeof getInputLines>
+) {
+  const lines = await getInputLines(...params);
+  return lines.map(([...chars]) => chars);
 }
 
 export async function getInputParagraphs(

@@ -1,14 +1,14 @@
 import {frequencies} from 'lib/frequencies';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2018, day: 2});
+const lines = await getInputLines({year: 2018, day: 2});
 
 let twos = 0;
 let threes = 0;
 
-for (const ln of lns) {
+for (const line of lines) {
   const counts = new Map(
-    Array.from(frequencies(ln), ([char, count]) => [count, char]),
+    Array.from(frequencies(line), ([char, count]) => [count, char]),
   );
 
   if (counts.has(2)) twos++;

@@ -1,7 +1,7 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {raise} from 'lib/raise';
 
-const jobs = await getInputLns({year: 2022, day: 21});
+const jobs = await getInputLines({year: 2022, day: 21});
 
 const jobsMap = new Map(
   jobs.map((job) => {

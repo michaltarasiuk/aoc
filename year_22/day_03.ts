@@ -1,7 +1,7 @@
 import {chunkEvery} from 'lib/chunk_every';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2022, day: 3});
+const lines = await getInputLines({year: 2022, day: 3});
 
 function splitRucksack(rucksack: string) {
   return [
@@ -21,14 +21,14 @@ function calcPriority(char: string) {
   throw new Error(`Invalid char: ${char}`);
 }
 
-const prioritiesSum = lns.reduce((acc, rucksack) => {
+const prioritiesSum = lines.reduce((acc, rucksack) => {
   const [a, b] = splitRucksack(rucksack);
   const [char] = new Set(a).intersection(new Set(b));
 
   return acc + calcPriority(char);
 }, 0);
 
-const prioritiesSum2 = chunkEvery(lns, 3).reduce((acc, [a, b, c]) => {
+const prioritiesSum2 = chunkEvery(lines, 3).reduce((acc, [a, b, c]) => {
   const [char] = new Set(a).intersection(new Set(b)).intersection(new Set(c));
   return acc + calcPriority(char);
 }, 0);

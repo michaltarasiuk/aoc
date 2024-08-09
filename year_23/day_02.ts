@@ -1,8 +1,8 @@
 import {assertHasOwn} from 'lib/assert_has_own';
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 import {isDefined} from 'lib/is_defined';
 
-const lns = await getInputLns({year: 2023, day: 2});
+const lines = await getInputLines({year: 2023, day: 2});
 
 function parseGame(game: string) {
   const gameRe = /(\d+)(?: (\w+))?/g;
@@ -27,7 +27,7 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   );
 }
 
-const gamesIdsSum = lns.reduce((acc, game) => {
+const gamesIdsSum = lines.reduce((acc, game) => {
   const [[id], ...cubes] = parseGame(game);
   const {red, green, blue} = collectMaxCubeSizes(cubes);
 
@@ -37,7 +37,7 @@ const gamesIdsSum = lns.reduce((acc, game) => {
   return acc;
 }, 0);
 
-const setsPowerSum = lns.reduce((acc, game) => {
+const setsPowerSum = lines.reduce((acc, game) => {
   const [, ...cubes] = parseGame(game);
   const {red, green, blue} = collectMaxCubeSizes(cubes);
 

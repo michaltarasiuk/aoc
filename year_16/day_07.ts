@@ -1,6 +1,6 @@
-import {getInputLns} from 'lib/input';
+import {getInputLines} from 'lib/input';
 
-const lns = await getInputLns({year: 2016, day: 7});
+const lines = await getInputLines({year: 2016, day: 7});
 
 function parseIPAddress(ipAddress: string) {
   const squareBracketRe = /\[|\]/;
@@ -14,8 +14,8 @@ function parseIPAddress(ipAddress: string) {
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 
-const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
-  const {supernets, hypernets} = parseIPAddress(ln);
+const tlsSupportedIpsCount = lines.reduce((acc, line) => {
+  const {supernets, hypernets} = parseIPAddress(line);
 
   if (abbaRe.test(supernets) && !abbaRe.test(hypernets)) {
     acc++;
@@ -25,8 +25,8 @@ const tlsSupportedIpsCount = lns.reduce((acc, ln) => {
 
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
 
-const sslSupportedIpsCount = lns.reduce((acc, ln) => {
-  const {supernets, hypernets} = parseIPAddress(ln);
+const sslSupportedIpsCount = lines.reduce((acc, line) => {
+  const {supernets, hypernets} = parseIPAddress(line);
 
   if (abaRe.test(`${supernets}, ${hypernets}`)) {
     acc++;
