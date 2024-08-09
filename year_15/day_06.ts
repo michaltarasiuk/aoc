@@ -1,6 +1,7 @@
-import {assertHasOwn} from 'lib/assert_has_own';
+import {assert} from 'lib/assert';
 import {create2dArr} from 'lib/create_2d_arr';
 import {getInputLines} from 'lib/input';
+import {isKeyOf} from 'lib/is_key_of';
 import {sum} from 'lib/sum';
 
 const lines = await getInputLines({year: 2015, day: 6});
@@ -22,7 +23,7 @@ function countLights(
 
     for (let x = x1; x <= x2; x++) {
       for (let y = y1; y <= y2; y++) {
-        assertHasOwn(actions, action);
+        assert(isKeyOf(actions, action));
         lights[y][x] = actions[action](lights[y][x]);
       }
     }

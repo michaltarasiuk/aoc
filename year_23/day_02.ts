@@ -1,6 +1,7 @@
-import {assertHasOwn} from 'lib/assert_has_own';
+import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
 import {isDefined} from 'lib/is_defined';
+import {isKeyOf} from 'lib/is_key_of';
 
 const lines = await getInputLines({year: 2023, day: 2});
 
@@ -18,7 +19,7 @@ function parseGame(game: string) {
 function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   return cubes.reduce(
     (acc, [count, cube]) => {
-      assertHasOwn(acc, cube);
+      assert(isKeyOf(acc, cube));
 
       acc[cube] = Math.max(acc[cube], count);
       return acc;

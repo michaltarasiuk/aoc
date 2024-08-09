@@ -1,5 +1,6 @@
-import {assertHasOwn} from 'lib/assert_has_own';
+import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
+import {isKeyOf} from 'lib/is_key_of';
 
 const commands = await getInputLines({year: 2021, day: 2});
 
@@ -13,7 +14,7 @@ function calcDistance<Position extends {horizontal: number; depth: number}>(
   const {horizontal, depth} = commands.reduce((acc, command) => {
     const [instruct, units] = command.split(/\s/);
 
-    assertHasOwn(instructs, instruct);
+    assert(isKeyOf(instructs, instruct));
     instructs[instruct](acc, Number(units));
     return acc;
   }, position);

@@ -1,5 +1,6 @@
-import {assertHasOwn} from 'lib/assert_has_own';
+import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
+import {isKeyOf} from 'lib/is_key_of';
 
 const instructions = await getInputLines({year: 2015, day: 23});
 
@@ -41,7 +42,7 @@ function executeProgram(registers: Registers = {a: 0, b: 0}) {
     const instructionRe = /(\w+|[+-]\d+)/g;
     const [name, ...payload] = instructions[offset].match(instructionRe)!;
 
-    assertHasOwn(instructs, name);
+    assert(isKeyOf(instructs, name));
     const instruct = instructs[name];
 
     offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;

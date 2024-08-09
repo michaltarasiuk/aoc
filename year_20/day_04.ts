@@ -1,5 +1,6 @@
-import {assertHasOwn} from 'lib/assert_has_own';
+import {assert} from 'lib/assert';
 import {getInputParagraphs} from 'lib/input';
+import {isKeyOf} from 'lib/is_key_of';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
@@ -43,7 +44,7 @@ const validPassportsCount = countValidPassports((passport, key) =>
   Object.hasOwn(passport, key),
 );
 const validPassportsCount2 = countValidPassports((passport, key) => {
-  assertHasOwn(PASSPORT_FIELDS, key);
+  assert(isKeyOf(PASSPORT_FIELDS, key));
   return PASSPORT_FIELDS[key].test(passport[key]);
 });
 

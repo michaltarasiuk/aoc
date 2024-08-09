@@ -1,13 +1,11 @@
 import {getInputLines} from 'lib/input';
-import {raise} from 'lib/raise';
 
 const reindeers = await getInputLines({year: 2015, day: 14});
 
 function parseReindeer(reindeer: string) {
   const reindeerRe =
     /^\w+ can fly (\d+) km\/s for (\d+) seconds?, but then must rest for (\d+) seconds?\.$/;
-  const [, ...groups] = reindeer.match(reindeerRe) ?? raise('Invalid reindeer');
-  const [speed, time, rest] = groups.map(Number);
+  const [, speed, time, rest] = reindeer.match(reindeerRe)!.map(Number);
 
   return {speed, time, rest};
 }
