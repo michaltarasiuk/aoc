@@ -1,23 +1,22 @@
 import {getInput} from 'lib/input';
+import {uniq} from 'lib/uniq';
 
 const input = await getInput({year: 2022, day: 6});
 
-function findLastIndexOfMarker(markerSize: number) {
+function findLastIndexOfMarker([...characters]: string, length: number) {
   let lastIndex: number | undefined;
 
-  for (let i = 0; i < input.length; i++) {
-    const marker = new Set(input.slice(i, i + markerSize));
-
-    if (marker.size === markerSize) {
-      lastIndex = i + markerSize;
+  for (const i of characters.keys()) {
+    if (uniq(input.slice(i, i + length)).length === length) {
+      lastIndex = i + length;
       break;
     }
   }
   return lastIndex;
 }
 
-const lastIndex = findLastIndexOfMarker(4);
-const lastIndex2 = findLastIndexOfMarker(14);
+const lastIndex = findLastIndexOfMarker(input, 4);
+const lastIndex2 = findLastIndexOfMarker(input, 14);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

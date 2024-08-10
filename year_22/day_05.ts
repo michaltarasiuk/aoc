@@ -38,13 +38,13 @@ function rearrangStacks(
 
 const reversedStacks = stacks.toReversed();
 
-const finalStacks = rearrangStacks(reversedStacks, (crates) =>
+const rearrangedStacks = rearrangStacks(reversedStacks, (crates) =>
   crates.toReversed(),
 );
-const finalStacks2 = rearrangStacks(reversedStacks);
+const rearrangedStacks2 = rearrangStacks(reversedStacks);
 
-const serializedStacks = stacksToString(finalStacks);
-const serializedStacks2 = stacksToString(finalStacks2);
+const serializedStacks = stacksToString(rearrangedStacks);
+const serializedStacks2 = stacksToString(rearrangedStacks2);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

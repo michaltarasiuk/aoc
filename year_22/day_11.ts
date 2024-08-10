@@ -21,19 +21,20 @@ const MONKEY_SCHEMA = z.object({
   throwTo_false: z.string().transform(Number),
 });
 
-type Monkey = z.infer<typeof MONKEY_SCHEMA>;
-
 function parseMonkey(paragraph: string[]) {
   const groups = paragraph.join('\n').match(monkeyRe)?.groups;
   return MONKEY_SCHEMA.parse(groups);
 }
 
-class SimianShenanigas {
-  #monkeys: Map<Monkey['id'], Monkey & {inspects: number}>;
+type MonkeySchema = z.infer<typeof MONKEY_SCHEMA>;
+type Monkey = MonkeySchema & {inspects: number};
 
-  constructor(monkeys: Monkey[]) {
+class SimianShenanigas {
+  #monkeys: Map<Monkey['id'], Monkey>;
+
+  constructor(monkeys: MonkeySchema[]) {
     this.#monkeys = new Map(
-      monkeys.map((monkey) => [monkey.id, {inspects: 0, ...monkey}]),
+      monkeys.map((monkey) => [monkey.id, {...monkey, inspects: 0}]),
     );
   }
 
@@ -49,15 +50,20 @@ class SimianShenanigas {
     return Math.floor(worryLevel / 3);
   }
 
-  #stuffSlinging(monkey: Monkey & {inspects: number}) {
+  #inspect(monkey: Monkey, item: number) {
+    const divisible = item % monkey.divider === 0;
+    const target = this.#monkeys.get(monkey[`throwTo_${divisible}`])!;
+
+    monkey.inspects++;
+    target.items.push(item);
+  }
+
+  #stuffSlinging(monkey: Monkey) {
     for (const old of monkey.items.splice(0)) {
       const item = this.#reduceWorryLevel(
         this.#evalOperation(monkey.operation, old),
       );
-      const target = monkey[`throwTo_${item % monkey.divider === 0}`];
-
-      this.#monkeys.get(target)?.items.push(item);
-      monkey.inspects++;
+      this.#inspect(monkey, item);
     }
   }
 
@@ -78,7 +84,8 @@ class SimianShenanigas {
   }
 }
 
-const businessLevel = new SimianShenanigas(paragraphs.map(parseMonkey))
+const monkeys = paragraphs.map(parseMonkey);
+const businessLevel = new SimianShenanigas(monkeys)
   .stuffSlinging()
   .businessLevel();
 

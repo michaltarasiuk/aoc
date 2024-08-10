@@ -1,22 +1,27 @@
-import {assert} from 'lib/assert';
 import {getInputParagraphs} from 'lib/input';
 import {isKeyOf} from 'lib/is_key_of';
 import {sum} from 'lib/sum';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
-const pairRe = /(\w+):([^\s]+)/g;
+function parsePassport(passport: string[]) {
+  const pairRe = /(\w+):(\S+)/g;
+  const passportEntries = Array.from(
+    passport.join(' ').matchAll(pairRe),
+    ([, key, value]) => [key, value] as const,
+  );
 
-const passports = paragraphs.map((paragraph) =>
-  Object.fromEntries(
-    Array.from(
-      paragraph.join(' ').matchAll(pairRe),
-      ([, key, value]) => [key, value] as const,
-    ),
-  ),
-);
+  return Object.fromEntries(passportEntries);
+}
 
-const PASSPORT_FIELDS = {
+function countValidPassports<Passport extends Record<string, string>>(
+  passports: Passport[],
+  predicate: (passport: Passport) => boolean,
+) {
+  return sum(...passports.map((passport) => Number(predicate(passport))));
+}
+
+const PASSPORT_KEYS = {
   byr: /^(19[2-9]\d|200[0-2])$/,
   iyr: /^(201\d|2020)$/,
   eyr: /^(202\d|2030)$/,
@@ -26,25 +31,15 @@ const PASSPORT_FIELDS = {
   pid: /^\d{9}$/,
 };
 
-function countValidPassports(
-  passports: Record<string, string>[],
-  predicate: (passport: Record<string, string>, key: string) => boolean,
-) {
-  return sum(
-    passports.map((passport) => {
-      const allFieldsValid = Object.keys(PASSPORT_FIELDS).every((key) =>
-        predicate(passport, key),
-      );
-      return Number(allFieldsValid);
-    }),
-  );
-}
+const passports = paragraphs.map(parsePassport);
 
-const validPassportsCount = countValidPassports(passports, isKeyOf);
-const validPassportsCount2 = countValidPassports(passports, (passport, key) => {
-  assert(isKeyOf(PASSPORT_FIELDS, key));
-  return PASSPORT_FIELDS[key].test(passport[key]);
-});
+const validPassportsCount = countValidPassports(passports, (passport) =>
+  Object.keys(PASSPORT_KEYS).every((key) => isKeyOf(passport, key)),
+);
+
+const validPassportsCount2 = countValidPassports(passports, (passport) =>
+  Object.entries(PASSPORT_KEYS).every(([key, re]) => re.test(passport[key])),
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
