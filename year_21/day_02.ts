@@ -4,7 +4,7 @@ import {isKeyOf} from 'lib/is_key_of';
 
 const commands = await getInputLines({year: 2021, day: 2});
 
-function calcDistance<Position extends {horizontal: number; depth: number}>(
+function calcDistance<Position extends Record<string, number>>(
   instructs: Record<
     'forward' | 'down' | 'up',
     (position: Position, units: number) => void
