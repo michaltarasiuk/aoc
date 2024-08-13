@@ -38,32 +38,20 @@ class SimianShenanigas {
     );
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars
-  -- used by eval expression
-  -- operation example: "1 + old"
-  */
-  #evalOperation(operation: string, old: number) {
-    return eval(operation);
-  }
-
-  #reduceWorryLevel(worryLevel: number) {
-    return Math.floor(worryLevel / 3);
-  }
-
-  #inspect(monkey: Monkey, item: number) {
-    const divisible = item % monkey.divider === 0;
-    const target = this.#monkeys.get(monkey[`throwTo_${divisible}`])!;
-
-    monkey.inspects++;
-    target.items.push(item);
-  }
-
   #stuffSlinging(monkey: Monkey) {
+    /* eslint-disable-next-line @typescript-eslint/no-unused-vars
+      -- used by eval expression
+      -- operation example: "1 + old"
+    */
     for (const old of monkey.items.splice(0)) {
-      const item = this.#reduceWorryLevel(
-        this.#evalOperation(monkey.operation, old),
-      );
-      this.#inspect(monkey, item);
+      const worryLevel = eval(monkey.operation);
+      const item = Math.floor(worryLevel / 3);
+
+      const divisible = item % monkey.divider === 0;
+      const throwTo = this.#monkeys.get(monkey[`throwTo_${divisible}`])!;
+
+      monkey.inspects++;
+      throwTo.items.push(item);
     }
   }
 
