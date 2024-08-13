@@ -4,15 +4,14 @@ import {uniq} from 'lib/uniq';
 const input = await getInput({year: 2022, day: 6});
 
 function findLastIndexOfMarker([...characters]: string, length: number) {
-  let lastIndex: number | undefined;
-
   for (const i of characters.keys()) {
-    if (uniq(input.slice(i, i + length)).length === length) {
-      lastIndex = i + length;
-      break;
+    const lastIndex = i + length;
+    const marker = uniq(input.slice(i, lastIndex));
+
+    if (marker.length === length) {
+      return lastIndex;
     }
   }
-  return lastIndex;
 }
 
 const lastIndex = findLastIndexOfMarker(input, 4);
