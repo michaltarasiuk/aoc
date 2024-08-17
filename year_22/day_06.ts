@@ -3,8 +3,8 @@ import {uniq} from 'lib/uniq';
 
 const input = await getInput({year: 2022, day: 6});
 
-function findLastIndexOfMarker([...characters]: string, length: number) {
-  for (const i of characters.keys()) {
+function findLastIndexOfMarker([...chars]: string, length: number) {
+  for (const i of chars.keys()) {
     const lastIndex = i + length;
     const marker = uniq(input.slice(i, lastIndex));
 

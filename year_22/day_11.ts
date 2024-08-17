@@ -44,14 +44,11 @@ class SimianShenanigas {
       -- operation example: "1 + old"
     */
     for (const old of monkey.items.splice(0)) {
-      const worryLevel = eval(monkey.operation);
-      const item = Math.floor(worryLevel / 3);
-
-      const divisible = item % monkey.divider === 0;
-      const throwTo = this.#monkeys.get(monkey[`throwTo_${divisible}`])!;
+      const item = Math.floor(eval(monkey.operation) / 3);
+      const throwToId = monkey[`throwTo_${item % monkey.divider === 0}`];
 
       monkey.inspects++;
-      throwTo.items.push(item);
+      this.#monkeys.get(throwToId)?.items.push(item);
     }
   }
 
