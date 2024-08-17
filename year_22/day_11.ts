@@ -45,10 +45,10 @@ class SimianShenanigas {
     */
     for (const old of monkey.items.splice(0)) {
       const item = Math.floor(eval(monkey.operation) / 3);
-      const throwToId = monkey[`throwTo_${item % monkey.divider === 0}`];
+      const throwTo = monkey[`throwTo_${item % monkey.divider === 0}`];
 
       monkey.inspects++;
-      this.#monkeys.get(throwToId)?.items.push(item);
+      this.#monkeys.get(throwTo)?.items.push(item);
     }
   }
 
