@@ -17,6 +17,7 @@ function countWaysOfBeatRecord(time: number, record: number) {
 }
 
 const [times, distances] = lines.map(matchUints);
+
 const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => {
     const record = distances[i];
@@ -24,10 +25,22 @@ const waysOfBeatRecordProduct = multiply(
   }),
 );
 
+const [longRaceTime, longRaceRecord] = [times, distances].map((value) =>
+  Number(value.join('')),
+);
+const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
+  longRaceTime,
+  longRaceRecord,
+);
+
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(waysOfBeatRecordProduct).toBe(140220);
+  });
+
+  test('part 2', () => {
+    expect(longRaceWaysOfBeatRecord).toBe(39570185);
   });
 }

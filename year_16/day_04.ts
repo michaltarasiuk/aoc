@@ -1,7 +1,7 @@
 import {frequencies} from 'lib/frequencies';
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 import {stringToCodePoints} from 'lib/string_to_code_points';
-import {sum} from 'lib/sum';
 
 const lines = await getInputLines({year: 2016, day: 4});
 

@@ -1,5 +1,5 @@
 import {getInput} from 'lib/input';
-import {sum} from 'lib/sum';
+import {sum} from 'lib/math';
 
 const input = await getInput({year: 2017, day: 1});
 

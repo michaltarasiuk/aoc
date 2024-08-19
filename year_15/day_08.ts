@@ -1,5 +1,5 @@
 import {getInputLines} from 'lib/input';
-import {sum} from 'lib/sum';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2015, day: 8});
 

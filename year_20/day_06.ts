@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {sum} from 'lib/sum';
+import {sum} from 'lib/math';
 import {uniq} from 'lib/uniq';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 6});

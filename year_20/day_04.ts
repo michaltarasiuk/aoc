@@ -1,6 +1,6 @@
 import {getInputParagraphs} from 'lib/input';
 import {isKeyOf} from 'lib/is_key_of';
-import {sum} from 'lib/sum';
+import {sum} from 'lib/math';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 

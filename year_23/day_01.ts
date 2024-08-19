@@ -1,6 +1,6 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 import {raise} from 'lib/raise';
-import {sum} from 'lib/sum';
 
 const lines = await getInputLines({year: 2023, day: 1});
 

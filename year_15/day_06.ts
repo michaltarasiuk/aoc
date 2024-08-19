@@ -2,7 +2,7 @@ import {assert} from 'lib/assert';
 import {create2dArr} from 'lib/create_2d_arr';
 import {getInputLines} from 'lib/input';
 import {isKeyOf} from 'lib/is_key_of';
-import {sum} from 'lib/sum';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2015, day: 6});
 

@@ -1,6 +1,6 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 import {permute} from 'lib/permutate';
-import {sum} from 'lib/sum';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
