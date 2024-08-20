@@ -16,6 +16,10 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
+function concatNumbers(ns: number[]) {
+  return Number(ns.join(''));
+}
+
 const [times, distances] = lines.map(matchUints);
 
 const waysOfBeatRecordProduct = multiply(
@@ -25,12 +29,9 @@ const waysOfBeatRecordProduct = multiply(
   }),
 );
 
-const [longRaceTime, longRaceRecord] = [times, distances].map((value) =>
-  Number(value.join('')),
-);
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
-  longRaceTime,
-  longRaceRecord,
+  concatNumbers(times),
+  concatNumbers(distances),
 );
 
 if (import.meta.vitest) {
