@@ -1,3 +1,4 @@
+import {concatNumbers} from 'lib/concat_numbers';
 import {getInputLines} from 'lib/input';
 import {matchUints} from 'lib/ints';
 import {multiply} from 'lib/math';
@@ -16,10 +17,6 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-function concatNumbers(ns: number[]) {
-  return Number(ns.join(''));
-}
-
 const [times, distances] = lines.map(matchUints);
 
 const waysOfBeatRecordProduct = multiply(
@@ -30,8 +27,8 @@ const waysOfBeatRecordProduct = multiply(
 );
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
-  concatNumbers(times),
-  concatNumbers(distances),
+  concatNumbers(...times),
+  concatNumbers(...distances),
 );
 
 if (import.meta.vitest) {
