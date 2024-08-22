@@ -2,12 +2,12 @@ import {frequencies} from 'lib/frequencies';
 import {getInputParagraphs} from 'lib/input';
 import {isDefined} from 'lib/is_defined';
 
-const [[polymerTemplate], pairInsertionRules] = await getInputParagraphs({
+const [[polymerTemplate], pairInsertRules] = await getInputParagraphs({
   year: 2021,
   day: 14,
 });
 
-function parsePairInsertionRule(rule: string) {
+function parsePairInsertRule(rule: string) {
   const pairInsertionRule = /^(\w{2}) -> (\w)$/;
   const [, pair, insertion] = rule.match(pairInsertionRule) ?? [];
 
@@ -35,9 +35,9 @@ function pairInsertion(
   );
 }
 
-const pairInsertionRulesMap = new Map(
-  pairInsertionRules.map((rule) => {
-    const {pair, insertion} = parsePairInsertionRule(rule);
+const pairInsertRulesMap = new Map(
+  pairInsertRules.map((rule) => {
+    const {pair, insertion} = parsePairInsertRule(rule);
     return [pair, insertion];
   }),
 );
@@ -46,7 +46,7 @@ const STEPS_COUNT = 10;
 
 let polymer = polymerTemplate;
 for (let i = 0; i < STEPS_COUNT; i++) {
-  polymer = pairInsertion(polymer, pairInsertionRulesMap);
+  polymer = pairInsertion(polymer, pairInsertRulesMap);
 }
 
 const frequency = Array.from(frequencies(polymer), ([, count]) => count);
