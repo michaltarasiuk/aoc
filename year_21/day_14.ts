@@ -49,7 +49,7 @@ for (let i = 0; i < STEPS_COUNT; i++) {
   polymer = pairInsertion(polymer, pairInsertionRulesMap);
 }
 
-const frequency = Array.from(frequencies(polymer).values());
+const frequency = Array.from(frequencies(polymer), ([, count]) => count);
 const frequencyRange = Math.max(...frequency) - Math.min(...frequency);
 
 if (import.meta.vitest) {
