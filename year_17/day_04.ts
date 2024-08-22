@@ -1,17 +1,13 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2017, day: 4});
 
 function countValidPassports(
-  lines: string[],
+  passports: string[],
   isValid: (...words: string[]) => boolean,
 ) {
-  return lines.reduce((acc, line) => {
-    if (isValid(...line.split(/\s/))) {
-      acc++;
-    }
-    return acc;
-  }, 0);
+  return sum(...passports.map((passport) => +isValid(...passport.split(/\s/))));
 }
 
 const validPassphrasesCount = countValidPassports(lines, (...words) => {

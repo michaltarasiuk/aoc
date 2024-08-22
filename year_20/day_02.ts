@@ -1,4 +1,5 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2020, day: 2});
 
@@ -9,26 +10,27 @@ function parsePassword(s: string) {
   return {min: Number(min), max: Number(max), char, password};
 }
 
-const validPasswordsCount = lines.reduce((acc, line) => {
-  const {min, max, char, password} = parsePassword(line);
-  const count = password.split(char).length - 1;
+function countValidPasswords(
+  passwords: string[],
+  isValid: (password: ReturnType<typeof parsePassword>) => boolean,
+) {
+  return sum(...passwords.map((password) => +isValid(parsePassword(password))));
+}
 
-  if (count >= min && count <= max) {
-    acc++;
-  }
-  return acc;
-}, 0);
+const validPasswordsCount = countValidPasswords(lines, (password) => {
+  const count = password.password.split(password.char).length - 1;
+  return count >= password.min && count <= password.max;
+});
 
-const validPasswordsCount2 = lines.reduce((acc, line) => {
-  const {min, max, char, password} = parsePassword(line);
-  const minChar = password[min - 1];
-  const maxChar = password[max - 1];
+const validPasswordsCount2 = countValidPasswords(
+  lines,
+  ({min, max, char, password}) => {
+    const minChar = password[min - 1];
+    const maxChar = password[max - 1];
 
-  if ((minChar === char) !== (maxChar === char)) {
-    acc++;
-  }
-  return acc;
-}, 0);
+    return (minChar === char) !== (maxChar === char);
+  },
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
