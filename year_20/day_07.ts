@@ -1,5 +1,4 @@
 import {getInputLines} from 'lib/input';
-import {isDefined} from 'lib/is_defined';
 
 const lines = await getInputLines({year: 2020, day: 7});
 
@@ -10,48 +9,39 @@ function parseRule(rule: string) {
 
   return Array.from(rule.matchAll(bagsRe), ([, count, color]) => ({
     color,
-    get count() {
-      if (!isDefined(count)) {
-        throw new Error('No count');
-      }
-      return Number(count);
-    },
+    count: Number(count),
   }));
 }
 
-class Holders {
-  #holders = new Map<string, Bag[]>();
+function buildBagGraph(rules: string[]) {
+  const holders = new Map(
+    rules.map((line) => {
+      const [holder, ...bags] = parseRule(line);
+      return [holder.color, bags];
+    }),
+  );
 
-  constructor(rules: string[]) {
-    this.#holders = new Map(
-      rules.map((line) => {
-        const [holder, ...bags] = parseRule(line);
-        return [holder.color, bags] as const;
-      }),
-    );
-  }
-
-  #containAtLeastOne(searchBag: string, bags: Bag[]): boolean {
+  const contains = (searchBag: string, ...bags: Bag[]): boolean => {
     return bags.some(
       (bag) =>
         bag.color === searchBag ||
-        this.#containAtLeastOne(searchBag, this.#holders.get(bag.color) ?? []),
+        contains(searchBag, ...(holders.get(bag.color) ?? [])),
     );
-  }
+  };
 
-  countBagsWith(searchBag: string) {
-    let count = 0;
+  return {
+    countBagsWith(searchBag: string) {
+      let count = 0;
 
-    for (const bags of this.#holders.values()) {
-      if (this.#containAtLeastOne(searchBag, bags)) {
-        count++;
+      for (const bags of holders.values()) {
+        if (contains(searchBag, ...bags)) count++;
       }
-    }
-    return count;
-  }
+      return count;
+    },
+  };
 }
 
-const count = new Holders(lines).countBagsWith('shiny gold');
+const count = buildBagGraph(lines).countBagsWith('shiny gold');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
