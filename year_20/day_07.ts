@@ -2,7 +2,8 @@ import {getInputLines} from 'lib/input';
 
 const lines = await getInputLines({year: 2020, day: 7});
 
-type Bag = ReturnType<typeof parseRule>[number];
+type Rule = ReturnType<typeof parseRule>;
+type Bag = Rule[number];
 
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other\b)\w+ \w+\b) bags?/g;
@@ -38,15 +39,30 @@ function buildBagGraph(rules: string[]) {
       }
       return count;
     },
+    countBagsOf(searchBag: string) {
+      let count = 0;
+
+      for (const bag of holders.get(searchBag) ?? []) {
+        count += bag.count + bag.count * this.countBagsOf(bag.color);
+      }
+      return count;
+    },
   };
 }
 
-const count = buildBagGraph(lines).countBagsWith('shiny gold');
+const bagGraph = buildBagGraph(lines);
+
+const bagsWithShinyGoldCount = bagGraph.countBagsWith('shiny gold');
+const bagsOfShinyGoldCount = bagGraph.countBagsOf('shiny gold');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(count).toBe(242);
+    expect(bagsWithShinyGoldCount).toBe(242);
+  });
+
+  test('part 2', () => {
+    expect(bagsOfShinyGoldCount).toBe(176035);
   });
 }
