@@ -23,15 +23,12 @@ function stacksToString(stacks: Record<string, string[]>) {
     .join('');
 }
 
-function rearrangStacks(
-  stacks: string[],
-  mapfn = (crates: string[]) => crates,
-) {
+function rearrangStacks(stacks: string[], fn = (crates: string[]) => crates) {
   return instructions.reduce((acc, instruction) => {
     const [count, from, to] = matchInts(instruction);
     const crates = acc[from].splice(-count);
 
-    acc[to].push(...mapfn(crates));
+    acc[to].push(...fn(crates));
     return acc;
   }, parseStacks(stacks));
 }

@@ -1,4 +1,5 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2016, day: 7});
 
@@ -12,27 +13,23 @@ function parseIPAddress(ipAddress: string) {
   return {supernets: String(supernets), hypernets: String(hypernets)};
 }
 
+const ipAddresses = lines.map(parseIPAddress);
+
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 
-const tlsSupportedIpsCount = lines.reduce((acc, line) => {
-  const {supernets, hypernets} = parseIPAddress(line);
-
-  if (abbaRe.test(supernets) && !abbaRe.test(hypernets)) {
-    acc++;
-  }
-  return acc;
-}, 0);
+const tlsSupportedIpsCount = sum(
+  ...ipAddresses.map(({supernets, hypernets}) =>
+    Number(abbaRe.test(supernets) && !abbaRe.test(hypernets)),
+  ),
+);
 
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
 
-const sslSupportedIpsCount = lines.reduce((acc, line) => {
-  const {supernets, hypernets} = parseIPAddress(line);
-
-  if (abaRe.test(`${supernets}, ${hypernets}`)) {
-    acc++;
-  }
-  return acc;
-}, 0);
+const sslSupportedIpsCount = sum(
+  ...ipAddresses.map(({supernets, hypernets}) =>
+    Number(abaRe.test(`${supernets}, ${hypernets}`)),
+  ),
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

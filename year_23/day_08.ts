@@ -29,10 +29,9 @@ function countStepsToNodes(
   startingNodes: string[],
   predicate: (node: string) => boolean,
 ) {
-  const steps = startingNodes.map((start) =>
-    countStepsToNode(start, predicate),
+  return leastCommonMultiple(
+    ...startingNodes.map((start) => countStepsToNode(start, predicate)),
   );
-  return leastCommonMultiple(...steps);
 }
 
 function nodeEndsWith(node: string, char: string) {

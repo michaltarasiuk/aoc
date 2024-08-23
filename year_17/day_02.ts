@@ -1,28 +1,22 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2017, day: 2});
 
-function parseRow(row: string) {
-  return row.split('\t').map(Number);
-}
-
-const spreadsheetChecksum = lines.reduce((acc, line) => {
-  const ns = parseRow(line);
-  return acc + Math.max(...ns) - Math.min(...ns);
-}, 0);
-
-const rowsSum = lines.reduce((acc, line) => {
-  const ns = parseRow(line);
-
+function findDivisiblePair(...ns: number[]) {
   for (const n of ns) {
     for (const m of ns) {
-      if (n !== m && n % m === 0) {
-        return acc + n / m;
-      }
+      if (n !== m && n % m === 0) return n / m;
     }
   }
-  return acc;
-}, 0);
+}
+
+const rows = lines.map((line) => line.split('\t').map(Number));
+
+const spreadsheetChecksum = sum(
+  ...rows.map((row) => Math.max(...row) - Math.min(...row)),
+);
+const rowsSum = sum(...rows.map((row) => findDivisiblePair(...row) ?? 0));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

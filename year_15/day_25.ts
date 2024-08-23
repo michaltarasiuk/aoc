@@ -7,14 +7,11 @@ function calcSteps(row: number, col: number) {
   return (sum * (sum - 1)) / 2 - row;
 }
 
-const FIRST_CODE = 20151125;
-
-function calcCode(prevCode = FIRST_CODE) {
+function calcCode(prevCode = 20151125) {
   return (prevCode * 252533) % 33554393;
 }
 
 let code: number | undefined;
-
 for (let i = 0; i < calcSteps(row, col); i++) {
   code = calcCode(code);
 }

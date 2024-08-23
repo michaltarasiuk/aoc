@@ -22,8 +22,8 @@ const MONKEY_SCHEMA = z.object({
 });
 
 function parseMonkey(paragraph: string[]) {
-  const groups = paragraph.join('\n').match(monkeyRe)?.groups;
-  return MONKEY_SCHEMA.parse(groups);
+  const monkey = paragraph.join('\n').match(monkeyRe)?.groups;
+  return MONKEY_SCHEMA.parse(monkey);
 }
 
 type MonkeySchema = z.infer<typeof MONKEY_SCHEMA>;
