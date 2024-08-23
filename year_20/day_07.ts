@@ -1,4 +1,5 @@
 import {getInputLines} from 'lib/input';
+import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2020, day: 7});
 
@@ -14,46 +15,37 @@ function parseRule(rule: string) {
   }));
 }
 
-function buildBagGraph(rules: string[]) {
-  const holders = new Map(
-    rules.map((line) => {
-      const [holder, ...bags] = parseRule(line);
-      return [holder.color, bags];
-    }),
+const holders = new Map(
+  lines.map((line) => {
+    const [holder, ...bags] = parseRule(line);
+    return [holder.color, bags];
+  }),
+);
+
+const containsAtLeastOne = (searchBag: string, ...bags: Bag[]): boolean => {
+  return bags.some(
+    (bag) =>
+      bag.color === searchBag ||
+      containsAtLeastOne(searchBag, ...(holders.get(bag.color) ?? [])),
   );
+};
 
-  const contains = (searchBag: string, ...bags: Bag[]): boolean => {
-    return bags.some(
-      (bag) =>
-        bag.color === searchBag ||
-        contains(searchBag, ...(holders.get(bag.color) ?? [])),
-    );
-  };
-
-  return {
-    countBagsWith(searchBag: string) {
-      let count = 0;
-
-      for (const bags of holders.values()) {
-        if (contains(searchBag, ...bags)) count++;
-      }
-      return count;
-    },
-    countBagsOf(searchBag: string) {
-      let count = 0;
-
-      for (const bag of holders.get(searchBag) ?? []) {
-        count += bag.count + bag.count * this.countBagsOf(bag.color);
-      }
-      return count;
-    },
-  };
+function countBagsOf(searchBag: string): number {
+  const counts = Array.from(
+    holders.get(searchBag) ?? [],
+    (bag) => bag.count + bag.count * countBagsOf(bag.color),
+  );
+  return sum(...counts);
 }
 
-const bagGraph = buildBagGraph(lines);
+const SEARCH_BAG = 'shiny gold';
 
-const bagsWithShinyGoldCount = bagGraph.countBagsWith('shiny gold');
-const bagsOfShinyGoldCount = bagGraph.countBagsOf('shiny gold');
+const bagsWithShinyGoldCount = sum(
+  ...Array.from(holders.values(), (bags) =>
+    Number(containsAtLeastOne(SEARCH_BAG, ...bags)),
+  ),
+);
+const bagsOfShinyGoldCount = countBagsOf(SEARCH_BAG);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

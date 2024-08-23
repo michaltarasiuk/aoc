@@ -1,19 +1,19 @@
 import {getInputLines} from 'lib/input';
 import {raise} from 'lib/raise';
 
-const jobs = await getInputLines({year: 2022, day: 21});
+const lines = await getInputLines({year: 2022, day: 21});
 
-const jobsMap = new Map(
-  jobs.map((job) => {
+const jobs = new Map(
+  lines.map((line) => {
     const jobRe = /^(\w{4}): (.+)$/;
-    const [, name, yell] = jobRe.exec(job)!;
+    const [, name, yell] = jobRe.exec(line)!;
 
     return [name, yell];
   }),
 );
 
 function workOutMonkeyNamed(name: string): number {
-  const yell = jobsMap.get(name) ?? raise(`No job for ${name}`);
+  const yell = jobs.get(name) ?? raise(`No job for ${name}`);
   const parsed = Number(yell);
 
   if (Number.isNaN(parsed)) {
