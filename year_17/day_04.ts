@@ -7,7 +7,9 @@ function countValidPassports(
   passports: string[],
   isValid: (...words: string[]) => boolean,
 ) {
-  return sum(...passports.map((passport) => +isValid(...passport.split(/\s/))));
+  return sum(
+    ...passports.map((passport) => Number(isValid(...passport.split(/\s/)))),
+  );
 }
 
 const validPassphrasesCount = countValidPassports(lines, (...words) => {

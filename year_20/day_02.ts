@@ -10,20 +10,22 @@ function parsePassword(s: string) {
   return {min: Number(min), max: Number(max), char, password};
 }
 
-function countValidPasswords(
-  passwords: string[],
-  isValid: (password: ReturnType<typeof parsePassword>) => boolean,
+function countValidPasswords<Password extends ReturnType<typeof parsePassword>>(
+  passwords: Password[],
+  isValid: (password: Password) => boolean,
 ) {
-  return sum(...passwords.map((password) => +isValid(parsePassword(password))));
+  return sum(...passwords.map((password) => Number(isValid(password))));
 }
 
-const validPasswordsCount = countValidPasswords(lines, (password) => {
+const passwords = lines.map(parsePassword);
+
+const validPasswordsCount = countValidPasswords(passwords, (password) => {
   const count = password.password.split(password.char).length - 1;
   return count >= password.min && count <= password.max;
 });
 
 const validPasswordsCount2 = countValidPasswords(
-  lines,
+  passwords,
   ({min, max, char, password}) => {
     const minChar = password[min - 1];
     const maxChar = password[max - 1];
