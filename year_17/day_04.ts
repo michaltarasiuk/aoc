@@ -18,10 +18,10 @@ const validPassphrasesCount = countValidPassports(lines, (...words) => {
 });
 
 const validPassphrasesCount2 = countValidPassports(lines, (...words) => {
-  const uniqueWords = new Set(
+  const uniqWords = new Set(
     words.map(([...chars]) => chars.toSorted().join('')),
   );
-  return words.length === uniqueWords.size;
+  return words.length === uniqWords.size;
 });
 
 if (import.meta.vitest) {
