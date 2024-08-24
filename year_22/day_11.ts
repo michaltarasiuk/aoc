@@ -26,53 +26,42 @@ function parseMonkey(paragraph: string[]) {
   return MONKEY_SCHEMA.parse(monkey);
 }
 
-type MonkeySchema = z.infer<typeof MONKEY_SCHEMA>;
-type Monkey = MonkeySchema & {inspects: number};
+type Monkey = z.infer<typeof MONKEY_SCHEMA> & {inspects: number};
 
-class SimianShenanigas {
-  #monkeys: Map<Monkey['id'], Monkey>;
+function processRound(monkeys: Map<number, Monkey>) {
+  for (const monkey of monkeys.values()) {
+    const items = monkey.items.splice(0);
 
-  constructor(monkeys: MonkeySchema[]) {
-    this.#monkeys = new Map(
-      monkeys.map((monkey) => [monkey.id, {...monkey, inspects: 0}]),
-    );
-  }
-
-  #stuffSlinging(monkey: Monkey) {
-    /* eslint-disable-next-line @typescript-eslint/no-unused-vars
-      -- used by eval expression
-      -- operation example: "1 + old"
-    */
-    for (const old of monkey.items.splice(0)) {
-      const item = Math.floor(eval(monkey.operation) / 3);
-      const throwTo = monkey[`throwTo_${item % monkey.divider === 0}`];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by eval expression
+    for (const old of items) {
+      const newItem = Math.floor(eval(monkey.operation) / 3);
+      const throwTo = monkey[`throwTo_${newItem % monkey.divider === 0}`];
 
       monkey.inspects++;
-      this.#monkeys.get(throwTo)?.items.push(item);
+      monkeys.get(throwTo)!.items.push(newItem);
     }
-  }
-
-  stuffSlinging(rounds = 20) {
-    for (let i = 0; i < rounds; i++) {
-      for (const monkey of this.#monkeys.values()) {
-        this.#stuffSlinging(monkey);
-      }
-    }
-    return this;
-  }
-
-  businessLevel() {
-    const [a, b] = Array.from(this.#monkeys.values()).toSorted(
-      (a, b) => b.inspects - a.inspects,
-    );
-    return a.inspects * b.inspects;
   }
 }
 
-const monkeys = paragraphs.map(parseMonkey);
-const businessLevel = new SimianShenanigas(monkeys)
-  .stuffSlinging()
-  .businessLevel();
+function calcBusinessLevel(monkeys: Map<number, Monkey>) {
+  const [a, b] = Array.from(monkeys.values()).toSorted(
+    (a, b) => b.inspects - a.inspects,
+  );
+  return a.inspects * b.inspects;
+}
+
+const monkeys = new Map<number, Monkey>(
+  paragraphs
+    .map(parseMonkey)
+    .map((monkey) => [monkey.id, {...monkey, inspects: 0}]),
+);
+
+const ROUNDS_COUNT = 20;
+for (let i = 0; i < ROUNDS_COUNT; i++) {
+  processRound(monkeys);
+}
+
+const businessLevel = calcBusinessLevel(monkeys);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
