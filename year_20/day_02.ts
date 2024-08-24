@@ -10,9 +10,9 @@ function parsePassword(s: string) {
   return {min: Number(min), max: Number(max), char, password};
 }
 
-function countValidPasswords<Password extends ReturnType<typeof parsePassword>>(
-  passwords: Password[],
-  isValid: (password: Password) => boolean,
+function countValidPasswords<T extends ReturnType<typeof parsePassword>>(
+  passwords: T[],
+  isValid: (password: T) => boolean,
 ) {
   return sum(...passwords.map((password) => Number(isValid(password))));
 }

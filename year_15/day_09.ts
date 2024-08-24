@@ -15,10 +15,8 @@ const costMap = lines.reduce<{[k: string]: Record<string, number>}>(
   (acc, line) => {
     const {a, b, cost} = parseDistance(line);
 
-    acc[a] ??= {};
-    acc[b] ??= {};
-    acc[a][b] = cost;
-    acc[b][a] = cost;
+    (acc[a] ??= {}), (acc[a][b] = cost);
+    (acc[b] ??= {}), (acc[b][a] = cost);
     return acc;
   },
   {},

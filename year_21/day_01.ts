@@ -1,14 +1,13 @@
 import {getInputInts} from 'lib/input';
+import {sum} from 'lib/math';
 
 const ns = await getInputInts({year: 2021, day: 1});
 
-const increasingMeasurementsCount = ns.reduce(
-  (acc, num, i) => (num > ns[i - 1] ? ++acc : acc),
-  0,
+const increasingMeasurementsCount = sum(
+  ...ns.map((num, i) => Number(num > ns[i - 1])),
 );
-const increasingMeasurementsSumCount = ns.reduce(
-  (acc, num, i) => (num > ns[i - 3] ? ++acc : acc),
-  0,
+const increasingMeasurementsSumCount = sum(
+  ...ns.map((num, i) => Number(num > ns[i - 3])),
 );
 
 if (import.meta.vitest) {

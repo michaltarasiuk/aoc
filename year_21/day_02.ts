@@ -4,12 +4,12 @@ import {isKeyOf} from 'lib/is_key_of';
 
 const commands = await getInputLines({year: 2021, day: 2});
 
-function calcDistance<Position extends Record<string, number>>(
+function calcDistance<T extends Record<string, number>>(
   instructs: Record<
     'forward' | 'down' | 'up',
-    (position: Position, units: number) => void
+    (position: T, units: number) => void
   >,
-  position: Position,
+  position: T,
 ) {
   const {horizontal, depth} = commands.reduce((acc, command) => {
     const [instruct, units] = command.split(/\s/);

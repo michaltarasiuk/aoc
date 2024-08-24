@@ -14,9 +14,9 @@ function parsePassport(passport: string[]) {
   return Object.fromEntries(passportEntries);
 }
 
-function countValidPassports<Passport extends Record<string, string>>(
-  passports: Passport[],
-  predicate: (passport: Passport) => boolean,
+function countValidPassports<T extends Record<string, string>>(
+  passports: T[],
+  predicate: (passport: T) => boolean,
 ) {
   return sum(...passports.map((passport) => Number(predicate(passport))));
 }

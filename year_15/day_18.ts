@@ -42,8 +42,8 @@ function animate(lights: Lights) {
 }
 
 const STEPS_COUNT = 100;
-let lights = grid;
 
+let lights = grid;
 for (let i = 0; i < STEPS_COUNT; i++) {
   lights = animate(lights);
 }
