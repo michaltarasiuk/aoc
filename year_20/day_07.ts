@@ -15,6 +15,28 @@ function parseRule(rule: string) {
   }));
 }
 
+function containsAtLeastOne(
+  holders: Map<string, Bag[]>,
+  holderBag: string,
+  searchBag: string,
+): boolean {
+  const bags = holders.get(holderBag) ?? [];
+
+  return bags.some(
+    (bag) =>
+      bag.color === searchBag ||
+      containsAtLeastOne(holders, bag.color, searchBag),
+  );
+}
+
+function countBagsOf(holders: Map<string, Bag[]>, searchBag: string): number {
+  const counts = Array.from(
+    holders.get(searchBag) ?? [],
+    (bag) => bag.count + bag.count * countBagsOf(holders, bag.color),
+  );
+  return sum(...counts);
+}
+
 const holders = new Map(
   lines.map((line) => {
     const [holder, ...bags] = parseRule(line);
@@ -22,30 +44,14 @@ const holders = new Map(
   }),
 );
 
-const containsAtLeastOne = (searchBag: string, ...bags: Bag[]): boolean => {
-  return bags.some(
-    (bag) =>
-      bag.color === searchBag ||
-      containsAtLeastOne(searchBag, ...(holders.get(bag.color) ?? [])),
-  );
-};
-
-function countBagsOf(searchBag: string): number {
-  const counts = Array.from(
-    holders.get(searchBag) ?? [],
-    (bag) => bag.count + bag.count * countBagsOf(bag.color),
-  );
-  return sum(...counts);
-}
-
 const SEARCH_BAG = 'shiny gold';
 
 const bagsWithShinyGoldCount = sum(
-  ...Array.from(holders.values(), (bags) =>
-    Number(containsAtLeastOne(SEARCH_BAG, ...bags)),
+  ...Array.from(holders.keys(), (holderBag) =>
+    Number(containsAtLeastOne(holders, holderBag, SEARCH_BAG)),
   ),
 );
-const bagsOfShinyGoldCount = countBagsOf(SEARCH_BAG);
+const bagsOfShinyGoldCount = countBagsOf(holders, SEARCH_BAG);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
