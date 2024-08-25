@@ -15,24 +15,22 @@ function parseRule(rule: string) {
   }));
 }
 
-function containsAtLeastOne(
-  holders: Map<string, Bag[]>,
-  holderBag: string,
+function containsBag(
   searchBag: string,
+  holderBag: string,
+  holders: Map<string, Bag[]>,
 ): boolean {
   const bags = holders.get(holderBag) ?? [];
-
   return bags.some(
     (bag) =>
-      bag.color === searchBag ||
-      containsAtLeastOne(holders, bag.color, searchBag),
+      bag.color === searchBag || containsBag(searchBag, bag.color, holders),
   );
 }
 
-function countBagsOf(holders: Map<string, Bag[]>, searchBag: string): number {
+function countBagsOf(searchBag: string, holders: Map<string, Bag[]>): number {
   const counts = Array.from(
     holders.get(searchBag) ?? [],
-    (bag) => bag.count + bag.count * countBagsOf(holders, bag.color),
+    (bag) => bag.count + bag.count * countBagsOf(bag.color, holders),
   );
   return sum(...counts);
 }
@@ -47,11 +45,11 @@ const holders = new Map(
 const SEARCH_BAG = 'shiny gold';
 
 const bagsWithShinyGoldCount = sum(
-  ...Array.from(holders.keys(), (holderBag) =>
-    Number(containsAtLeastOne(holders, holderBag, SEARCH_BAG)),
+  ...Array.from(holders.keys(), (holder) =>
+    Number(containsBag(SEARCH_BAG, holder, holders)),
   ),
 );
-const bagsOfShinyGoldCount = countBagsOf(holders, SEARCH_BAG);
+const bagsOfShinyGoldCount = countBagsOf(SEARCH_BAG, holders);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

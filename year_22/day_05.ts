@@ -8,13 +8,13 @@ function parseCrate(crate: string) {
   return emptyCrateRe.test(crate) ? undefined : crate;
 }
 
-function parseStacks([ids, ...supplies]: string[]) {
-  return matchInts(ids).reduce<Record<string, string[]>>((acc, id) => {
-    const i = ids.indexOf(String(id));
-
-    acc[id] = supplies.flatMap((crates) => parseCrate(crates[i]) ?? []);
-    return acc;
-  }, {});
+function parseStacks([ids, ...stacks]: string[]) {
+  return Object.fromEntries(
+    matchInts(ids).map((id) => {
+      const i = ids.indexOf(String(id));
+      return [id, stacks.flatMap((crates) => parseCrate(crates[i]) ?? [])];
+    }),
+  );
 }
 
 function stacksToString(stacks: Record<string, string[]>) {

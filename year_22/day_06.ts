@@ -12,6 +12,7 @@ function findLastIndexOfMarker([...chars]: string, length: number) {
       return lastIndex;
     }
   }
+  return -1;
 }
 
 const lastIndex = findLastIndexOfMarker(input, 4);

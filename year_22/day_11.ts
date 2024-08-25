@@ -21,24 +21,29 @@ const MONKEY_SCHEMA = z.object({
   throwTo_false: z.string().transform(Number),
 });
 
+type Monkey = ReturnType<typeof parseMonkey>;
+
 function parseMonkey(paragraph: string[]) {
   const monkey = paragraph.join('\n').match(monkeyRe)?.groups;
-  return MONKEY_SCHEMA.parse(monkey);
+  return {inspects: 0, ...MONKEY_SCHEMA.parse(monkey)};
 }
 
-type Monkey = z.infer<typeof MONKEY_SCHEMA> & {inspects: number};
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars
+  -- Used by eval expression
+  -- Operation example: "1 + old"
+*/
+function inspect(monkey: Monkey, old: number) {
+  monkey.inspects++;
+  return Math.floor(eval(monkey.operation) / 3);
+}
 
 function processRound(monkeys: Map<number, Monkey>) {
   for (const monkey of monkeys.values()) {
-    const items = monkey.items.splice(0);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by eval expression
-    for (const old of items) {
-      const newItem = Math.floor(eval(monkey.operation) / 3);
+    for (const item of monkey.items.splice(0)) {
+      const newItem = inspect(monkey, item);
       const throwTo = monkey[`throwTo_${newItem % monkey.divider === 0}`];
 
-      monkey.inspects++;
-      monkeys.get(throwTo)!.items.push(newItem);
+      monkeys.get(throwTo)?.items.push(newItem);
     }
   }
 }
@@ -50,10 +55,8 @@ function calcBusinessLevel(monkeys: Map<number, Monkey>) {
   return a.inspects * b.inspects;
 }
 
-const monkeys = new Map<number, Monkey>(
-  paragraphs
-    .map(parseMonkey)
-    .map((monkey) => [monkey.id, {...monkey, inspects: 0}]),
+const monkeys = new Map(
+  paragraphs.map(parseMonkey).map((monkey) => [monkey.id, monkey]),
 );
 
 const ROUNDS_COUNT = 20;
