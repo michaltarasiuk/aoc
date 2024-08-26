@@ -15,41 +15,42 @@ function parseRule(rule: string) {
   }));
 }
 
-function containsBag(
-  searchBag: string,
-  holderBag: string,
-  holders: Map<string, Bag[]>,
-): boolean {
-  const bags = holders.get(holderBag) ?? [];
-  return bags.some(
-    (bag) =>
-      bag.color === searchBag || containsBag(searchBag, bag.color, holders),
-  );
-}
+class Rules {
+  #rules: Map<string, Bag[]>;
+  constructor(rules: Rule[]) {
+    this.#rules = new Map(rules.map(([{color}, ...bags]) => [color, bags]));
+  }
 
-function countBagsOf(searchBag: string, holders: Map<string, Bag[]>): number {
-  const counts = Array.from(
-    holders.get(searchBag) ?? [],
-    (bag) => bag.count + bag.count * countBagsOf(bag.color, holders),
-  );
-  return sum(...counts);
-}
+  #includesBag(holder: string, search: string): boolean {
+    const bags = this.#rules.get(holder) ?? [];
+    return bags.some(
+      (bag) => bag.color === search || this.#includesBag(bag.color, search),
+    );
+  }
+  countBagsWith(search: string) {
+    return sum(
+      ...Array.from(this.#rules.keys(), (holder) =>
+        Number(this.#includesBag(holder, search)),
+      ),
+    );
+  }
 
-const holders = new Map(
-  lines.map((line) => {
-    const [holder, ...bags] = parseRule(line);
-    return [holder.color, bags];
-  }),
-);
+  countBagsOf(search: string): number {
+    return sum(
+      ...Array.from(
+        this.#rules.get(search) ?? [],
+        (bag) => bag.count + bag.count * this.countBagsOf(bag.color),
+      ),
+    );
+  }
+}
 
 const SEARCH_BAG = 'shiny gold';
 
-const bagsWithShinyGoldCount = sum(
-  ...Array.from(holders.keys(), (holder) =>
-    Number(containsBag(SEARCH_BAG, holder, holders)),
-  ),
-);
-const bagsOfShinyGoldCount = countBagsOf(SEARCH_BAG, holders);
+const rules = new Rules(lines.map(parseRule));
+
+const bagsWithShinyGoldCount = rules.countBagsWith(SEARCH_BAG);
+const bagsOfShinyGoldCount = rules.countBagsOf(SEARCH_BAG);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
