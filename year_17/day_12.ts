@@ -24,6 +24,22 @@ function findGroup(programs: Map<string, string[]>, start: string) {
   return group;
 }
 
+function countGroups(init: Map<string, string[]>) {
+  const programs = new Map(init);
+  let count = 0;
+
+  while (programs.size > 0) {
+    const start = programs.keys().next().value;
+    const group = findGroup(programs, start);
+
+    for (const id of group) {
+      programs.delete(id);
+    }
+    count++;
+  }
+  return count;
+}
+
 const programs = new Map(
   lines.map((line) => {
     const {id, connections} = parseProgram(line);
@@ -32,11 +48,16 @@ const programs = new Map(
 );
 
 const group0 = findGroup(programs, '0');
+const groupsCount = countGroups(programs);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(group0.size).toBe(145);
+  });
+
+  test('part 2', () => {
+    expect(groupsCount).toBe(207);
   });
 }
