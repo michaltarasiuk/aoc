@@ -24,20 +24,13 @@ function findGroup(programs: Map<string, string[]>, start: string) {
   return group;
 }
 
-function countGroups(init: Map<string, string[]>) {
-  const programs = new Map(init);
-  let count = 0;
+function countGroups(programs: Map<string, string[]>) {
+  const groups = new Set<string>();
 
-  while (programs.size > 0) {
-    const start = programs.keys().next().value;
-    const group = findGroup(programs, start);
-
-    for (const id of group) {
-      programs.delete(id);
-    }
-    count++;
+  for (const id of programs.keys()) {
+    groups.add([...findGroup(programs, id)].toSorted().join());
   }
-  return count;
+  return groups.size;
 }
 
 const programs = new Map(
