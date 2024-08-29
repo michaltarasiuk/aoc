@@ -9,15 +9,21 @@ const cards = new Map(
     return [id, new Set(a).intersection(new Set(b))] as const;
   }),
 );
+function calcPoints(cards: Map<number, Set<number>>) {
+  let points = 0;
 
-let points = 0;
-for (const [, matches] of cards) {
-  if (matches.size) {
-    points += Math.pow(2, matches.size - 1);
+  for (const [, matches] of cards) {
+    if (matches.size) {
+      points += Math.pow(2, matches.size - 1);
+    }
   }
+  return points;
 }
 
-function findTotalCards(ids = Array.from(cards.keys())) {
+function findTotalCards(
+  cards: Map<number, Set<number>>,
+  ids = Array.from(cards.keys()),
+) {
   let count = 0;
 
   for (const id of ids) {
@@ -25,12 +31,13 @@ function findTotalCards(ids = Array.from(cards.keys())) {
       {length: cards.get(id)!.size},
       (_, i) => id + i + 1,
     );
-    count += findTotalCards(scratchcards);
+    count += findTotalCards(cards, scratchcards);
   }
   return count + ids.length;
 }
 
-const totalCards = findTotalCards();
+const points = calcPoints(cards);
+const totalCards = findTotalCards(cards);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

@@ -24,8 +24,7 @@ function stacksToString(stacks: Record<string, string[]>) {
 }
 
 function rearrangStacks(stacks: string[], fn = (crates: string[]) => crates) {
-  return instructions.reduce((acc, instruction) => {
-    const [count, from, to] = matchInts(instruction);
+  return instructions.map(matchInts).reduce((acc, [count, from, to]) => {
     const crates = acc[from].splice(-count);
 
     acc[to].push(...fn(crates));

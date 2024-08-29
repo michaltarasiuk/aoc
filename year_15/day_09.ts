@@ -11,7 +11,19 @@ function parseDistance(distance: string) {
   return {a, b, cost: Number(cost)};
 }
 
-const costMap = lines.reduce<{[k: string]: Record<string, number>}>(
+function calcRouteCost(
+  costs: Record<string, Record<string, number>>,
+  route: string[],
+) {
+  return sum(
+    ...route.map((city, i) => {
+      const dest = route[i + 1];
+      return costs[city][dest] ?? 0;
+    }),
+  );
+}
+
+const costs = lines.reduce<{[k: string]: Record<string, number>}>(
   (acc, line) => {
     const {a, b, cost} = parseDistance(line);
 
@@ -21,24 +33,14 @@ const costMap = lines.reduce<{[k: string]: Record<string, number>}>(
   },
   {},
 );
-const costMapKeys = Object.keys(costMap);
 
-function calcRouteCost(cities: string[]) {
-  return sum(
-    cities.map((city, i) => {
-      const dest = cities[i + 1];
-      return costMap[city][dest] ?? 0;
-    }),
-  );
-}
-
-const costs = permute(costMapKeys).reduce<number[]>(
-  (acc, cities) => acc.concat(calcRouteCost(cities)),
+const allRouteCosts = permute(Object.keys(costs)).reduce<number[]>(
+  (acc, route) => acc.concat(calcRouteCost(costs, route)),
   [],
 );
 
-const minCost = Math.min(...costs);
-const maxCost = Math.max(...costs);
+const minCost = Math.min(...allRouteCosts);
+const maxCost = Math.max(...allRouteCosts);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

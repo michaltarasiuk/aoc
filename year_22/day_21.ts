@@ -3,6 +3,17 @@ import {raise} from 'lib/raise';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
+function workOutMonkeyNamed(jobs: Map<string, string>, name: string): number {
+  const yell = jobs.get(name) ?? raise(`No job for ${name}`);
+  const parsed = Number(yell);
+
+  if (Number.isNaN(parsed)) {
+    const [a, op, b] = yell.split(/\s/);
+    return eval(workOutMonkeyNamed(jobs, a) + op + workOutMonkeyNamed(jobs, b));
+  }
+  return parsed;
+}
+
 const jobs = new Map(
   lines.map((line) => {
     const jobRe = /^(\w{4}): (.+)$/;
@@ -12,18 +23,7 @@ const jobs = new Map(
   }),
 );
 
-function workOutMonkeyNamed(name: string): number {
-  const yell = jobs.get(name) ?? raise(`No job for ${name}`);
-  const parsed = Number(yell);
-
-  if (Number.isNaN(parsed)) {
-    const [a, op, b] = yell.split(/\s/);
-    return eval(workOutMonkeyNamed(a) + op + workOutMonkeyNamed(b));
-  }
-  return parsed;
-}
-
-const yell = workOutMonkeyNamed('root');
+const yell = workOutMonkeyNamed(jobs, 'root');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
