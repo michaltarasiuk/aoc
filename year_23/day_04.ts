@@ -9,10 +9,11 @@ const cards = new Map(
     return [id, new Set(a).intersection(new Set(b))] as const;
   }),
 );
+
 function calcPoints(cards: Map<number, Set<number>>) {
   let points = 0;
 
-  for (const [, matches] of cards) {
+  for (const matches of cards.values()) {
     if (matches.size) {
       points += Math.pow(2, matches.size - 1);
     }
