@@ -8,7 +8,7 @@ const digitRe = /\d/;
 const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
 
 const calibrationValuesSum = sum(
-  lines.map((line) => {
+  ...lines.map((line) => {
     const first = line.match(digitRe)?.at(0) ?? raise('No digit');
     const last = line.match(lastdigitRe)?.at(1) ?? first;
 
