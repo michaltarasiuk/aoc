@@ -2,40 +2,41 @@ import {getInputLines} from 'lib/input';
 
 const lines = await getInputLines({year: 2020, day: 8});
 
-function runProgram(instructions: {op: string; arg: number}[]) {
-  const state = {acc: 0, ip: 0};
+function runProgram(...instructions: {op: string; arg: number}[]) {
+  let acc = 0;
+  let ip = 0;
   const seen = new Set<number>();
 
   while (true) {
-    if (seen.has(state.ip)) {
+    if (seen.has(ip)) {
       break;
     } else {
-      seen.add(state.ip);
+      seen.add(ip);
     }
+    const {op, arg} = instructions[ip];
 
-    const {op, arg} = instructions[state.ip];
     switch (op) {
       case 'acc':
-        state.acc += arg;
-        state.ip++;
+        acc += arg;
+        ip++;
         break;
       case 'jmp':
-        state.ip += arg;
+        ip += arg;
         break;
       case 'nop':
-        state.ip++;
+        ip++;
         break;
     }
   }
-  return state.acc;
+  return acc;
 }
 
-const instructions = lines.map((line) => {
-  const [op, arg] = line.split(/\s/);
-  return {op, arg: Number(arg)};
-});
-
-const acc = runProgram(instructions);
+const acc = runProgram(
+  ...lines.map((line) => {
+    const [op, arg] = line.split(/\s/);
+    return {op, arg: Number(arg)};
+  }),
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
