@@ -3,23 +3,23 @@ import {matchInts} from 'lib/ints';
 
 const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 
-const maps = paragraphs.map(([, ...maps]) => maps.map(matchInts));
-
-function findLocation(value: number, level = 0) {
-  if (level === maps.length) {
+function findLocation([...maps]: number[][][], value: number) {
+  const map = maps.shift();
+  if (!map) {
     return value;
   }
 
-  for (const [destination, source, length] of maps[level]) {
+  for (const [destination, source, length] of map) {
     if (value >= source && value < source + length) {
-      return findLocation(destination + (value - source), level + 1);
+      return findLocation(maps, destination + (value - source));
     }
   }
-  return findLocation(value, level + 1);
+  return findLocation(maps, value);
 }
 
+const maps = paragraphs.map(([, ...maps]) => maps.map(matchInts));
 const lowestLocation = Math.min(
-  ...matchInts(seeds).map((seed) => findLocation(seed)),
+  ...matchInts(seeds).map((seed) => findLocation(maps, seed)),
 );
 
 if (import.meta.vitest) {
