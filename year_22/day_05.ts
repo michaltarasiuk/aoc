@@ -8,7 +8,11 @@ function parseCrate(crate: string) {
   return emptyCrateRe.test(crate) ? undefined : crate;
 }
 
-function parseStacks([ids, ...stacks]: string[]) {
+type Stacks = ReturnType<typeof parseStacks>;
+
+function parseStacks([...stacks]: string[]) {
+  const ids = stacks.pop()!;
+
   return Object.fromEntries(
     matchInts(ids).map((id) => {
       const i = ids.indexOf(String(id));
@@ -17,30 +21,31 @@ function parseStacks([ids, ...stacks]: string[]) {
   );
 }
 
-function stacksToString(stacks: Record<string, string[]>) {
+function stacksToString(stacks: Stacks) {
   return Object.values(stacks)
-    .flatMap((crates) => crates.at(-1) ?? [])
+    .map(([crate]) => crate)
     .join('');
 }
 
-function rearrangStacks(stacks: string[], fn = (crates: string[]) => crates) {
+function rearrangeStacks(
+  stacks: Stacks,
+  instructions: string[],
+  fn = (crates: string[]) => crates,
+) {
   return instructions.map(matchInts).reduce((acc, [count, from, to]) => {
-    const crates = acc[from].splice(-count);
-
-    acc[to].push(...fn(crates));
-    return acc;
-  }, parseStacks(stacks));
+    const crates = acc[from].splice(0, count);
+    return acc[to].unshift(...fn(crates)), acc;
+  }, structuredClone(stacks));
 }
 
-const reversedStacks = stacks.toReversed();
+const parsedStacks = parseStacks(stacks);
 
-const rearrangedStacks = rearrangStacks(reversedStacks, (crates) =>
-  crates.toReversed(),
+const serializedStacks = stacksToString(
+  rearrangeStacks(parsedStacks, instructions, (crates) => crates.toReversed()),
 );
-const rearrangedStacks2 = rearrangStacks(reversedStacks);
-
-const serializedStacks = stacksToString(rearrangedStacks);
-const serializedStacks2 = stacksToString(rearrangedStacks2);
+const serializedStacks2 = stacksToString(
+  rearrangeStacks(parsedStacks, instructions),
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

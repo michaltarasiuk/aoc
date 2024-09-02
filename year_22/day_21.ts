@@ -3,7 +3,9 @@ import {raise} from 'lib/raise';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-function yell(monkeys: Map<string, string>, name: string): number {
+type Monkeys = Map<string, string>;
+
+function yell(monkeys: Monkeys, name: string): number {
   const job = monkeys.get(name) ?? raise(`No job for ${name}`);
   const parsed = Number(job);
 
@@ -14,7 +16,7 @@ function yell(monkeys: Map<string, string>, name: string): number {
   return parsed;
 }
 
-const monkeys = new Map(
+const monkeys: Monkeys = new Map(
   lines.map((line) => {
     const monkeyRe = /^(\w{4}): (.+)$/;
     const [, name, job] = monkeyRe.exec(line)!;

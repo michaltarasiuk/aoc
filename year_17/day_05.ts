@@ -2,7 +2,7 @@ import {getInputInts} from 'lib/input';
 
 const ints = await getInputInts({year: 2017, day: 5});
 
-function calcStepsToExit(
+function calcSteps(
   [...offsets]: number[],
   jump: (offsets: number[], offset: number) => number,
 ) {
@@ -16,11 +16,8 @@ function calcStepsToExit(
   return steps;
 }
 
-const stepsToExit = calcStepsToExit(
-  ints,
-  (offsets, offset) => offsets[offset]++,
-);
-const stepsToExit2 = calcStepsToExit(ints, (offsets, offset) =>
+const steps = calcSteps(ints, (offsets, offset) => offsets[offset]++);
+const steps2 = calcSteps(ints, (offsets, offset) =>
   offsets[offset] >= 3 ? offsets[offset]-- : offsets[offset]++,
 );
 
@@ -28,10 +25,10 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(stepsToExit).toBe(373160);
+    expect(steps).toBe(373160);
   });
 
   test('part 2', () => {
-    expect(stepsToExit2).toBe(26395586);
+    expect(steps2).toBe(26395586);
   });
 }
