@@ -44,7 +44,7 @@ function compareHands(a: string, b: string) {
 }
 
 const hands = lines
-  .map((line) => {
+  .map(line => {
     const [hand, bid] = line.split(/\s/);
     return {hand, bid: Number(bid), type: classifyHand(hand)};
   })
@@ -59,7 +59,7 @@ const totalWinnings = sum(
   ...hands.map(({bid}, i) => {
     const rank = i + 1;
     return bid * rank;
-  }),
+  })
 );
 
 if (import.meta.vitest) {

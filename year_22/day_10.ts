@@ -32,9 +32,7 @@ const instructions = lines.flatMap((line): Instruction[] => {
 
 const CYCLES = [20, 60, 100, 140, 180, 220];
 const sumOfSignals = sum(
-  ...CYCLES.map(
-    (cycle) => cycle * calcSignal(instructions.slice(0, cycle - 1)),
-  ),
+  ...CYCLES.map(cycle => cycle * calcSignal(instructions.slice(0, cycle - 1)))
 );
 
 if (import.meta.vitest) {

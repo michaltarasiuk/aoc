@@ -7,7 +7,7 @@ function getErrorCorrectedMessage(comparefn: (a: number, b: number) => number) {
   return cols.reduce((acc, chars) => {
     const charsCount = frequencies(chars);
     const [[char]] = Array.from(charsCount).toSorted((a, b) =>
-      comparefn(a[1], b[1]),
+      comparefn(a[1], b[1])
     );
 
     return acc + char;

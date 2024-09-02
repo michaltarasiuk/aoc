@@ -14,7 +14,7 @@ function parseInstruction(instruction: string) {
 }
 
 function countLights(
-  actions: Record<'turn on' | 'turn off' | 'toggle', (val: number) => number>,
+  actions: Record<'turn on' | 'turn off' | 'toggle', (val: number) => number>
 ) {
   const lights = create2dArr(1_000, 0);
 
@@ -34,13 +34,13 @@ function countLights(
 const litLightsCount = countLights({
   'turn on': () => 1,
   'turn off': () => 0,
-  toggle: (val) => +!val,
+  toggle: val => +!val,
 });
 
 const totalBrightness = countLights({
-  'turn on': (val) => val + 1,
-  'turn off': (val) => Math.max(val - 1, 0),
-  toggle: (val) => val + 2,
+  'turn on': val => val + 1,
+  'turn off': val => Math.max(val - 1, 0),
+  toggle: val => val + 2,
 });
 
 if (import.meta.vitest) {

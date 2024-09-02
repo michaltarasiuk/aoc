@@ -14,10 +14,10 @@ function parseStacks([...stacks]: string[]) {
   const ids = stacks.pop()!;
 
   return Object.fromEntries(
-    matchInts(ids).map((id) => {
+    matchInts(ids).map(id => {
       const i = ids.indexOf(String(id));
-      return [id, stacks.flatMap((crates) => parseCrate(crates[i]) ?? [])];
-    }),
+      return [id, stacks.flatMap(crates => parseCrate(crates[i]) ?? [])];
+    })
   );
 }
 
@@ -30,7 +30,7 @@ function stacksToString(stacks: Stacks) {
 function rearrangeStacks(
   stacks: Stacks,
   instructions: string[],
-  fn = (crates: string[]) => crates,
+  fn = (crates: string[]) => crates
 ) {
   return instructions.map(matchInts).reduce((acc, [count, from, to]) => {
     const crates = acc[from].splice(0, count);
@@ -41,10 +41,10 @@ function rearrangeStacks(
 const parsedStacks = parseStacks(stacks);
 
 const serializedStacks = stacksToString(
-  rearrangeStacks(parsedStacks, instructions, (crates) => crates.toReversed()),
+  rearrangeStacks(parsedStacks, instructions, crates => crates.toReversed())
 );
 const serializedStacks2 = stacksToString(
-  rearrangeStacks(parsedStacks, instructions),
+  rearrangeStacks(parsedStacks, instructions)
 );
 
 if (import.meta.vitest) {

@@ -8,7 +8,7 @@ const ns = lines.map(({length}) => length);
 const ns2 = (<string[]>eval(`[${lines.join()}]`)).map(({length}) => length);
 const stringLiteralMemoryDiff = sum(...ns) - sum(...ns2);
 
-const ns3 = lines.map((line) => JSON.stringify(line).length);
+const ns3 = lines.map(line => JSON.stringify(line).length);
 const stringLiteralMemoryDiff2 = sum(...ns3) - sum(...ns);
 
 if (import.meta.vitest) {

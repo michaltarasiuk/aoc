@@ -22,7 +22,7 @@ function findTotalCards(cards: Cards, ids = Array.from(cards.keys())) {
   for (const id of ids) {
     const scratchcards = Array.from(
       {length: cards.get(id)!.size},
-      (_, i) => id + i + 1,
+      (_, i) => id + i + 1
     );
     count += findTotalCards(cards, scratchcards);
   }
@@ -30,10 +30,10 @@ function findTotalCards(cards: Cards, ids = Array.from(cards.keys())) {
 }
 
 const cards: Cards = new Map(
-  lines.map((line) => {
+  lines.map(line => {
     const [[id, ...a], b] = line.split('|').map(matchInts);
     return [id, new Set(a).intersection(new Set(b))] as const;
-  }),
+  })
 );
 
 const points = calcPoints(cards);

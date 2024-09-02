@@ -8,7 +8,7 @@ let threes = 0;
 
 for (const line of lines) {
   const counts = new Map(
-    Array.from(frequencies(line), ([char, count]) => [count, char]),
+    Array.from(frequencies(line), ([char, count]) => [count, char])
   );
 
   if (counts.has(2)) twos++;

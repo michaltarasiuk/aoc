@@ -24,14 +24,14 @@ class Rules {
   #includesBag(holder: string, search: string): boolean {
     const bags = this.#rules.get(holder) ?? [];
     return bags.some(
-      (bag) => bag.color === search || this.#includesBag(bag.color, search),
+      bag => bag.color === search || this.#includesBag(bag.color, search)
     );
   }
   countBagsWith(search: string) {
     return sum(
-      ...Array.from(this.#rules.keys(), (holder) =>
-        Number(this.#includesBag(holder, search)),
-      ),
+      ...Array.from(this.#rules.keys(), holder =>
+        Number(this.#includesBag(holder, search))
+      )
     );
   }
 
@@ -39,8 +39,8 @@ class Rules {
     return sum(
       ...Array.from(
         this.#rules.get(search) ?? [],
-        (bag) => bag.count + bag.count * this.countBagsOf(bag.color),
-      ),
+        bag => bag.count + bag.count * this.countBagsOf(bag.color)
+      )
     );
   }
 }

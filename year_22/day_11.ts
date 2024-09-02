@@ -50,13 +50,13 @@ function processRound(monkeys: Map<number, Monkey>) {
 
 function calcBusinessLevel(monkeys: Map<number, Monkey>) {
   const [a, b] = Array.from(monkeys.values()).toSorted(
-    (a, b) => b.inspects - a.inspects,
+    (a, b) => b.inspects - a.inspects
   );
   return a.inspects * b.inspects;
 }
 
 const monkeys = new Map(
-  paragraphs.map(parseMonkey).map((monkey) => [monkey.id, monkey]),
+  paragraphs.map(parseMonkey).map(monkey => [monkey.id, monkey])
 );
 
 const ROUNDS_COUNT = 20;

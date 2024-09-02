@@ -16,7 +16,7 @@ function parsePairInsertRule(rule: string) {
 
 function pairInsertion(
   [a, b, ...rest]: string,
-  rules: Map<string, string>,
+  rules: Map<string, string>
 ): string {
   if (!isDefined(b)) {
     return a;
@@ -36,10 +36,10 @@ function pairInsertion(
 }
 
 const pairInsertRulesMap = new Map(
-  pairInsertRules.map((rule) => {
+  pairInsertRules.map(rule => {
     const {pair, insertion} = parsePairInsertRule(rule);
     return [pair, insertion];
-  }),
+  })
 );
 
 const STEPS_COUNT = 10;

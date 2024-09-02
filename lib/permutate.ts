@@ -3,7 +3,7 @@ export function permute<T>(items: T[]): T[][] {
     return [[]];
   }
   const [first, ...rest] = items;
-  return permute(rest).flatMap((items) => interleave(first!, items));
+  return permute(rest).flatMap(items => interleave(first!, items));
 }
 
 function interleave<T>(item: T, items: T[]): T[][] {
@@ -13,6 +13,6 @@ function interleave<T>(item: T, items: T[]): T[][] {
   const [first, ...rest] = items;
   return [
     [item, first, ...rest],
-    ...interleave(item, rest).map((items) => [first, ...items]),
+    ...interleave(item, rest).map(items => [first, ...items]),
   ];
 }

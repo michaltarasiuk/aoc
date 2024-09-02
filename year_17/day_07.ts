@@ -10,7 +10,7 @@ function parseProgram(program: string) {
 }
 
 function findRoot(programs: ReturnType<typeof parseProgram>[]) {
-  const children = new Set(programs.flatMap((p) => p.children));
+  const children = new Set(programs.flatMap(p => p.children));
 
   for (const program of programs) {
     if (!children.has(program.name)) {

@@ -10,7 +10,7 @@ function md5(data: crypto.BinaryLike) {
 
 function waitUntilStartsWith(
   {string, searchString}: {string: string; searchString: string},
-  init = 0,
+  init = 0
 ) {
   let n = init;
   while (!md5(string + n).startsWith(searchString)) n++;

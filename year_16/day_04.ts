@@ -29,10 +29,10 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 }
 
 const realRoomSectorIDsSum = sum(
-  ...lines.map((line) => {
+  ...lines.map(line => {
     const {name, id, checksum} = parseRoom(line);
     return checksum === calcChecksum(...name) ? id : 0;
-  }),
+  })
 );
 
 const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
@@ -41,9 +41,9 @@ let northPoleSectorID: number | undefined;
 for (const line of lines) {
   const {name, id} = parseRoom(line);
   const decoded = String.fromCodePoint(
-    ...stringToCodePoints(name, (codePoint) =>
-      shiftAlphabetCodePoint(codePoint, id),
-    ),
+    ...stringToCodePoints(name, codePoint =>
+      shiftAlphabetCodePoint(codePoint, id)
+    )
   );
 
   if (decoded === NORTH_POLE_OBJECT_STORAGE) {

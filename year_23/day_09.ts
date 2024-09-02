@@ -8,14 +8,14 @@ function extrapolate(...ns: number[]): number[] {
   const differences = ns.slice(0, -1).map((n, i) => ns.at(i + 1)! - n);
   const last = ns.at(-1)!;
 
-  if (differences.every((difference) => difference === 0)) {
+  if (differences.every(difference => difference === 0)) {
     return [last];
   }
   return [last, ...extrapolate(...differences)];
 }
 
 const extrapolatedValuesSum = sum(
-  lines.map((line) => sum(...extrapolate(...matchInts(line)))),
+  lines.map(line => sum(...extrapolate(...matchInts(line))))
 );
 
 if (import.meta.vitest) {

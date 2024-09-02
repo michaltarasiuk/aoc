@@ -12,7 +12,7 @@ function parseGame(game: string) {
   return Array.from(
     gameMatch,
     ([, num, cube]) =>
-      [Number(num), ...(isDefined(cube) ? [cube] : [])] as const,
+      [Number(num), ...(isDefined(cube) ? [cube] : [])] as const
   );
 }
 
@@ -24,7 +24,7 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
       acc[cube] = Math.max(acc[cube], count);
       return acc;
     },
-    {red: 0, green: 0, blue: 0},
+    {red: 0, green: 0, blue: 0}
   );
 }
 

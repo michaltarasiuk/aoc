@@ -4,7 +4,7 @@ const ints = await getInputInts({year: 2017, day: 5});
 
 function calcSteps(
   [...offsets]: number[],
-  jump: (offsets: number[], offset: number) => number,
+  jump: (offsets: number[], offset: number) => number
 ) {
   let offset = 0;
   let steps = 0;
@@ -18,7 +18,7 @@ function calcSteps(
 
 const steps = calcSteps(ints, (offsets, offset) => offsets[offset]++);
 const steps2 = calcSteps(ints, (offsets, offset) =>
-  offsets[offset] >= 3 ? offsets[offset]-- : offsets[offset]++,
+  offsets[offset] >= 3 ? offsets[offset]-- : offsets[offset]++
 );
 
 if (import.meta.vitest) {

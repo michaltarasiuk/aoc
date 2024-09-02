@@ -3,7 +3,7 @@ import {sum} from 'lib/math';
 
 const ns = await getInputInts({year: 2019, day: 1});
 
-const fuelRequirementsSum = sum(...ns.map((n) => Math.floor(n / 3) - 2));
+const fuelRequirementsSum = sum(...ns.map(n => Math.floor(n / 3) - 2));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

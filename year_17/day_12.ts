@@ -34,10 +34,10 @@ function countGroups(programs: Map<string, string[]>) {
 }
 
 const programs = new Map(
-  lines.map((line) => {
+  lines.map(line => {
     const {id, connections} = parseProgram(line);
     return [id, connections];
-  }),
+  })
 );
 
 const group0 = findGroup(programs, '0');

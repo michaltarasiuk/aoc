@@ -23,12 +23,12 @@ const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => {
     const record = distances[i];
     return countWaysOfBeatRecord(time, record);
-  }),
+  })
 );
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
   concatNumbers(...times),
-  concatNumbers(...distances),
+  concatNumbers(...distances)
 );
 
 if (import.meta.vitest) {

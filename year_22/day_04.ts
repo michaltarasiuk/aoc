@@ -8,8 +8,8 @@ const pairsFullyCoveredCount = sum(
   ...lines
     .map(matchUints)
     .map(([a, b, a1, b2]) =>
-      Number((a <= a1 && b >= b2) || (a1 <= a && b2 >= b)),
-    ),
+      Number((a <= a1 && b >= b2) || (a1 <= a && b2 >= b))
+    )
 );
 
 if (import.meta.vitest) {

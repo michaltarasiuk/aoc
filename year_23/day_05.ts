@@ -19,7 +19,7 @@ function findLocation([...maps]: number[][][], value: number) {
 
 const maps = paragraphs.map(([, ...maps]) => maps.map(matchInts));
 const lowestLocation = Math.min(
-  ...matchInts(seeds).map((seed) => findLocation(maps, seed)),
+  ...matchInts(seeds).map(seed => findLocation(maps, seed))
 );
 
 if (import.meta.vitest) {

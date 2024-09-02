@@ -8,7 +8,7 @@ function parsePassport(passport: string[]) {
   const pairRe = /(\w+):(\S+)/g;
   const passportEntries = Array.from(
     passport.join(' ').matchAll(pairRe),
-    ([, key, value]) => [key, value] as const,
+    ([, key, value]) => [key, value] as const
   );
 
   return Object.fromEntries(passportEntries);
@@ -16,9 +16,9 @@ function parsePassport(passport: string[]) {
 
 function countValidPassports<T extends Record<string, string>>(
   passports: T[],
-  predicate: (passport: T) => boolean,
+  predicate: (passport: T) => boolean
 ) {
-  return sum(...passports.map((passport) => Number(predicate(passport))));
+  return sum(...passports.map(passport => Number(predicate(passport))));
 }
 
 const PASSPORT_KEYS = {
@@ -33,12 +33,12 @@ const PASSPORT_KEYS = {
 
 const passports = paragraphs.map(parsePassport);
 
-const validPassportsCount = countValidPassports(passports, (passport) =>
-  Object.keys(PASSPORT_KEYS).every((key) => isKeyOf(passport, key)),
+const validPassportsCount = countValidPassports(passports, passport =>
+  Object.keys(PASSPORT_KEYS).every(key => isKeyOf(passport, key))
 );
 
-const validPassportsCount2 = countValidPassports(passports, (passport) =>
-  Object.entries(PASSPORT_KEYS).every(([key, re]) => re.test(passport[key])),
+const validPassportsCount2 = countValidPassports(passports, passport =>
+  Object.entries(PASSPORT_KEYS).every(([key, re]) => re.test(passport[key]))
 );
 
 if (import.meta.vitest) {

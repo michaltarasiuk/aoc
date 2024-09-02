@@ -6,21 +6,21 @@ const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 
 const questionRe = /[a-z]/g;
 
-const questions = paragraphs.map((paragraph) =>
-  paragraph.map((line): string[] => line.match(questionRe) ?? []),
+const questions = paragraphs.map(paragraph =>
+  paragraph.map((line): string[] => line.match(questionRe) ?? [])
 );
 
 const questionsCount = sum(
-  ...questions.map((group) => uniq(group.flat()).length),
+  ...questions.map(group => uniq(group.flat()).length)
 );
 
 const questionsCount2 = sum(
-  ...questions.flatMap((group) => {
+  ...questions.flatMap(group => {
     const common = group.reduce((acc, questions) =>
-      Array.from(new Set(questions).intersection(new Set(acc))),
+      Array.from(new Set(questions).intersection(new Set(acc)))
     );
     return common.length;
-  }),
+  })
 );
 
 if (import.meta.vitest) {

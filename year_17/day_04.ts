@@ -5,10 +5,10 @@ const lines = await getInputLines({year: 2017, day: 4});
 
 function countValidPassports(
   passports: string[],
-  isValid: (...words: string[]) => boolean,
+  isValid: (...words: string[]) => boolean
 ) {
   return sum(
-    ...passports.map((passport) => Number(isValid(...passport.split(/\s/)))),
+    ...passports.map(passport => Number(isValid(...passport.split(/\s/))))
   );
 }
 
@@ -19,7 +19,7 @@ const validPassphrasesCount = countValidPassports(lines, (...words) => {
 
 const validPassphrasesCount2 = countValidPassports(lines, (...words) => {
   const uniqWords = new Set(
-    words.map(([...chars]) => chars.toSorted().join('')),
+    words.map(([...chars]) => chars.toSorted().join(''))
   );
   return words.length === uniqWords.size;
 });

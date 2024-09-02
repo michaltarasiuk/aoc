@@ -21,7 +21,7 @@ class Coordinates {
   static set(turn: string, steps: number) {
     const [left, right] = adjacentAt(
       this.#directions,
-      this.#directions.indexOf(this.#direction),
+      this.#directions.indexOf(this.#direction)
     );
 
     this.#direction = turn === 'L' ? left : right;

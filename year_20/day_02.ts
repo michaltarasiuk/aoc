@@ -12,14 +12,14 @@ function parsePassword(s: string) {
 
 function countValidPasswords<T extends ReturnType<typeof parsePassword>>(
   passwords: T[],
-  isValid: (password: T) => boolean,
+  isValid: (password: T) => boolean
 ) {
-  return sum(...passwords.map((password) => Number(isValid(password))));
+  return sum(...passwords.map(password => Number(isValid(password))));
 }
 
 const passwords = lines.map(parsePassword);
 
-const validPasswordsCount = countValidPasswords(passwords, (password) => {
+const validPasswordsCount = countValidPasswords(passwords, password => {
   const count = password.password.split(password.char).length - 1;
   return count >= password.min && count <= password.max;
 });
@@ -31,7 +31,7 @@ const validPasswordsCount2 = countValidPasswords(
     const maxChar = password[max - 1];
 
     return (minChar === char) !== (maxChar === char);
-  },
+  }
 );
 
 if (import.meta.vitest) {

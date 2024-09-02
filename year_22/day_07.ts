@@ -35,9 +35,9 @@ function cd(arg: string, cwd: string[]) {
 function updateFilesystem(
   {...filesystem}: Filesystem,
   dir: string[],
-  cwd: string[],
+  cwd: string[]
 ) {
-  const dirSize = sum(...dir.map((file) => parseFile(file) ?? 0));
+  const dirSize = sum(...dir.map(file => parseFile(file) ?? 0));
 
   for (const i of cwd.keys()) {
     const dirName = cwd.slice(0, i + 1).join('/');
@@ -74,7 +74,7 @@ for (const line of lines) {
 
 const filesystem = determineFilesystem(...cmds);
 const totalSize = sum(
-  ...Object.values(filesystem).filter((size) => size <= 100_000),
+  ...Object.values(filesystem).filter(size => size <= 100_000)
 );
 
 if (import.meta.vitest) {

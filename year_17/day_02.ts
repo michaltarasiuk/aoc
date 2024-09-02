@@ -11,12 +11,12 @@ function findDivisiblePair(...ns: number[]) {
   }
 }
 
-const rows = lines.map((line) => line.split('\t').map(Number));
+const rows = lines.map(line => line.split('\t').map(Number));
 
 const spreadsheetChecksum = sum(
-  ...rows.map((row) => Math.max(...row) - Math.min(...row)),
+  ...rows.map(row => Math.max(...row) - Math.min(...row))
 );
-const rowsSum = sum(...rows.map((row) => findDivisiblePair(...row) ?? 0));
+const rowsSum = sum(...rows.map(row => findDivisiblePair(...row) ?? 0));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

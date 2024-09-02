@@ -4,7 +4,7 @@ import {sum} from 'lib/math';
 const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 
 const elfs = paragraphs
-  .map((paragraph) => sum(...paragraph.map(Number)))
+  .map(paragraph => sum(...paragraph.map(Number)))
   .toSorted((a, b) => b - a);
 
 const maxCalories = elfs[0];

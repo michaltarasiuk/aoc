@@ -9,7 +9,7 @@ function calcDistance<T extends Record<string, number>>(
     'forward' | 'down' | 'up',
     (position: T, units: number) => void
   >,
-  position: T,
+  position: T
 ) {
   const {horizontal, depth} = commands.reduce((acc, command) => {
     const [instruct, units] = command.split(/\s/);
@@ -34,7 +34,7 @@ const distance = calcDistance(
       acc.depth -= units;
     },
   },
-  {horizontal: 0, depth: 0},
+  {horizontal: 0, depth: 0}
 );
 
 const distance2 = calcDistance(
@@ -50,7 +50,7 @@ const distance2 = calcDistance(
       acc.aim -= units;
     },
   },
-  {horizontal: 0, depth: 0, aim: 0},
+  {horizontal: 0, depth: 0, aim: 0}
 );
 
 if (import.meta.vitest) {

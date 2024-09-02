@@ -32,10 +32,10 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
 }
 
 const acc = runProgram(
-  ...lines.map((line) => {
+  ...lines.map(line => {
     const [op, arg] = line.split(/\s/);
     return {op, arg: Number(arg)};
-  }),
+  })
 );
 
 if (import.meta.vitest) {

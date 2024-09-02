@@ -33,7 +33,7 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
 const sumOfIndices = sum(
   ...paragraphs
     .map(parsePacketPair)
-    .map((packetPair, i) => (isValidPacketPair(packetPair) ? i + 1 : 0)),
+    .map((packetPair, i) => (isValidPacketPair(packetPair) ? i + 1 : 0))
 );
 
 if (import.meta.vitest) {

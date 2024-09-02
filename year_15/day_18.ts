@@ -14,7 +14,7 @@ function getNeighbors(lights: Lights, {x, y}: {x: number; y: number}) {
     [-1, 0, 1],
   ];
   return NEIGHBORS.map((offsets, i) =>
-    offsets.flatMap((offset) => lights[y + i - 1]?.[x + offset] ?? []),
+    offsets.flatMap(offset => lights[y + i - 1]?.[x + offset] ?? [])
   );
 }
 
@@ -37,7 +37,7 @@ function switchLight(light: string, neighbors: Lights) {
 
 function animate(lights: Lights) {
   return lights.map((row, y) =>
-    row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y}))),
+    row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y})))
   );
 }
 

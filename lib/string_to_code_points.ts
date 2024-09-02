@@ -1,6 +1,6 @@
 export function stringToCodePoints(
   string: string,
-  fn = (codePoint: number) => codePoint,
+  fn = (codePoint: number) => codePoint
 ) {
-  return Array.from(string, (char) => fn(char.codePointAt(0)!));
+  return Array.from(string, char => fn(char.codePointAt(0)!));
 }

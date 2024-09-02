@@ -22,7 +22,7 @@ function createPos() {
 
 function getVisitedHousesCount() {
   const santa = createPos();
-  const houses = uniq(Array.from(input, (char) => santa.set(char).toString()));
+  const houses = uniq(Array.from(input, char => santa.set(char).toString()));
 
   return houses.length;
 }
@@ -30,7 +30,7 @@ function getVisitedHousesCount() {
 function getVisitedHousesCount2() {
   const santas = [createPos(), createPos()];
   const houses = uniq(
-    Array.from(input, (char, i) => santas[i % 2].set(char).toString()),
+    Array.from(input, (char, i) => santas[i % 2].set(char).toString())
   );
 
   return houses.length;

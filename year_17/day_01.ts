@@ -6,10 +6,10 @@ const input = await getInput({year: 2017, day: 1});
 const ns = Array.from(input, Number);
 
 const captchaSolution = sum(
-  ...ns.filter((n, i) => n === ns.at((i + 1) % ns.length)),
+  ...ns.filter((n, i) => n === ns.at((i + 1) % ns.length))
 );
 const captchaSolution2 = sum(
-  ...ns.filter((n, i) => n === ns.at((i + ns.length / 2) % ns.length)),
+  ...ns.filter((n, i) => n === ns.at((i + ns.length / 2) % ns.length))
 );
 
 if (import.meta.vitest) {

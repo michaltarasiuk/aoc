@@ -17,12 +17,12 @@ function yell(monkeys: Monkeys, name: string): number {
 }
 
 const monkeys: Monkeys = new Map(
-  lines.map((line) => {
+  lines.map(line => {
     const monkeyRe = /^(\w{4}): (.+)$/;
     const [, name, job] = monkeyRe.exec(line)!;
 
     return [name, job];
-  }),
+  })
 );
 
 const number = yell(monkeys, 'root');

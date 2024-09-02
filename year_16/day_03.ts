@@ -15,7 +15,7 @@ const triangles = ints.filter(isPossibleTriangle);
 
 const TRIANGLES_COUNT = 3;
 const triangles2 = chunkEvery(transpose(ints).flat(), TRIANGLES_COUNT).filter(
-  isPossibleTriangle,
+  isPossibleTriangle
 );
 
 const possibleTrianglesCount = triangles.length;

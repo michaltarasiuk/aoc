@@ -34,7 +34,7 @@ export async function getInputParagraphs(
   const input = await getInput(...params);
   const newlineRe = /\n\n+/;
 
-  return input.split(newlineRe).map((paragraph) => paragraph.split('\n'));
+  return input.split(newlineRe).map(paragraph => paragraph.split('\n'));
 }
 
 export async function getInputCSV(...params: Parameters<typeof getInput>) {
@@ -42,7 +42,7 @@ export async function getInputCSV(...params: Parameters<typeof getInput>) {
   const newlineRe = /\n/;
   const csvRe = /, /;
 
-  return input.split(newlineRe).map((line) => line.split(csvRe));
+  return input.split(newlineRe).map(line => line.split(csvRe));
 }
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {
@@ -82,7 +82,7 @@ async function fetchInput(input: {year: number; day: number}) {
           Accept: 'text/plain',
           Cookie: `session=${env.session}`,
         },
-      },
+      }
     );
     if (!response.ok) {
       throw new ResponseError(response);
