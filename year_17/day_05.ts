@@ -3,22 +3,25 @@ import {getInputInts} from 'lib/input';
 const ints = await getInputInts({year: 2017, day: 5});
 
 function calcStepsToExit(
-  [...ints]: number[],
-  jump: (ints: number[], offset: number) => number,
+  [...offsets]: number[],
+  jump: (offsets: number[], offset: number) => number,
 ) {
   let offset = 0;
   let steps = 0;
 
-  while (offset < ints.length) {
-    offset += jump(ints, offset);
+  while (offset < offsets.length) {
+    offset += jump(offsets, offset);
     steps++;
   }
   return steps;
 }
 
-const stepsToExit = calcStepsToExit(ints, (ints, offset) => ints[offset]++);
-const stepsToExit2 = calcStepsToExit(ints, (ints, offset) =>
-  ints[offset] >= 3 ? ints[offset]-- : ints[offset]++,
+const stepsToExit = calcStepsToExit(
+  ints,
+  (offsets, offset) => offsets[offset]++,
+);
+const stepsToExit2 = calcStepsToExit(ints, (offsets, offset) =>
+  offsets[offset] >= 3 ? offsets[offset]-- : offsets[offset]++,
 );
 
 if (import.meta.vitest) {

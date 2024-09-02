@@ -3,14 +3,9 @@ import {matchInts} from 'lib/ints';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
-const cards = new Map(
-  lines.map((line) => {
-    const [[id, ...a], b] = line.split('|').map(matchInts);
-    return [id, new Set(a).intersection(new Set(b))] as const;
-  }),
-);
+type Cards = Map<number, Set<number>>;
 
-function calcPoints(cards: Map<number, Set<number>>) {
+function calcPoints(cards: Cards) {
   let points = 0;
 
   for (const matches of cards.values()) {
@@ -21,10 +16,7 @@ function calcPoints(cards: Map<number, Set<number>>) {
   return points;
 }
 
-function findTotalCards(
-  cards: Map<number, Set<number>>,
-  ids = Array.from(cards.keys()),
-) {
+function findTotalCards(cards: Cards, ids = Array.from(cards.keys())) {
   let count = 0;
 
   for (const id of ids) {
@@ -36,6 +28,13 @@ function findTotalCards(
   }
   return count + ids.length;
 }
+
+const cards: Cards = new Map(
+  lines.map((line) => {
+    const [[id, ...a], b] = line.split('|').map(matchInts);
+    return [id, new Set(a).intersection(new Set(b))] as const;
+  }),
+);
 
 const points = calcPoints(cards);
 const totalCards = findTotalCards(cards);

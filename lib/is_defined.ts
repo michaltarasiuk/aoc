@@ -1,3 +1,3 @@
-export function isDefined<T>(value: T): value is NonNullable<T> {
+export function isDefined(value: unknown) {
   return value !== undefined && value !== null;
 }

@@ -3,32 +3,32 @@ import {raise} from 'lib/raise';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-function workOutMonkeyNamed(jobs: Map<string, string>, name: string): number {
-  const yell = jobs.get(name) ?? raise(`No job for ${name}`);
-  const parsed = Number(yell);
+function yell(monkeys: Map<string, string>, name: string): number {
+  const job = monkeys.get(name) ?? raise(`No job for ${name}`);
+  const parsed = Number(job);
 
   if (Number.isNaN(parsed)) {
-    const [a, op, b] = yell.split(/\s/);
-    return eval(workOutMonkeyNamed(jobs, a) + op + workOutMonkeyNamed(jobs, b));
+    const [a, op, b] = job.split(/\s/);
+    return eval(yell(monkeys, a) + op + yell(monkeys, b));
   }
   return parsed;
 }
 
-const jobs = new Map(
+const monkeys = new Map(
   lines.map((line) => {
-    const jobRe = /^(\w{4}): (.+)$/;
-    const [, name, yell] = jobRe.exec(line)!;
+    const monkeyRe = /^(\w{4}): (.+)$/;
+    const [, name, job] = monkeyRe.exec(line)!;
 
-    return [name, yell];
+    return [name, job];
   }),
 );
 
-const yell = workOutMonkeyNamed(jobs, 'root');
+const number = yell(monkeys, 'root');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(yell).toBe(142707821472432);
+    expect(number).toBe(142707821472432);
   });
 }

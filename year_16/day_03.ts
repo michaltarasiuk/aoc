@@ -1,4 +1,4 @@
-import {chunkEvery} from 'lib/chunk';
+import {chunkEvery} from 'lib/chunk_every';
 import {getInputLines} from 'lib/input';
 import {matchInts} from 'lib/ints';
 import {transpose} from 'lib/transpose';
