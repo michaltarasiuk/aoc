@@ -34,7 +34,9 @@ function rearrangeStacks(
 ) {
   return instructions.map(matchInts).reduce((acc, [count, from, to]) => {
     const crates = acc[from].splice(0, count);
-    return acc[to].unshift(...fn(crates)), acc;
+
+    acc[to].unshift(...fn(crates));
+    return acc;
   }, structuredClone(stacks));
 }
 

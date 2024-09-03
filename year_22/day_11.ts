@@ -21,50 +21,39 @@ const MONKEY_SCHEMA = z.object({
   throwTo_false: z.string().transform(Number),
 });
 
-type Monkey = ReturnType<typeof parseMonkey>;
-
 function parseMonkey(paragraph: string[]) {
   const monkey = paragraph.join('\n').match(monkeyRe)?.groups;
-  return {inspects: 0, ...MONKEY_SCHEMA.parse(monkey)};
+
+  return {
+    inspects: 0,
+    inspect(old: number) {
+      this.inspects++;
+      return Math.floor(eval(this.operation) / 3);
+    },
+    ...MONKEY_SCHEMA.parse(monkey),
+  };
 }
 
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars
-  -- Used by eval expression
-  -- Operation example: "1 + old"
-*/
-function inspect(monkey: Monkey, old: number) {
-  monkey.inspects++;
-  return Math.floor(eval(monkey.operation) / 3);
-}
-
-function processRound(monkeys: Map<number, Monkey>) {
-  for (const monkey of monkeys.values()) {
-    for (const item of monkey.items.splice(0)) {
-      const newItem = inspect(monkey, item);
-      const throwTo = monkey[`throwTo_${newItem % monkey.divider === 0}`];
-
-      monkeys.get(throwTo)?.items.push(newItem);
-    }
-  }
-}
-
-function calcBusinessLevel(monkeys: Map<number, Monkey>) {
-  const [a, b] = Array.from(monkeys.values()).toSorted(
-    (a, b) => b.inspects - a.inspects
-  );
-  return a.inspects * b.inspects;
-}
-
+const ROUNDS_COUNT = 20;
 const monkeys = new Map(
   paragraphs.map(parseMonkey).map(monkey => [monkey.id, monkey])
 );
 
-const ROUNDS_COUNT = 20;
 for (let i = 0; i < ROUNDS_COUNT; i++) {
-  processRound(monkeys);
+  for (const monkey of monkeys.values()) {
+    for (const item of monkey.items.splice(0)) {
+      const newItem = monkey.inspect(item);
+      const divisible = newItem % monkey.divider === 0;
+
+      monkeys.get(monkey[`throwTo_${divisible}`])?.items.push(newItem);
+    }
+  }
 }
 
-const businessLevel = calcBusinessLevel(monkeys);
+const [a, b] = Array.from(monkeys.values()).toSorted(
+  (a, b) => b.inspects - a.inspects
+);
+const businessLevel = a.inspects * b.inspects;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

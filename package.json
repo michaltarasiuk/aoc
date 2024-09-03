@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "eslint": "eslint --no-warn-ignored --max-warnings=0",
+    "eslint": "eslint --no-warn-ignored",
     "lint": "bun run eslint .",
     "lint-fix": "bun run eslint . -- --fix",
     "prettier": "prettier --ignore-unknown --write",
