@@ -1,5 +1,5 @@
 import {getInput} from 'lib/input';
-import {stringToCodePoints} from 'lib/string_to_code_points';
+import {stringToCodePoints} from 'lib/string';
 
 const input = await getInput({year: 2015, day: 11});
 

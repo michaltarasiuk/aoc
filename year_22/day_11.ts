@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {matchInts} from 'lib/ints';
+import {extractInts} from 'lib/parse';
 import {z} from 'zod';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 11});
@@ -14,7 +14,7 @@ Monkey (?<id>\\d):
 
 const MONKEY_SCHEMA = z.object({
   id: z.string().transform(Number),
-  items: z.string().transform(matchInts),
+  items: z.string().transform(extractInts),
   operation: z.string(),
   divider: z.string().transform(Number),
   throwTo_true: z.string().transform(Number),

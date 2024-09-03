@@ -1,5 +1,5 @@
-import {chunkEvery} from 'lib/chunk_every';
 import {getInputLines} from 'lib/input';
+import {chunkEvery} from 'lib/iterable';
 
 const lines = await getInputLines({year: 2022, day: 3});
 

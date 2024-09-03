@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {matchInts} from 'lib/ints';
+import {extractInts} from 'lib/parse';
 
 const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
 
@@ -14,7 +14,7 @@ function parseStacks([...stacks]: string[]) {
   const ids = stacks.pop()!;
 
   return Object.fromEntries(
-    matchInts(ids).map(id => {
+    extractInts(ids).map(id => {
       const i = ids.indexOf(String(id));
       return [id, stacks.flatMap(crates => parseCrate(crates[i]) ?? [])];
     })
@@ -32,7 +32,7 @@ function rearrangeStacks(
   instructions: string[],
   fn = (crates: string[]) => crates
 ) {
-  return instructions.map(matchInts).reduce((acc, [count, from, to]) => {
+  return instructions.map(extractInts).reduce((acc, [count, from, to]) => {
     const crates = acc[from].splice(0, count);
 
     acc[to].unshift(...fn(crates));

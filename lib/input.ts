@@ -1,8 +1,8 @@
 import {z} from 'zod';
 
 import {env} from '../env';
-import {matchInts} from './ints';
-import {transpose} from './transpose';
+import {transpose} from './array';
+import {extractInts} from './parse';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);
@@ -47,7 +47,7 @@ export async function getInputCSV(...params: Parameters<typeof getInput>) {
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
-  return matchInts(input);
+  return extractInts(input);
 }
 
 class ResponseError extends Error {

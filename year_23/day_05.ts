@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input';
-import {matchInts} from 'lib/ints';
+import {extractInts} from 'lib/parse';
 
 const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 
@@ -17,9 +17,9 @@ function findLocation([...maps]: number[][][], value: number) {
   return findLocation(maps, value);
 }
 
-const maps = paragraphs.map(([, ...maps]) => maps.map(matchInts));
+const maps = paragraphs.map(([, ...maps]) => maps.map(extractInts));
 const lowestLocation = Math.min(
-  ...matchInts(seeds).map(seed => findLocation(maps, seed))
+  ...extractInts(seeds).map(seed => findLocation(maps, seed))
 );
 
 if (import.meta.vitest) {

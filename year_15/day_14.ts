@@ -1,5 +1,5 @@
 import {getInputLines} from 'lib/input';
-import {matchInts} from 'lib/ints';
+import {extractInts} from 'lib/parse';
 
 const lines = await getInputLines({year: 2015, day: 14});
 
@@ -14,7 +14,7 @@ const TOTAL_TIME = 2_503;
 
 const winningReindeer = Math.max(
   ...lines
-    .map(matchInts)
+    .map(extractInts)
     .map(([speed, time, rest]) => calcFlyTime(TOTAL_TIME, time, rest) * speed)
 );
 

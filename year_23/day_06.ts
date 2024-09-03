@@ -1,7 +1,7 @@
-import {concatNumbers} from 'lib/concat_numbers';
 import {getInputLines} from 'lib/input';
-import {matchUints} from 'lib/ints';
 import {multiply} from 'lib/math';
+import {concatNumbers} from 'lib/number';
+import {extractUints} from 'lib/parse';
 
 const lines = await getInputLines({year: 2023, day: 6});
 
@@ -17,7 +17,7 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-const [times, distances] = lines.map(matchUints);
+const [times, distances] = lines.map(extractUints);
 
 const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => {

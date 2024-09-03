@@ -1,5 +1,5 @@
-import {divisors} from 'lib/divisors';
 import {getInput} from 'lib/input';
+import {divisors} from 'lib/math';
 
 const input = await getInput({year: 2015, day: 20});
 

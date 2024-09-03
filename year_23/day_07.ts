@@ -1,5 +1,5 @@
-import {frequencies} from 'lib/frequencies';
 import {getInputLines} from 'lib/input';
+import {frequencies} from 'lib/iterable';
 import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2023, day: 7});

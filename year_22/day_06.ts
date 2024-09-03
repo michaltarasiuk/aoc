@@ -1,5 +1,5 @@
 import {getInput} from 'lib/input';
-import {uniq} from 'lib/uniq';
+import {uniq} from 'lib/iterable';
 
 const input = await getInput({year: 2022, day: 6});
 

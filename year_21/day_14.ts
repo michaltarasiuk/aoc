@@ -1,6 +1,6 @@
-import {frequencies} from 'lib/frequencies';
 import {getInputParagraphs} from 'lib/input';
-import {isDefined} from 'lib/is_defined';
+import {frequencies} from 'lib/iterable';
+import {isDefined} from 'lib/type_guard';
 
 const [[polymerTemplate], pairInsertRules] = await getInputParagraphs({
   year: 2021,

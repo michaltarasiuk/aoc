@@ -1,4 +1,4 @@
-import {adjacentAt} from 'lib/adjacent_at';
+import {adjacentAt} from 'lib/array';
 import {getInputCSV} from 'lib/input';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});

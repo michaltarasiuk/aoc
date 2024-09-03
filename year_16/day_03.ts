@@ -1,7 +1,7 @@
-import {chunkEvery} from 'lib/chunk_every';
+import {transpose} from 'lib/array';
 import {getInputLines} from 'lib/input';
-import {matchInts} from 'lib/ints';
-import {transpose} from 'lib/transpose';
+import {chunkEvery} from 'lib/iterable';
+import {extractInts} from 'lib/parse';
 
 const lines = await getInputLines({year: 2016, day: 3});
 
@@ -9,7 +9,7 @@ function isPossibleTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const ints = lines.map(matchInts);
+const ints = lines.map(extractInts);
 
 const triangles = ints.filter(isPossibleTriangle);
 
