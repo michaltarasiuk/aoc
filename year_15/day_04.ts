@@ -21,7 +21,6 @@ const coin = waitUntilStartsWith({
   string,
   searchString: '0'.repeat(5),
 });
-
 const coin2 = waitUntilStartsWith({string, searchString: '0'.repeat(6)}, coin);
 
 if (import.meta.vitest) {

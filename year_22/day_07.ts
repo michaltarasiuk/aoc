@@ -34,8 +34,8 @@ function cd(arg: string, cwd: string[]) {
 
 function updateFilesystem(
   {...filesystem}: Filesystem,
-  dir: string[],
-  cwd: string[]
+  cwd: string[],
+  dir: string[]
 ) {
   const dirSize = sum(...dir.map(file => parseFile(file) ?? 0));
 
@@ -57,7 +57,7 @@ function determineFilesystem(...cmds: Cmd[]) {
         cwd = cd(arg, cwd);
         break;
       case 'ls':
-        filesystem = updateFilesystem(filesystem, output, cwd);
+        filesystem = updateFilesystem(filesystem, cwd, output);
         break;
       default:
         throw new Error(`Unknown command: ${cmd}`);

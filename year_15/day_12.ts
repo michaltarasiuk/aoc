@@ -5,6 +5,8 @@ import {isObject} from 'lib/type_guard';
 const input = await getInput({year: 2015, day: 12});
 
 const ns: number[] = [];
+const ns2: number[] = [];
+
 const parsed = JSON.parse(input, (_, val: unknown) => {
   if (typeof val === 'number') {
     ns.push(val);
@@ -12,7 +14,6 @@ const parsed = JSON.parse(input, (_, val: unknown) => {
   return val;
 });
 
-const ns2: number[] = [];
 JSON.stringify(parsed, (_, val: unknown) => {
   if (isObject(val)) {
     for (const v of Object.values(val)) {

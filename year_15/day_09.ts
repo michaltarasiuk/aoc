@@ -4,6 +4,8 @@ import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
+type Costs = {[city: string]: Record<string, number>};
+
 function parseDistance(distance: string) {
   const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
   const [, a, b, cost] = distance.match(distanceRe)!;
@@ -11,10 +13,7 @@ function parseDistance(distance: string) {
   return {a, b, cost: Number(cost)};
 }
 
-function calcRouteCost(
-  costs: Record<string, Record<string, number>>,
-  route: string[]
-) {
+function calcRouteCost(costs: Costs, ...route: string[]) {
   return sum(
     ...route.map((city, i) => {
       const dest = route[i + 1];
@@ -23,24 +22,22 @@ function calcRouteCost(
   );
 }
 
-const costs = lines.reduce<{[k: string]: Record<string, number>}>(
-  (acc, line) => {
-    const {a, b, cost} = parseDistance(line);
+const costs = lines.reduce<Costs>((acc, line) => {
+  const {a, b, cost} = parseDistance(line);
 
-    (acc[a] ??= {}), (acc[a][b] = cost);
-    (acc[b] ??= {}), (acc[b][a] = cost);
-    return acc;
-  },
-  {}
-);
+  (acc[a] ??= {}), (acc[a][b] = cost);
+  (acc[b] ??= {}), (acc[b][a] = cost);
+  return acc;
+}, {});
+const cities = Object.keys(costs);
 
-const allRouteCosts = permute(Object.keys(costs)).reduce<number[]>(
-  (acc, route) => acc.concat(calcRouteCost(costs, route)),
+const possibleCosts = permute(cities).reduce<number[]>(
+  (acc, route) => acc.concat(calcRouteCost(costs, ...route)),
   []
 );
 
-const minCost = Math.min(...allRouteCosts);
-const maxCost = Math.max(...allRouteCosts);
+const minCost = Math.min(...possibleCosts);
+const maxCost = Math.max(...possibleCosts);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

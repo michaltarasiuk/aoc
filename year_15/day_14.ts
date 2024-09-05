@@ -15,7 +15,7 @@ const TOTAL_TIME = 2_503;
 const winningReindeer = Math.max(
   ...lines
     .map(extractInts)
-    .map(([speed, time, rest]) => calcFlyTime(TOTAL_TIME, time, rest) * speed)
+    .map(([speed, time, rest]) => speed * calcFlyTime(TOTAL_TIME, time, rest))
 );
 
 if (import.meta.vitest) {

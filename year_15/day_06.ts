@@ -6,21 +6,20 @@ import {isKeyOf} from 'lib/type_guard';
 
 const lines = await getInputLines({year: 2015, day: 6});
 
-function parseInstruction(instruction: string) {
+type Instruction = [action: string, ...dimensions: number[]];
+type Actions = Record<'turn on' | 'turn off' | 'toggle', (v: number) => number>;
+
+function parseInstruction(instruction: string): Instruction {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
   const [, action, ...dimensions] = instruction.match(instructionRe)!;
 
   return [action, ...dimensions.map(Number)] as const;
 }
 
-function countLights(
-  actions: Record<'turn on' | 'turn off' | 'toggle', (val: number) => number>
-) {
+function setLights(actions: Actions, ...instructions: Instruction[]) {
   const lights = create2dArr(1_000, 0);
 
-  for (const line of lines) {
-    const [action, x1, y1, x2, y2] = parseInstruction(line);
-
+  for (const [action, x1, y1, x2, y2] of instructions) {
     for (let x = x1; x <= x2; x++) {
       for (let y = y1; y <= y2; y++) {
         assert(isKeyOf(actions, action));
@@ -28,20 +27,22 @@ function countLights(
       }
     }
   }
-  return sum(lights.flat());
+  return lights;
 }
 
-const litLightsCount = countLights({
-  'turn on': () => 1,
-  'turn off': () => 0,
-  toggle: val => +!val,
-});
+const instructions = lines.map(parseInstruction);
 
-const totalBrightness = countLights({
-  'turn on': val => val + 1,
-  'turn off': val => Math.max(val - 1, 0),
-  toggle: val => val + 2,
-});
+const lights = setLights(
+  {'turn on': () => 1, 'turn off': () => 0, toggle: v => Number(!v)},
+  ...instructions
+);
+const brightness = setLights(
+  {'turn on': v => ++v, 'turn off': v => Math.max(0, --v), toggle: v => v + 2},
+  ...instructions
+);
+
+const litLightsCount = sum(lights.flat());
+const totalBrightness = sum(brightness.flat());
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
