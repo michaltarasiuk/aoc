@@ -3,7 +3,7 @@ import {frequencies} from 'lib/iterable';
 
 const cols = await getInputCols({year: 2016, day: 6});
 
-function getErrorCorrectedMessage(comparefn: (a: number, b: number) => number) {
+function getErrorCorrectedMessage(comparefn = (a: number, b: number) => a - b) {
   return cols.reduce((acc, chars) => {
     const charsCount = frequencies(chars);
     const [[char]] = Array.from(charsCount).toSorted((a, b) =>
@@ -15,7 +15,7 @@ function getErrorCorrectedMessage(comparefn: (a: number, b: number) => number) {
 }
 
 const errorCorrectedMessage = getErrorCorrectedMessage((a, b) => b - a);
-const orginalErrorCorrectedMessage = getErrorCorrectedMessage((a, b) => a - b);
+const orginalErrorCorrectedMessage = getErrorCorrectedMessage();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

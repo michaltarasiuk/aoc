@@ -37,7 +37,9 @@ function findSectorID(storage: string, ...rooms: Room[]) {
         shiftAlphabetCodePoint(codePoint, id)
       )
     );
-    if (storage === decoded) return id;
+    if (storage === decoded) {
+      return id;
+    }
   }
 }
 
