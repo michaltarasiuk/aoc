@@ -1,7 +1,7 @@
 import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
 import {sum} from 'lib/math';
-import {isDefined} from 'lib/type_guard';
+import {isDefined} from 'lib/predicate';
 
 const lines = await getInputLines({year: 2022, day: 7});
 

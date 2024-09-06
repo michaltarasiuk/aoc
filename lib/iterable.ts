@@ -17,6 +17,6 @@ export function frequencies<T>(iterable: Iterable<T>) {
   return count;
 }
 
-export function uniq<T>(iterable: Iterable<T>): T[] {
+export function uniq<T>(iterable: Iterable<T>) {
   return Array.from(new Set(iterable));
 }

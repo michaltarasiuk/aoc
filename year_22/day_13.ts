@@ -1,7 +1,7 @@
 import {castArray} from 'lib/array';
 import {getInputParagraphs} from 'lib/input';
 import {sum} from 'lib/math';
-import {isArray, isDefined, isNumber} from 'lib/type_guard';
+import {isArray, isDefined, isNumber} from 'lib/predicate';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 13});
 

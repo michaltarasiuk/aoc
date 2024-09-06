@@ -1,6 +1,6 @@
 import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
-import {isDefined, isKeyOf} from 'lib/type_guard';
+import {isDefined, isKeyOf} from 'lib/predicate';
 
 const lines = await getInputLines({year: 2023, day: 2});
 

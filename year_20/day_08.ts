@@ -31,12 +31,11 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
   return acc;
 }
 
-const acc = runProgram(
-  ...lines.map(line => {
-    const [op, arg] = line.split(/\s/);
-    return {op, arg: Number(arg)};
-  })
-);
+const instructions = lines
+  .map(line => line.split(/\s/))
+  .map(([op, arg]) => ({op, arg: Number(arg)}));
+
+const acc = runProgram(...instructions);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

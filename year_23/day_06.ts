@@ -1,6 +1,6 @@
 import {getInputLines} from 'lib/input';
 import {multiply} from 'lib/math';
-import {concatNumbers} from 'lib/number';
+import {joinNumbers} from 'lib/number';
 import {extractUints} from 'lib/parse';
 
 const lines = await getInputLines({year: 2023, day: 6});
@@ -27,8 +27,8 @@ const waysOfBeatRecordProduct = multiply(
 );
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
-  concatNumbers(...times),
-  concatNumbers(...distances)
+  joinNumbers(...times),
+  joinNumbers(...distances)
 );
 
 if (import.meta.vitest) {

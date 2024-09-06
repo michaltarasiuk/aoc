@@ -1,6 +1,6 @@
 import {getInput} from 'lib/input';
 import {sum} from 'lib/math';
-import {isObject} from 'lib/type_guard';
+import {isObject} from 'lib/predicate';
 
 const input = await getInput({year: 2015, day: 12});
 

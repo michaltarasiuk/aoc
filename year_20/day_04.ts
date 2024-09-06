@@ -1,6 +1,6 @@
 import {getInputParagraphs} from 'lib/input';
 import {sum} from 'lib/math';
-import {isKeyOf} from 'lib/type_guard';
+import {isKeyOf} from 'lib/predicate';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
@@ -12,13 +12,6 @@ function parsePassport(passport: string[]) {
   );
 
   return Object.fromEntries(passportEntries);
-}
-
-function countValidPassports<T extends Record<string, string>>(
-  passports: T[],
-  predicate: (passport: T) => boolean
-) {
-  return sum(...passports.map(passport => Number(predicate(passport))));
 }
 
 const PASSPORT_KEYS = {
@@ -33,12 +26,22 @@ const PASSPORT_KEYS = {
 
 const passports = paragraphs.map(parsePassport);
 
-const validPassportsCount = countValidPassports(passports, passport =>
-  Object.keys(PASSPORT_KEYS).every(key => isKeyOf(passport, key))
+const validPassportsCount = sum(
+  ...passports.map(passport => {
+    const isValid = Object.keys(PASSPORT_KEYS).every(key =>
+      isKeyOf(passport, key)
+    );
+    return Number(isValid);
+  })
 );
 
-const validPassportsCount2 = countValidPassports(passports, passport =>
-  Object.entries(PASSPORT_KEYS).every(([key, re]) => re.test(passport[key]))
+const validPassportsCount2 = sum(
+  ...passports.map(passport => {
+    const isValid = Object.entries(PASSPORT_KEYS).every(
+      ([key, re]) => isKeyOf(passport, key) && re.test(passport[key])
+    );
+    return Number(isValid);
+  })
 );
 
 if (import.meta.vitest) {
