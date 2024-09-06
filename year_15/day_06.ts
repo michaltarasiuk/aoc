@@ -1,4 +1,3 @@
-import {create2dArr} from 'lib/array';
 import {assert} from 'lib/assert';
 import {getInputLines} from 'lib/input';
 import {sum} from 'lib/math';
@@ -17,7 +16,8 @@ function parseInstruction(instruction: string): Instruction {
 }
 
 function setLights(actions: Actions, ...instructions: Instruction[]) {
-  const lights = create2dArr(1_000, 0);
+  const SIZE = 1_000;
+  const lights = [...Array(SIZE)].map(() => Array(SIZE).fill(0));
 
   for (const [action, x1, y1, x2, y2] of instructions) {
     for (let x = x1; x <= x2; x++) {

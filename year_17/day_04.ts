@@ -3,21 +3,21 @@ import {sum} from 'lib/math';
 
 const lines = await getInputLines({year: 2017, day: 4});
 
-function countValidPassports(
-  passports: string[],
-  isValid: (...words: string[]) => boolean
+function countValidPassports<T extends string[]>(
+  passports: T[],
+  isValid: (...words: T) => boolean
 ) {
-  return sum(
-    ...passports.map(passport => Number(isValid(...passport.split(/\s/))))
-  );
+  return sum(...passports.map(passport => Number(isValid(...passport))));
 }
 
-const validPassphrasesCount = countValidPassports(lines, (...words) => {
+const passports = lines.map(line => line.split(/\s/));
+
+const validPassphrasesCount = countValidPassports(passports, (...words) => {
   const uniqWords = new Set(words);
   return words.length === uniqWords.size;
 });
 
-const validPassphrasesCount2 = countValidPassports(lines, (...words) => {
+const validPassphrasesCount2 = countValidPassports(passports, (...words) => {
   const uniqWords = new Set(
     words.map(([...chars]) => chars.toSorted().join(''))
   );

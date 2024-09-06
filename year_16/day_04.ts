@@ -5,6 +5,8 @@ import {stringToCodePoints} from 'lib/string';
 
 const lines = await getInputLines({year: 2016, day: 4});
 
+type Room = ReturnType<typeof parseRoom>;
+
 function parseRoom(room: string) {
   const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
   const [, name, id, checksum] = room.match(roomRe)!;
@@ -28,29 +30,25 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
   return ((codePoint - 97 + shift) % 26) + 97;
 }
 
-const realRoomSectorIDsSum = sum(
-  ...lines.map(line => {
-    const {name, id, checksum} = parseRoom(line);
-    return checksum === calcChecksum(...name) ? id : 0;
-  })
-);
-
-const NORTH_POLE_OBJECT_STORAGE = 'northpoleobjectstorage';
-let northPoleSectorID: number | undefined;
-
-for (const line of lines) {
-  const {name, id} = parseRoom(line);
-  const decoded = String.fromCodePoint(
-    ...stringToCodePoints(name, codePoint =>
-      shiftAlphabetCodePoint(codePoint, id)
-    )
-  );
-
-  if (decoded === NORTH_POLE_OBJECT_STORAGE) {
-    northPoleSectorID = id;
-    break;
+function findSectorID(storage: string, ...rooms: Room[]) {
+  for (const {name, id} of rooms) {
+    const decoded = String.fromCodePoint(
+      ...stringToCodePoints(name, codePoint =>
+        shiftAlphabetCodePoint(codePoint, id)
+      )
+    );
+    if (storage === decoded) return id;
   }
 }
+
+const rooms = lines.map(parseRoom);
+
+const realRoomSectorIDsSum = sum(
+  ...rooms.map(({name, id, checksum}) =>
+    checksum === calcChecksum(...name) ? id : 0
+  )
+);
+const northPoleSectorID = findSectorID('northpoleobjectstorage', ...rooms);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

@@ -1,17 +1,13 @@
-import {atLeastOne} from './assert';
+import {assert} from './assert';
 
 export function adjacentAt<T>(arr: T[], i: number) {
-  atLeastOne(arr);
+  assert(arr.length > 0, 'Expected array to have at least one element');
 
   return [arr.at(i - 1)!, arr.at((i + 1) % arr.length)!] as const;
 }
 
 export function castArray<T>(value: T | T[]) {
   return Array.isArray(value) ? value : [value];
-}
-
-export function create2dArr<T>(size: number, val: T) {
-  return [...Array(size)].map(() => Array(size).fill(val));
 }
 
 export function permute<T>(items: T[]): T[][] {

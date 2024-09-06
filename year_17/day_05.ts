@@ -1,10 +1,10 @@
 import {getInputInts} from 'lib/input';
 
-const ints = await getInputInts({year: 2017, day: 5});
+const jumpOffsets = await getInputInts({year: 2017, day: 5});
 
-function calcSteps(
+function calcStepsToExit(
   [...offsets]: number[],
-  jump: (offsets: number[], offset: number) => number
+  jump: (offsets: number[], i: number) => number
 ) {
   let offset = 0;
   let steps = 0;
@@ -16,19 +16,19 @@ function calcSteps(
   return steps;
 }
 
-const steps = calcSteps(ints, (offsets, offset) => offsets[offset]++);
-const steps2 = calcSteps(ints, (offsets, offset) =>
-  offsets[offset] >= 3 ? offsets[offset]-- : offsets[offset]++
+const stepsToExit = calcStepsToExit(jumpOffsets, (offsets, i) => offsets[i]++);
+const stepsToExit2 = calcStepsToExit(jumpOffsets, (offsets, i) =>
+  offsets[i] >= 3 ? offsets[i]-- : offsets[i]++
 );
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(steps).toBe(373160);
+    expect(stepsToExit).toBe(373160);
   });
 
   test('part 2', () => {
-    expect(steps2).toBe(26395586);
+    expect(stepsToExit2).toBe(26395586);
   });
 }
