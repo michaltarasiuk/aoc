@@ -1,4 +1,4 @@
-import {getInputInts} from 'lib/input';
+import {getInputInts} from 'lib/input.js';
 
 const memoryBlocks = await getInputInts({year: 2017, day: 6});
 

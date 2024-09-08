@@ -1,4 +1,4 @@
-import {assert} from './assert';
+import {assert} from './assert.js';
 
 export function adjacentAt<T>(arr: T[], i: number) {
   assert(arr.length > 0, 'Expected array to have at least one element');

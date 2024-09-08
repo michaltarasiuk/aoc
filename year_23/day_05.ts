@@ -1,5 +1,5 @@
-import {getInputParagraphs} from 'lib/input';
-import {extractInts} from 'lib/parse';
+import {getInputParagraphs} from 'lib/input.js';
+import {extractInts} from 'lib/parse.js';
 
 const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 

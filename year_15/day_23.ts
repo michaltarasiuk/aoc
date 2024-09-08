@@ -1,6 +1,6 @@
-import {assert} from 'lib/assert';
-import {getInputLines} from 'lib/input';
-import {isKeyOf} from 'lib/predicate';
+import {assert} from 'lib/assert.js';
+import {getInputLines} from 'lib/input.js';
+import {isKeyOf} from 'lib/predicate.js';
 
 const instructions = await getInputLines({year: 2015, day: 23});
 

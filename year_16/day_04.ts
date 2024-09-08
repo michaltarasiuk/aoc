@@ -1,7 +1,7 @@
-import {getInputLines} from 'lib/input';
-import {frequencies} from 'lib/iterable';
-import {sum} from 'lib/math';
-import {stringToCodePoints} from 'lib/string';
+import {getInputLines} from 'lib/input.js';
+import {frequencies} from 'lib/iterable.js';
+import {sum} from 'lib/math.js';
+import {stringToCodePoints} from 'lib/string.js';
 
 const lines = await getInputLines({year: 2016, day: 4});
 

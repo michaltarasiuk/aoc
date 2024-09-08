@@ -1,6 +1,6 @@
-import {getInput} from 'lib/input';
-import {sum} from 'lib/math';
-import {isObject} from 'lib/predicate';
+import {getInput} from 'lib/input.js';
+import {sum} from 'lib/math.js';
+import {isObject} from 'lib/predicate.js';
 
 const input = await getInput({year: 2015, day: 12});
 

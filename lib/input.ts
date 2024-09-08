@@ -1,8 +1,8 @@
 import {z} from 'zod';
 
-import {env} from '../env';
-import {transpose} from './array';
-import {extractInts} from './parse';
+import {env} from '../env.js';
+import {transpose} from './array.js';
+import {extractInts} from './parse.js';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);

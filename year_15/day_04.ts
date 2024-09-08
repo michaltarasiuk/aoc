@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 
-import {getInput} from 'lib/input';
+import {getInput} from 'lib/input.js';
 
 const string = await getInput({year: 2015, day: 4});
 

@@ -1,7 +1,7 @@
-import {getInputLines} from 'lib/input';
-import {multiply} from 'lib/math';
-import {joinNumbers} from 'lib/number';
-import {extractUints} from 'lib/parse';
+import {getInputLines} from 'lib/input.js';
+import {multiply} from 'lib/math.js';
+import {joinNumbers} from 'lib/number.js';
+import {extractUints} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 6});
 

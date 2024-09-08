@@ -1,4 +1,4 @@
-import {getInputGrid} from 'lib/input';
+import {getInputGrid} from 'lib/input.js';
 
 const grid = await getInputGrid({year: 2015, day: 18});
 

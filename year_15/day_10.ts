@@ -1,4 +1,4 @@
-import {getInput} from 'lib/input';
+import {getInput} from 'lib/input.js';
 
 let input = await getInput({year: 2015, day: 10});
 let count = 0;

@@ -1,7 +1,7 @@
-import {assert} from 'lib/assert';
-import {getInputLines} from 'lib/input';
-import {sum} from 'lib/math';
-import {isKeyOf} from 'lib/predicate';
+import {assert} from 'lib/assert.js';
+import {getInputLines} from 'lib/input.js';
+import {sum} from 'lib/math.js';
+import {isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2015, day: 6});
 
@@ -33,11 +33,19 @@ function setLights(actions: Actions, ...instructions: Instruction[]) {
 const instructions = lines.map(parseInstruction);
 
 const lights = setLights(
-  {'turn on': () => 1, 'turn off': () => 0, toggle: v => Number(!v)},
+  {
+    'turn on': () => 1,
+    'turn off': () => 0,
+    toggle: v => Number(!v),
+  },
   ...instructions
 );
 const brightness = setLights(
-  {'turn on': v => ++v, 'turn off': v => Math.max(0, --v), toggle: v => v + 2},
+  {
+    'turn on': v => v + 1,
+    'turn off': v => Math.max(0, v - 1),
+    toggle: v => v + 2,
+  },
   ...instructions
 );
 

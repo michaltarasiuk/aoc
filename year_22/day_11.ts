@@ -1,5 +1,5 @@
-import {getInputParagraphs} from 'lib/input';
-import {extractInts} from 'lib/parse';
+import {getInputParagraphs} from 'lib/input.js';
+import {extractInts} from 'lib/parse.js';
 import {z} from 'zod';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 11});

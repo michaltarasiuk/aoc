@@ -1,20 +1,20 @@
-import {transpose} from 'lib/array';
-import {getInputLines} from 'lib/input';
-import {chunkEvery} from 'lib/iterable';
-import {extractInts} from 'lib/parse';
+import {transpose} from 'lib/array.js';
+import {getInputLines} from 'lib/input.js';
+import {chunkEvery} from 'lib/iterable.js';
+import {extractInts} from 'lib/parse.js';
 
-const lines = await getInputLines({year: 2016, day: 3});
+const lines = (await getInputLines({year: 2016, day: 3})).map(line =>
+  extractInts(line)
+);
 
 function isPossibleTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const ints = lines.map(extractInts);
-
-const triangles = ints.filter(isPossibleTriangle);
+const triangles = lines.filter(isPossibleTriangle);
 
 const TRIANGLES_COUNT = 3;
-const triangles2 = chunkEvery(transpose(ints).flat(), TRIANGLES_COUNT).filter(
+const triangles2 = chunkEvery(transpose(lines).flat(), TRIANGLES_COUNT).filter(
   isPossibleTriangle
 );
 

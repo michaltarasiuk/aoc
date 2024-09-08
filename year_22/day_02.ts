@@ -1,4 +1,4 @@
-import {getInputLines} from 'lib/input';
+import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 2});
 

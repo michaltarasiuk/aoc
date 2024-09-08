@@ -1,5 +1,5 @@
-import {getInputCols} from 'lib/input';
-import {frequencies} from 'lib/iterable';
+import {getInputCols} from 'lib/input.js';
+import {frequencies} from 'lib/iterable.js';
 
 const cols = await getInputCols({year: 2016, day: 6});
 

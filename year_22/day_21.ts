@@ -1,5 +1,5 @@
-import {raise} from 'lib/assert';
-import {getInputLines} from 'lib/input';
+import {raise} from 'lib/assert.js';
+import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 

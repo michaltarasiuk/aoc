@@ -1,5 +1,5 @@
-import {getInputParagraphs} from 'lib/input';
-import {sum} from 'lib/math';
+import {getInputParagraphs} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 

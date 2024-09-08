@@ -1,5 +1,5 @@
-import {getInput} from 'lib/input';
-import {sum} from 'lib/math';
+import {getInput} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 
 const input = await getInput({year: 2017, day: 1});
 

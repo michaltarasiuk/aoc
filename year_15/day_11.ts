@@ -1,5 +1,5 @@
-import {getInput} from 'lib/input';
-import {stringToCodePoints} from 'lib/string';
+import {getInput} from 'lib/input.js';
+import {stringToCodePoints} from 'lib/string.js';
 
 const input = await getInput({year: 2015, day: 11});
 

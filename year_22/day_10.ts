@@ -1,5 +1,5 @@
-import {getInputLines} from 'lib/input';
-import {sum} from 'lib/math';
+import {getInputLines} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 import {z} from 'zod';
 
 const lines = await getInputLines({year: 2022, day: 10});

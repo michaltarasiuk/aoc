@@ -1,6 +1,6 @@
-import {getInputLines} from 'lib/input';
-import {sum} from 'lib/math';
-import {extractUints} from 'lib/parse';
+import {getInputLines} from 'lib/input.js';
+import {sum} from 'lib/math.js';
+import {extractUints} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2022, day: 4});
 

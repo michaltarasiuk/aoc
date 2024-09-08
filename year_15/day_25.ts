@@ -1,4 +1,4 @@
-import {getInputInts} from 'lib/input';
+import {getInputInts} from 'lib/input.js';
 
 const [row, col] = await getInputInts({year: 2015, day: 25});
 

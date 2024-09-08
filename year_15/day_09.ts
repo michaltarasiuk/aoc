@@ -1,6 +1,6 @@
-import {permute} from 'lib/array';
-import {getInputLines} from 'lib/input';
-import {sum} from 'lib/math';
+import {permute} from 'lib/array.js';
+import {getInputLines} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 

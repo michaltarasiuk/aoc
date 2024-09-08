@@ -1,6 +1,6 @@
-import {getInputParagraphs} from 'lib/input';
-import {sum} from 'lib/math';
-import {isKeyOf} from 'lib/predicate';
+import {getInputParagraphs} from 'lib/input.js';
+import {sum} from 'lib/math.js';
+import {isKeyOf} from 'lib/predicate.js';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 

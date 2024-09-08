@@ -1,5 +1,5 @@
-import {getInputLines} from 'lib/input';
-import {extractInts} from 'lib/parse';
+import {getInputLines} from 'lib/input.js';
+import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2015, day: 14});
 

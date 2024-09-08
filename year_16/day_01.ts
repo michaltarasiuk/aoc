@@ -1,5 +1,5 @@
-import {adjacentAt} from 'lib/array';
-import {getInputCSV} from 'lib/input';
+import {adjacentAt} from 'lib/array.js';
+import {getInputCSV} from 'lib/input.js';
 
 const [instructions] = await getInputCSV({year: 2016, day: 1});
 

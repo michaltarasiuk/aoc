@@ -1,5 +1,5 @@
-import {getInput} from 'lib/input';
-import {extractUints} from 'lib/parse';
+import {getInput} from 'lib/input.js';
+import {extractUints} from 'lib/parse.js';
 
 const input = await getInput({year: 2019, day: 4});
 

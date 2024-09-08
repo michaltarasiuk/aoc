@@ -1,6 +1,6 @@
-import {getInputParagraphs} from 'lib/input';
-import {frequencies} from 'lib/iterable';
-import {isDefined} from 'lib/predicate';
+import {getInputParagraphs} from 'lib/input.js';
+import {frequencies} from 'lib/iterable.js';
+import {isDefined} from 'lib/predicate.js';
 
 const [[polymerTemplate], pairInsertRules] = await getInputParagraphs({
   year: 2021,
