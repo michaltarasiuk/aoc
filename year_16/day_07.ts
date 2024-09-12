@@ -16,7 +16,6 @@ function parseIPAddress(ipAddress: string) {
 const ipAddresses = lines.map(parseIPAddress);
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
-
 const tlsSupportedIpsCount = sum(
   ...ipAddresses.map(({supernets, hypernets}) =>
     Number(abbaRe.test(supernets) && !abbaRe.test(hypernets))
@@ -24,7 +23,6 @@ const tlsSupportedIpsCount = sum(
 );
 
 const abaRe = /(\w)((?!\1)\w)\1.*, .*\2\1\2.*/;
-
 const sslSupportedIpsCount = sum(
   ...ipAddresses.map(({supernets, hypernets}) =>
     Number(abaRe.test(`${supernets}, ${hypernets}`))

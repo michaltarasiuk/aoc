@@ -35,7 +35,7 @@ const instructs: Record<string, Instruct> = {
   },
 };
 
-function executeProgram(registers: Registers = {a: 0, b: 0}) {
+function executeProgram(registers: Registers, ...instructions: string[]) {
   let offset = 0;
 
   while (offset < instructions.length) {
@@ -50,8 +50,8 @@ function executeProgram(registers: Registers = {a: 0, b: 0}) {
   return registers;
 }
 
-const registers = executeProgram();
-const registers2 = executeProgram({a: 1, b: 0});
+const registers = executeProgram({a: 0, b: 0}, ...instructions);
+const registers2 = executeProgram({a: 1, b: 0}, ...instructions);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

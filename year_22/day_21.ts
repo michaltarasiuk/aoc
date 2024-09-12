@@ -3,34 +3,40 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-type Monkeys = Map<string, string>;
+type Monkey = ReturnType<typeof parseMonkey>;
+type Monkeys = Map<Monkey['name'], Monkey['job']>;
 
-function yell(monkeys: Monkeys, name: string): number {
+function parseMonkey(monkey: string) {
+  const monkeyRe = /^(\w{4}): (.+)$/;
+  const [, name, job] = monkeyRe.exec(monkey) ?? raise(`Invalid: ${monkey}`);
+
+  return {name, job};
+}
+
+function yell(monkeys: Monkeys, name: Monkey['name']): number {
   const job = monkeys.get(name) ?? raise(`No job for ${name}`);
-  const parsed = Number(job);
+  const parsedJob = Number(job);
 
-  if (Number.isNaN(parsed)) {
+  if (Number.isNaN(parsedJob)) {
     const [a, op, b] = job.split(/\s/);
     return eval(yell(monkeys, a) + op + yell(monkeys, b));
   }
-  return parsed;
+  return parsedJob;
 }
 
 const monkeys: Monkeys = new Map(
   lines.map(line => {
-    const monkeyRe = /^(\w{4}): (.+)$/;
-    const [, name, job] = monkeyRe.exec(line)!;
-
+    const {name, job} = parseMonkey(line);
     return [name, job];
   })
 );
 
-const number = yell(monkeys, 'root');
+const n = yell(monkeys, 'root');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(number).toBe(142707821472432);
+    expect(n).toBe(142707821472432);
   });
 }

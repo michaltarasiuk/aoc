@@ -22,12 +22,10 @@ class Rules {
   }
 
   #includesBag(holder: string, search: string): boolean {
-    for (const bag of this.#rules.get(holder) ?? []) {
-      if (bag.color === search || this.#includesBag(bag.color, search)) {
-        return true;
-      }
-    }
-    return false;
+    const bags = this.#rules.get(holder) ?? [];
+    return bags.some(
+      bag => bag.color === search || this.#includesBag(bag.color, search)
+    );
   }
   countBagsWith(search: string) {
     return sum(

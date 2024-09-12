@@ -11,7 +11,7 @@ function parseProgram(program: string) {
   return {name, weight: Number(weight), children};
 }
 
-function findRoot(programs: Program[]) {
+function findRoot(...programs: Program[]) {
   const children = new Set(programs.flatMap(p => p.children));
 
   for (const program of programs) {
@@ -21,8 +21,7 @@ function findRoot(programs: Program[]) {
   }
 }
 
-const programs = lines.map(parseProgram);
-const root = findRoot(programs);
+const root = findRoot(...lines.map(parseProgram));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
