@@ -2,5 +2,4 @@
 const lintStagedConfig = {
   '*': ['bun run prettier', 'bun run eslint', 'bun run vitest related --run'],
 };
-
 export default lintStagedConfig;

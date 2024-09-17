@@ -6,5 +6,4 @@ const prettierConfig = {
   printWidth: 80,
   arrowParens: 'avoid',
 };
-
 export default prettierConfig;
