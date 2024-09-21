@@ -11,9 +11,9 @@ function isPossibleTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const triangles = lines.filter(isPossibleTriangle);
-
 const TRIANGLES_COUNT = 3;
+
+const triangles = lines.filter(isPossibleTriangle);
 const triangles2 = chunkEvery(transpose(lines).flat(), TRIANGLES_COUNT).filter(
   isPossibleTriangle
 );

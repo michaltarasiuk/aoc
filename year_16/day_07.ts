@@ -27,7 +27,7 @@ const tlsSupportedIpsCount = sum(
 
 const sslSupportedIpsCount = sum(
   ...ipAddresses.map(({supernets, hypernets}) => {
-    const isSupported = abaRe.test(`${supernets} ${hypernets}`);
+    const isSupported = abaRe.test(supernets + ' ' + hypernets);
     return Number(isSupported);
   })
 );

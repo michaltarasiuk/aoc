@@ -29,9 +29,8 @@ const costs = lines.reduce<Costs>((acc, line) => {
   (acc[b] ??= {}), (acc[b][a] = cost);
   return acc;
 }, {});
-const cities = Object.keys(costs);
 
-const possibleCosts = permute(cities).reduce<number[]>(
+const possibleCosts = permute(Object.keys(costs)).reduce<number[]>(
   (acc, route) => acc.concat(calcRouteCost(costs, ...route)),
   []
 );

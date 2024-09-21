@@ -10,12 +10,9 @@ const repeatedDigitsRe = /(?:(\d)\1*)/g;
 const results: number[] = [];
 
 while (++count <= PROCESS_COUNT_2) {
-  const match = input.match(repeatedDigitsRe)!;
-
-  input = match
-    .map(([...digits]) => {
-      return digits.length + digits[0];
-    })
+  input = input
+    .match(repeatedDigitsRe)!
+    .map(([...digits]) => digits.length + digits[0])
     .join('');
 
   if (count === PROCESS_COUNT || count === PROCESS_COUNT_2) {
@@ -23,16 +20,14 @@ while (++count <= PROCESS_COUNT_2) {
   }
 }
 
-const [result, result2] = results;
-
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(result).toBe(492982);
+    expect(results[0]).toBe(492982);
   });
 
   test('part 2', () => {
-    expect(result2).toBe(6989950);
+    expect(results[1]).toBe(6989950);
   });
 }

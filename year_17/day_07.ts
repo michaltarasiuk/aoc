@@ -2,8 +2,6 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 7});
 
-type Program = ReturnType<typeof parseProgram>;
-
 function parseProgram(program: string) {
   const programRe = /(\w+|\d+)/g;
   const [name, weight, ...children] = program.match(programRe)!;
@@ -11,7 +9,7 @@ function parseProgram(program: string) {
   return {name, weight: Number(weight), children};
 }
 
-function findRoot(...programs: Program[]) {
+function findRoot(...programs: ReturnType<typeof parseProgram>[]) {
   const children = new Set(programs.flatMap(p => p.children));
 
   for (const program of programs) {
