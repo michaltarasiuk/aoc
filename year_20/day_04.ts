@@ -4,16 +4,6 @@ import {isKeyOf} from 'lib/predicate.js';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
-function parsePassport(passport: string[]) {
-  const pairRe = /(\w+):(\S+)/g;
-  const passportEntries = Array.from(
-    passport.join(' ').matchAll(pairRe),
-    ([, key, value]) => [key, value] as const
-  );
-
-  return Object.fromEntries(passportEntries);
-}
-
 const PASSPORT_KEYS = {
   byr: /^(19[2-9]\d|200[0-2])$/,
   iyr: /^(201\d|2020)$/,
@@ -23,6 +13,16 @@ const PASSPORT_KEYS = {
   ecl: /^(amb|blu|brn|gry|grn|hzl|oth)$/,
   pid: /^\d{9}$/,
 };
+
+function parsePassport(passport: string[]) {
+  const pairRe = /(\w+):(\S+)/g;
+  const entries = Array.from(
+    passport.join(' ').matchAll(pairRe),
+    ([, key, value]) => [key, value] as const
+  );
+
+  return Object.fromEntries(entries);
+}
 
 const passports = paragraphs.map(parsePassport);
 

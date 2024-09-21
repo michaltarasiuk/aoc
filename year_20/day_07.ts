@@ -7,7 +7,7 @@ type Rule = ReturnType<typeof parseRule>;
 type Bag = Rule[number];
 
 function parseRule(rule: string) {
-  const bagsRe = /(?:(\d+) )?(\b(?!no other\b)\w+ \w+\b) bags?/g;
+  const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
 
   return Array.from(rule.matchAll(bagsRe), ([, count, color]) => ({
     color,

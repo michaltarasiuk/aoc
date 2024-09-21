@@ -7,7 +7,6 @@ const [start, end] = extractUints(input);
 const twoAdjacentDigitsRe = /(\d)\1/;
 
 let passwordsCount = 0;
-
 for (let i = start; i <= end; i++) {
   const s = String(i);
 

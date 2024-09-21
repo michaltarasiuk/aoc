@@ -1,4 +1,3 @@
-import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
@@ -8,13 +7,13 @@ type Monkeys = Map<Monkey['name'], Monkey['job']>;
 
 function parseMonkey(monkey: string) {
   const monkeyRe = /^(\w{4}): (.+)$/;
-  const [, name, job] = monkeyRe.exec(monkey) ?? raise(`Invalid: ${monkey}`);
+  const [, name, job] = monkeyRe.exec(monkey)!;
 
   return {name, job};
 }
 
 function yell(monkeys: Monkeys, name: Monkey['name']): number {
-  const job = monkeys.get(name) ?? raise(`No job for ${name}`);
+  const job = monkeys.get(name)!;
   const parsedJob = Number(job);
 
   if (Number.isNaN(parsedJob)) {
