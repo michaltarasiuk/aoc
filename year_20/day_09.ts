@@ -1,4 +1,5 @@
 import {getInputInts} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 
 const ints = await getInputInts({year: 2020, day: 9});
 
@@ -21,13 +22,31 @@ function findFirstInvalid(ns: number[], preambleSize: number) {
   }
 }
 
+function findContiguousSet(ns: number[], value: number) {
+  for (let i = 0; i < ns.length; i++) {
+    const set: number[] = [];
+
+    for (const n of ns.slice(i)) {
+      set.push(n);
+      if (sum(...set) === value) return set;
+    }
+  }
+}
+
 const PREAMBLE_SIZE = 25;
-const invalid = findFirstInvalid(ints, PREAMBLE_SIZE);
+const invalid = findFirstInvalid(ints, PREAMBLE_SIZE)!;
+
+const set = findContiguousSet(ints, invalid)!;
+const encryptionWeakness = Math.min(...set) + Math.max(...set);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
     expect(invalid).toBe(2089807806);
+  });
+
+  test('part 2', () => {
+    expect(encryptionWeakness).toBe(245848639);
   });
 }
