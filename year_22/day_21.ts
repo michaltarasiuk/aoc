@@ -29,7 +29,6 @@ const monkeys: Monkeys = new Map(
     return [name, job];
   })
 );
-
 const n = yell(monkeys, 'root');
 
 if (import.meta.vitest) {
