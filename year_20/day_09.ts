@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputInts} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -14,7 +15,7 @@ function isValid(preamble: number[], sum: number) {
   return false;
 }
 
-function findFirstInvalid(ns: number[], preambleSize: number) {
+function findInvalid(ns: number[], preambleSize: number) {
   for (let i = preambleSize; i < ns.length; i++) {
     if (!isValid(ns.slice(i - preambleSize, i), ns[i])) {
       return ns[i];
@@ -28,15 +29,17 @@ function findContiguousSet(ns: number[], value: number) {
 
     for (const n of ns.slice(i)) {
       set.push(n);
-      if (sum(...set) === value) return set;
+      if (sum(...set) === value) {
+        return set;
+      }
     }
   }
 }
 
 const PREAMBLE_SIZE = 25;
-const invalid = findFirstInvalid(ints, PREAMBLE_SIZE)!;
+const invalid = findInvalid(ints, PREAMBLE_SIZE) ?? raise('Invalid not found');
 
-const set = findContiguousSet(ints, invalid)!;
+const set = findContiguousSet(ints, invalid) ?? raise('Set not found');
 const encryptionWeakness = Math.min(...set) + Math.max(...set);
 
 if (import.meta.vitest) {
