@@ -50,13 +50,6 @@ export async function getInputInts(...params: Parameters<typeof getInput>) {
   return extractInts(input);
 }
 
-class ResponseError extends Error {
-  constructor(public response: Response) {
-    super();
-    this.name = ResponseError.name;
-  }
-}
-
 const INPUT_SCHEMA = z.object({
   year: z
     .number()
@@ -69,6 +62,13 @@ const INPUT_SCHEMA = z.object({
     .min(1, 'The day must be at least 1')
     .max(25, 'The day must not exceed 25'),
 });
+
+class ResponseError extends Error {
+  constructor(public response: Response) {
+    super();
+    this.name = ResponseError.name;
+  }
+}
 
 async function fetchInput(input: {year: number; day: number}) {
   try {
