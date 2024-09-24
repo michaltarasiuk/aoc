@@ -1,4 +1,5 @@
 import {z} from 'zod';
+import {fromError as fromZodError, isZodErrorLike} from 'zod-validation-error';
 
 import {env} from '../env.js';
 import {transpose} from './array.js';
@@ -72,9 +73,7 @@ class ResponseError extends Error {
 
 async function fetchInput(input: {year: number; day: number}) {
   try {
-    INPUT_SCHEMA.parse(input);
-    const {year, day} = input;
-
+    const {year, day} = INPUT_SCHEMA.parse(input);
     const response = await fetch(
       `https://adventofcode.com/${year}/day/${day}/input`,
       {
@@ -84,19 +83,19 @@ async function fetchInput(input: {year: number; day: number}) {
         },
       }
     );
+
     if (!response.ok) {
       throw new ResponseError(response);
     }
-
     return await response.text();
   } catch (error) {
-    let errorMessage = 'Failed to fetch input';
-
-    if (error instanceof ResponseError) {
-      errorMessage = error.response.statusText;
-    } else if (error instanceof Error) {
-      errorMessage = error.message;
+    if (isZodErrorLike(error)) {
+      throw new Error(fromZodError(error).message);
+    } else if (error instanceof ResponseError) {
+      const {status, statusText} = error.response;
+      throw new Error(`HTTP ${status} ${statusText}`);
+    } else {
+      throw new Error('An unknown error occurred');
     }
-    throw new Error(errorMessage);
   }
 }

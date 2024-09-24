@@ -27,20 +27,17 @@ function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
   );
 }
 
-const gamesIdsSum = lines.reduce((acc, game) => {
-  const [[id], ...cubes] = parseGame(game);
-  const {red, green, blue} = collectMaxCubeSizes(cubes);
+const parsedGames = lines.map(parseGame);
 
-  if (red <= 12 && green <= 13 && blue <= 14) {
-    acc += id;
-  }
-  return acc;
+const gamesIdsSum = parsedGames.reduce((acc, [[id], ...cubes]) => {
+  const {red, green, blue} = collectMaxCubeSizes(cubes);
+  const isGamePossible = red <= 12 && green <= 13 && blue <= 14;
+
+  return acc + (isGamePossible ? id : 0);
 }, 0);
 
-const setsPowerSum = lines.reduce((acc, game) => {
-  const [, ...cubes] = parseGame(game);
+const setsPowerSum = parsedGames.reduce((acc, [, ...cubes]) => {
   const {red, green, blue} = collectMaxCubeSizes(cubes);
-
   return acc + red * green * blue;
 }, 0);
 

@@ -23,7 +23,7 @@ function yell(monkeys: Monkeys, name: Monkey['name']): number {
   return parsedJob;
 }
 
-const monkeys: Monkeys = new Map(
+const monkeys = new Map(
   lines.map(line => {
     const {name, job} = parseMonkey(line);
     return [name, job];

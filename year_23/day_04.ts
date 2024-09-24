@@ -1,43 +1,39 @@
 import {getInputLines} from 'lib/input.js';
+import {sum} from 'lib/math.js';
 import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
 type Cards = Map<number, Set<number>>;
 
-function calcPoints(cards: Cards) {
-  let points = 0;
-
-  for (const matches of cards.values()) {
-    if (matches.size) {
-      points += Math.pow(2, matches.size - 1);
-    }
-  }
-  return points;
+function getScratchcards(cards: Cards, id: number) {
+  return Array(cards.get(id)!.size)
+    .fill(1)
+    .map((v, i) => v + i + id);
 }
 
-function findTotalCards(cards: Cards, ids = Array.from(cards.keys())) {
-  let count = 0;
-
-  for (const id of ids) {
-    const scratchcards = Array.from(
-      {length: cards.get(id)!.size},
-      (_, i) => id + i + 1
-    );
-    count += findTotalCards(cards, scratchcards);
-  }
-  return count + ids.length;
+function countTotalCards(cards: Cards, ids = Array.from(cards.keys())): number {
+  return sum(
+    ids.length,
+    ...ids.map(id => countTotalCards(cards, getScratchcards(cards, id)))
+  );
 }
 
-const cards: Cards = new Map(
+const cards = new Map(
   lines.map(line => {
     const [[id, ...a], b] = line.split('|').map(extractInts);
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );
 
-const points = calcPoints(cards);
-const totalCards = findTotalCards(cards);
+let points = 0;
+for (const matches of cards.values()) {
+  if (matches.size) {
+    points += Math.pow(2, matches.size - 1);
+  }
+}
+
+const totalCardsCount = countTotalCards(cards);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
@@ -47,6 +43,6 @@ if (import.meta.vitest) {
   });
 
   test('part 2', () => {
-    expect(totalCards).toBe(9997537);
+    expect(totalCardsCount).toBe(9997537);
   });
 }

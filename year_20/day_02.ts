@@ -13,9 +13,9 @@ function parsePassword(s: string) {
 const passwords = lines.map(parsePassword);
 
 const validPasswordsCount = sum(
-  ...passwords.map(password => {
-    const count = password.password.split(password.char).length - 1;
-    return Number(count >= password.min && count <= password.max);
+  ...passwords.map(({min, max, char, password}) => {
+    const count = password.split(char).length - 1;
+    return Number(count >= min && count <= max);
   })
 );
 

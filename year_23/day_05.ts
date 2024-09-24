@@ -3,23 +3,32 @@ import {extractInts} from 'lib/parse.js';
 
 const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
 
-function findLocation([...maps]: number[][][], value: number) {
-  const map = maps.shift();
-  if (!map) {
+type Map = ReturnType<typeof parseMap>;
+
+function parseMap(map: string) {
+  const mapRe = /^(\d+) (\d+) (\d+)$/;
+  const [, destination, source, length] = map.match(mapRe)!.map(Number);
+
+  return {destination, source, length};
+}
+
+function findLocation([...mapLayers]: Map[][], value: number) {
+  const mapLayer = mapLayers.shift();
+  if (!mapLayer) {
     return value;
   }
 
-  for (const [destination, source, length] of map) {
+  for (const {destination, source, length} of mapLayer) {
     if (value >= source && value < source + length) {
-      return findLocation(maps, destination + (value - source));
+      return findLocation(mapLayers, destination + (value - source));
     }
   }
-  return findLocation(maps, value);
+  return findLocation(mapLayers, value);
 }
 
-const maps = paragraphs.map(([, ...maps]) => maps.map(extractInts));
+const mapLayers = paragraphs.map(([, ...mapLayer]) => mapLayer.map(parseMap));
 const lowestLocation = Math.min(
-  ...extractInts(seeds).map(seed => findLocation(maps, seed))
+  ...extractInts(seeds).map(seed => findLocation(mapLayers, seed))
 );
 
 if (import.meta.vitest) {
