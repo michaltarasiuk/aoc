@@ -1,22 +1,18 @@
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
 type Cards = Map<number, Set<number>>;
 
-function getScratchcards(cards: Cards, id: number) {
-  return Array(cards.get(id)!.size)
-    .fill(1)
-    .map((v, i) => v + i + id);
-}
-
 function countTotalCards(cards: Cards, ids = Array.from(cards.keys())): number {
-  return sum(
-    ids.length,
-    ...ids.map(id => countTotalCards(cards, getScratchcards(cards, id)))
-  );
+  return ids.reduce((acc, id) => {
+    const scratchcards = Array(cards.get(id)!.size)
+      .fill(1)
+      .map((v, i) => v + i + id);
+
+    return acc + countTotalCards(cards, scratchcards);
+  }, ids.length);
 }
 
 const cards = new Map(

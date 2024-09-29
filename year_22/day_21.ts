@@ -2,10 +2,10 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-type Monkey = ReturnType<typeof parseMonkey>;
+type Monkey = {name: string; job: string};
 type Monkeys = Map<Monkey['name'], Monkey['job']>;
 
-function parseMonkey(monkey: string) {
+function parseMonkey(monkey: string): Monkey {
   const monkeyRe = /^(\w{4}): (.+)$/;
   const [, name, job] = monkeyRe.exec(monkey)!;
 
@@ -23,7 +23,7 @@ function yell(monkeys: Monkeys, name: Monkey['name']): number {
   return parsedJob;
 }
 
-const monkeys = new Map(
+const monkeys: Monkeys = new Map(
   lines.map(line => {
     const {name, job} = parseMonkey(line);
     return [name, job];

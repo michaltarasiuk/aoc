@@ -1,11 +1,10 @@
 import {castArray} from 'lib/array.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {isArray, isDefined, isNumber} from 'lib/predicate.js';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 13});
 
-type Packet = (number | Packet)[];
+type Packet = (Packet | number)[];
 
 function parsePacketPair([a, b]: string[]): [Packet, Packet] {
   return [eval(a), eval(b)];
@@ -28,11 +27,14 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
   }
 }
 
-const sumOfIndices = sum(
-  ...paragraphs
-    .map(parsePacketPair)
-    .map((packetPair, i) => (isValidPacketPair(packetPair) ? i + 1 : 0))
-);
+const sumOfIndices = paragraphs
+  .map(parsePacketPair)
+  .reduce((acc, packetPair, i) => {
+    if (isValidPacketPair(packetPair)) {
+      acc += i + 1;
+    }
+    return acc;
+  }, 0);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

@@ -1,22 +1,27 @@
 import {getInput} from 'lib/input.js';
 
-let input = await getInput({year: 2015, day: 10});
-let count = 0;
+const input = await getInput({year: 2015, day: 10});
+
+function matchRepeatedDigits(s: string) {
+  const repeatedDigitsRe = /(?:(\d)\1*)/g;
+  return s.match(repeatedDigitsRe) ?? [];
+}
 
 const PROCESS_COUNT = 40;
 const PROCESS_COUNT_2 = 50;
 
-const repeatedDigitsRe = /(?:(\d)\1*)/g;
+let sequence = input;
+let count = 0;
+
 const results: number[] = [];
 
 while (++count <= PROCESS_COUNT_2) {
-  input = input
-    .match(repeatedDigitsRe)!
+  sequence = matchRepeatedDigits(sequence)
     .map(([...digits]) => digits.length + digits[0])
     .join('');
 
   if (count === PROCESS_COUNT || count === PROCESS_COUNT_2) {
-    results.push(input.length);
+    results.push(sequence.length);
   }
 }
 

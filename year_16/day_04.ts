@@ -5,8 +5,6 @@ import {stringToCodePoints} from 'lib/string.js';
 
 const lines = await getInputLines({year: 2016, day: 4});
 
-type Room = ReturnType<typeof parseRoom>;
-
 function parseRoom(room: string) {
   const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
   const [, name, id, checksum] = room.match(roomRe)!;
@@ -30,7 +28,10 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
   return ((codePoint - 97 + shift) % 26) + 97;
 }
 
-function findSectorID(storage: string, ...rooms: Room[]) {
+function findSectorID(
+  storage: string,
+  ...rooms: ReturnType<typeof parseRoom>[]
+) {
   for (const {name, id} of rooms) {
     const decoded = String.fromCodePoint(
       ...stringToCodePoints(name, codePoint =>
