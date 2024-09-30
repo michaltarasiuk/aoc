@@ -4,6 +4,7 @@ import {sum} from 'lib/math.js';
 const lines = await getInputLines({year: 2020, day: 7});
 
 type Rule = ReturnType<typeof parseRule>;
+type Rules = Map<string, Rule>;
 
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
@@ -14,18 +15,14 @@ function parseRule(rule: string) {
   }));
 }
 
-function includesBag(
-  rules: Map<string, Rule>,
-  holder: string,
-  search: string
-): boolean {
+function includesBag(rules: Rules, holder: string, search: string): boolean {
   const bags = rules.get(holder) ?? [];
   return bags.some(
     bag => bag.color === search || includesBag(rules, bag.color, search)
   );
 }
 
-function countBagsWith(rules: Map<string, Rule>, search: string) {
+function countBagsWith(rules: Rules, search: string) {
   return sum(
     ...Array.from(rules.keys(), holder =>
       Number(includesBag(rules, holder, search))
@@ -33,7 +30,7 @@ function countBagsWith(rules: Map<string, Rule>, search: string) {
   );
 }
 
-function countBagsOf(rules: Map<string, Rule>, search: string): number {
+function countBagsOf(rules: Rules, search: string): number {
   return sum(
     ...Array.from(
       rules.get(search) ?? [],
