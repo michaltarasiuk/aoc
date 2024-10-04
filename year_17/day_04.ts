@@ -3,7 +3,7 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2017, day: 4});
 
-const passports = lines.map(line => line.split(/\s/));
+const passports = lines.map(l => l.split(/\s/));
 
 const validPassphrasesCount = sum(
   ...passports.map(passport => {

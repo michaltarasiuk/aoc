@@ -3,27 +3,20 @@ import {stringToCodePoints} from 'lib/string.js';
 
 const input = await getInput({year: 2015, day: 11});
 
-function isValidPassword(password: string) {
-  return (
-    containsValidChars(password) &&
-    contains2NonOverlappingPairs(password) &&
-    hasIncreasingStraightOf3Chars(password)
-  );
-}
-
-function containsValidChars(s: string) {
-  return /^[^iol]*$/.test(s) && /^[a-z]*$/.test(s);
-}
-
-function contains2NonOverlappingPairs(s: string) {
-  return /.*(\w)\1.*(\w)\2/.test(s);
-}
-
 function hasIncreasingStraightOf3Chars(s: string) {
   return stringToCodePoints(s).some((_, i, codePoints) => {
     const [a, b, c] = codePoints.slice(i, i + 3);
     return b - a === 1 && c - b === 1;
   });
+}
+
+function isValidPassword(s: string) {
+  const hasValidChars = /^[^iol]*$/.test(s) && /^[a-z]*$/.test(s);
+  const has2NonOverlappingPairs = /.*(\w)\1.*(\w)\2/.test(s);
+
+  return (
+    hasValidChars && has2NonOverlappingPairs && hasIncreasingStraightOf3Chars(s)
+  );
 }
 
 function findNewPassword(password: string) {

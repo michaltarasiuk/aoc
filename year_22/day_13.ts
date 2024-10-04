@@ -27,7 +27,7 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
   }
 }
 
-const sumOfIndices = paragraphs
+const indicesSum = paragraphs
   .map(parsePacketPair)
   .reduce((acc, packetPair, i) => {
     if (isValidPacketPair(packetPair)) {
@@ -40,6 +40,6 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(sumOfIndices).toBe(4734);
+    expect(indicesSum).toBe(4734);
   });
 }

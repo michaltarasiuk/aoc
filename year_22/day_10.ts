@@ -22,13 +22,11 @@ function calcSignal(instructions: Instruction[]) {
   }, 1);
 }
 
-const instructions = lines.flatMap((line): Instruction[] => {
-  const instruction = parseInstruction(line);
-
-  return instruction.op === 'addx'
-    ? [{op: 'noop'}, instruction]
-    : [instruction];
-});
+const instructions = lines
+  .map(parseInstruction)
+  .flatMap((instruction): Instruction[] =>
+    instruction.op === 'addx' ? [{op: 'noop'}, instruction] : [instruction]
+  );
 
 const CYCLES = [20, 60, 100, 140, 180, 220];
 const sumOfSignals = sum(

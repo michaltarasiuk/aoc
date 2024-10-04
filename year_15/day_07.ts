@@ -9,8 +9,8 @@ function parseInstruction(instruction: string) {
   ];
 }
 
-const circuit = lines.reduce<Record<string, string[]>>((acc, line) => {
-  const instruction = parseInstruction(line);
+const circuit = lines.reduce<Record<string, string[]>>((acc, l) => {
+  const instruction = parseInstruction(l);
   const dest = instruction.pop();
 
   if (dest) {

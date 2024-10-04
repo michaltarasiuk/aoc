@@ -14,34 +14,33 @@ const PASSPORT_KEYS = {
   pid: /^\d{9}$/,
 };
 
-function parsePassport(passport: string[]) {
+const passports = paragraphs.map(passport => {
   const pairRe = /(\w+):(\S+)/g;
-  const entries = Array.from(
-    passport.join(' ').matchAll(pairRe),
-    ([, key, value]) => [key, value] as const
+
+  return Object.fromEntries(
+    passport
+      .join(' ')
+      .matchAll(pairRe)
+      .map(([, k, v]) => [k, v])
   );
-
-  return Object.fromEntries(entries);
-}
-
-const passports = paragraphs.map(parsePassport);
+});
 
 const validPassportsCount = sum(
-  ...passports.map(passport => {
-    const isValid = Object.keys(PASSPORT_KEYS).every(key =>
-      isKeyOf(passport, key)
-    );
-    return Number(isValid);
-  })
+  ...passports
+    .map(passport =>
+      Object.keys(PASSPORT_KEYS).every(k => isKeyOf(passport, k))
+    )
+    .map(Number)
 );
 
 const validPassportsCount2 = sum(
-  ...passports.map(passport => {
-    const isValid = Object.entries(PASSPORT_KEYS).every(
-      ([key, re]) => isKeyOf(passport, key) && re.test(passport[key])
-    );
-    return Number(isValid);
-  })
+  ...passports
+    .map(passport =>
+      Object.entries(PASSPORT_KEYS).every(
+        ([k, re]) => isKeyOf(passport, k) && re.test(passport[k])
+      )
+    )
+    .map(Number)
 );
 
 if (import.meta.vitest) {

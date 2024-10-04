@@ -6,8 +6,8 @@ export function adjacentAt<T>(arr: T[], i: number) {
   return [arr.at(i - 1)!, arr.at((i + 1) % arr.length)!] as const;
 }
 
-export function castArray<T>(value: T | T[]) {
-  return Array.isArray(value) ? value : [value];
+export function castArray<T>(v: T | T[]) {
+  return Array.isArray(v) ? v : [v];
 }
 
 export function permute<T>(items: T[]): T[][] {

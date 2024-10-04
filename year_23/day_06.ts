@@ -20,10 +20,7 @@ function countWaysOfBeatRecord(time: number, record: number) {
 const [times, distances] = lines.map(extractUints);
 
 const waysOfBeatRecordProduct = multiply(
-  ...times.map((time, i) => {
-    const record = distances[i];
-    return countWaysOfBeatRecord(time, record);
-  })
+  ...times.map((time, i) => countWaysOfBeatRecord(time, distances[i]))
 );
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(

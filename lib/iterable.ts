@@ -3,7 +3,11 @@ export function chunkEvery<T>(iterable: Iterable<T>, count: number) {
 
   for (const item of iterable) {
     const chunk = chunks.at(-1)!;
-    chunk.length === count ? chunks.push([item]) : chunk.push(item);
+    if (chunk.length === count) {
+      chunks.push([item]);
+    } else {
+      chunk.push(item);
+    }
   }
   return chunks;
 }

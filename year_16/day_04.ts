@@ -1,6 +1,5 @@
 import {getInputLines} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
-import {sum} from 'lib/math.js';
 import {stringToCodePoints} from 'lib/string.js';
 
 const lines = await getInputLines({year: 2016, day: 4});
@@ -46,11 +45,12 @@ function findSectorID(
 
 const rooms = lines.map(parseRoom);
 
-const realRoomSectorIDsSum = sum(
-  ...rooms.map(({name, id, checksum}) =>
-    checksum === calcChecksum(...name) ? id : 0
-  )
-);
+const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
+  if (checksum === calcChecksum(...name)) {
+    acc += id;
+  }
+  return acc;
+}, 0);
 const northPoleSectorID = findSectorID('northpoleobjectstorage', ...rooms);
 
 if (import.meta.vitest) {

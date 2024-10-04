@@ -2,18 +2,10 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-type Monkey = ReturnType<typeof parseMonkey>;
-type Monkeys = Map<Monkey['name'], Monkey['job']>;
+type Monkeys = Record<string, string>;
 
-function parseMonkey(monkey: string) {
-  const monkeyRe = /^(\w{4}): (.+)$/;
-  const [, name, job] = monkeyRe.exec(monkey)!;
-
-  return {name, job};
-}
-
-function yell(monkeys: Monkeys, name: Monkey['name']): number {
-  const job = monkeys.get(name)!;
+function yell(monkeys: Monkeys, name: keyof Monkeys): number {
+  const job = monkeys[name];
   const parsedJob = Number(job);
 
   if (Number.isNaN(parsedJob)) {
@@ -23,12 +15,13 @@ function yell(monkeys: Monkeys, name: Monkey['name']): number {
   return parsedJob;
 }
 
-const monkeys = new Map(
-  lines.map(line => {
-    const {name, job} = parseMonkey(line);
-    return [name, job];
-  })
-);
+const monkeys = lines.reduce<Monkeys>((acc, l) => {
+  const monkeyRe = /^(\w{4}): (.+)$/;
+  const [, name, job] = monkeyRe.exec(l)!;
+
+  return {...acc, [name]: job};
+}, {});
+
 const n = yell(monkeys, 'root');
 
 if (import.meta.vitest) {

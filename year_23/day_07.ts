@@ -44,8 +44,8 @@ function compareHands(a: string, b: string) {
 }
 
 const hands = lines
-  .map(line => {
-    const [hand, bid] = line.split(/\s/);
+  .map(l => {
+    const [hand, bid] = l.split(/\s/);
     return {hand, bid: Number(bid), type: classifyHand(hand)};
   })
   .toSorted((a, b) => {

@@ -1,5 +1,4 @@
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2020, day: 7});
 
@@ -9,34 +8,29 @@ type Rules = Map<string, Rule>;
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
 
-  return Array.from(rule.matchAll(bagsRe), ([, count, color]) => ({
-    color,
-    count: Number(count),
-  }));
+  return rule
+    .matchAll(bagsRe)
+    .map(([, count, color]) => ({color, count: Number(count)}))
+    .toArray();
 }
 
 function includesBag(rules: Rules, holder: string, search: string): boolean {
-  const bags = rules.get(holder) ?? [];
-  return bags.some(
+  return (rules.get(holder) ?? []).some(
     bag => bag.color === search || includesBag(rules, bag.color, search)
   );
 }
 
 function countBagsWith(rules: Rules, search: string) {
-  return sum(
-    ...Array.from(rules.keys(), holder =>
-      Number(includesBag(rules, holder, search))
-    )
-  );
+  return rules
+    .keys()
+    .map(holder => includesBag(rules, holder, search))
+    .reduce((acc, has) => acc + Number(has), 0);
 }
 
 function countBagsOf(rules: Rules, search: string): number {
-  return sum(
-    ...Array.from(
-      rules.get(search) ?? [],
-      bag => bag.count + bag.count * countBagsOf(rules, bag.color)
-    )
-  );
+  return (rules.get(search) ?? [])
+    .map(({color, count}) => count + count * countBagsOf(rules, color))
+    .reduce((acc, count) => acc + count, 0);
 }
 
 const rules = new Map(

@@ -2,11 +2,6 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 10});
 
-function matchRepeatedDigits(s: string) {
-  const repeatedDigitsRe = /(?:(\d)\1*)/g;
-  return s.match(repeatedDigitsRe) ?? [];
-}
-
 const PROCESS_COUNT = 40;
 const PROCESS_COUNT_2 = 50;
 
@@ -16,7 +11,9 @@ let count = 0;
 const results: number[] = [];
 
 while (++count <= PROCESS_COUNT_2) {
-  sequence = matchRepeatedDigits(sequence)
+  const repeatedDigitsRe = /(?:(\d)\1*)/g;
+
+  sequence = (sequence.match(repeatedDigitsRe) ?? [])
     .map(([...digits]) => digits.length + digits[0])
     .join('');
 

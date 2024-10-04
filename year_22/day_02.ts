@@ -29,8 +29,8 @@ function roundOutcome(them: number, me: number) {
   throw new Error('Invalid round outcome');
 }
 
-const score = lines.reduce((acc, line) => {
-  const [them, me] = parseRound(line);
+const score = lines.reduce((acc, l) => {
+  const [them, me] = parseRound(l);
   return acc + roundOutcome(them, me) + me;
 }, 0);
 

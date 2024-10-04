@@ -1,45 +1,28 @@
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
-import {isDefined, isKeyOf} from 'lib/predicate.js';
+import {isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2023, day: 2});
 
-function parseGame(game: string) {
-  const gameRe = /(\d+)(?: (\w+))?/g;
-  const gameMatch = game.matchAll(gameRe);
+const games = lines.map(l =>
+  l
+    .matchAll(/(\d+) (r|g|b)/g)
+    .map(([, n, color]) => [color, Number(n)] as const)
+    .reduce(
+      (acc, [k, v]) => {
+        assert(isKeyOf(acc, k));
+        return {...acc, [k]: Math.max(acc[k], v)};
+      },
+      {r: 0, g: 0, b: 0}
+    )
+);
 
-  return Array.from(
-    gameMatch,
-    ([, num, cube]) =>
-      [Number(num), ...(isDefined(cube) ? [cube] : [])] as const
-  );
-}
+const gamesIdsSum = games
+  .map((game, i) => ({id: i + 1, ...game}))
+  .filter(({r, g, b}) => r <= 12 && g <= 13 && b <= 14)
+  .reduce((acc, {id}) => acc + id, 0);
 
-function collectMaxCubeSizes(cubes: (readonly [number, ...string[]])[]) {
-  return cubes.reduce(
-    (acc, [count, cube]) => {
-      assert(isKeyOf(acc, cube));
-
-      acc[cube] = Math.max(acc[cube], count);
-      return acc;
-    },
-    {red: 0, green: 0, blue: 0}
-  );
-}
-
-const parsedGames = lines.map(parseGame);
-
-const gamesIdsSum = parsedGames.reduce((acc, [[id], ...cubes]) => {
-  const {red, green, blue} = collectMaxCubeSizes(cubes);
-  const isGamePossible = red <= 12 && green <= 13 && blue <= 14;
-
-  return acc + (isGamePossible ? id : 0);
-}, 0);
-
-const setsPowerSum = parsedGames.reduce((acc, [, ...cubes]) => {
-  const {red, green, blue} = collectMaxCubeSizes(cubes);
-  return acc + red * green * blue;
-}, 0);
+const setsPowerSum = games.reduce((acc, {r, g, b}) => acc + r * g * b, 0);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

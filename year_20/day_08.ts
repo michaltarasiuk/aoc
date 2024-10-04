@@ -32,7 +32,7 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
 }
 
 const instructions = lines
-  .map(line => line.split(/\s/))
+  .map(l => l.split(/\s/))
   .map(([op, arg]) => ({op, arg: Number(arg)}));
 
 const acc = runProgram(...instructions);

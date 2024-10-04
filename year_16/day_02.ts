@@ -31,8 +31,8 @@ const START_POINT = [1, 1];
 let [x, y] = START_POINT;
 let bathroomCode = '';
 
-for (const line of lines) {
-  for (const char of line) {
+for (const l of lines) {
+  for (const char of l) {
     [x, y] = move(x, y, char);
   }
   bathroomCode += KEYPAD[y][x];

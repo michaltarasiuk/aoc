@@ -3,32 +3,32 @@ import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
 import {extractInts} from 'lib/parse.js';
 
-const lines = (await getInputLines({year: 2016, day: 3})).map(line =>
-  extractInts(line)
-);
+const lines = await getInputLines({year: 2016, day: 3});
 
-function isPossibleTriangle([a, b, c]: number[]) {
+function isValidTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const TRIANGLES_COUNT = 3;
+function countValidTriangles(...triangles: number[][]) {
+  return triangles.filter(isValidTriangle).length;
+}
 
-const triangles = lines.filter(isPossibleTriangle);
-const triangles2 = chunkEvery(transpose(lines).flat(), TRIANGLES_COUNT).filter(
-  isPossibleTriangle
+const TRIANGLE_SIZE = 3;
+const triangles = lines.map(extractInts);
+
+const validTrianglesCount = countValidTriangles(...triangles);
+const validTrianglesCount2 = countValidTriangles(
+  ...chunkEvery(transpose(triangles).flat(), TRIANGLE_SIZE)
 );
-
-const possibleTrianglesCount = triangles.length;
-const possibleTrianglesCount2 = triangles2.length;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(possibleTrianglesCount).toBe(993);
+    expect(validTrianglesCount).toBe(993);
   });
 
   test('part 2', () => {
-    expect(possibleTrianglesCount2).toBe(1849);
+    expect(validTrianglesCount2).toBe(1849);
   });
 }

@@ -4,35 +4,26 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
-function parseDistance(distance: string) {
-  const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
-  const [, a, b, cost] = distance.match(distanceRe)!;
+const costs = lines
+  .map(distance => {
+    const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
+    const [, a, b, cost] = distance.match(distanceRe)!;
 
-  return {a, b, cost: Number(cost)};
-}
-
-function calcRouteCost(...route: string[]) {
-  return sum(
-    ...route.map((from, i) => {
-      const to = route[i + 1];
-      return costs[from][to] ?? 0;
-    })
-  );
-}
-
-const costs = lines.reduce<{[from: string]: {[to: string]: number}}>(
-  (acc, line) => {
-    const {a, b, cost} = parseDistance(line);
-
-    (acc[a] ??= {}), (acc[a][b] = cost);
-    (acc[b] ??= {}), (acc[b][a] = cost);
+    return {a, b, cost: Number(cost)};
+  })
+  .reduce<{[from: string]: {[to: string]: number}}>((acc, {a, b, cost}) => {
+    acc[a] ??= {};
+    acc[b] ??= {};
+    acc[a][b] = cost;
+    acc[b][a] = cost;
     return acc;
-  },
-  {}
-);
+  }, {});
 
 const possibleCosts = permute(Object.keys(costs)).reduce<number[]>(
-  (acc, route) => acc.concat(calcRouteCost(...route)),
+  (acc, route) => {
+    const cost = sum(...route.map((from, i) => costs[from][route[i + 1]] ?? 0));
+    return acc.concat(cost);
+  },
   []
 );
 

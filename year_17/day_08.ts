@@ -18,16 +18,10 @@ function evalCondition(registers: Registers, cond: string) {
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
 
-function findMaxRegister(registers: Registers) {
-  return Math.max(...Object.values(registers));
-}
-
 const registers: Registers = {};
 let maxHeldRegister = -Infinity;
 
-for (const line of lines) {
-  const {reg, op, val, cond} = parseInstruction(line);
-
+for (const {reg, op, val, cond} of lines.map(parseInstruction)) {
   if (evalCondition(registers, cond)) {
     registers[reg] ??= 0;
     registers[reg] += op === 'inc' ? val : -val;
@@ -36,7 +30,7 @@ for (const line of lines) {
   }
 }
 
-const maxFinalRegister = findMaxRegister(registers);
+const maxFinalRegister = Math.max(...Object.values(registers));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

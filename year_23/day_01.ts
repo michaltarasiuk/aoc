@@ -8,9 +8,9 @@ const digitRe = /\d/;
 const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
 
 const calibrationValuesSum = sum(
-  ...lines.map(line => {
-    const first = line.match(digitRe)?.at(0) ?? raise('No digit');
-    const last = line.match(lastdigitRe)?.at(1) ?? first;
+  ...lines.map(l => {
+    const first = l.match(digitRe)?.at(0) ?? raise('No digit');
+    const last = l.match(lastdigitRe)?.at(1) ?? first;
 
     return Number(first + last);
   })
@@ -27,9 +27,9 @@ const digitOrSpelledRe = new RegExp(
 const lastDigitOrSpelledRe = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const calibrationValuesSum2 = sum(
-  ...lines.map(line => {
-    const first = line.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
-    const last = line.match(lastDigitOrSpelledRe)?.at(1) ?? first;
+  ...lines.map(l => {
+    const first = l.match(digitOrSpelledRe)?.at(0) ?? raise('No digit');
+    const last = l.match(lastDigitOrSpelledRe)?.at(1) ?? first;
 
     return Number(
       [first, last]

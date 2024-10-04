@@ -21,8 +21,10 @@ const steps = lines
 
 const order: string[] = [];
 while (steps.size > 0) {
-  const [step] = [...steps.keys()]
-    .filter(k => [...steps.get(k)!].every(step => order.includes(step)))
+  const [step] = steps
+    .keys()
+    .filter(k => steps.get(k)?.isSubsetOf(new Set(order)))
+    .toArray()
     .toSorted();
 
   steps.delete(step);

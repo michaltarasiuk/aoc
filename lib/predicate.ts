@@ -1,24 +1,22 @@
-export function isNumber(value: unknown) {
-  return typeof value === 'number';
+export function isNumber(v: unknown) {
+  return typeof v === 'number';
 }
 
-export function isObject(
-  value: unknown
-): value is Record<PropertyKey, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
+export function isObject(v: unknown): v is Record<PropertyKey, unknown> {
+  return typeof v === 'object' && v !== null && !Array.isArray(v);
 }
 
-export function isArray(value: unknown) {
-  return Array.isArray(value);
+export function isArray(v: unknown) {
+  return Array.isArray(v);
 }
 
-export function isDefined(value: unknown) {
-  return value !== undefined && value !== null;
+export function isDefined(v: unknown) {
+  return v !== undefined && v !== null;
 }
 
 export function isKeyOf<T extends Record<PropertyKey, unknown>>(
-  object: T,
-  key: PropertyKey
-): key is keyof T {
-  return Object.hasOwn(object, key);
+  obj: T,
+  k: PropertyKey
+): k is keyof T {
+  return Object.hasOwn(obj, k);
 }

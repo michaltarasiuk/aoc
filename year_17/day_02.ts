@@ -13,7 +13,7 @@ function findDivisiblePair(...ns: number[]) {
   }
 }
 
-const rows = lines.map(line => line.split('\t').map(Number));
+const rows = lines.map(l => l.split('\t').map(Number));
 
 const spreadsheetChecksum = sum(
   ...rows.map(row => Math.max(...row) - Math.min(...row))

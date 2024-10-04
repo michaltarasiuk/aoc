@@ -13,5 +13,5 @@ function* divisors_(n: number) {
   yield n;
 }
 export function divisors(n: number) {
-  return Array.from(divisors_(n));
+  return divisors_(n).toArray();
 }

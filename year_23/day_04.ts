@@ -3,11 +3,12 @@ import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
-type Cards = Map<number, Set<number>>;
-
-function countTotalCards(cards: Cards, ids = Array.from(cards.keys())): number {
+function countTotalCards(
+  cards: Map<number, Set<number>>,
+  ids = cards.keys().toArray()
+): number {
   return ids.reduce((acc, id) => {
-    const scratchcards = Array(cards.get(id)!.size)
+    const scratchcards = Array(cards.get(id)?.size ?? 0)
       .fill(1)
       .map((v, i) => v + i + id);
 
@@ -16,18 +17,18 @@ function countTotalCards(cards: Cards, ids = Array.from(cards.keys())): number {
 }
 
 const cards = new Map(
-  lines.map(line => {
-    const [[id, ...a], b] = line.split('|').map(extractInts);
+  lines.map(l => {
+    const [[id, ...a], b] = l.split('|').map(extractInts);
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );
 
-let points = 0;
-for (const matches of cards.values()) {
+const points = cards.values().reduce((acc, matches) => {
   if (matches.size) {
-    points += Math.pow(2, matches.size - 1);
+    acc += Math.pow(2, matches.size - 1);
   }
-}
+  return acc;
+}, 0);
 
 const totalCardsCount = countTotalCards(cards);
 

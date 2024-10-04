@@ -18,8 +18,8 @@ function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
 let paper = 0;
 let ribbon = 0;
 
-for (const line of lines) {
-  const [l = 0, w = 0, h = 0] = line.split('x').map(Number);
+for (const ln of lines) {
+  const [l = 0, w = 0, h = 0] = ln.split('x').map(Number);
 
   paper += calcPaper({l, w, h});
   ribbon += calcRibbon({l, w, h});

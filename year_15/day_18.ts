@@ -20,7 +20,7 @@ function getNeighbors(lights: Lights, {x, y}: {x: number; y: number}) {
 
 function calcLightsOn(lights: Lights) {
   const lightsOnRe = new RegExp(LIGHT_ON, 'g');
-  return Array.from(lights.join().matchAll(lightsOnRe)).length;
+  return lights.join().matchAll(lightsOnRe).toArray().length;
 }
 
 function switchLight(light: string, neighbors: Lights) {
@@ -35,17 +35,13 @@ function switchLight(light: string, neighbors: Lights) {
   }
 }
 
-function animate(lights: Lights) {
-  return lights.map((row, y) =>
-    row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y})))
-  );
-}
-
 const STEPS_COUNT = 100;
 
 let lights = grid;
 for (let i = 0; i < STEPS_COUNT; i++) {
-  lights = animate(lights);
+  lights = lights.map((row, y) =>
+    row.map((light, x) => switchLight(light, getNeighbors(lights, {x, y})))
+  );
 }
 
 const lightsOnCount = calcLightsOn(lights);

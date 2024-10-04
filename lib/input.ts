@@ -43,7 +43,7 @@ export async function getInputCSV(...params: Parameters<typeof getInput>) {
   const newlineRe = /\n/;
   const csvRe = /, /;
 
-  return input.split(newlineRe).map(line => line.split(csvRe));
+  return input.split(newlineRe).map(l => l.split(csvRe));
 }
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {

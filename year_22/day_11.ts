@@ -21,23 +21,28 @@ const MONKEY_SCHEMA = z.object({
   throwToIfIndivisible: z.string().transform(Number),
 });
 
-type Monkey = ReturnType<typeof parseMonkey>;
-
 function parseMonkey(monkey: string) {
-  const {groups} = monkey.match(monkeyRe) ?? {};
-  return {inspects: 0, ...MONKEY_SCHEMA.parse(groups)};
+  return {
+    inspects: 0,
+    inspect(old: number) {
+      this.inspects++;
+      return Math.floor(eval(this.operation) / 3);
+    },
+    ...MONKEY_SCHEMA.parse(monkey.match(monkeyRe)?.groups),
+  };
 }
 
-function inspect(this: Monkey, old: number) {
-  this.inspects++;
-  return Math.floor(eval(this.operation) / 3);
-}
+const ROUNDS_COUNT = 20;
+const monkeys = new Map(
+  input
+    .split('\n\n')
+    .map(parseMonkey)
+    .map(monkey => [monkey.id, monkey])
+);
 
-function round(initial: Map<number, Monkey>) {
-  const monkeys = structuredClone(initial);
-
+for (let i = 0; i < ROUNDS_COUNT; i++) {
   for (const monkey of monkeys.values()) {
-    const items = monkey.items.splice(0).map(inspect, monkey);
+    const items = monkey.items.splice(0).map(old => monkey.inspect(old));
     const {divisible = [], indivisible = []} = Object.groupBy(items, item =>
       item % monkey.divider === 0 ? 'divisible' : 'indivisible'
     );
@@ -45,24 +50,12 @@ function round(initial: Map<number, Monkey>) {
     monkeys.get(monkey.throwToIfDivisble)?.items.push(...divisible);
     monkeys.get(monkey.throwToIfIndivisible)?.items.push(...indivisible);
   }
-  return monkeys;
 }
 
-let monkeys = new Map(
-  input
-    .split('\n\n')
-    .map(parseMonkey)
-    .map(monkey => [monkey.id, monkey])
-);
-
-const ROUNDS_COUNT = 20;
-for (let i = 0; i < ROUNDS_COUNT; i++) {
-  monkeys = round(monkeys);
-}
-
-const [a, b] = Array.from(monkeys.values()).toSorted(
-  (a, b) => b.inspects - a.inspects
-);
+const [a, b] = monkeys
+  .values()
+  .toArray()
+  .toSorted((a, b) => b.inspects - a.inspects);
 const businessLevel = a.inspects * b.inspects;
 
 if (import.meta.vitest) {

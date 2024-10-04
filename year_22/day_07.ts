@@ -67,9 +67,13 @@ function determineFilesystem(...cmds: Cmd[]) {
 }
 
 const cmds: Cmd[] = [];
-for (const line of lines) {
-  const cmd = parseCmd(line);
-  isDefined(cmd) ? cmds.push([cmd]) : cmds.at(-1)?.push(line);
+for (const l of lines) {
+  const cmd = parseCmd(l);
+  if (isDefined(cmd)) {
+    cmds.push([cmd]);
+  } else {
+    cmds.at(-1)?.push(l);
+  }
 }
 
 const filesystem = determineFilesystem(...cmds);

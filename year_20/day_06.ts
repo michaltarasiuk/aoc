@@ -7,7 +7,7 @@ const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 const questionRe = /[a-z]/g;
 
 const questions = paragraphs.map(paragraph =>
-  paragraph.map((line): string[] => line.match(questionRe) ?? [])
+  paragraph.map((l): string[] => l.match(questionRe) ?? [])
 );
 
 const questionsCount = sum(
