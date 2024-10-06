@@ -4,7 +4,7 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
-const costs = lines
+const routeCostMap = lines
   .map(distance => {
     const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
     const [, a, b, cost] = distance.match(distanceRe)!;
@@ -18,14 +18,16 @@ const costs = lines
     acc[b][a] = cost;
     return acc;
   }, {});
+const cities = Object.keys(routeCostMap);
 
-const possibleCosts = permute(Object.keys(costs)).reduce<number[]>(
-  (acc, route) => {
-    const cost = sum(...route.map((from, i) => costs[from][route[i + 1]] ?? 0));
-    return acc.concat(cost);
-  },
-  []
-);
+const possibleCosts = permute(cities).reduce<number[]>((acc, route) => {
+  const cost = sum(
+    ...route
+      .map((from, i) => [from, route[i + 1]])
+      .map(([from, to]) => routeCostMap[from][to] ?? 0)
+  );
+  return acc.concat(cost);
+}, []);
 
 const minCost = Math.min(...possibleCosts);
 const maxCost = Math.max(...possibleCosts);

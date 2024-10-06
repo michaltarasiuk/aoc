@@ -5,13 +5,13 @@ import {extractInts} from 'lib/parse.js';
 const lines = await getInputLines({year: 2023, day: 9});
 
 function extrapolate(...ns: number[]): number[] {
-  const differences = ns.slice(0, -1).map((n, i) => ns.at(i + 1)! - n);
+  const diffs = ns.slice(0, -1).map((n, i) => ns.at(i + 1)! - n);
   const last = ns.at(-1)!;
 
-  if (differences.every(difference => difference === 0)) {
+  if (diffs.every(diff => diff === 0)) {
     return [last];
   }
-  return [last, ...extrapolate(...differences)];
+  return [last, ...extrapolate(...diffs)];
 }
 
 const extrapolatedValuesSum = sum(
