@@ -1,45 +1,33 @@
 import {adjacentAt} from 'lib/array.js';
-import {getInputCSV} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const [instructions] = await getInputCSV({year: 2016, day: 1});
+const input = await getInput({year: 2016, day: 1});
 
-function parseInstruction(instruction: string) {
-  const instructionRe = /([LR])(\d+)/;
-  const [, turn, steps] = instruction.match(instructionRe)!;
+function createCoordinates() {
+  const coordinates = {n: 0, e: 0, s: 0, w: 0};
+  const directions = Object.keys(coordinates) as (keyof typeof coordinates)[];
+  let direction = directions[0];
 
-  return {turn, steps: Number(steps)};
+  return {
+    set(turn: string, steps: number) {
+      const [l, r] = adjacentAt(directions, directions.indexOf(direction));
+
+      direction = turn === 'L' ? l : r;
+      coordinates[direction] += steps;
+      return this;
+    },
+    calcDistance() {
+      const {n, e, s, w} = coordinates;
+      return Math.abs(n - s) + Math.abs(e - w);
+    },
+  };
 }
 
-type Direction = 'n' | 'e' | 's' | 'w';
-
-class Coordinates {
-  static #state: Record<Direction, number> = {n: 0, e: 0, s: 0, w: 0};
-
-  static #directions = Object.keys(this.#state) as Direction[];
-  static #direction = this.#directions.at(0)!;
-
-  static set(turn: string, steps: number) {
-    const [left, right] = adjacentAt(
-      this.#directions,
-      this.#directions.indexOf(this.#direction)
-    );
-
-    this.#direction = turn === 'L' ? left : right;
-    this.#state[this.#direction] += steps;
-  }
-
-  static calcDistance() {
-    const {n, e, s, w} = this.#state;
-    return Math.abs(n - s) + Math.abs(e - w);
-  }
-}
-
-for (const instruction of instructions) {
-  const {turn, steps} = parseInstruction(instruction);
-  Coordinates.set(turn, steps);
-}
-
-const distance = Coordinates.calcDistance();
+const distance = input
+  .matchAll(/([LR])(\d+)/g)
+  .map(([, turn, steps]) => ({turn, steps: Number(steps)}))
+  .reduce((acc, {turn, steps}) => acc.set(turn, steps), createCoordinates())
+  .calcDistance();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
