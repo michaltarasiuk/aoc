@@ -3,25 +3,27 @@ import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2015, day: 14});
 
-function calcFlyTime(total: number, time: number, rest: number) {
-  const cycle = Math.floor(total / (time + rest));
-  const remaining = total % (time + rest);
+function calcFlyTime(totalTime: number, speedTime: number, restTime: number) {
+  const cycle = Math.floor(totalTime / (speedTime + restTime));
+  const remaining = totalTime % (speedTime + restTime);
 
-  return cycle * time + Math.min(time, remaining);
+  return cycle * speedTime + Math.min(speedTime, remaining);
 }
 
 const TOTAL_TIME = 2_503;
 
-const winningReindeer = Math.max(
-  ...lines
-    .map(extractInts)
-    .map(([speed, time, rest]) => speed * calcFlyTime(TOTAL_TIME, time, rest))
-);
+let distance = -Infinity;
+for (const [speed, speedTime, restTime] of lines.map(extractInts)) {
+  distance = Math.max(
+    distance,
+    speed * calcFlyTime(TOTAL_TIME, speedTime, restTime)
+  );
+}
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(winningReindeer).toBe(2640);
+    expect(distance).toBe(2640);
   });
 }

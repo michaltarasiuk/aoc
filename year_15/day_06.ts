@@ -5,10 +5,10 @@ import {isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2015, day: 6});
 
-type Instruction = [action: string, ...dimensions: number[]];
+type Instruction = ReturnType<typeof parseInstruction>;
 type Actions = Record<'turn on' | 'turn off' | 'toggle', (v: number) => number>;
 
-function parseInstruction(instruction: string): Instruction {
+function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
   const [, action, ...dimensions] = instruction.match(instructionRe)!;
 

@@ -2,26 +2,23 @@ import crypto from 'node:crypto';
 
 import {getInput} from 'lib/input.js';
 
-const string = await getInput({year: 2015, day: 4});
+const s = await getInput({year: 2015, day: 4});
 
 function md5(data: crypto.BinaryLike) {
   return crypto.createHash('md5').update(data).digest('hex');
 }
 
 function waitUntilStartsWith(
-  {string, searchString}: {string: string; searchString: string},
+  {s, searchString}: {s: string; searchString: string},
   init = 0
 ) {
   let n = init;
-  while (!md5(string + n).startsWith(searchString)) n++;
+  while (!md5(s + n).startsWith(searchString)) n++;
   return n;
 }
 
-const coin = waitUntilStartsWith({
-  string,
-  searchString: '0'.repeat(5),
-});
-const coin2 = waitUntilStartsWith({string, searchString: '0'.repeat(6)}, coin);
+const coin = waitUntilStartsWith({s, searchString: '0'.repeat(5)});
+const coin2 = waitUntilStartsWith({s, searchString: '0'.repeat(6)}, coin);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
