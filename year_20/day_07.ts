@@ -2,16 +2,14 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2020, day: 7});
 
-type Rule = ReturnType<typeof parseRule>;
-type Rules = Map<string, Rule>;
+type Rules = Map<string, {color: string; count: number}[]>;
 
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
 
   return rule
     .matchAll(bagsRe)
-    .map(([, count, color]) => ({color, count: Number(count)}))
-    .toArray();
+    .map(([, count, color]) => ({color, count: Number(count)}));
 }
 
 function includesBag(rules: Rules, holder: string, search: string): boolean {
