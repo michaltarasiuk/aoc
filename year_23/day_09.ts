@@ -15,7 +15,7 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 const extrapolatedValuesSum = sum(
-  lines.map(l => sum(...extrapolate(...extractInts(l))))
+  lines.map(extractInts).map(ns => sum(...extrapolate(...ns)))
 );
 
 if (import.meta.vitest) {

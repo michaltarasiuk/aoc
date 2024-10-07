@@ -1,16 +1,11 @@
-import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
 
-const instructions = await getInputLines({year: 2015, day: 23});
+const lines = await getInputLines({year: 2015, day: 23});
 
-type Registers = Record<string, number>;
-type Instruct = (
-  this: {registers: Registers; offset: number},
-  ...payload: string[]
-) => number | void;
+type Program = {registers: Record<string, number>; offset: number};
+type Instruct = (this: Program, ...payload: string[]) => number | void;
 
-const instructs: Record<string, Instruct> = {
+const instructMap: Record<string, Instruct> = {
   hlf(register) {
     this.registers[register] /= 2;
   },
@@ -35,23 +30,25 @@ const instructs: Record<string, Instruct> = {
   },
 };
 
-function executeProgram(registers: Registers, ...instructions: string[]) {
+function executeProgram(
+  registers: Program['registers'],
+  ...instructs: string[][]
+) {
   let offset = 0;
 
-  while (offset < instructions.length) {
-    const instructionRe = /(\w+|[+-]\d+)/g;
-    const [name, ...payload] = instructions[offset].match(instructionRe)!;
-
-    assert(isKeyOf(instructs, name));
-    const instruct = instructs[name];
+  while (offset < instructs.length) {
+    const [name, ...payload] = instructs[offset];
+    const instruct = instructMap[name];
 
     offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;
   }
   return registers;
 }
 
-const registers = executeProgram({a: 0, b: 0}, ...instructions);
-const registers2 = executeProgram({a: 1, b: 0}, ...instructions);
+const instructs = lines.map((l): string[] => l.match(/(\w+|[+-]\d+)/g)!);
+
+const registers = executeProgram({a: 0, b: 0}, ...instructs);
+const registers2 = executeProgram({a: 1, b: 0}, ...instructs);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

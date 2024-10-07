@@ -15,12 +15,14 @@ function yell(monkeys: Monkeys, name: keyof Monkeys): number {
   return parsedJob;
 }
 
-const monkeys = lines.reduce<Monkeys>((acc, l) => {
-  const monkeyRe = /^(\w{4}): (.+)$/;
-  const [, name, job] = monkeyRe.exec(l)!;
+const monkeys = lines
+  .map(l => {
+    const monkeyRe = /^(\w{4}): (.+)$/;
+    const [, name, job] = monkeyRe.exec(l)!;
 
-  return {...acc, [name]: job};
-}, {});
+    return {name, job};
+  })
+  .reduce<Monkeys>((acc, {name, job}) => ({...acc, [name]: job}), {});
 
 const n = yell(monkeys, 'root');
 
