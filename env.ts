@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-const ENV_SCHEMA = z.object({
+const EnvSchema = z.object({
   session: z.string(),
 });
-export const env = ENV_SCHEMA.parse(process.env);
+export const env = EnvSchema.parse(process.env);

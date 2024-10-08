@@ -10,13 +10,13 @@ function calcFlyTime(totalTime: number, speedTime: number, restTime: number) {
   return cycles * speedTime + Math.min(speedTime, timeLeft);
 }
 
-const TOTAL_TIME = 2_503;
+const TotalTime = 2_503;
 const maxDistance = Math.max(
   ...lines
     .map(extractInts)
     .map(
       ([speed, speedTime, restTime]) =>
-        speed * calcFlyTime(TOTAL_TIME, speedTime, restTime)
+        speed * calcFlyTime(TotalTime, speedTime, restTime)
     )
 );
 

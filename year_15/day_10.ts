@@ -2,22 +2,22 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 10});
 
-const PROCESS_COUNT = 40;
-const PROCESS_COUNT_2 = 50;
+const ProcessCount = 40;
+const ProcessCount2 = 50;
 
 let sequence = input;
 let count = 0;
 
 const results: number[] = [];
 
-while (++count <= PROCESS_COUNT_2) {
+while (++count <= ProcessCount2) {
   const repeatedDigitsRe = /(?:(\d)\1*)/g;
 
   sequence = (sequence.match(repeatedDigitsRe) ?? [])
     .map(([...digits]) => digits.length + digits[0])
     .join('');
 
-  if (count === PROCESS_COUNT || count === PROCESS_COUNT_2) {
+  if (count === ProcessCount || count === ProcessCount2) {
     results.push(sequence.length);
   }
 }

@@ -13,12 +13,12 @@ function countValidTriangles(...triangles: number[][]) {
   return triangles.filter(isValidTriangle).length;
 }
 
-const TRIANGLE_SIZE = 3;
+const TriangleSize = 3;
 const triangles = lines.map(extractInts);
 
 const validTrianglesCount = countValidTriangles(...triangles);
 const validTrianglesCount2 = countValidTriangles(
-  ...chunkEvery(transpose(triangles).flat(), TRIANGLE_SIZE)
+  ...chunkEvery(transpose(triangles).flat(), TriangleSize)
 );
 
 if (import.meta.vitest) {

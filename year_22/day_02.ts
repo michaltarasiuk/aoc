@@ -2,11 +2,11 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 2});
 
-const SHAPES_COUNT = 3;
+const ShapesCount = 3;
 const POINTS = {WIN: 6, DRAW: 3, LOSE: 0};
 
 function getHandShape(char: string) {
-  return ('ABCXYZ'.indexOf(char) % SHAPES_COUNT) + 1;
+  return ('ABCXYZ'.indexOf(char) % ShapesCount) + 1;
 }
 
 function parseRound(round: string) {

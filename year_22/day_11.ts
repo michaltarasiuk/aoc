@@ -12,7 +12,7 @@ Monkey (?<id>\\d):
     If true: throw to monkey (?<throwToIfDivisble>\\d+)
     If false: throw to monkey (?<throwToIfIndivisible>\\d+)`);
 
-const MONKEY_SCHEMA = z.object({
+const MonkeySchema = z.object({
   id: z.string().transform(Number),
   items: z.string().transform(extractInts),
   operation: z.string(),
@@ -28,11 +28,11 @@ function parseMonkey(monkey: string) {
       this.inspects++;
       return Math.floor(eval(this.operation) / 3);
     },
-    ...MONKEY_SCHEMA.parse(monkey.match(monkeyRe)?.groups),
+    ...MonkeySchema.parse(monkey.match(monkeyRe)?.groups),
   };
 }
 
-const ROUNDS_COUNT = 20;
+const RoundsCount = 20;
 const monkeys = new Map(
   input
     .split('\n\n')
@@ -40,7 +40,7 @@ const monkeys = new Map(
     .map(monkey => [monkey.id, monkey])
 );
 
-for (let i = 0; i < ROUNDS_COUNT; i++) {
+for (let i = 0; i < RoundsCount; i++) {
   for (const monkey of monkeys.values()) {
     const items = monkey.items.splice(0).map(old => monkey.inspect(old));
     const {divisible = [], indivisible = []} = Object.groupBy(items, item =>

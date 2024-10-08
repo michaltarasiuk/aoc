@@ -4,7 +4,7 @@ import {isKeyOf} from 'lib/predicate.js';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 4});
 
-const PASSPORT_KEYS = {
+const PassportKeys = {
   byr: /^(19[2-9]\d|200[0-2])$/,
   iyr: /^(201\d|2020)$/,
   eyr: /^(202\d|2030)$/,
@@ -27,16 +27,14 @@ const passports = paragraphs.map(passport => {
 
 const validPassportsCount = sum(
   ...passports
-    .map(passport =>
-      Object.keys(PASSPORT_KEYS).every(k => isKeyOf(passport, k))
-    )
+    .map(passport => Object.keys(PassportKeys).every(k => isKeyOf(passport, k)))
     .map(Number)
 );
 
 const validPassportsCount2 = sum(
   ...passports
     .map(passport =>
-      Object.entries(PASSPORT_KEYS).every(
+      Object.entries(PassportKeys).every(
         ([k, re]) => isKeyOf(passport, k) && re.test(passport[k])
       )
     )

@@ -4,16 +4,15 @@ import {z} from 'zod';
 
 const lines = await getInputLines({year: 2022, day: 10});
 
-type Instruction = z.infer<typeof INSTRUCTION_SCHEMA>;
-
-const INSTRUCTION_SCHEMA = z.union([
+type Instruction = z.infer<typeof InstructionSchema>;
+const InstructionSchema = z.union([
   z.object({op: z.literal('addx'), arg: z.string().transform(Number)}),
   z.object({op: z.literal('noop')}),
 ]);
 
 function parseInstruction(instruction: string): Instruction {
   const [op, arg] = instruction.split(/\s/);
-  return INSTRUCTION_SCHEMA.parse({op, arg});
+  return InstructionSchema.parse({op, arg});
 }
 
 function calcSignal(instructions: Instruction[]) {

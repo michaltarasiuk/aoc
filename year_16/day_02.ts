@@ -8,27 +8,27 @@ const KEYPAD = [
   ['7', '8', '9'],
 ];
 
-const X_BOUND = KEYPAD[0].length - 1;
-const Y_BOUND = KEYPAD.length - 1;
+const XBound = KEYPAD[0].length - 1;
+const YBound = KEYPAD.length - 1;
 
 function move(x: number, y: number, direction: string) {
   switch (direction) {
     case 'U':
       return [x, Math.max(y - 1, 0)];
     case 'D':
-      return [x, Math.min(y + 1, Y_BOUND)];
+      return [x, Math.min(y + 1, YBound)];
     case 'L':
       return [Math.max(x - 1, 0), y];
     case 'R':
-      return [Math.min(x + 1, X_BOUND), y];
+      return [Math.min(x + 1, XBound), y];
     default:
       throw new Error('Invalid direction');
   }
 }
 
-const START_POINT = [1, 1];
+const StartPoint = [1, 1];
 
-let [x, y] = START_POINT;
+let [x, y] = StartPoint;
 let bathroomCode = '';
 
 for (const l of lines) {

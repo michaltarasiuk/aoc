@@ -43,7 +43,7 @@ export async function getInputInts(...params: Parameters<typeof getInput>) {
   return extractInts(input);
 }
 
-const INPUT_SCHEMA = z.object({
+const InputSchema = z.object({
   year: z
     .number()
     .int('The day must be an integer')
@@ -65,7 +65,7 @@ class ResponseError extends Error {
 
 async function fetchInput(input: {year: number; day: number}) {
   try {
-    const {year, day} = INPUT_SCHEMA.parse(input);
+    const {year, day} = InputSchema.parse(input);
     const response = await fetch(
       `https://adventofcode.com/${year}/day/${day}/input`,
       {

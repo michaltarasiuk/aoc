@@ -36,8 +36,8 @@ function findContiguousSet(ns: number[], value: number) {
   }
 }
 
-const PREAMBLE_SIZE = 25;
-const invalid = findInvalid(ints, PREAMBLE_SIZE) ?? raise('Invalid not found');
+const PreambleSize = 25;
+const invalid = findInvalid(ints, PreambleSize) ?? raise('Invalid not found');
 
 const set = findContiguousSet(ints, invalid) ?? raise('Set not found');
 const encryptionWeakness = Math.min(...set) + Math.max(...set);

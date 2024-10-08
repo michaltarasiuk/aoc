@@ -35,9 +35,9 @@ const rules = new Map(
   lines.map(parseRule).map(([{color}, ...bags]) => [color, bags])
 );
 
-const SEARCH_BAG = 'shiny gold';
-const bagsWithShinyGoldCount = countBagsWith(rules, SEARCH_BAG);
-const bagsOfShinyGoldCount = countBagsOf(rules, SEARCH_BAG);
+const SearchBag = 'shiny gold';
+const bagsWithShinyGoldCount = countBagsWith(rules, SearchBag);
+const bagsOfShinyGoldCount = countBagsOf(rules, SearchBag);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

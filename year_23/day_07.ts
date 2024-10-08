@@ -4,7 +4,7 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2023, day: 7});
 
-const HAND_TYPE = {
+const HandType = {
   fiveKind: 6,
   fourKind: 5,
   fullHouse: 4,
@@ -19,15 +19,15 @@ function classifyHand(hand: string) {
 
   switch (Math.max(...frequency.values())) {
     case 5:
-      return HAND_TYPE.fiveKind;
+      return HandType.fiveKind;
     case 4:
-      return HAND_TYPE.fourKind;
+      return HandType.fourKind;
     case 3:
-      return frequency.size === 2 ? HAND_TYPE.fullHouse : HAND_TYPE.threeKind;
+      return frequency.size === 2 ? HandType.fullHouse : HandType.threeKind;
     case 2:
-      return frequency.size === 3 ? HAND_TYPE.twoPair : HAND_TYPE.pair;
+      return frequency.size === 3 ? HandType.twoPair : HandType.pair;
     default:
-      return HAND_TYPE.highCard;
+      return HandType.highCard;
   }
 }
 

@@ -19,8 +19,8 @@ function parseShift(guard: string) {
 }
 
 function createShift() {
-  const MINUTES_IN_HOUR = 60;
-  return Array(MINUTES_IN_HOUR).fill(0);
+  const MinutesInHour = 60;
+  return Array(MinutesInHour).fill(0);
 }
 
 const EVENT = {falls: 'falls asleep', wakes: 'wakes up'};

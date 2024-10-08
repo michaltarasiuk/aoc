@@ -12,9 +12,9 @@ function parseClaim(claim: string) {
 const claims = lines.map(parseClaim);
 const overlappingClaims = new Set<number>();
 
-const FABRIC_SIZE = 1_000;
-const fabric = [...Array(FABRIC_SIZE)].map(() =>
-  [...Array(FABRIC_SIZE)].map(() => new Set<number>())
+const FabricSize = 1_000;
+const fabric = [...Array(FabricSize)].map(() =>
+  [...Array(FabricSize)].map(() => new Set<number>())
 );
 
 for (const {id, x, y, width, height} of claims) {
