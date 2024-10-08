@@ -11,12 +11,14 @@ function calcFlyTime(totalTime: number, speedTime: number, restTime: number) {
 }
 
 const TOTAL_TIME = 2_503;
-const maxDistance = lines
-  .map(extractInts)
-  .reduce((acc, [speed, speedTime, restTime]) => {
-    const distance = speed * calcFlyTime(TOTAL_TIME, speedTime, restTime);
-    return Math.max(acc, distance);
-  }, 0);
+const maxDistance = Math.max(
+  ...lines
+    .map(extractInts)
+    .map(
+      ([speed, speedTime, restTime]) =>
+        speed * calcFlyTime(TOTAL_TIME, speedTime, restTime)
+    )
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

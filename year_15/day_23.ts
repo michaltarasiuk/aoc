@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
@@ -45,7 +46,8 @@ function executeProgram(
   return registers;
 }
 
-const instructs = lines.map((l): string[] => l.match(/(\w+|[+-]\d+)/g)!);
+const instructRe = /(\w+|[+-]\d+)/g;
+const instructs = lines.map((l): string[] => l.match(instructRe)!);
 
 const registers = executeProgram({a: 0, b: 0}, ...instructs);
 const registers2 = executeProgram({a: 1, b: 0}, ...instructs);
