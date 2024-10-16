@@ -1,4 +1,3 @@
-import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
