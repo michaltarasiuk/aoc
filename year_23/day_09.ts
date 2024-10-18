@@ -1,6 +1,5 @@
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
-import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 9});
 
@@ -15,7 +14,9 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 const extrapolatedValuesSum = sum(
-  lines.map(extractInts).map(ns => sum(...extrapolate(...ns)))
+  lines
+    .map(l => l.matchAll(/-?\d+/g).map(([n]) => Number(n)))
+    .map(ns => sum(...extrapolate(...ns)))
 );
 
 if (import.meta.vitest) {

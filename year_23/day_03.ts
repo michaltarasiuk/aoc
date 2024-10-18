@@ -1,5 +1,4 @@
 import {getInputLines} from 'lib/input.js';
-import {extractUints} from 'lib/parse.js';
 import {isDefined} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2023, day: 3});
@@ -26,7 +25,7 @@ const nsLayers = lines
 const symbolRe = /[^\d.]/;
 const sumOfPartNumbers = nsLayers.flat().reduce((acc, segments) => {
   if (segments.filter(isDefined).some(s => symbolRe.test(s))) {
-    acc += extractUints(segments[1])[0];
+    return acc + Number(segments[1].replace(/\D/g, ''));
   }
   return acc;
 }, 0);

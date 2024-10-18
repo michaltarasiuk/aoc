@@ -1,7 +1,6 @@
 import {transpose} from 'lib/array.js';
 import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
-import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2016, day: 3});
 
@@ -14,7 +13,12 @@ function countValidTriangles(...triangles: number[][]) {
 }
 
 const TriangleSize = 3;
-const triangles = lines.map(extractInts);
+const triangles = lines.map(l =>
+  l
+    .matchAll(/-?\d+/g)
+    .map(([n]) => Number(n))
+    .toArray()
+);
 
 const validTrianglesCount = countValidTriangles(...triangles);
 const validTrianglesCount2 = countValidTriangles(

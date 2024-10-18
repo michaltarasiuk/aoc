@@ -1,5 +1,4 @@
 import {getInputLines} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2015, day: 14});
 
@@ -13,7 +12,7 @@ function calcFlyTime(totalTime: number, speedTime: number, restTime: number) {
 const TotalTime = 2_503;
 const maxDistance = Math.max(
   ...lines
-    .map(extractInts)
+    .map(l => l.matchAll(/-?\d+/g).map(([n]) => Number(n)))
     .map(
       ([speed, speedTime, restTime]) =>
         speed * calcFlyTime(TotalTime, speedTime, restTime)

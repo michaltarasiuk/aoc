@@ -1,7 +1,5 @@
 import {getInputLines} from 'lib/input.js';
 import {multiply} from 'lib/math.js';
-import {joinNumbers} from 'lib/number.js';
-import {extractUints} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 6});
 
@@ -17,15 +15,19 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-const [times, distances] = lines.map(extractUints);
+const [times, distances] = lines.map(l =>
+  l
+    .matchAll(/\d+/g)
+    .map(([n]) => Number(n))
+    .toArray()
+);
 
 const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => countWaysOfBeatRecord(time, distances[i]))
 );
-
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
-  joinNumbers(...times),
-  joinNumbers(...distances)
+  Number(times.join('')),
+  Number(distances.join(''))
 );
 
 if (import.meta.vitest) {

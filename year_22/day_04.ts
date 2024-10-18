@@ -1,12 +1,11 @@
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
-import {extractUints} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2022, day: 4});
 
 const pairsFullyCoveredCount = sum(
   ...lines
-    .map(extractUints)
+    .map(l => l.matchAll(/\d+/g).map(([n]) => Number(n)))
     .map(([a, b, a1, b2]) =>
       Number((a <= a1 && b >= b2) || (a1 <= a && b2 >= b))
     )
