@@ -19,7 +19,6 @@ const monkeys = Object.fromEntries(
     return monkeyRe.exec(l)!.slice(1);
   })
 );
-
 const n = yell(monkeys, 'root');
 
 if (import.meta.vitest) {

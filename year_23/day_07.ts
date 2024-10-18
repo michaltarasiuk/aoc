@@ -4,6 +4,8 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2023, day: 7});
 
+const Cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+
 const HandType = {
   fiveKind: 6,
   fourKind: 5,
@@ -31,14 +33,11 @@ function classifyHand(hand: string) {
   }
 }
 
-const CARDS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-
 function compareHands(a: string, b: string) {
   for (const [i, card] of Array.from(a).entries()) {
-    if (card === b[i]) {
-      continue;
+    if (card !== b[i]) {
+      return Cards.indexOf(card) - Cards.indexOf(b[i]);
     }
-    return CARDS.indexOf(card) - CARDS.indexOf(b[i]);
   }
   return 0;
 }

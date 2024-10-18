@@ -5,7 +5,7 @@ const lines = await getInputLines({year: 2015, day: 23});
 type Program = {registers: Record<string, number>; offset: number};
 type Instruct = (this: Program, ...payload: string[]) => number | void;
 
-const instructMap: Record<string, Instruct> = {
+const instructsMap: Record<string, Instruct> = {
   hlf(register) {
     this.registers[register] /= 2;
   },
@@ -38,7 +38,7 @@ function executeProgram(
 
   while (offset < instructs.length) {
     const [name, ...payload] = instructs[offset];
-    const instruct = instructMap[name];
+    const instruct = instructsMap[name];
 
     offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;
   }
