@@ -33,9 +33,7 @@ export async function getInputParagraphs(
   ...params: Parameters<typeof getInput>
 ) {
   const input = await getInput(...params);
-  const newlineRe = /\n\n+/;
-
-  return input.split(newlineRe).map(paragraph => paragraph.split('\n'));
+  return input.split(/\n\n+/).map(paragraph => paragraph.split('\n'));
 }
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {

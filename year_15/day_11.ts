@@ -27,7 +27,6 @@ function findNewPassword(password: string) {
     int++;
     newPassword = int.toString(36);
   } while (!isValidPassword(newPassword));
-
   return newPassword;
 }
 

@@ -2,9 +2,7 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-type Monkeys = Record<string, string>;
-
-function yell(monkeys: Monkeys, name: keyof Monkeys): number {
+function yell(monkeys: Record<string, string>, name: string): number {
   const job = monkeys[name];
   const parsedJob = Number(job);
 
@@ -15,15 +13,12 @@ function yell(monkeys: Monkeys, name: keyof Monkeys): number {
   return parsedJob;
 }
 
-const monkeys = lines
-  .map(l => {
+const monkeys = Object.fromEntries(
+  lines.map(l => {
     const monkeyRe = /^(\w{4}): (.+)$/;
-    const [, name, job] = monkeyRe.exec(l)!;
-
-    return {name, job};
+    return monkeyRe.exec(l)!.slice(1);
   })
-  .reduce<Monkeys>((acc, {name, job}) => ({...acc, [name]: job}), {});
-
+);
 const n = yell(monkeys, 'root');
 
 if (import.meta.vitest) {

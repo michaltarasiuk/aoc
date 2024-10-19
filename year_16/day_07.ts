@@ -13,10 +13,10 @@ function parseIPAddress(ipAddress: string) {
   return {supernets: String(supernets), hypernets: String(hypernets)};
 }
 
-const ipAddresses = lines.map(parseIPAddress);
-
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/;
+
+const ipAddresses = lines.map(parseIPAddress);
 
 const tlsSupportedIpsCount = sum(
   ...ipAddresses.map(({supernets, hypernets}) => {
