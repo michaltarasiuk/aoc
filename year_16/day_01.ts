@@ -1,4 +1,3 @@
-import {adjacentAt} from 'lib/array.js';
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2016, day: 1});
@@ -10,7 +9,9 @@ function createCoordinates() {
 
   return {
     set(turn: string, steps: number) {
-      const [l, r] = adjacentAt(directions, directions.indexOf(direction));
+      const i = directions.indexOf(direction);
+      const l = directions.at(i - 1)!;
+      const r = directions.at((i + 1) % directions.length)!;
 
       direction = turn === 'L' ? l : r;
       coordinates[direction] += steps;

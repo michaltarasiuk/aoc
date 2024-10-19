@@ -1,11 +1,3 @@
-import {assert} from './assert.js';
-
-export function adjacentAt<T>(arr: T[], i: number) {
-  assert(arr.length > 0, 'Expected array to have at least one element');
-
-  return [arr.at(i - 1)!, arr.at((i + 1) % arr.length)!] as const;
-}
-
 export function castArray<T>(v: T | T[]) {
   return Array.isArray(v) ? v : [v];
 }
