@@ -21,7 +21,6 @@ const [times, distances] = lines.map(extractUints);
 const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => countWaysOfBeatRecord(time, distances[i]))
 );
-
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
   Number(times.join('')),
   Number(distances.join(''))

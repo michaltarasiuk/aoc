@@ -16,7 +16,9 @@ function yell(monkeys: Record<string, string>, name: string): number {
 const monkeys = Object.fromEntries(
   lines.map(l => {
     const monkeyRe = /^(\w{4}): (.+)$/;
-    return monkeyRe.exec(l)!.slice(1);
+    const [, name, job] = monkeyRe.exec(l)!;
+
+    return [name, job];
   })
 );
 const n = yell(monkeys, 'root');
