@@ -1,34 +1,39 @@
 import {getInputInts} from 'lib/input.js';
 
-const jumpOffsets = await getInputInts({year: 2017, day: 5});
+const ints = await getInputInts({year: 2017, day: 5});
 
-function calcStepsToExit(
-  [...offsets]: number[],
-  jump: (offsets: number[], i: number) => number
-) {
-  let offset = 0;
+const steps = (() => {
+  const offsets = ints.slice();
+  let index = 0;
   let steps = 0;
 
-  while (offset < offsets.length) {
-    offset += jump(offsets, offset);
+  while (index < offsets.length) {
+    index += offsets[index]++;
     steps++;
   }
   return steps;
-}
+})();
 
-const stepsToExit = calcStepsToExit(jumpOffsets, (offsets, i) => offsets[i]++);
-const stepsToExit2 = calcStepsToExit(jumpOffsets, (offsets, i) =>
-  offsets[i] >= 3 ? offsets[i]-- : offsets[i]++
-);
+const steps2 = (() => {
+  const offsets = ints.slice();
+  let index = 0;
+  let steps = 0;
+
+  while (index < offsets.length) {
+    index += offsets[index] >= 3 ? offsets[index]-- : offsets[index]++;
+    steps++;
+  }
+  return steps;
+})();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(stepsToExit).toBe(373160);
+    expect(steps).toBe(373160);
   });
 
   test('part 2', () => {
-    expect(stepsToExit2).toBe(26395586);
+    expect(steps2).toBe(26395586);
   });
 }
