@@ -4,11 +4,11 @@ import {isDefined} from 'lib/predicate.js';
 const lines = await getInputLines({year: 2023, day: 3});
 
 function range(n: number, x: number) {
-  const Padding = 1;
-  return [Math.max(x - Padding, 0), x + String(n).length + Padding] as const;
+  const Offset = 1;
+  return [Math.max(x - Offset, 0), x + String(n).length + Offset] as const;
 }
 
-const VerticalOffsets = [-1, 0, 1];
+const Offsets = [-1, 0, 1];
 const nsLayers = lines
   .map(l =>
     l
@@ -18,7 +18,7 @@ const nsLayers = lines
   )
   .map((ns, y) =>
     ns.map(([n, x]) =>
-      VerticalOffsets.map(offset => lines[offset + y]?.slice(...range(n, x)))
+      Offsets.map(offset => lines[offset + y]?.slice(...range(n, x)))
     )
   );
 
