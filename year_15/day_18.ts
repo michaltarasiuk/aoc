@@ -8,12 +8,12 @@ const LightOff = '.';
 type Lights = string[][];
 
 function getNeighbors(lights: Lights, {x, y}: {x: number; y: number}) {
-  const NEIGHBORS = [
+  const Neighbors = [
     [-1, 0, 1],
     [-1, 1],
     [-1, 0, 1],
   ];
-  return NEIGHBORS.map((offsets, i) =>
+  return Neighbors.map((offsets, i) =>
     offsets.flatMap(offset => lights[y + i - 1]?.[x + offset] ?? [])
   );
 }

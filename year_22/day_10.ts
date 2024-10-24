@@ -27,9 +27,9 @@ const instructions = lines
     instruction.op === 'addx' ? [{op: 'noop'}, instruction] : [instruction]
   );
 
-const CYCLES = [20, 60, 100, 140, 180, 220];
+const Cycles = [20, 60, 100, 140, 180, 220];
 const sumOfSignals = sum(
-  ...CYCLES.map(cycle => cycle * calcSignal(instructions.slice(0, cycle - 1)))
+  ...Cycles.map(cycle => cycle * calcSignal(instructions.slice(0, cycle - 1)))
 );
 
 if (import.meta.vitest) {
