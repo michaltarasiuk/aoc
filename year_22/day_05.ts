@@ -29,10 +29,10 @@ function stacksToString(stacks: Stacks) {
 
 function rearrangeStacks(
   stacks: Stacks,
-  instructions: string[],
+  instructions: number[][],
   fn = (crates: string[]) => crates
 ) {
-  return instructions.map(extractInts).reduce((acc, [count, from, to]) => {
+  return instructions.reduce((acc, [count, from, to]) => {
     const crates = acc[from].splice(0, count);
 
     acc[to].unshift(...fn(crates));
@@ -41,12 +41,15 @@ function rearrangeStacks(
 }
 
 const parsedStacks = parseStacks(stacks);
+const parsedInstructions = instructions.map(extractInts);
 
 const serializedStacks = stacksToString(
-  rearrangeStacks(parsedStacks, instructions, crates => crates.toReversed())
+  rearrangeStacks(parsedStacks, parsedInstructions, crates =>
+    crates.toReversed()
+  )
 );
 const serializedStacks2 = stacksToString(
-  rearrangeStacks(parsedStacks, instructions)
+  rearrangeStacks(parsedStacks, parsedInstructions)
 );
 
 if (import.meta.vitest) {
