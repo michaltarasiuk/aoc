@@ -1,31 +1,42 @@
 import {getInputParagraphs} from 'lib/input.js';
 import {extractInts} from 'lib/parse.js';
 
-const [[seeds], ...paragraphs] = await getInputParagraphs({year: 2023, day: 5});
+const [[initialSeeds], ...categoryMaps] = await getInputParagraphs({
+  year: 2023,
+  day: 5,
+});
 
-function findLocation([...mapLayers]: number[][][], value: number) {
-  const mapLayer = mapLayers.shift();
-  if (!mapLayer) {
+function convertThroughCategories(
+  [...categoryLayers]: number[][][],
+  value: number
+): number {
+  const categoryLayer = categoryLayers.shift();
+  if (!categoryLayer) {
     return value;
   }
 
-  for (const [destination, source, length] of mapLayer) {
-    if (value >= source && value < source + length) {
-      return findLocation(mapLayers, destination + (value - source));
+  for (const [destinationStart, sourceStart, rangeLength] of categoryLayer) {
+    if (value >= sourceStart && value < sourceStart + rangeLength) {
+      return convertThroughCategories(
+        categoryLayers,
+        destinationStart + (value - sourceStart)
+      );
     }
   }
-  return findLocation(mapLayers, value);
+  return convertThroughCategories(categoryLayers, value);
 }
 
-const mapLayers = paragraphs.map(([, ...p]) => p.map(extractInts));
-const lowestLocation = Math.min(
-  ...extractInts(seeds).map(seed => findLocation(mapLayers, seed))
+const categoryLayers = categoryMaps.map(([, ...map]) => map.map(extractInts));
+const lowestConvertedLocation = Math.min(
+  ...extractInts(initialSeeds).map(seed =>
+    convertThroughCategories(categoryLayers, seed)
+  )
 );
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(lowestLocation).toBe(323142486);
+    expect(lowestConvertedLocation).toBe(323142486);
   });
 }
