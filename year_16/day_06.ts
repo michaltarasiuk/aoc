@@ -1,30 +1,30 @@
 import {getInputCols} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 
-const cols = await getInputCols({year: 2016, day: 6});
+const columns = await getInputCols({year: 2016, day: 6});
 
-function getErrorCorrectedMessage(comparefn = (a: number, b: number) => a - b) {
-  return cols.reduce((acc, chars) => {
-    const charsCount = frequencies(chars);
-    const [[char]] = Array.from(charsCount).toSorted((a, b) =>
-      comparefn(a[1], b[1])
+function decodeMessage(compareFn = (a: number, b: number) => a - b) {
+  return columns.reduce((decodedMessage, columnChars) => {
+    const charFrequencies = frequencies(columnChars);
+    const [[mostFrequentChar]] = Array.from(charFrequencies).toSorted((a, b) =>
+      compareFn(a[1], b[1])
     );
 
-    return acc + char;
+    return decodedMessage + mostFrequentChar;
   }, '');
 }
 
-const errorCorrectedMessage = getErrorCorrectedMessage((a, b) => b - a);
-const orginalErrorCorrectedMessage = getErrorCorrectedMessage();
+const mostFrequentMessage = decodeMessage((a, b) => b - a);
+const leastFrequentMessage = decodeMessage();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(errorCorrectedMessage).toBe('cyxeoccr');
+    expect(mostFrequentMessage).toBe('cyxeoccr');
   });
 
   test('part 2', () => {
-    expect(orginalErrorCorrectedMessage).toBe('batwpask');
+    expect(leastFrequentMessage).toBe('batwpask');
   });
 }
