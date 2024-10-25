@@ -1,22 +1,28 @@
 import {getInputLines} from 'lib/input.js';
 import {extractInts} from 'lib/parse.js';
 
-const lines = await getInputLines({year: 2015, day: 14});
+const reindeerDescriptions = await getInputLines({year: 2015, day: 14});
 
-function calcFlyTime(totalTime: number, speedTime: number, restTime: number) {
-  const cycles = Math.floor(totalTime / (speedTime + restTime));
-  const timeLeft = totalTime % (speedTime + restTime);
+function calcFlyingTime(
+  totalRaceTime: number,
+  flyingDuration: number,
+  restingDuration: number
+) {
+  const fullCycles = Math.floor(
+    totalRaceTime / (flyingDuration + restingDuration)
+  );
+  const remainingTime = totalRaceTime % (flyingDuration + restingDuration);
 
-  return cycles * speedTime + Math.min(speedTime, timeLeft);
+  return fullCycles * flyingDuration + Math.min(flyingDuration, remainingTime);
 }
 
-const TotalTime = 2_503;
-const maxDistance = Math.max(
-  ...lines
+const RaceDuration = 2_503;
+const furthestDistance = Math.max(
+  ...reindeerDescriptions
     .map(extractInts)
     .map(
-      ([speed, speedTime, restTime]) =>
-        speed * calcFlyTime(TotalTime, speedTime, restTime)
+      ([speed, flyingDuration, restingDuration]) =>
+        speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)
     )
 );
 
@@ -24,6 +30,6 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(maxDistance).toBe(2640);
+    expect(furthestDistance).toBe(2640);
   });
 }

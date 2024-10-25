@@ -52,9 +52,7 @@ function calcSignal(dest: string): number {
 }
 
 const wireASignal = calcSignal('a');
-
 cache = new Map([['b', wireASignal]]);
-
 const finalWireASignal = calcSignal('a');
 
 if (import.meta.vitest) {

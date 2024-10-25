@@ -1,19 +1,19 @@
 import {getInputInts} from 'lib/input.js';
 
-const [row, col] = await getInputInts({year: 2015, day: 25});
+const [targetRow, targetCol] = await getInputInts({year: 2015, day: 25});
 
-function calcSteps(row: number, col: number) {
-  const sum = row + col;
-  return (sum * (sum - 1)) / 2 - row;
+function calculateSteps(row: number, col: number) {
+  const diagonalSum = row + col;
+  return (diagonalSum * (diagonalSum - 1)) / 2 - row;
 }
 
-function calcCode(prevCode = 20151125) {
-  return (prevCode * 252533) % 33554393;
+function generateNextCode(previousCode = 20151125) {
+  return (previousCode * 252533) % 33554393;
 }
 
 let code: number | undefined;
-for (let i = 0; i < calcSteps(row, col); i++) {
-  code = calcCode(code);
+for (let i = 0; i < calculateSteps(targetRow, targetCol); i++) {
+  code = generateNextCode(code);
 }
 
 if (import.meta.vitest) {

@@ -3,7 +3,7 @@ import {uniq} from 'lib/iterable.js';
 
 const input = await getInput({year: 2015, day: 3});
 
-function createPos() {
+function createPosition() {
   let x = 0;
   let y = 0;
 
@@ -11,33 +11,37 @@ function createPos() {
     toString() {
       return `${x},${y}`;
     },
-    set(char: string) {
-      x += char === '>' ? 1 : char === '<' ? -1 : 0;
-      y += char === '^' ? 1 : char === 'v' ? -1 : 0;
+    move(direction: string) {
+      x += direction === '>' ? 1 : direction === '<' ? -1 : 0;
+      y += direction === '^' ? 1 : direction === 'v' ? -1 : 0;
 
       return this;
     },
   };
 }
 
-function getVisitedHousesCount() {
-  const santa = createPos();
-  const houses = uniq(Array.from(input, char => santa.set(char).toString()));
-
-  return houses.length;
-}
-
-function getVisitedHousesCount2() {
-  const santas = [createPos(), createPos()];
-  const houses = uniq(
-    Array.from(input, (char, i) => santas[i % 2].set(char).toString())
+function countVisitedHouses() {
+  const santa = createPosition();
+  const visitedHouses = uniq(
+    Array.from(input, direction => santa.move(direction).toString())
   );
 
-  return houses.length;
+  return visitedHouses.length;
 }
 
-const visitedHousesCount = getVisitedHousesCount();
-const visitedHousesCount2 = getVisitedHousesCount2();
+function countVisitedHousesWithRoboSanta() {
+  const santas = [createPosition(), createPosition()];
+  const visitedHouses = uniq(
+    Array.from(input, (direction, index) =>
+      santas[index % 2].move(direction).toString()
+    )
+  );
+
+  return visitedHouses.length;
+}
+
+const visitedHousesCount = countVisitedHouses();
+const visitedHousesCountWithRoboSanta = countVisitedHousesWithRoboSanta();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
@@ -47,6 +51,6 @@ if (import.meta.vitest) {
   });
 
   test('part 2', () => {
-    expect(visitedHousesCount2).toBe(2639);
+    expect(visitedHousesCountWithRoboSanta).toBe(2639);
   });
 }

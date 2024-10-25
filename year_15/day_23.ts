@@ -2,10 +2,13 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
 
-type Program = {registers: Record<string, number>; offset: number};
-type Instruct = (this: Program, ...payload: string[]) => number | void;
+type ProgramState = {
+  registers: Record<string, number>;
+  instructionPointer: number;
+};
+type Instruction = (this: ProgramState, ...args: string[]) => number | void;
 
-const instructsMap: Record<string, Instruct> = {
+const instructionSet: Record<string, Instruction> = {
   hlf(register) {
     this.registers[register] /= 2;
   },
@@ -15,50 +18,56 @@ const instructsMap: Record<string, Instruct> = {
   inc(register) {
     this.registers[register] += 1;
   },
-  jmp(away) {
-    return this.offset + Number(away);
+  jmp(offset) {
+    return this.instructionPointer + Number(offset);
   },
-  jie(register, away) {
+  jie(register, offset) {
     if (this.registers[register] % 2 === 0) {
-      return this.offset + Number(away);
+      return this.instructionPointer + Number(offset);
     }
   },
-  jio(register, away) {
+  jio(register, offset) {
     if (this.registers[register] === 1) {
-      return this.offset + Number(away);
+      return this.instructionPointer + Number(offset);
     }
   },
 };
 
 function executeProgram(
-  registers: Program['registers'],
-  ...instructs: string[][]
+  initialRegisters: ProgramState['registers'],
+  ...instructions: string[][]
 ) {
-  let offset = 0;
+  let instructionPointer = 0;
 
-  while (offset < instructs.length) {
-    const [name, ...payload] = instructs[offset];
-    const instruct = instructsMap[name];
+  while (instructionPointer < instructions.length) {
+    const [name, ...args] = instructions[instructionPointer];
+    const instruction = instructionSet[name];
 
-    offset = instruct.call({registers, offset}, ...payload) ?? offset + 1;
+    instructionPointer =
+      instruction.call(
+        {registers: initialRegisters, instructionPointer},
+        ...args
+      ) ?? instructionPointer + 1;
   }
-  return registers;
+  return initialRegisters;
 }
 
-const instructRe = /(\w+|[+-]\d+)/g;
-const instructs = lines.map((l): string[] => l.match(instructRe)!);
+const instructionPattern = /(\w+|[+-]\d+)/g;
+const parsedInstructions = lines.map(
+  (line): string[] => line.match(instructionPattern)!
+);
 
-const registers = executeProgram({a: 0, b: 0}, ...instructs);
-const registers2 = executeProgram({a: 1, b: 0}, ...instructs);
+const initialRegisters = executeProgram({a: 0, b: 0}, ...parsedInstructions);
+const modifiedRegisters = executeProgram({a: 1, b: 0}, ...parsedInstructions);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(registers.b).toBe(184);
+    expect(initialRegisters.b).toBe(184);
   });
 
   test('part 2', () => {
-    expect(registers2.b).toBe(231);
+    expect(modifiedRegisters.b).toBe(231);
   });
 }

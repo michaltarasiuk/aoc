@@ -4,7 +4,7 @@ import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
-const routeCostMap = lines
+const distanceMap = lines
   .map(distance => {
     const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
     const [, a, b, cost] = distance.match(distanceRe)!;
@@ -18,28 +18,28 @@ const routeCostMap = lines
     acc[b][a] = cost;
     return acc;
   }, {});
-const cities = Object.keys(routeCostMap);
+const cities = Object.keys(distanceMap);
 
-const possibleCosts = permute(cities).reduce<number[]>((acc, route) => {
-  const cost = sum(
+const routeDistances = permute(cities).reduce<number[]>((acc, route) => {
+  const totalDistance = sum(
     ...route
       .map((from, i) => [from, route[i + 1]])
-      .map(([from, to]) => routeCostMap[from][to] ?? 0)
+      .map(([from, to]) => distanceMap[from][to] ?? 0)
   );
-  return acc.concat(cost);
+  return acc.concat(totalDistance);
 }, []);
 
-const minCost = Math.min(...possibleCosts);
-const maxCost = Math.max(...possibleCosts);
+const shortestRouteDistance = Math.min(...routeDistances);
+const longestRouteDistance = Math.max(...routeDistances);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(minCost).toBe(251);
+    expect(shortestRouteDistance).toBe(251);
   });
 
   test('part 2', () => {
-    expect(maxCost).toBe(898);
+    expect(longestRouteDistance).toBe(898);
   });
 }
