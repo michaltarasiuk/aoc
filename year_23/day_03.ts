@@ -25,7 +25,7 @@ const nsLayers = lines
 const symbolRe = /[^\d.]/;
 const sumOfPartNumbers = nsLayers.flat().reduce((acc, segments) => {
   if (segments.filter(isDefined).some(s => symbolRe.test(s))) {
-    return acc + Number(segments[1].replace(/\D/g, ''));
+    acc += Number(segments[1].replace(/\D/g, ''));
   }
   return acc;
 }, 0);

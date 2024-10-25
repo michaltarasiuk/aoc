@@ -2,31 +2,38 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-function yell(monkeys: Record<string, string>, name: string): number {
-  const job = monkeys[name];
-  const parsedJob = Number(job);
+function parseMonkeyJob(line: string) {
+  const monkeyJobRe = /^(\w{4}): (.+)$/;
+  const [, monkeyName, jobDescription] = monkeyJobRe.exec(line)!;
 
-  if (Number.isNaN(parsedJob)) {
-    const [a, op, b] = job.split(/\s/);
-    return eval(yell(monkeys, a) + op + yell(monkeys, b));
-  }
-  return parsedJob;
+  return [monkeyName, jobDescription] as const;
 }
 
-const monkeys = Object.fromEntries(
-  lines.map(l => {
-    const monkeyRe = /^(\w{4}): (.+)$/;
-    const [, name, job] = monkeyRe.exec(l)!;
+function calcYell(
+  monkeyJobs: Record<string, string>,
+  monkeyName: string
+): number {
+  const jobDescription = monkeyJobs[monkeyName];
+  const numericJob = Number(jobDescription);
 
-    return [name, job];
-  })
-);
-const n = yell(monkeys, 'root');
+  if (Number.isNaN(numericJob)) {
+    const [firstMonkey, operator, secondMonkey] = jobDescription.split(/\s/);
+    return eval(
+      calcYell(monkeyJobs, firstMonkey) +
+        operator +
+        calcYell(monkeyJobs, secondMonkey)
+    );
+  }
+  return numericJob;
+}
+
+const monkeyJobs = Object.fromEntries(lines.map(parseMonkeyJob));
+const rootYell = calcYell(monkeyJobs, 'root');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(n).toBe(142707821472432);
+    expect(rootYell).toBe(142707821472432);
   });
 }

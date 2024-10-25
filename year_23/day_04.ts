@@ -29,7 +29,6 @@ const points = cards.values().reduce((acc, matches) => {
   }
   return acc;
 }, 0);
-
 const totalCardsCount = countTotalCards(cards);
 
 if (import.meta.vitest) {
