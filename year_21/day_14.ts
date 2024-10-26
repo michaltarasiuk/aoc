@@ -24,7 +24,7 @@ function pairInsertion(
   const pair = a + b;
   const insertion = rules.get(pair);
 
-  if (!insertion) {
+  if (!isDefined(insertion)) {
     return pair + pairInsertion(rest.join(''), rules);
   }
   const pairRe = new RegExp(pair.replace(/(\w)/, '($1)'));

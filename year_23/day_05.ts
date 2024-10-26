@@ -1,5 +1,6 @@
 import {getInputParagraphs} from 'lib/input.js';
 import {extractInts} from 'lib/parse.js';
+import {isDefined} from 'lib/predicate.js';
 
 const [[initialSeeds], ...categoryMaps] = await getInputParagraphs({
   year: 2023,
@@ -11,7 +12,7 @@ function convertThroughCategories(
   value: number
 ): number {
   const categoryLayer = categoryLayers.shift();
-  if (!categoryLayer) {
+  if (!isDefined(categoryLayer)) {
     return value;
   }
 

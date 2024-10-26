@@ -15,12 +15,12 @@ function countValidTriangles(triangles: number[][]) {
   return triangles.filter(isTriangleValid).length;
 }
 
-const TRIANGLE_SIDES = 3;
+const TriangleSides = 3;
 const trianglesByRows = inputLines.map(extractInts);
 
 const validTrianglesByRowsCount = countValidTriangles(trianglesByRows);
 const validTrianglesByColumnsCount = countValidTriangles(
-  chunkEvery(transpose(trianglesByRows).flat(), TRIANGLE_SIDES)
+  chunkEvery(transpose(trianglesByRows).flat(), TriangleSides)
 );
 
 if (import.meta.vitest) {

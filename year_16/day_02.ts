@@ -2,14 +2,14 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2016, day: 2});
 
-const KEYPAD = [
+const Keypad = [
   ['1', '2', '3'],
   ['4', '5', '6'],
   ['7', '8', '9'],
 ];
 
-const XBound = KEYPAD[0].length - 1;
-const YBound = KEYPAD.length - 1;
+const XBound = Keypad[0].length - 1;
+const YBound = Keypad.length - 1;
 
 function move(x: number, y: number, direction: string) {
   switch (direction) {
@@ -35,7 +35,7 @@ for (const l of lines) {
   for (const char of l) {
     [x, y] = move(x, y, char);
   }
-  bathroomCode += KEYPAD[y][x];
+  bathroomCode += Keypad[y][x];
 }
 
 if (import.meta.vitest) {

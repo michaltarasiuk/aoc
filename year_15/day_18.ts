@@ -2,8 +2,8 @@ import {getInputGrid} from 'lib/input.js';
 
 const initialGrid = await getInputGrid({year: 2015, day: 18});
 
-const LIGHT_ON = '#';
-const LIGHT_OFF = '.';
+const LightOn = '#';
+const LightOff = '.';
 
 type Grid = string[][];
 
@@ -18,26 +18,26 @@ function getNeighbors(grid: Grid, {x, y}: {x: number; y: number}) {
     [1, 0],
     [1, 1],
   ];
-  return NeighborOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? LIGHT_OFF);
+  return NeighborOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? LightOff);
 }
 
 function countLightsOn(grid: Grid) {
-  return grid.flat().filter(light => light === LIGHT_ON).length;
+  return grid.flat().filter(light => light === LightOn).length;
 }
 
 function getNextLightState(currentLight: string, neighbors: string[]) {
-  const lightsOnCount = neighbors.filter(light => light === LIGHT_ON).length;
-  if (currentLight === LIGHT_ON) {
-    return lightsOnCount === 2 || lightsOnCount === 3 ? LIGHT_ON : LIGHT_OFF;
+  const lightsOnCount = neighbors.filter(light => light === LightOn).length;
+  if (currentLight === LightOn) {
+    return lightsOnCount === 2 || lightsOnCount === 3 ? LightOn : LightOff;
   } else {
-    return lightsOnCount === 3 ? LIGHT_ON : LIGHT_OFF;
+    return lightsOnCount === 3 ? LightOn : LightOff;
   }
 }
 
-const STEPS_COUNT = 100;
+const StepsCount = 100;
 
 let grid = initialGrid;
-for (let step = 0; step < STEPS_COUNT; step++) {
+for (let step = 0; step < StepsCount; step++) {
   grid = grid.map((row, y) =>
     row.map((light, x) => getNextLightState(light, getNeighbors(grid, {x, y})))
   );

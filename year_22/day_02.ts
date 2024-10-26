@@ -3,7 +3,7 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2022, day: 2});
 
 const ShapesCount = 3;
-const POINTS = {WIN: 6, DRAW: 3, LOSE: 0};
+const Points = {WIN: 6, DRAW: 3, LOSE: 0};
 
 function getHandShape(char: string) {
   return ('ABCXYZ'.indexOf(char) % ShapesCount) + 1;
@@ -20,11 +20,11 @@ function roundOutcome(them: number, me: number) {
   const diff = me - them;
 
   if (diff === 0) {
-    return POINTS.DRAW;
+    return Points.DRAW;
   } else if (diff === 1 || diff === -2) {
-    return POINTS.WIN;
+    return Points.WIN;
   } else if (diff === -1 || diff === 2) {
-    return POINTS.LOSE;
+    return Points.LOSE;
   }
   throw new Error('Invalid round outcome');
 }
