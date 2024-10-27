@@ -7,7 +7,7 @@ const [[initialSeeds], ...categoryMaps] = await getInputParagraphs({
   day: 5,
 });
 
-function convertThroughCategories(
+function throughCategories(
   [...categoryLayers]: number[][][],
   value: number
 ): number {
@@ -18,19 +18,19 @@ function convertThroughCategories(
 
   for (const [destinationStart, sourceStart, rangeLength] of categoryLayer) {
     if (value >= sourceStart && value < sourceStart + rangeLength) {
-      return convertThroughCategories(
+      return throughCategories(
         categoryLayers,
         destinationStart + (value - sourceStart)
       );
     }
   }
-  return convertThroughCategories(categoryLayers, value);
+  return throughCategories(categoryLayers, value);
 }
 
 const categoryLayers = categoryMaps.map(([, ...map]) => map.map(extractInts));
 const lowestConvertedLocation = Math.min(
   ...extractInts(initialSeeds).map(seed =>
-    convertThroughCategories(categoryLayers, seed)
+    throughCategories(categoryLayers, seed)
   )
 );
 

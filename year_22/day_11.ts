@@ -4,13 +4,12 @@ import {z} from 'zod';
 
 const input = await getInput({year: 2022, day: 11});
 
-const monkeyRe = new RegExp(`\
-Monkey (?<id>\\d):
+const monkeyRe = new RegExp(String.raw`Monkey (?<id>\d):
   Starting items: (?<items>.*)
   Operation: new = (?<operation>.*)
-  Test: divisible by (?<divider>\\d+)
-    If true: throw to monkey (?<throwToIfDivisble>\\d+)
-    If false: throw to monkey (?<throwToIfIndivisible>\\d+)`);
+  Test: divisible by (?<divider>\d+)
+    If true: throw to monkey (?<throwToIfDivisble>\d+)
+    If false: throw to monkey (?<throwToIfIndivisible>\d+)`);
 
 const MonkeySchema = z.object({
   id: z.string().transform(Number),
