@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -5,7 +6,8 @@ const lines = await getInputLines({year: 2020, day: 2});
 
 function parsePassword(s: string) {
   const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
-  const [, min, max, char, password] = s.match(passwordRe)!;
+  const [, min, max, char, password] =
+    s.match(passwordRe) ?? raise('Invalid password');
 
   return {min: Number(min), max: Number(max), char, password};
 }

@@ -1,4 +1,4 @@
-import {assert} from 'lib/assert.js';
+import {assert, raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {isKeyOf} from 'lib/predicate.js';
@@ -10,7 +10,8 @@ type Actions = Record<'turn on' | 'turn off' | 'toggle', (v: number) => number>;
 
 function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
-  const [, action, ...dimensions] = instruction.match(instructionRe)!;
+  const [, action, ...dimensions] =
+    instruction.match(instructionRe) ?? raise('Invalid instruction');
 
   return [action, ...dimensions.map(Number)] as const;
 }

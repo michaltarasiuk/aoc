@@ -1,10 +1,12 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 21});
 
-function parseMonkeyJob(line: string) {
+function parseMonkeyJob(monkeyJob: string) {
   const monkeyJobRe = /^(\w{4}): (.+)$/;
-  const [, monkeyName, jobDescription] = monkeyJobRe.exec(line)!;
+  const [, monkeyName, jobDescription] =
+    monkeyJobRe.exec(monkeyJob) ?? raise('Invalid monkey job');
 
   return [monkeyName, jobDescription] as const;
 }

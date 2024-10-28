@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
 import {extractInts} from 'lib/parse.js';
 
@@ -11,7 +12,7 @@ function parseCrate(crate: string) {
 type Stacks = ReturnType<typeof parseStacks>;
 
 function parseStacks([...stacks]: string[]) {
-  const ids = stacks.pop()!;
+  const ids = stacks.pop() ?? raise('No stack IDs found');
 
   return Object.fromEntries(
     extractInts(ids).map(id => {

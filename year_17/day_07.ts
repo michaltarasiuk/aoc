@@ -1,10 +1,12 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 7});
 
 function parseProgram(program: string) {
   const programRe = /(\w+|\d+)/g;
-  const [name, weight, ...children] = program.match(programRe)!;
+  const [name, weight, ...children] =
+    program.match(programRe) ?? raise('Invalid program');
 
   return {name, weight: Number(weight), children};
 }

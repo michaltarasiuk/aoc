@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {isDefined} from 'lib/predicate.js';
@@ -6,7 +7,7 @@ const lines = await getInputLines({year: 2018, day: 4});
 
 function parseRecord(record: string) {
   const recordRe = /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+)$/;
-  const [, time, event] = recordRe.exec(record)!;
+  const [, time, event] = recordRe.exec(record) ?? raise('Invalid record');
 
   return {event, date: new Date(time)};
 }
@@ -23,7 +24,7 @@ function createShift() {
   return Array(MinutesInHour).fill(0);
 }
 
-const EVENT = {falls: 'falls asleep', wakes: 'wakes up'};
+const Event = {falls: 'falls asleep', wakes: 'wakes up'};
 
 const records = lines
   .map(parseRecord)
@@ -40,9 +41,9 @@ for (const {event, date} of records) {
 
   if (isDefined(shift)) {
     currentGuard = guards[shift.id] ??= createShift();
-  } else if (event === EVENT.falls) {
+  } else if (event === Event.falls) {
     sleepStart = date;
-  } else if (event === EVENT.wakes) {
+  } else if (event === Event.wakes) {
     for (let i = sleepStart!.getMinutes(); i < date.getMinutes(); i++) {
       currentGuard![i]++;
     }

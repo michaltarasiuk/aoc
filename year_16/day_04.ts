@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 import {stringToCodePoints} from 'lib/string.js';
@@ -6,7 +7,7 @@ const lines = await getInputLines({year: 2016, day: 4});
 
 function parseRoom(room: string) {
   const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
-  const [, name, id, checksum] = room.match(roomRe)!;
+  const [, name, id, checksum] = room.match(roomRe) ?? raise('Invalid room');
 
   return {name: name.replace(/-/g, ''), id: Number(id), checksum};
 }

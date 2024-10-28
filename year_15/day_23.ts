@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
@@ -52,9 +53,9 @@ function executeProgram(
   return initialRegisters;
 }
 
-const instructionPattern = /(\w+|[+-]\d+)/g;
+const instructionRe = /(\w+|[+-]\d+)/g;
 const parsedInstructions = lines.map(
-  (line): string[] => line.match(instructionPattern)!
+  line => line.match(instructionRe) ?? raise('Invalid instruction')
 );
 
 const initialRegisters = executeProgram({a: 0, b: 0}, ...parsedInstructions);

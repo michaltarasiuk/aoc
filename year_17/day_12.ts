@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 12});
@@ -12,7 +13,7 @@ function findGroup(programs: Map<string, string[]>, start: string) {
   const stack = [start];
 
   while (stack.length > 0) {
-    const current = stack.pop()!;
+    const current = stack.pop() ?? raise('Empty stack');
     group.add(current);
 
     for (const connection of programs.get(current) ?? []) {

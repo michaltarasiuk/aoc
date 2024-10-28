@@ -1,8 +1,10 @@
+import {raise} from './assert.js';
+
 export function chunkEvery<T>(iterable: Iterable<T>, count: number) {
   const chunks: T[][] = [[]];
 
   for (const item of iterable) {
-    const chunk = chunks.at(-1)!;
+    const chunk = chunks.at(-1) ?? raise('Empty chunks');
     if (chunk.length === count) {
       chunks.push([item]);
     } else {

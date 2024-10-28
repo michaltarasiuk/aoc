@@ -1,10 +1,11 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2018, day: 7});
 
 function parseStep(step: string) {
   const stepRe = /^Step (\w) must be finished before step (\w) can begin.$/;
-  const [, before, after] = stepRe.exec(step)!;
+  const [, before, after] = stepRe.exec(step) ?? raise('Invalid step');
 
   return {before, after};
 }
@@ -15,7 +16,7 @@ const steps = lines
     if (!acc.has(before)) acc.set(before, new Set());
     if (!acc.has(after)) acc.set(after, new Set());
 
-    acc.get(after)!.add(before);
+    acc.get(after)?.add(before);
     return acc;
   }, new Map());
 

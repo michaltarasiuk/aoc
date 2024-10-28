@@ -1,3 +1,4 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2022, day: 2});
@@ -11,7 +12,7 @@ function getHandShape(char: string) {
 
 function parseRound(round: string) {
   const roundRe = /^([ABC]) ([XYZ])$/;
-  const [, them, me] = roundRe.exec(round)!;
+  const [, them, me] = roundRe.exec(round) ?? raise('Invalid round');
 
   return [getHandShape(them), getHandShape(me)] as const;
 }

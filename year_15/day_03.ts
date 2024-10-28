@@ -25,7 +25,6 @@ function countVisitedHouses() {
   const visitedHouses = uniq(
     Array.from(input, direction => santa.move(direction).toString())
   );
-
   return visitedHouses.length;
 }
 
@@ -36,7 +35,6 @@ function countVisitedHousesWithRoboSanta() {
       santas[index % 2].move(direction).toString()
     )
   );
-
   return visitedHouses.length;
 }
 

@@ -1,4 +1,5 @@
 import {permute} from 'lib/array.js';
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -7,7 +8,8 @@ const lines = await getInputLines({year: 2015, day: 9});
 const distanceMap = lines
   .map(distance => {
     const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
-    const [, a, b, cost] = distance.match(distanceRe)!;
+    const [, a, b, cost] =
+      distance.match(distanceRe) ?? raise('Invalid distance');
 
     return {a, b, cost: Number(cost)};
   })

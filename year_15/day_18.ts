@@ -5,7 +5,7 @@ const initialGrid = await getInputGrid({year: 2015, day: 18});
 const LightOn = '#';
 const LightOff = '.';
 
-type Grid = string[][];
+type Grid = typeof initialGrid;
 
 function getNeighbors(grid: Grid, {x, y}: {x: number; y: number}) {
   const NeighborOffsets = [

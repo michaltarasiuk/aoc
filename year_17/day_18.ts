@@ -1,10 +1,12 @@
+import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 18});
 
 function parseJumpInstruction(instruction: string) {
   const instructionRe = /^(\w{3}) (\w)(?: (\S+))?$/;
-  const [, operation, register, value] = instructionRe.exec(instruction)!;
+  const [, operation, register, value] =
+    instructionRe.exec(instruction) ?? raise('Invalid instruction');
 
   return {operation, register, value};
 }
