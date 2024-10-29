@@ -5,7 +5,6 @@ import {sum} from 'lib/math.js';
 const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 
 const questionRe = /[a-z]/g;
-
 const questions = paragraphs.map(paragraph =>
   paragraph.map((l): string[] => l.match(questionRe) ?? [])
 );
@@ -13,7 +12,6 @@ const questions = paragraphs.map(paragraph =>
 const questionsCount = sum(
   ...questions.map(group => uniq(group.flat()).length)
 );
-
 const questionsCount2 = sum(
   ...questions.flatMap(group => {
     const common = group.reduce((acc, questions) =>
