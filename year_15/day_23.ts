@@ -35,7 +35,7 @@ const instructionSet: Record<string, Instruction> = {
 };
 
 function executeProgram(
-  initialRegisters: ProgramState['registers'],
+  registers: ProgramState['registers'],
   ...instructions: string[][]
 ) {
   let instructionPointer = 0;
@@ -45,12 +45,10 @@ function executeProgram(
     const instruction = instructionSet[name];
 
     instructionPointer =
-      instruction.call(
-        {registers: initialRegisters, instructionPointer},
-        ...args
-      ) ?? instructionPointer + 1;
+      instruction.call({registers, instructionPointer}, ...args) ??
+      instructionPointer + 1;
   }
-  return initialRegisters;
+  return registers;
 }
 
 const instructionRe = /(\w+|[+-]\d+)/g;
