@@ -31,10 +31,11 @@ function calcSignalOrParse(s: string) {
 }
 
 function calcSignal(dest: string): number {
-  if (!(dest in circuit)) throw new Error(`No destination for "${dest}"`);
+  if (!(dest in circuit)) {
+    throw new Error(`No destination for "${dest}"`);
+  }
 
   const [gate, a, b] = circuit[dest];
-
   switch (gate) {
     case 'AND':
       return calcSignalOrParse(a) & calcSignalOrParse(b);
