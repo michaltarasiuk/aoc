@@ -21,10 +21,6 @@ function getNeighbors(grid: Grid, {x, y}: {x: number; y: number}) {
   return NeighborOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? LightOff);
 }
 
-function countLightsOn(grid: Grid) {
-  return grid.flat().filter(light => light === LightOn).length;
-}
-
 function getNextLightState(currentLight: string, neighbors: string[]) {
   const lightsOnCount = neighbors.filter(light => light === LightOn).length;
   if (currentLight === LightOn) {
@@ -43,7 +39,7 @@ for (let step = 0; step < StepsCount; step++) {
   );
 }
 
-const lightsOnCount = countLightsOn(grid);
+const lightsOnCount = grid.flat().filter(light => light === LightOn).length;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

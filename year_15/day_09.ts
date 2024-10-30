@@ -37,7 +37,6 @@ const costs = permute(Object.keys(costMap)).reduce<number[]>(
   (acc, route) => acc.concat(calcRouteCost(costMap, ...route)),
   []
 );
-
 const minCost = Math.min(...costs);
 const maxCost = Math.max(...costs);
 

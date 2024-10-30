@@ -3,25 +3,19 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 7});
 
-function parseProgram(program: string) {
-  const programRe = /(\w+|\d+)/g;
-  const [name, weight, ...children] =
-    program.match(programRe) ?? raise('Invalid program');
+const programs = lines
+  .map(program => {
+    const programRe = /(\w+|\d+)/g;
+    return program.match(programRe) ?? raise('Invalid program');
+  })
+  .map(([name, weight, ...children]) => ({
+    name,
+    weight: Number(weight),
+    children,
+  }));
 
-  return {name, weight: Number(weight), children};
-}
-
-function findRoot(...programs: ReturnType<typeof parseProgram>[]) {
-  const children = new Set(programs.flatMap(p => p.children));
-
-  for (const program of programs) {
-    if (!children.has(program.name)) {
-      return program;
-    }
-  }
-}
-
-const root = findRoot(...lines.map(parseProgram));
+const children = new Set(programs.flatMap(p => p.children));
+const root = programs.find(program => !children.has(program.name));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

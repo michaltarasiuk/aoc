@@ -15,19 +15,23 @@ function parsePassword(s: string) {
 const passwords = lines.map(parsePassword);
 
 const validPasswordsCount = sum(
-  ...passwords.map(({min, max, char, password}) => {
-    const count = password.split(char).length - 1;
-    return Number(count >= min && count <= max);
-  })
+  ...passwords
+    .map(({min, max, char, password}) => {
+      const count = password.split(char).length - 1;
+      return count >= min && count <= max;
+    })
+    .map(Number)
 );
 
 const validPasswordsCount2 = sum(
-  ...passwords.map(({min, max, char, password}) => {
-    const minChar = password[min - 1];
-    const maxChar = password[max - 1];
+  ...passwords
+    .map(({min, max, char, password}) => {
+      const minChar = password[min - 1];
+      const maxChar = password[max - 1];
 
-    return Number((minChar === char) !== (maxChar === char));
-  })
+      return (minChar === char) !== (maxChar === char);
+    })
+    .map(Number)
 );
 
 if (import.meta.vitest) {

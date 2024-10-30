@@ -4,39 +4,38 @@ import {isObject} from 'lib/predicate.js';
 
 const input = await getInput({year: 2015, day: 12});
 
-const allNumbers: number[] = [];
-const nonRedNumbers: number[] = [];
+const ns: number[] = [];
+const ns2: number[] = [];
 
-const parsedDocument = JSON.parse(input, (_, value: unknown) => {
-  if (typeof value === 'number') {
-    allNumbers.push(value);
+const parsed = JSON.parse(input, (_, val: unknown) => {
+  if (typeof val === 'number') {
+    ns.push(val);
   }
-  return value;
+  return val;
 });
 
-JSON.stringify(parsedDocument, (_, value: unknown) => {
-  if (isObject(value)) {
-    for (const propertyValue of Object.values(value)) {
-      if (propertyValue === 'red') return;
+JSON.stringify(parsed, (_, val: unknown) => {
+  if (isObject(val)) {
+    for (const v of Object.values(val)) {
+      if (v === 'red') return;
     }
-  } else if (typeof value === 'number') {
-    nonRedNumbers.push(value);
+  } else if (typeof val === 'number') {
+    ns2.push(val);
   }
-
-  return value;
+  return val;
 });
 
-const totalSum = sum(...allNumbers);
-const nonRedSum = sum(...nonRedNumbers);
+const documentNsSum = sum(...ns);
+const documentNsSum2 = sum(...ns2);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(totalSum).toBe(191164);
+    expect(documentNsSum).toBe(191164);
   });
 
   test('part 2', () => {
-    expect(nonRedSum).toBe(87842);
+    expect(documentNsSum2).toBe(87842);
   });
 }

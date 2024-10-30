@@ -11,9 +11,8 @@ let iterationCount = 0;
 const sequenceLengths: number[] = [];
 
 while (++iterationCount <= IterationsPart2) {
-  const repeatedDigitsPattern = /(?:(\d)\1*)/g;
-
-  currentSequence = (currentSequence.match(repeatedDigitsPattern) ?? [])
+  const repeatedDigitsRe = /(?:(\d)\1*)/g;
+  currentSequence = (currentSequence.match(repeatedDigitsRe) ?? [])
     .map(([...digits]) => digits.length + digits[0])
     .join('');
 

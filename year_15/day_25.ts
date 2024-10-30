@@ -6,14 +6,13 @@ function calcSteps(row: number, col: number) {
   const diagonalSum = row + col;
   return (diagonalSum * (diagonalSum - 1)) / 2 - row;
 }
-
-function getNextCode(previousCode = 20151125) {
-  return (previousCode * 252533) % 33554393;
+function calcNewCode(oldCode = 20151125) {
+  return (oldCode * 252533) % 33554393;
 }
 
 let code: number | undefined;
 for (let i = 0; i < calcSteps(targetRow, targetCol); i++) {
-  code = getNextCode(code);
+  code = calcNewCode(code);
 }
 
 if (import.meta.vitest) {

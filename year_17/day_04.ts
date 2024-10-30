@@ -6,19 +6,23 @@ const lines = await getInputLines({year: 2017, day: 4});
 const passports = lines.map(l => l.split(/\s/));
 
 const validPassphrasesCount = sum(
-  ...passports.map(passport => {
-    const uniq = new Set(passport);
-    return Number(passport.length === uniq.size);
-  })
+  ...passports
+    .map(passport => {
+      const uniq = new Set(passport);
+      return passport.length === uniq.size;
+    })
+    .map(Number)
 );
 
 const validPassphrasesCount2 = sum(
-  ...passports.map(passport => {
-    const uniq = new Set(
-      passport.map(([...chars]) => chars.toSorted().join(''))
-    );
-    return Number(passport.length === uniq.size);
-  })
+  ...passports
+    .map(passport => {
+      const uniq = new Set(
+        passport.map(([...chars]) => chars.toSorted().join(''))
+      );
+      return passport.length === uniq.size;
+    })
+    .map(Number)
 );
 
 if (import.meta.vitest) {

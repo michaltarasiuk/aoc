@@ -13,9 +13,7 @@ function parseRoom(room: string) {
 }
 
 function calcChecksum(...chars: string[]) {
-  const charsCount = frequencies(chars);
-
-  return Array.from(charsCount)
+  return Array.from(frequencies(chars))
     .toSorted(([charA, countA], [charB, countB]) => {
       return countB - countA || charA.localeCompare(charB);
     })
@@ -27,21 +25,20 @@ function calcChecksum(...chars: string[]) {
 function shiftAlphabetCodePoint(codePoint: number, shift: number) {
   return ((codePoint - 97 + shift) % 26) + 97;
 }
-
 function findSectorID(
   storage: string,
   ...rooms: ReturnType<typeof parseRoom>[]
 ) {
-  for (const {name, id} of rooms) {
-    const decoded = String.fromCodePoint(
-      ...stringToCodePoints(name, codePoint =>
-        shiftAlphabetCodePoint(codePoint, id)
+  const room = rooms.find(
+    ({name, id}) =>
+      storage ===
+      String.fromCodePoint(
+        ...stringToCodePoints(name, codePoint =>
+          shiftAlphabetCodePoint(codePoint, id)
+        )
       )
-    );
-    if (storage === decoded) {
-      return id;
-    }
-  }
+  );
+  return room?.id ?? raise('Sector ID not found');
 }
 
 const rooms = lines.map(parseRoom);
@@ -52,7 +49,8 @@ const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
   }
   return acc;
 }, 0);
-const northPoleSectorID = findSectorID('northpoleobjectstorage', ...rooms);
+const NorthPoleObjectStorage = 'northpoleobjectstorage';
+const northPoleSectorID = findSectorID(NorthPoleObjectStorage, ...rooms);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

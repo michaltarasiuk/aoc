@@ -5,10 +5,8 @@ import {extractInts} from 'lib/parse.js';
 
 const inputLines = await getInputLines({year: 2016, day: 3});
 
-function isTriangleValid([side1, side2, side3]: number[]) {
-  return (
-    side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1
-  );
+function isTriangleValid([a, b, c]: number[]) {
+  return a + b > c && a + c > b && b + c > a;
 }
 
 function countValidTriangles(triangles: number[][]) {

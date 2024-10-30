@@ -11,13 +11,13 @@ function calcDistance<T extends Record<string, number>>(
   >,
   position: T
 ) {
-  const {horizontal, depth} = commands.reduce((acc, command) => {
-    const [instruct, units] = command.split(/\s/);
-
-    assert(isKeyOf(instructs, instruct));
-    instructs[instruct](acc, Number(units));
-    return acc;
-  }, position);
+  const {horizontal, depth} = commands
+    .map(command => command.split(/\s/))
+    .reduce((acc, [instruct, units]) => {
+      assert(isKeyOf(instructs, instruct));
+      instructs[instruct](acc, Number(units));
+      return acc;
+    }, position);
 
   return horizontal * depth;
 }

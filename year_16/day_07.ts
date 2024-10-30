@@ -10,7 +10,7 @@ function parseIPAddress(ipAddress: string) {
     (_, i) => (i % 2 === 0 ? 'supernets' : 'hypernets')
   );
 
-  return {supernets: String(supernets), hypernets: String(hypernets)};
+  return {supernets: supernets.join(), hypernets: hypernets.join()};
 }
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
@@ -19,17 +19,17 @@ const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/;
 const ipAddresses = lines.map(parseIPAddress);
 
 const tlsSupportedIpsCount = sum(
-  ...ipAddresses.map(({supernets, hypernets}) => {
-    const isSupported = abbaRe.test(supernets) && !abbaRe.test(hypernets);
-    return Number(isSupported);
-  })
+  ...ipAddresses
+    .map(
+      ({supernets, hypernets}) =>
+        abbaRe.test(supernets) && !abbaRe.test(hypernets)
+    )
+    .map(Number)
 );
-
 const sslSupportedIpsCount = sum(
-  ...ipAddresses.map(({supernets, hypernets}) => {
-    const isSupported = abaRe.test(supernets + ' ' + hypernets);
-    return Number(isSupported);
-  })
+  ...ipAddresses
+    .map(({supernets, hypernets}) => abaRe.test(supernets + ' ' + hypernets))
+    .map(Number)
 );
 
 if (import.meta.vitest) {

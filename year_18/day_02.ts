@@ -5,7 +5,6 @@ const lines = await getInputLines({year: 2018, day: 2});
 
 let twos = 0;
 let threes = 0;
-
 for (const l of lines) {
   const counts = new Map(
     Array.from(frequencies(l), ([char, count]) => [count, char])

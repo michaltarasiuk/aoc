@@ -7,7 +7,6 @@ function redistributeMemoryBlocks([...blocks]: number[]) {
 
   function redistribute() {
     const seen = new Set<string>();
-
     while (true) {
       const snapshot = blocks.join();
       if (seen.has(snapshot)) {
@@ -18,14 +17,12 @@ function redistributeMemoryBlocks([...blocks]: number[]) {
 
       let max = Math.max(...blocks);
       let idx = blocks.indexOf(max);
-
       blocks[idx] = 0;
       while (max--) {
         blocks[++idx % blocks.length]++;
       }
     }
   }
-
   return {
     cycles,
     run() {

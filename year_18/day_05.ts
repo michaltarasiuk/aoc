@@ -27,8 +27,8 @@ while (unit <= 'z') {
   const unitRe = new RegExp(unit, 'gi');
   const polymer = input.replace(unitRe, '');
 
-  minPolymerLength = Math.min(minPolymerLength, reactPolymer(polymer).length);
   unit = String.fromCodePoint(unit.codePointAt(0)! + 1);
+  minPolymerLength = Math.min(minPolymerLength, reactPolymer(polymer).length);
 }
 
 if (import.meta.vitest) {
