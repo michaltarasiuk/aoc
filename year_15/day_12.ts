@@ -13,7 +13,6 @@ const parsed = JSON.parse(input, (_, val: unknown) => {
   }
   return val;
 });
-
 JSON.stringify(parsed, (_, val: unknown) => {
   if (isObject(val)) {
     for (const v of Object.values(val)) {

@@ -7,7 +7,6 @@ function calcPaper({l, w, h}: {l: number; w: number; h: number}) {
 
   return 2 * (lw + wh + hl) + Math.min(lw, wh, hl);
 }
-
 function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
   const dist = Math.min(l + w, w + h, h + l);
   const vol = l * w * h;
@@ -17,10 +16,8 @@ function calcRibbon({l, w, h}: {l: number; w: number; h: number}) {
 
 let paper = 0;
 let ribbon = 0;
-
 for (const ln of lines) {
   const [l = 0, w = 0, h = 0] = ln.split('x').map(Number);
-
   paper += calcPaper({l, w, h});
   ribbon += calcRibbon({l, w, h});
 }

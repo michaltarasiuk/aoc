@@ -3,10 +3,8 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2020, day: 7});
 
 type Rules = Map<string, {color: string; count: number}[]>;
-
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
-
   return rule
     .matchAll(bagsRe)
     .map(([, count, color]) => ({color, count: Number(count)}));
@@ -17,7 +15,6 @@ function includesBag(rules: Rules, holder: string, search: string): boolean {
     bag => bag.color === search || includesBag(rules, bag.color, search)
   );
 }
-
 function countBagsWith(rules: Rules, search: string) {
   return rules
     .keys()
@@ -31,11 +28,10 @@ function countBagsOf(rules: Rules, search: string): number {
     .reduce((acc, count) => acc + count, 0);
 }
 
+const SearchBag = 'shiny gold';
 const rules = new Map(
   lines.map(parseRule).map(([{color}, ...bags]) => [color, bags])
 );
-
-const SearchBag = 'shiny gold';
 const bagsWithShinyGoldCount = countBagsWith(rules, SearchBag);
 const bagsOfShinyGoldCount = countBagsOf(rules, SearchBag);
 

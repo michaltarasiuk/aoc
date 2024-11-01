@@ -36,7 +36,6 @@ function calcSyntaxErrorScore(line: string) {
   }
   return 0;
 }
-
 function isMatchingPair(open: string, close: string) {
   return (
     (open === '(' && close === ')') ||

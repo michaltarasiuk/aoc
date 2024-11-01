@@ -14,7 +14,6 @@ function createPosition() {
     move(direction: string) {
       x += direction === '>' ? 1 : direction === '<' ? -1 : 0;
       y += direction === '^' ? 1 : direction === 'v' ? -1 : 0;
-
       return this;
     },
   };

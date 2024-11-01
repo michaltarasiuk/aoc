@@ -3,9 +3,9 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2020, day: 8});
 
 function runProgram(...instructions: {op: string; arg: number}[]) {
+  const seen = new Set<number>();
   let acc = 0;
   let ip = 0;
-  const seen = new Set<number>();
 
   while (true) {
     if (seen.has(ip)) {

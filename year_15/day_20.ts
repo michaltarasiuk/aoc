@@ -3,14 +3,14 @@ import {divisors} from 'lib/math.js';
 
 const input = await getInput({year: 2015, day: 20});
 
-const housePresents: Record<number, number> = {};
-let houseNumber = 0;
+const houses: Record<number, number> = {};
+let i = 0;
 
-outer: while (++houseNumber) {
-  for (const elf of divisors(houseNumber)) {
-    housePresents[houseNumber] = (housePresents[houseNumber] ?? 0) + 10 * elf;
+outer: while (++i) {
+  for (const j of divisors(i)) {
+    houses[i] = (houses[i] ?? 0) + 10 * j;
 
-    if (housePresents[houseNumber] >= Number(input)) {
+    if (houses[i] >= Number(input)) {
       break outer;
     }
   }
@@ -20,6 +20,6 @@ if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
 
   test('part 1', () => {
-    expect(houseNumber).toBe(665280);
+    expect(i).toBe(665280);
   });
 }
