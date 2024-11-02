@@ -43,12 +43,6 @@ const validPassportsCount2 = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(validPassportsCount).toBe(208);
-  });
-
-  test('part 2', () => {
-    expect(validPassportsCount2).toBe(167);
-  });
+  test('part 1', () => expect(validPassportsCount).toBe(208));
+  test('part 2', () => expect(validPassportsCount2).toBe(167));
 }

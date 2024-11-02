@@ -40,8 +40,5 @@ for (const l of lines) {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(bathroomCode).toBe('19636');
-  });
+  test('part 1', () => expect(bathroomCode).toBe('19636'));
 }

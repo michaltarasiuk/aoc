@@ -12,12 +12,6 @@ const increasingMeasurementsSumCount = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(increasingMeasurementsCount).toBe(1559);
-  });
-
-  test('part 2', () => {
-    expect(increasingMeasurementsSumCount).toBe(1600);
-  });
+  test('part 1', () => expect(increasingMeasurementsCount).toBe(1559));
+  test('part 2', () => expect(increasingMeasurementsSumCount).toBe(1600));
 }

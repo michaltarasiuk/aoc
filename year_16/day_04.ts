@@ -54,12 +54,6 @@ const northPoleSectorID = findSectorID(NorthPoleObjectStorage, ...rooms);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(realRoomSectorIDsSum).toBe(409147);
-  });
-
-  test('part 2', () => {
-    expect(northPoleSectorID).toBe(991);
-  });
+  test('part 1', () => expect(realRoomSectorIDsSum).toBe(409147));
+  test('part 2', () => expect(northPoleSectorID).toBe(991));
 }

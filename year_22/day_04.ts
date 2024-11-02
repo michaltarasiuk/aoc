@@ -13,8 +13,5 @@ const pairsFullyCoveredCount = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(pairsFullyCoveredCount).toBe(532);
-  });
+  test('part 1', () => expect(pairsFullyCoveredCount).toBe(532));
 }

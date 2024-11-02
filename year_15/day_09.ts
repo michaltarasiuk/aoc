@@ -42,12 +42,6 @@ const maxCost = Math.max(...costs);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(minCost).toBe(251);
-  });
-
-  test('part 2', () => {
-    expect(maxCost).toBe(898);
-  });
+  test('part 1', () => expect(minCost).toBe(251));
+  test('part 2', () => expect(maxCost).toBe(898));
 }

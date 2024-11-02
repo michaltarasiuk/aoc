@@ -20,8 +20,5 @@ const extrapolatedValuesSum = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(extrapolatedValuesSum).toBe(1939607039);
-  });
+  test('part 1', () => expect(extrapolatedValuesSum).toBe(1939607039));
 }

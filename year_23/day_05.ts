@@ -36,8 +36,5 @@ const lowestConvertedLocation = Math.min(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(lowestConvertedLocation).toBe(323142486);
-  });
+  test('part 1', () => expect(lowestConvertedLocation).toBe(323142486));
 }

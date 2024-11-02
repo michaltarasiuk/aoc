@@ -33,12 +33,6 @@ while (unit <= 'z') {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(reactedPolymer.length).toBe(10972);
-  });
-
-  test('part 2', () => {
-    expect(minPolymerLength).toBe(5278);
-  });
+  test('part 1', () => expect(reactedPolymer.length).toBe(10972));
+  test('part 2', () => expect(minPolymerLength).toBe(5278));
 }

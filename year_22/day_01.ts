@@ -12,12 +12,6 @@ const caloriesOfTopThreeElves = elfs[0] + elfs[1] + elfs[2];
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(maxCalories).toBe(66306);
-  });
-
-  test('part 2', () => {
-    expect(caloriesOfTopThreeElves).toBe(195292);
-  });
+  test('part 1', () => expect(maxCalories).toBe(66306));
+  test('part 2', () => expect(caloriesOfTopThreeElves).toBe(195292));
 }

@@ -34,8 +34,5 @@ const rootYell = calcYell(monkeyJobs, 'root');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(rootYell).toBe(142707821472432);
-  });
+  test('part 1', () => expect(rootYell).toBe(142707821472432));
 }

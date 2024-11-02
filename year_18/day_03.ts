@@ -36,12 +36,6 @@ const [nonOverlappingClaim] = new Set(claims.map(({id}) => id)).difference(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(overlappingClaimsCount).toBe(101469);
-  });
-
-  test('part 2', () => {
-    expect(nonOverlappingClaim).toBe(1067);
-  });
+  test('part 1', () => expect(overlappingClaimsCount).toBe(101469));
+  test('part 2', () => expect(nonOverlappingClaim).toBe(1067));
 }

@@ -24,12 +24,6 @@ const firstFrequencyReachesTwice = findFirstFrequencyReachesTwice(...ns);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(frequency).toBe(522);
-  });
-
-  test('part 2', () => {
-    expect(firstFrequencyReachesTwice).toBe(73364);
-  });
+  test('part 1', () => expect(frequency).toBe(522));
+  test('part 2', () => expect(firstFrequencyReachesTwice).toBe(73364));
 }

@@ -58,12 +58,6 @@ const finalWireASignal = calcSignal('a');
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(wireASignal).toBe(46065);
-  });
-
-  test('part 2', () => {
-    expect(finalWireASignal).toBe(14134);
-  });
+  test('part 1', () => expect(wireASignal).toBe(46065));
+  test('part 2', () => expect(finalWireASignal).toBe(14134));
 }

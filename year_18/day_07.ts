@@ -34,8 +34,6 @@ while (steps.size > 0) {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(order.join('')).toBe('JDEKPFABTUHOQSXVYMLZCNIGRW');
-  });
+  test('part 1', () =>
+    expect(order.join('')).toBe('JDEKPFABTUHOQSXVYMLZCNIGRW'));
 }

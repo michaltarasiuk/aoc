@@ -18,8 +18,5 @@ const checksum = twos * threes;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(checksum).toBe(5880);
-  });
+  test('part 1', () => expect(checksum).toBe(5880));
 }

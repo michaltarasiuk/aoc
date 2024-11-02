@@ -35,12 +35,6 @@ const newPassword2 = findNewPassword(newPassword);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(newPassword).toBe('cqjxxyzz');
-  });
-
-  test('part 2', () => {
-    expect(newPassword2).toBe('cqkaabcc');
-  });
+  test('part 1', () => expect(newPassword).toBe('cqjxxyzz'));
+  test('part 2', () => expect(newPassword2).toBe('cqkaabcc'));
 }

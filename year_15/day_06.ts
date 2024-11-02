@@ -55,12 +55,6 @@ const totalBrightness = sum(brightness.flat());
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(litLightsCount).toBe(400410);
-  });
-
-  test('part 2', () => {
-    expect(totalBrightness).toBe(15343601);
-  });
+  test('part 1', () => expect(litLightsCount).toBe(400410));
+  test('part 2', () => expect(totalBrightness).toBe(15343601));
 }

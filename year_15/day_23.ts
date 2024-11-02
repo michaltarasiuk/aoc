@@ -61,12 +61,6 @@ const modifiedRegisters = executeProgram({a: 1, b: 0}, ...parsedInstructions);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(initialRegisters.b).toBe(184);
-  });
-
-  test('part 2', () => {
-    expect(modifiedRegisters.b).toBe(231);
-  });
+  test('part 1', () => expect(initialRegisters.b).toBe(184));
+  test('part 2', () => expect(modifiedRegisters.b).toBe(231));
 }

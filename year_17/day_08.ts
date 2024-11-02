@@ -36,12 +36,6 @@ const maxFinalRegister = Math.max(...Object.values(registers));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(maxFinalRegister).toBe(5966);
-  });
-
-  test('part 2', () => {
-    expect(maxHeldRegister).toBe(6347);
-  });
+  test('part 1', () => expect(maxFinalRegister).toBe(5966));
+  test('part 2', () => expect(maxHeldRegister).toBe(6347));
 }

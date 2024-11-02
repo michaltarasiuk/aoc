@@ -55,12 +55,6 @@ const distance2 = calcDistance(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(distance).toBe(1714950);
-  });
-
-  test('part 2', () => {
-    expect(distance2).toBe(1281977850);
-  });
+  test('part 1', () => expect(distance).toBe(1714950));
+  test('part 2', () => expect(distance2).toBe(1281977850));
 }

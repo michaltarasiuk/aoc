@@ -23,12 +23,6 @@ const questionsCount2 = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(questionsCount).toBe(6310);
-  });
-
-  test('part 2', () => {
-    expect(questionsCount2).toBe(3193);
-  });
+  test('part 1', () => expect(questionsCount).toBe(6310));
+  test('part 2', () => expect(questionsCount2).toBe(3193));
 }

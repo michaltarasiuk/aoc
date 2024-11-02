@@ -34,8 +34,5 @@ const sumOfSignals = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(sumOfSignals).toBe(14540);
-  });
+  test('part 1', () => expect(sumOfSignals).toBe(14540));
 }

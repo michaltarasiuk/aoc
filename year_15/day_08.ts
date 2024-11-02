@@ -13,12 +13,6 @@ const stringLiteralMemoryDiff2 = sum(...ns3) - sum(...ns);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(stringLiteralMemoryDiff).toBe(1350);
-  });
-
-  test('part 2', () => {
-    expect(stringLiteralMemoryDiff2).toBe(2085);
-  });
+  test('part 1', () => expect(stringLiteralMemoryDiff).toBe(1350));
+  test('part 2', () => expect(stringLiteralMemoryDiff2).toBe(2085));
 }

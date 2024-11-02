@@ -59,8 +59,5 @@ const businessLevel = a.inspects * b.inspects;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(businessLevel).toBe(55458);
-  });
+  test('part 1', () => expect(businessLevel).toBe(55458));
 }

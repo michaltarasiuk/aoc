@@ -28,12 +28,6 @@ const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(waysOfBeatRecordProduct).toBe(140220);
-  });
-
-  test('part 2', () => {
-    expect(longRaceWaysOfBeatRecord).toBe(39570185);
-  });
+  test('part 1', () => expect(waysOfBeatRecordProduct).toBe(140220));
+  test('part 2', () => expect(longRaceWaysOfBeatRecord).toBe(39570185));
 }

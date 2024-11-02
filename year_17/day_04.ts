@@ -27,12 +27,6 @@ const validPassphrasesCount2 = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(validPassphrasesCount).toBe(455);
-  });
-
-  test('part 2', () => {
-    expect(validPassphrasesCount2).toBe(186);
-  });
+  test('part 1', () => expect(validPassphrasesCount).toBe(455));
+  test('part 2', () => expect(validPassphrasesCount2).toBe(186));
 }

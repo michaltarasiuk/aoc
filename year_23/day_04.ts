@@ -33,12 +33,6 @@ const totalCardsCount = countTotalCards(cards);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(points).toBe(26218);
-  });
-
-  test('part 2', () => {
-    expect(totalCardsCount).toBe(9997537);
-  });
+  test('part 1', () => expect(points).toBe(26218));
+  test('part 2', () => expect(totalCardsCount).toBe(9997537));
 }

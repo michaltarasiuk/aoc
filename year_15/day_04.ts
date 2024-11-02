@@ -22,12 +22,6 @@ const coin2 = waitUntilStartsWith({s, searchString: '0'.repeat(6)}, coin);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(coin).toBe(346386);
-  });
-
-  test('part 2', () => {
-    expect(coin2).toBe(9958218);
-  });
+  test('part 1', () => expect(coin).toBe(346386));
+  test('part 2', () => expect(coin2).toBe(9958218));
 }

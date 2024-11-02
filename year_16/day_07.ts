@@ -34,12 +34,6 @@ const sslSupportedIpsCount = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(tlsSupportedIpsCount).toBe(110);
-  });
-
-  test('part 2', () => {
-    expect(sslSupportedIpsCount).toBe(242);
-  });
+  test('part 1', () => expect(tlsSupportedIpsCount).toBe(110));
+  test('part 2', () => expect(sslSupportedIpsCount).toBe(242));
 }

@@ -14,12 +14,6 @@ const captchaSolution2 = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(captchaSolution).toBe(1203);
-  });
-
-  test('part 2', () => {
-    expect(captchaSolution2).toBe(1146);
-  });
+  test('part 1', () => expect(captchaSolution).toBe(1203));
+  test('part 2', () => expect(captchaSolution2).toBe(1146));
 }

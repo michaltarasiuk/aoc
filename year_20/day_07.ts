@@ -37,12 +37,6 @@ const bagsOfShinyGoldCount = countBagsOf(rules, SearchBag);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(bagsWithShinyGoldCount).toBe(242);
-  });
-
-  test('part 2', () => {
-    expect(bagsOfShinyGoldCount).toBe(176035);
-  });
+  test('part 1', () => expect(bagsWithShinyGoldCount).toBe(242));
+  test('part 2', () => expect(bagsOfShinyGoldCount).toBe(176035));
 }

@@ -19,8 +19,5 @@ const root = programs.find(program => !children.has(program.name));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(root?.name).toBe('rqwgj');
-  });
+  test('part 1', () => expect(root?.name).toBe('rqwgj'));
 }

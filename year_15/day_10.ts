@@ -26,12 +26,6 @@ while (++iterationCount <= IterationsPart2) {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(sequenceLengths[0]).toBe(492982);
-  });
-
-  test('part 2', () => {
-    expect(sequenceLengths[1]).toBe(6989950);
-  });
+  test('part 1', () => expect(sequenceLengths[0]).toBe(492982));
+  test('part 2', () => expect(sequenceLengths[1]).toBe(6989950));
 }

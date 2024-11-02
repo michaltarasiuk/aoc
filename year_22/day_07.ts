@@ -83,8 +83,5 @@ const totalSize = sum(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(totalSize).toBe(1306611);
-  });
+  test('part 1', () => expect(totalSize).toBe(1306611));
 }

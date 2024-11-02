@@ -18,8 +18,5 @@ outer: while (++i) {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(i).toBe(665280);
-  });
+  test('part 1', () => expect(i).toBe(665280));
 }

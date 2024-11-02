@@ -38,8 +38,5 @@ const indicesSum = paragraphs
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(indicesSum).toBe(4734);
-  });
+  test('part 1', () => expect(indicesSum).toBe(4734));
 }

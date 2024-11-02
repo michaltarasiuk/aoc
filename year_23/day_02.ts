@@ -26,12 +26,6 @@ const setsPowerSum = games.reduce((acc, {r, g, b}) => acc + r * g * b, 0);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(gamesIdsSum).toBe(2545);
-  });
-
-  test('part 2', () => {
-    expect(setsPowerSum).toBe(78111);
-  });
+  test('part 1', () => expect(gamesIdsSum).toBe(2545));
+  test('part 2', () => expect(setsPowerSum).toBe(78111));
 }

@@ -35,12 +35,6 @@ const prioritiesSum2 = chunkEvery(lines, 3).reduce((acc, [a, b, c]) => {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(prioritiesSum).toBe(8153);
-  });
-
-  test('part 2', () => {
-    expect(prioritiesSum2).toBe(2342);
-  });
+  test('part 1', () => expect(prioritiesSum).toBe(8153));
+  test('part 2', () => expect(prioritiesSum2).toBe(2342));
 }

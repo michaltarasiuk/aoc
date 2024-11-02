@@ -55,12 +55,6 @@ const serializedStacks2 = stacksToString(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(serializedStacks).toBe('QGTHFZBHV');
-  });
-
-  test('part 2', () => {
-    expect(serializedStacks2).toBe('MGDMPSZTM');
-  });
+  test('part 1', () => expect(serializedStacks).toBe('QGTHFZBHV'));
+  test('part 2', () => expect(serializedStacks2).toBe('MGDMPSZTM'));
 }

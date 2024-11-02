@@ -32,8 +32,5 @@ const sumOfPartNumbers = nsLayers.flat().reduce((acc, segments) => {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(sumOfPartNumbers).toBe(531561);
-  });
+  test('part 1', () => expect(sumOfPartNumbers).toBe(531561));
 }

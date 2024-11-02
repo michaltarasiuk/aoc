@@ -23,12 +23,6 @@ const validTrianglesByColumnsCount = countValidTriangles(
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(validTrianglesByRowsCount).toBe(993);
-  });
-
-  test('part 2', () => {
-    expect(validTrianglesByColumnsCount).toBe(1849);
-  });
+  test('part 1', () => expect(validTrianglesByRowsCount).toBe(993));
+  test('part 2', () => expect(validTrianglesByColumnsCount).toBe(1849));
 }

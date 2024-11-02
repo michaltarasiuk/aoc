@@ -20,12 +20,6 @@ const lastIndex2 = findLastIndexOfMarker(input, 14);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(lastIndex).toBe(1343);
-  });
-
-  test('part 2', () => {
-    expect(lastIndex2).toBe(2193);
-  });
+  test('part 1', () => expect(lastIndex).toBe(1343));
+  test('part 2', () => expect(lastIndex2).toBe(2193));
 }

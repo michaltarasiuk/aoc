@@ -22,12 +22,6 @@ const leastFrequentMessage = decodeMessage(cols);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(mostFrequentMessage).toBe('cyxeoccr');
-  });
-
-  test('part 2', () => {
-    expect(leastFrequentMessage).toBe('batwpask');
-  });
+  test('part 1', () => expect(mostFrequentMessage).toBe('cyxeoccr'));
+  test('part 2', () => expect(leastFrequentMessage).toBe('batwpask'));
 }

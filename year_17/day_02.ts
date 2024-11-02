@@ -22,12 +22,6 @@ const rowsSum = sum(...rows.map(row => findDivisiblePair(...row) ?? 0));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(spreadsheetChecksum).toBe(44216);
-  });
-
-  test('part 2', () => {
-    expect(rowsSum).toBe(320);
-  });
+  test('part 1', () => expect(spreadsheetChecksum).toBe(44216));
+  test('part 2', () => expect(rowsSum).toBe(320));
 }

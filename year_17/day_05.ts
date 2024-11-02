@@ -28,12 +28,6 @@ const steps2 = (() => {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(steps).toBe(373160);
-  });
-
-  test('part 2', () => {
-    expect(steps2).toBe(26395586);
-  });
+  test('part 1', () => expect(steps).toBe(373160));
+  test('part 2', () => expect(steps2).toBe(26395586));
 }

@@ -43,8 +43,5 @@ const lightsOnCount = grid.flat().filter(light => light === LightOn).length;
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(lightsOnCount).toBe(821);
-  });
+  test('part 1', () => expect(lightsOnCount).toBe(821));
 }

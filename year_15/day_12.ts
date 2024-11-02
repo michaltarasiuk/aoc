@@ -29,12 +29,6 @@ const documentNsSum2 = sum(...ns2);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(documentNsSum).toBe(191164);
-  });
-
-  test('part 2', () => {
-    expect(documentNsSum2).toBe(87842);
-  });
+  test('part 1', () => expect(documentNsSum).toBe(191164));
+  test('part 2', () => expect(documentNsSum2).toBe(87842));
 }

@@ -46,12 +46,6 @@ const groupsCount = countGroups(programs);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(group0.size).toBe(145);
-  });
-
-  test('part 2', () => {
-    expect(groupsCount).toBe(207);
-  });
+  test('part 1', () => expect(group0.size).toBe(145));
+  test('part 2', () => expect(groupsCount).toBe(207));
 }

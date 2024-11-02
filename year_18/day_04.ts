@@ -57,8 +57,5 @@ const maxMinute = minutes.indexOf(Math.max(...minutes));
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(Number(id) * maxMinute).toBe(115167);
-  });
+  test('part 1', () => expect(Number(id) * maxMinute).toBe(115167));
 }

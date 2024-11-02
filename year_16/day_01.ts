@@ -32,8 +32,5 @@ const distance = input
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(distance).toBe(273);
-  });
+  test('part 1', () => expect(distance).toBe(273));
 }

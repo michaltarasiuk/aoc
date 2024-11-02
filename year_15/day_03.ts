@@ -42,12 +42,6 @@ const visitedHousesCountWithRoboSanta = countVisitedHousesWithRoboSanta();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(visitedHousesCount).toBe(2565);
-  });
-
-  test('part 2', () => {
-    expect(visitedHousesCountWithRoboSanta).toBe(2639);
-  });
+  test('part 1', () => expect(visitedHousesCount).toBe(2565));
+  test('part 2', () => expect(visitedHousesCountWithRoboSanta).toBe(2639));
 }

@@ -36,12 +36,6 @@ const {cycles} = redistributeMemoryBlocks(memoryBlocks).run().run();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(cycles[0]).toBe(11137);
-  });
-
-  test('part 2', () => {
-    expect(cycles[1]).toBe(1037);
-  });
+  test('part 1', () => expect(cycles[0]).toBe(11137));
+  test('part 2', () => expect(cycles[1]).toBe(1037));
 }

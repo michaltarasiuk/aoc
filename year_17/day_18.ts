@@ -54,8 +54,5 @@ outer: while (true) {
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(lastSound).toBe(7071);
-  });
+  test('part 1', () => expect(lastSound).toBe(7071));
 }

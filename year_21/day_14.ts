@@ -54,8 +54,5 @@ const frequencyRange = Math.max(...frequency) - Math.min(...frequency);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-
-  test('part 1', () => {
-    expect(frequencyRange).toBe(2447);
-  });
+  test('part 1', () => expect(frequencyRange).toBe(2447));
 }
