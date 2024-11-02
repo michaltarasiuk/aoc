@@ -3,9 +3,9 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2020, day: 8});
 
 function runProgram(...instructions: {op: string; arg: number}[]) {
-  const seen = new Set<number>();
   let acc = 0;
   let ip = 0;
+  const seen = new Set<number>();
 
   while (true) {
     if (seen.has(ip)) {
@@ -13,8 +13,8 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
     } else {
       seen.add(ip);
     }
-    const {op, arg} = instructions[ip];
 
+    const {op, arg} = instructions[ip];
     switch (op) {
       case 'acc':
         acc += arg;
@@ -34,7 +34,6 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
 const instructions = lines
   .map(l => l.split(/\s/))
   .map(([op, arg]) => ({op, arg: Number(arg)}));
-
 const acc = runProgram(...instructions);
 
 if (import.meta.vitest) {

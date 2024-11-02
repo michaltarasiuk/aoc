@@ -9,9 +9,10 @@ function decodeMessage(
 ) {
   return cols.reduce((decodedMessage, columnChars) => {
     const charFrequencies = frequencies(columnChars);
-    const [[mostFrequentChar]] = Array.from(charFrequencies).toSorted((a, b) =>
-      compareFn(a[1], b[1])
-    );
+    const [[mostFrequentChar]] = charFrequencies
+      .entries()
+      .toArray()
+      .toSorted((a, b) => compareFn(a[1], b[1]));
 
     return decodedMessage + mostFrequentChar;
   }, '');

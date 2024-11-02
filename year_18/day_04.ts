@@ -25,7 +25,6 @@ function createShift() {
 }
 
 const Event = {falls: 'falls asleep', wakes: 'wakes up'};
-
 const records = lines
   .map(parseRecord)
   .toSorted((a, b) => Number(a.date) - Number(b.date));

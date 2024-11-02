@@ -20,15 +20,16 @@ const ipAddresses = lines.map(parseIPAddress);
 
 const tlsSupportedIpsCount = sum(
   ...ipAddresses
-    .map(
-      ({supernets, hypernets}) =>
-        abbaRe.test(supernets) && !abbaRe.test(hypernets)
-    )
+    .map(({supernets, hypernets}) => {
+      return abbaRe.test(supernets) && !abbaRe.test(hypernets);
+    })
     .map(Number)
 );
 const sslSupportedIpsCount = sum(
   ...ipAddresses
-    .map(({supernets, hypernets}) => abaRe.test(supernets + ' ' + hypernets))
+    .map(({supernets, hypernets}) => {
+      return abaRe.test(supernets + ' ' + hypernets);
+    })
     .map(Number)
 );
 

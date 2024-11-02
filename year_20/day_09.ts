@@ -16,7 +16,7 @@ function findInvalid(ns: number[], preambleSize: number) {
 }
 
 function findContiguousSet(ns: number[], value: number) {
-  for (let i = 0; i < ns.length; i++) {
+  for (const i of ns.keys()) {
     const set: number[] = [];
 
     for (const n of ns.slice(i)) {
