@@ -1,6 +1,5 @@
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {isDefined, isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2021, day: 10});
@@ -66,15 +65,14 @@ function calcAutocompleteScore(stack: string[]) {
 
 const parsedLines = lines.map(analyzeLineSyntax);
 
-const totalSyntaxErrorScore = sum(
-  ...parsedLines
-    .filter(l => l.status === 'SYNTAX_ERROR')
-    .map(({score}) => score)
-);
+const totalSyntaxErrorScore = parsedLines
+  .flatMap(l => (l.status === 'SYNTAX_ERROR' ? [l.score] : []))
+  .reduce((acc, score) => acc + score, 0);
 
 const scores = parsedLines
-  .filter(l => l.status === 'INCOMPLETE')
-  .map(({stack}) => calcAutocompleteScore(stack))
+  .flatMap(l =>
+    l.status === 'INCOMPLETE' ? [calcAutocompleteScore(l.stack)] : []
+  )
   .toSorted((a, b) => a - b);
 const middleScore = scores.at(Math.floor(scores.length / 2));
 
