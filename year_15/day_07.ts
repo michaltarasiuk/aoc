@@ -1,4 +1,5 @@
 import {getInputLines} from 'lib/input.js';
+import {isDefined} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2015, day: 7});
 
@@ -12,8 +13,7 @@ function parseInstruction(instruction: string) {
 const circuit = lines.reduce<Record<string, string[]>>((acc, l) => {
   const instruction = parseInstruction(l);
   const dest = instruction.pop();
-
-  if (dest) {
+  if (isDefined(dest)) {
     acc[dest] = instruction;
   }
   return acc;

@@ -3,7 +3,7 @@ import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
 import {extractInts} from 'lib/parse.js';
 
-const inputLines = await getInputLines({year: 2016, day: 3});
+const lines = await getInputLines({year: 2016, day: 3});
 
 function isTriangleValid([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
@@ -14,7 +14,7 @@ function countValidTriangles(triangles: number[][]) {
 }
 
 const TriangleSides = 3;
-const trianglesByRows = inputLines.map(extractInts);
+const trianglesByRows = lines.map(extractInts);
 
 const validTrianglesByRowsCount = countValidTriangles(trianglesByRows);
 const validTrianglesByColumnsCount = countValidTriangles(
