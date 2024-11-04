@@ -1,27 +1,24 @@
 import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
+import {matchInts} from 'lib/parse.js';
 
-const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
+const [stacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
 
-function parseCrate(crate: string) {
-  const emptyCrateRe = /\s/;
-  return emptyCrateRe.test(crate) ? undefined : crate;
-}
-
-function createStacks([...input]: string[]) {
-  const ids = input.pop() ?? raise('No stack IDs found');
+function createStacks([...rawStacks]: string[]) {
+  const ids = rawStacks.pop() ?? raise('No stack IDs found');
   const stacks = Object.fromEntries(
-    extractInts(ids).map(id => {
+    matchInts(ids).map(id => {
       const i = ids.indexOf(String(id));
-      return [id, input.flatMap(crates => parseCrate(crates[i]) ?? [])];
+      return [
+        id,
+        rawStacks.flatMap(crates => (/\s/.test(crates[i]) ? [] : crates[i])),
+      ];
     })
   );
 
   return {
     move([count, from, to]: number[], fn = (crates: string[]) => crates) {
-      const crates = stacks[from].splice(0, count);
-      stacks[to].unshift(...fn(crates));
+      stacks[to].unshift(...fn(stacks[from].splice(0, count)));
       return this;
     },
     toString() {
@@ -32,21 +29,16 @@ function createStacks([...input]: string[]) {
   };
 }
 
-const parsedInstructions = instructions.map(extractInts);
+const parsedInstructs = instructs.map(matchInts);
 
-const serializedStacks = parsedInstructions
+const serializedStacks = parsedInstructs
   .reduce(
-    (stacks, instruction) =>
-      stacks.move(instruction, crates => crates.toReversed()),
+    (stacks, instruct) => stacks.move(instruct, crates => crates.toReversed()),
     createStacks(stacks)
   )
   .toString();
-
-const serializedStacks2 = parsedInstructions
-  .reduce(
-    (stacks, instruction) => stacks.move(instruction),
-    createStacks(stacks)
-  )
+const serializedStacks2 = parsedInstructs
+  .reduce((stacks, instruct) => stacks.move(instruct), createStacks(stacks))
   .toString();
 
 if (import.meta.vitest) {

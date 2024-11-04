@@ -20,16 +20,13 @@ function reactPolymer(polymer: string) {
 }
 
 const reactedPolymer = reactPolymer(input);
-
-let unit = 'a';
-let minPolymerLength = input.length;
-while (unit <= 'z') {
-  const unitRe = new RegExp(unit, 'gi');
-  const polymer = input.replace(unitRe, '');
-
-  unit = String.fromCodePoint(unit.codePointAt(0)! + 1);
-  minPolymerLength = Math.min(minPolymerLength, reactPolymer(polymer).length);
-}
+const minPolymerLength = 'abcdefghijklmnopqrstuvwxyz'
+  .split('')
+  .map(unit => {
+    const unitRe = new RegExp(unit, 'gi');
+    return reactPolymer(input.replace(unitRe, '')).length;
+  })
+  .reduce((acc, len) => Math.min(acc, len), input.length);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

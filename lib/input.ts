@@ -1,6 +1,6 @@
 import {env} from '../env.js';
 import {transpose} from './array.js';
-import {extractInts} from './parse.js';
+import {matchInts} from './parse.js';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);
@@ -23,7 +23,7 @@ export async function getInputGrid(
 
 export async function getInputInts(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
-  return extractInts(input);
+  return matchInts(input);
 }
 
 export async function getInputLines(...params: Parameters<typeof getInput>) {
@@ -40,7 +40,7 @@ export async function getInputParagraphs(
 
 class ResponseError extends Error {
   constructor(public response: Response) {
-    super();
+    super(`Failed to fetch input: ${response.status} ${response.statusText}`);
     this.name = ResponseError.name;
   }
 }

@@ -31,30 +31,28 @@ function setLights(actions: Actions, ...instructions: Instruction[]) {
   return lights;
 }
 
-const instructions = lines.map(parseInstruction);
-
-const lights = setLights(
-  {
-    'turn on': () => 1,
-    'turn off': () => 0,
+const TurnOn = 'turn on';
+const TurnOff = 'turn off';
+const LightModes = {
+  binarySwitch: {
+    [TurnOn]: () => 1,
+    [TurnOff]: () => 0,
     toggle: v => Number(!v),
   },
-  ...instructions
-);
-const brightness = setLights(
-  {
-    'turn on': v => v + 1,
-    'turn off': v => Math.max(0, v - 1),
+  brightness: {
+    [TurnOn]: v => v + 1,
+    [TurnOff]: v => Math.max(0, v - 1),
     toggle: v => v + 2,
   },
-  ...instructions
-);
+} satisfies Record<string, Actions>;
 
-const litLightsCount = sum(lights.flat());
-const totalBrightness = sum(brightness.flat());
+const instructions = lines.map(parseInstruction);
+const [totalLights, totalBrightness] = Object.values(LightModes).map(actions =>
+  sum(setLights(actions, ...instructions).flat())
+);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(litLightsCount).toBe(400410));
+  test('part 1', () => expect(totalLights).toBe(400410));
   test('part 2', () => expect(totalBrightness).toBe(15343601));
 }

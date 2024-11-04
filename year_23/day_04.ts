@@ -1,5 +1,5 @@
 import {getInputLines} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
+import {matchInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
@@ -18,7 +18,7 @@ function countTotalCards(
 
 const cards = new Map(
   lines.map(l => {
-    const [[id, ...a], b] = l.split('|').map(extractInts);
+    const [[id, ...a], b] = l.split('|').map(matchInts);
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );
