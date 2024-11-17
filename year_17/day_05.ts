@@ -1,9 +1,9 @@
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 
-const ints = await getInputInts({year: 2017, day: 5});
+const ns = await getInputNumbers({year: 2017, day: 5});
 
 const steps = (() => {
-  const offsets = ints.slice();
+  const offsets = ns.slice();
   let index = 0;
   let steps = 0;
 
@@ -15,7 +15,7 @@ const steps = (() => {
 })();
 
 const steps2 = (() => {
-  const offsets = ints.slice();
+  const offsets = ns.slice();
   let index = 0;
   let steps = 0;
 

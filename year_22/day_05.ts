@@ -1,13 +1,13 @@
 import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {matchInts} from 'lib/parse.js';
+import {parseNumbers} from 'lib/parse.js';
 
 const [stacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
 
 function createStacks([...rawStacks]: string[]) {
   const ids = rawStacks.pop() ?? raise('No stack IDs found');
   const stacks = Object.fromEntries(
-    matchInts(ids).map(id => {
+    parseNumbers(ids).map(id => {
       const i = ids.indexOf(String(id));
       return [
         id,
@@ -29,7 +29,7 @@ function createStacks([...rawStacks]: string[]) {
   };
 }
 
-const parsedInstructs = instructs.map(matchInts);
+const parsedInstructs = instructs.map(instruct => parseNumbers(instruct));
 
 const serializedStacks = parsedInstructs
   .reduce(

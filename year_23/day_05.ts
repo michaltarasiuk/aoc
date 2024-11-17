@@ -1,5 +1,5 @@
 import {getInputParagraphs} from 'lib/input.js';
-import {matchInts} from 'lib/parse.js';
+import {parseNumbers} from 'lib/parse.js';
 import {isDefined} from 'lib/predicate.js';
 
 const [[initialSeeds], ...categoryMaps] = await getInputParagraphs({
@@ -15,7 +15,6 @@ function mapThroughCategories(
   if (!isDefined(categoryLayer)) {
     return value;
   }
-
   for (const [destinationStart, sourceStart, rangeLength] of categoryLayer) {
     if (value >= sourceStart && value < sourceStart + rangeLength) {
       return mapThroughCategories(
@@ -27,9 +26,11 @@ function mapThroughCategories(
   return mapThroughCategories(categoryLayers, value);
 }
 
-const categoryLayers = categoryMaps.map(([, ...map]) => map.map(matchInts));
+const categoryLayers = categoryMaps
+  .map(([, ...layer]) => layer)
+  .map(layer => layer.map(l => parseNumbers(l)));
 const lowestConvertedLocation = Math.min(
-  ...matchInts(initialSeeds).map(seed =>
+  ...parseNumbers(initialSeeds).map(seed =>
     mapThroughCategories(categoryLayers, seed)
   )
 );

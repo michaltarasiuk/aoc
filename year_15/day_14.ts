@@ -1,5 +1,5 @@
 import {getInputLines} from 'lib/input.js';
-import {matchInts} from 'lib/parse.js';
+import {parseNumbers} from 'lib/parse.js';
 
 const reindeerDescriptions = await getInputLines({year: 2015, day: 14});
 
@@ -19,7 +19,7 @@ function calcFlyingTime(
 const RaceDuration = 2_503;
 const furthestDistance = Math.max(
   ...reindeerDescriptions
-    .map(matchInts)
+    .map(description => parseNumbers(description))
     .map(
       ([speed, flyingDuration, restingDuration]) =>
         speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)

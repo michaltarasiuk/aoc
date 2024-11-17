@@ -1,6 +1,6 @@
 import {env} from '../env.js';
 import {transpose} from './array.js';
-import {matchInts} from './parse.js';
+import {parseNumbers} from './parse.js';
 
 export async function getInput(...params: Parameters<typeof fetchInput>) {
   const input = await fetchInput(...params);
@@ -21,9 +21,9 @@ export async function getInputGrid(
   return lines.map(([...chars]) => chars);
 }
 
-export async function getInputInts(...params: Parameters<typeof getInput>) {
+export async function getInputNumbers(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
-  return matchInts(input);
+  return parseNumbers(input);
 }
 
 export async function getInputLines(...params: Parameters<typeof getInput>) {

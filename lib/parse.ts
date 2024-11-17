@@ -1,7 +1,4 @@
-export function matchInts(input: string) {
-  return input.match(/-?\d+/g)?.map(Number) ?? [];
-}
-
-export function matchUints(input: string) {
-  return input.match(/\d+/g)?.map(Number) ?? [];
+export function parseNumbers(s: string, {negative} = {negative: true}) {
+  const re = new RegExp(String.raw`${negative ? '-?' : ''}\d+`, 'g');
+  return s.match(re)?.map(Number) ?? [];
 }

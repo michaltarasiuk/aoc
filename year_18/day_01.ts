@@ -1,7 +1,7 @@
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
-const ns = await getInputInts({year: 2018, day: 1});
+const ns = await getInputNumbers({year: 2018, day: 1});
 
 function findFirstFrequencyReachesTwice(...ns: number[]) {
   const frequencies = new Set<number>();

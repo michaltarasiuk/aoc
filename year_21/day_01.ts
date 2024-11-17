@@ -1,13 +1,13 @@
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
-const ns = await getInputInts({year: 2021, day: 1});
+const ns = await getInputNumbers({year: 2021, day: 1});
 
 const increasingMeasurementsCount = sum(
-  ...ns.map((num, i) => Number(num > ns[i - 1]))
+  ...ns.map((n, i) => Number(n > ns[i - 1]))
 );
 const increasingMeasurementsSumCount = sum(
-  ...ns.map((num, i) => Number(num > ns[i - 3]))
+  ...ns.map((n, i) => Number(n > ns[i - 3]))
 );
 
 if (import.meta.vitest) {

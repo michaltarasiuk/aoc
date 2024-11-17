@@ -1,6 +1,6 @@
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 
-const [targetRow, targetCol] = await getInputInts({year: 2015, day: 25});
+const [targetRow, targetCol] = await getInputNumbers({year: 2015, day: 25});
 
 function calcSteps(row: number, col: number) {
   const diagonalSum = row + col;

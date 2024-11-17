@@ -1,6 +1,6 @@
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 
-const memoryBlocks = await getInputInts({year: 2017, day: 6});
+const ns = await getInputNumbers({year: 2017, day: 6});
 
 function redistributeMemoryBlocks([...blocks]: number[]) {
   const cycles: number[] = [];
@@ -32,7 +32,7 @@ function redistributeMemoryBlocks([...blocks]: number[]) {
   };
 }
 
-const {cycles} = redistributeMemoryBlocks(memoryBlocks).run().run();
+const {cycles} = redistributeMemoryBlocks(ns).run().run();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;

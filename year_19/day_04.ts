@@ -1,9 +1,9 @@
 import {getInput} from 'lib/input.js';
-import {matchUints} from 'lib/parse.js';
+import {parseNumbers} from 'lib/parse.js';
 
 const input = await getInput({year: 2019, day: 4});
 
-const [start, end] = matchUints(input);
+const [start, end] = parseNumbers(input, {negative: false});
 const twoAdjacentDigitsRe = /(\d)\1/;
 
 let passwordsCount = 0;

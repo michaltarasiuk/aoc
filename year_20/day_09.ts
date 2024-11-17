@@ -1,8 +1,8 @@
 import {raise} from 'lib/assert.js';
-import {getInputInts} from 'lib/input.js';
+import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
-const ints = await getInputInts({year: 2020, day: 9});
+const ns = await getInputNumbers({year: 2020, day: 9});
 
 function isValid(preamble: number[], sum: number) {
   return preamble.some(n => preamble.some(n2 => n !== n2 && n + n2 === sum));
@@ -29,8 +29,8 @@ function findContiguousSet(ns: number[], value: number) {
 }
 
 const PreambleSize = 25;
-const invalid = findInvalid(ints, PreambleSize) ?? raise('Invalid not found');
-const set = findContiguousSet(ints, invalid) ?? raise('Set not found');
+const invalid = findInvalid(ns, PreambleSize) ?? raise('Invalid not found');
+const set = findContiguousSet(ns, invalid) ?? raise('Set not found');
 const encryptionWeakness = Math.min(...set) + Math.max(...set);
 
 if (import.meta.vitest) {
