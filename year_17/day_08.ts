@@ -5,7 +5,7 @@ const lines = await getInputLines({year: 2017, day: 8});
 
 type Registers = Record<string, number>;
 
-function parseInstruct(instruct: string) {
+function parseInstruction(instruct: string) {
   const instructRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
   const [, reg, op, val, cond] =
     instructRe.exec(instruct) ?? raise('Invalid instruction');
@@ -20,7 +20,7 @@ function evalCond(registers: Registers, cond: string) {
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
 
-const {registers, maxHeldRegister} = lines.map(parseInstruct).reduce(
+const {registers, maxHeldRegister} = lines.map(parseInstruction).reduce(
   (acc, {reg, op, val, cond}) => {
     if (evalCond(acc.registers, cond)) {
       acc.registers[reg] ??= 0;
