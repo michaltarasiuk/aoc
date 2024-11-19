@@ -57,20 +57,19 @@ for (const l of lines) {
   }
 }
 
+const outputs = new Map<number, number>();
 let responsibleBotId: number | undefined;
 let botsReadyForTransfer = getBotsWithTwoMicrochips(bots);
 while (botsReadyForTransfer.length > 0) {
   for (const [botId, [low, high]] of botsReadyForTransfer) {
     const {lowType, lowId, highType, highId} = instructions.get(botId)!;
-    if (low === 17 && high === 61) {
-      responsibleBotId = botId;
-    }
-    if (lowType === 'bot') {
-      addMicrochipToBot(bots, {botId: lowId, value: low});
-    }
-    if (highType === 'bot') {
-      addMicrochipToBot(bots, {botId: highId, value: high});
-    }
+    low === 17 && high === 61 && (responsibleBotId = botId);
+    lowType === 'bot'
+      ? addMicrochipToBot(bots, {botId: lowId, value: low})
+      : outputs.set(lowId, low);
+    highType === 'bot'
+      ? addMicrochipToBot(bots, {botId: highId, value: high})
+      : outputs.set(highId, high);
     bots.delete(botId);
   }
   botsReadyForTransfer = getBotsWithTwoMicrochips(bots);
@@ -79,4 +78,6 @@ while (botsReadyForTransfer.length > 0) {
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
   test('part 1', () => expect(responsibleBotId).toBe(141));
+  test('part 2', () =>
+    expect(outputs.get(0)! * outputs.get(1)! * outputs.get(2)!).toBe(1209));
 }
