@@ -1,83 +1,89 @@
-import {assert} from 'lib/assert.js';
+import {assert, raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
+import {isDefined} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2016, day: 10});
 
-function getBotsWithTwoMicrochips(bots: Map<number, number[]>) {
-  return bots
-    .entries()
-    .filter(([_, values]) => values.length === 2)
-    .toArray();
+function createBots() {
+  const bots = new Map<number, number[]>();
+  return {
+    getReadyBots() {
+      return bots
+        .entries()
+        .filter(([, chips]) => chips.length === 2)
+        .toArray();
+    },
+    addChip(botId: number, value: number) {
+      bots.set(
+        botId,
+        [...(bots.get(botId) ?? []), value].toSorted((a, b) => a - b)
+      );
+    },
+    deleteById(botId: number) {
+      bots.delete(botId);
+    },
+  };
 }
 
-function addMicrochipToBot(
-  bots: Map<number, number[]>,
-  {botId, value}: {botId: number; value: number}
-) {
-  bots.set(
-    botId,
-    [...(bots.get(botId) ?? []), value].toSorted((a, b) => a - b)
-  );
+function parseAssigmnet(s: string) {
+  const assignmentRe = /^value (\d+) goes to bot (\d+)$/;
+  const match = s.match(assignmentRe);
+  return isDefined(match)
+    ? {
+        type: 'assigment' as const,
+        value: Number(match[1]),
+        botId: Number(match[2]),
+      }
+    : null;
 }
-
-const bots = new Map<number, number[]>();
-const instructions = new Map<
-  number,
-  {
-    botId: number;
-    lowType: 'bot' | 'output';
-    lowId: number;
-    highType: 'bot' | 'output';
-    highId: number;
+function parseTransfer(s: string) {
+  const transferRe =
+    /^bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)$/;
+  const match = s.match(transferRe);
+  if (!isDefined(match)) {
+    return null;
   }
->();
+  const [, botId, lowType, lowId, highType, highId] = match;
+  assert(lowType === 'bot' || lowType === 'output');
+  assert(highType === 'bot' || highType === 'output');
+  return {
+    type: 'transfer' as const,
+    botId: Number(botId),
+    lowType,
+    lowId: Number(lowId),
+    highType,
+    highId: Number(highId),
+  };
+}
 
-const assignRe = /^value (\d+) goes to bot (\d+)$/;
-const transferRe =
-  /^bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)$/;
-
+const bots = createBots();
+const transfers = new Map<number, ReturnType<typeof parseTransfer>>();
 for (const l of lines) {
-  if (assignRe.test(l)) {
-    const [, value, botId] = l.match(assignRe)!;
-    addMicrochipToBot(bots, {
-      botId: Number(botId),
-      value: Number(value),
-    });
-  } else if (transferRe.test(l)) {
-    const [, botId, lowType, lowId, highType, highId] = l.match(transferRe)!;
-    assert(lowType === 'bot' || lowType === 'output');
-    assert(highType === 'bot' || highType === 'output');
-    instructions.set(Number(botId), {
-      botId: Number(botId),
-      lowType,
-      lowId: Number(lowId),
-      highType,
-      highId: Number(highId),
-    });
-  }
+  const parsed = parseAssigmnet(l) ?? parseTransfer(l) ?? raise('Invalid line');
+  parsed.type === 'assigment'
+    ? bots.addChip(parsed.botId, parsed.value)
+    : transfers.set(parsed.botId, parsed);
 }
 
-const outputs = new Map<number, number>();
+const output = new Map<number, number>();
 let responsibleBotId: number | undefined;
-let botsReadyForTransfer = getBotsWithTwoMicrochips(bots);
+let botsReadyForTransfer = bots.getReadyBots();
 while (botsReadyForTransfer.length > 0) {
   for (const [botId, [low, high]] of botsReadyForTransfer) {
-    const {lowType, lowId, highType, highId} = instructions.get(botId)!;
-    low === 17 && high === 61 && (responsibleBotId = botId);
-    lowType === 'bot'
-      ? addMicrochipToBot(bots, {botId: lowId, value: low})
-      : outputs.set(lowId, low);
-    highType === 'bot'
-      ? addMicrochipToBot(bots, {botId: highId, value: high})
-      : outputs.set(highId, high);
-    bots.delete(botId);
+    const {lowType, lowId, highType, highId} = transfers.get(botId)!;
+    if (low === 17 && high === 61) {
+      responsibleBotId = botId;
+    }
+    lowType === 'bot' ? bots.addChip(lowId, low) : output.set(lowId, low);
+    highType === 'bot' ? bots.addChip(highId, high) : output.set(highId, high);
+    bots.deleteById(botId);
   }
-  botsReadyForTransfer = getBotsWithTwoMicrochips(bots);
+  botsReadyForTransfer = bots.getReadyBots();
 }
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
   test('part 1', () => expect(responsibleBotId).toBe(141));
   test('part 2', () =>
-    expect(outputs.get(0)! * outputs.get(1)! * outputs.get(2)!).toBe(1209));
+    expect(output.get(0)! * output.get(1)! * output.get(2)!).toBe(1209));
 }
