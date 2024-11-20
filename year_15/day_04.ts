@@ -7,7 +7,6 @@ const s = await getInput({year: 2015, day: 4});
 function md5(data: crypto.BinaryLike) {
   return crypto.createHash('md5').update(data).digest('hex');
 }
-
 function waitUntilStartsWith(
   {s, searchString}: {s: string; searchString: string},
   init = 0

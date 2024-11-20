@@ -8,7 +8,6 @@ const lines = await getInputLines({year: 2016, day: 3});
 function isTriangleValid([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
-
 function countValidTriangles(triangles: number[][]) {
   return triangles.filter(isTriangleValid).length;
 }

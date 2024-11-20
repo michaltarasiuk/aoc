@@ -9,11 +9,9 @@ function hasIncreasingStraightOf3Chars(s: string) {
     return b - a === 1 && c - b === 1;
   });
 }
-
 function isValidPassword(s: string) {
   const hasValidChars = /^[^iol]*$/.test(s) && /^[a-z]*$/.test(s);
   const has2NonOverlappingPairs = /.*(\w)\1.*(\w)\2/.test(s);
-
   return (
     hasValidChars && has2NonOverlappingPairs && hasIncreasingStraightOf3Chars(s)
   );
@@ -22,7 +20,6 @@ function isValidPassword(s: string) {
 function findNewPassword(password: string) {
   let int = parseInt(password, 36);
   let newPassword = int.toString(36);
-
   do {
     int++;
     newPassword = int.toString(36);

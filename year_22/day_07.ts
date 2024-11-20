@@ -12,7 +12,6 @@ function parseCmd(cmd: string) {
   const cmdRe = /^\$ (\w+)(?:\s(.+))?$/;
   return cmdRe.exec(cmd)?.slice(1);
 }
-
 function parseFile(file: string) {
   const fileRe = /^(\d+)\s.+$/;
   const size = fileRe.exec(file)?.[1];
@@ -31,7 +30,6 @@ function cd(arg: string, cwd: string[]) {
       return cwd.concat(arg);
   }
 }
-
 function updateFilesystem(
   {...filesystem}: Filesystem,
   cwd: string[],
@@ -46,7 +44,6 @@ function updateFilesystem(
   }
   return filesystem;
 }
-
 function determineFilesystem(...cmds: Cmd[]) {
   let filesystem: Filesystem = {};
   let cwd: string[] = [];
@@ -69,11 +66,7 @@ function determineFilesystem(...cmds: Cmd[]) {
 const cmds: Cmd[] = [];
 for (const l of lines) {
   const cmd = parseCmd(l);
-  if (isDefined(cmd)) {
-    cmds.push([cmd]);
-  } else {
-    cmds.at(-1)?.push(l);
-  }
+  isDefined(cmd) ? cmds.push([cmd]) : cmds.at(-1)?.push(l);
 }
 
 const filesystem = determineFilesystem(...cmds);

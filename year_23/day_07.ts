@@ -5,8 +5,7 @@ import {sum} from 'lib/math.js';
 const lines = await getInputLines({year: 2023, day: 7});
 
 const Cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-
-const HandType = {
+const HandTypes = {
   fiveKind: 6,
   fourKind: 5,
   fullHouse: 4,
@@ -18,21 +17,19 @@ const HandType = {
 
 function classifyHand(hand: string) {
   const frequency = frequencies(hand);
-
   switch (Math.max(...frequency.values())) {
     case 5:
-      return HandType.fiveKind;
+      return HandTypes.fiveKind;
     case 4:
-      return HandType.fourKind;
+      return HandTypes.fourKind;
     case 3:
-      return frequency.size === 2 ? HandType.fullHouse : HandType.threeKind;
+      return frequency.size === 2 ? HandTypes.fullHouse : HandTypes.threeKind;
     case 2:
-      return frequency.size === 3 ? HandType.twoPair : HandType.pair;
+      return frequency.size === 3 ? HandTypes.twoPair : HandTypes.pair;
     default:
-      return HandType.highCard;
+      return HandTypes.highCard;
   }
 }
-
 function compareHands(a: string, b: string) {
   for (const [i, card] of Array.from(a).entries()) {
     if (card !== b[i]) {
@@ -43,22 +40,14 @@ function compareHands(a: string, b: string) {
 }
 
 const hands = lines
-  .map(l => {
-    const [hand, bid] = l.split(/\s/);
-    return {hand, bid: Number(bid), type: classifyHand(hand)};
-  })
-  .toSorted((a, b) => {
-    if (a.type === b.type) {
-      return compareHands(a.hand, b.hand);
-    }
-    return a.type - b.type;
-  });
+  .map(l => l.split(/\s/))
+  .map(([hand, bit]) => ({hand, bid: Number(bit), type: classifyHand(hand)}))
+  .toSorted((a, b) => a.type - b.type || compareHands(a.hand, b.hand));
 
 const totalWinnings = sum(
-  ...hands.map(({bid}, i) => {
-    const rank = i + 1;
-    return bid * rank;
-  })
+  ...hands
+    .map(({bid}, i) => ({bid, rank: i + 1}))
+    .map(({bid, rank}) => bid * rank)
 );
 
 if (import.meta.vitest) {

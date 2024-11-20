@@ -18,13 +18,12 @@ function parseShift(guard: string) {
 
   return isDefined(id) ? {id: Number(id)} : null;
 }
-
 function createShift() {
   const MinutesInHour = 60;
   return Array(MinutesInHour).fill(0);
 }
 
-const Event = {falls: 'falls asleep', wakes: 'wakes up'};
+const Events = {falls: 'falls asleep', wakes: 'wakes up'};
 const records = lines
   .map(parseRecord)
   .toSorted((a, b) => Number(a.date) - Number(b.date));
@@ -37,12 +36,11 @@ let sleepStart: Date | null = null;
 
 for (const {event, date} of records) {
   const shift = parseShift(event);
-
   if (isDefined(shift)) {
     currentGuard = guards[shift.id] ??= createShift();
-  } else if (event === Event.falls) {
+  } else if (event === Events.falls) {
     sleepStart = date;
-  } else if (event === Event.wakes) {
+  } else if (event === Events.wakes) {
     for (let i = sleepStart!.getMinutes(); i < date.getMinutes(); i++) {
       currentGuard![i]++;
     }

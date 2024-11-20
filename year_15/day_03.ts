@@ -19,29 +19,22 @@ function createPosition() {
   };
 }
 
-function countVisitedHouses() {
+const visitedHouses = (() => {
   const santa = createPosition();
-  const visitedHouses = uniq(
-    Array.from(input, direction => santa.move(direction).toString())
-  );
-  return visitedHouses.length;
-}
+  return uniq(Array.from(input, direction => santa.move(direction).toString()));
+})();
 
-function countVisitedHousesWithRoboSanta() {
+const visitedHousesWithRoboSanta = (() => {
   const santas = [createPosition(), createPosition()];
-  const visitedHouses = uniq(
+  return uniq(
     Array.from(input, (direction, index) =>
       santas[index % 2].move(direction).toString()
     )
   );
-  return visitedHouses.length;
-}
-
-const visitedHousesCount = countVisitedHouses();
-const visitedHousesCountWithRoboSanta = countVisitedHousesWithRoboSanta();
+})();
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(visitedHousesCount).toBe(2565));
-  test('part 2', () => expect(visitedHousesCountWithRoboSanta).toBe(2639));
+  test('part 1', () => expect(visitedHouses.length).toBe(2565));
+  test('part 2', () => expect(visitedHousesWithRoboSanta.length).toBe(2639));
 }

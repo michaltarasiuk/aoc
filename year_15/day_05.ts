@@ -14,7 +14,6 @@ const niceStringsCount = sum(
     );
   })
 );
-
 const niceStringsCount2 = sum(
   ...lines.map(s => {
     const hasPairOfTwoLetters = /(\w{2}).*\1/.test(s);

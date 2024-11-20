@@ -4,12 +4,11 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2022, day: 2});
 
 const ShapesCount = 3;
-const Points = {WIN: 6, DRAW: 3, LOSE: 0};
+const Points = {win: 6, draw: 3, lose: 0};
 
 function getHandShape(char: string) {
   return ('ABCXYZ'.indexOf(char) % ShapesCount) + 1;
 }
-
 function parseRound(round: string) {
   const roundRe = /^([ABC]) ([XYZ])$/;
   const [, them, me] = roundRe.exec(round) ?? raise('Invalid round');
@@ -21,11 +20,11 @@ function roundOutcome(them: number, me: number) {
   const diff = me - them;
 
   if (diff === 0) {
-    return Points.DRAW;
+    return Points.draw;
   } else if (diff === 1 || diff === -2) {
-    return Points.WIN;
+    return Points.win;
   } else if (diff === -1 || diff === 2) {
-    return Points.LOSE;
+    return Points.lose;
   }
   throw new Error('Invalid round outcome');
 }
