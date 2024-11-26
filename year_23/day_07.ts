@@ -44,11 +44,10 @@ const hands = lines
   .map(([hand, bit]) => ({hand, bid: Number(bit), type: classifyHand(hand)}))
   .toSorted((a, b) => a.type - b.type || compareHands(a.hand, b.hand));
 
-const totalWinnings = sum(
-  ...hands
-    .map(({bid}, i) => ({bid, rank: i + 1}))
-    .map(({bid, rank}) => bid * rank)
-);
+const totalWinnings = hands
+  .map(({bid}, i) => ({bid, rank: i + 1}))
+  .map(({bid, rank}) => bid * rank)
+  .reduce((a, b) => a + b);
 
 if (import.meta.vitest) {
   const {test, expect} = import.meta.vitest;
