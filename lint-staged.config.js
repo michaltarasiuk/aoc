@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 /** @type {import("lint-staged").Config} */
 const lintStagedConfig = {
   '*': [
@@ -7,7 +5,10 @@ const lintStagedConfig = {
     'npm run eslint',
     function assert(filenames) {
       return filenames
-        .filter(filename => path.extname(filename) === '.ts')
+        .filter(filename => {
+          const dayRe = /year_\d+\/day_\d+\.ts/;
+          return dayRe.test(filename);
+        })
         .map(filename => `tsx ${filename}`);
     },
   ],
