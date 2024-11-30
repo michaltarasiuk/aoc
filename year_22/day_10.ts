@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {z} from 'zod';
@@ -32,7 +34,4 @@ const sumOfSignals = sum(
   ...Cycles.map(cycle => cycle * calcSignal(instructions.slice(0, cycle - 1)))
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(sumOfSignals).toBe(14540));
-}
+assert.strictEqual(sumOfSignals, 14540, 'Part 1 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {stringToCodePoints} from 'lib/string.js';
 
@@ -30,8 +32,5 @@ function findNewPassword(password: string) {
 const newPassword = findNewPassword(input);
 const newPassword2 = findNewPassword(newPassword);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(newPassword).toBe('cqjxxyzz'));
-  test('part 2', () => expect(newPassword2).toBe('cqkaabcc'));
-}
+assert.strictEqual(newPassword, 'cqjxxyzz', 'Part 1 failed');
+assert.strictEqual(newPassword2, 'cqkaabcc', 'Part 2 failed');

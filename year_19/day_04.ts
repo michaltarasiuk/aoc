@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 
@@ -15,7 +17,4 @@ for (let i = start; i <= end; i++) {
   }
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(passwordsCount).toBe(1686));
-}
+assert.strictEqual(passwordsCount, 1686, 'Part 1 failed');

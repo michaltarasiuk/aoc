@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -22,8 +24,5 @@ function findFirstFrequencyReachesTwice(...ns: number[]) {
 const frequency = sum(...ns);
 const firstFrequencyReachesTwice = findFirstFrequencyReachesTwice(...ns);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(frequency).toBe(522));
-  test('part 2', () => expect(firstFrequencyReachesTwice).toBe(73364));
-}
+assert.strictEqual(frequency, 522, 'Part 1 failed');
+assert.strictEqual(firstFrequencyReachesTwice, 73364, 'Part 2 failed');

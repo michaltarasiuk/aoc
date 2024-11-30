@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -52,7 +54,4 @@ outer: while (true) {
   i++;
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(lastSound).toBe(7071));
-}
+assert.strictEqual(lastSound, 7071, 'Part 1 failed');

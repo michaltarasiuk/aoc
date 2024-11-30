@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {parseNumbers} from 'lib/parse.js';
@@ -18,7 +20,4 @@ const extrapolatedValuesSum = sum(
   ...lines.map(l => parseNumbers(l)).map(ns => sum(...extrapolate(...ns)))
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(extrapolatedValuesSum).toBe(1939607039));
-}
+assert.strictEqual(extrapolatedValuesSum, 1939607039, 'Part 1 failed');

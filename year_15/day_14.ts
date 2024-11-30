@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 
@@ -26,7 +28,4 @@ const furthestDistance = Math.max(
     )
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(furthestDistance).toBe(2640));
-}
+assert.strictEqual(furthestDistance, 2640, 'Part 1 failed');

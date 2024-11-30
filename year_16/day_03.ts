@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {transpose} from 'lib/array.js';
 import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
@@ -20,8 +22,5 @@ const validTrianglesByColumnsCount = countValidTriangles(
   chunkEvery(transpose(trianglesByRows).flat(), TriangleSides)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(validTrianglesByRowsCount).toBe(993));
-  test('part 2', () => expect(validTrianglesByColumnsCount).toBe(1849));
-}
+assert.strictEqual(validTrianglesByRowsCount, 993, 'Part 1 failed');
+assert.strictEqual(validTrianglesByColumnsCount, 1849, 'Part 2 failed');

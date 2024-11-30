@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputParagraphs} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {isKeyOf} from 'lib/predicate.js';
@@ -41,8 +43,5 @@ const validPassportsCount2 = sum(
     .map(Number)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(validPassportsCount).toBe(208));
-  test('part 2', () => expect(validPassportsCount2).toBe(167));
-}
+assert.strictEqual(validPassportsCount, 208, 'Part 1 failed');
+assert.strictEqual(validPassportsCount2, 167, 'Part 2 failed');

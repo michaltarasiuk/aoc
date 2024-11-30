@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {isDefined} from 'lib/predicate.js';
 
@@ -49,8 +51,5 @@ function calcSignal(dest: string, cache = new Map<string, number>()): number {
 const wireASignal = calcSignal('a');
 const finalWireASignal = calcSignal('a', new Map([['b', wireASignal]]));
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(wireASignal).toBe(46065));
-  test('part 2', () => expect(finalWireASignal).toBe(14134));
-}
+assert.strictEqual(wireASignal, 46065, 'Part 1 failed');
+assert.strictEqual(finalWireASignal, 14134, 'Part 2 failed');

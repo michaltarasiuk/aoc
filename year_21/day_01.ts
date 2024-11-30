@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -10,8 +12,5 @@ const increasingMeasurementsSumCount = sum(
   ...ns.map((n, i) => Number(n > ns[i - 3]))
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(increasingMeasurementsCount).toBe(1559));
-  test('part 2', () => expect(increasingMeasurementsSumCount).toBe(1600));
-}
+assert.strictEqual(increasingMeasurementsCount, 1559, 'Part 1 failed');
+assert.strictEqual(increasingMeasurementsSumCount, 1600, 'Part 2 failed');

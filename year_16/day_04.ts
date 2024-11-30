@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
@@ -52,8 +54,5 @@ const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
 const NorthPoleObjectStorage = 'northpoleobjectstorage';
 const northPoleSectorID = findSectorID(NorthPoleObjectStorage, ...rooms);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(realRoomSectorIDsSum).toBe(409147));
-  test('part 2', () => expect(northPoleSectorID).toBe(991));
-}
+assert.strictEqual(realRoomSectorIDsSum, 409147, 'Part 1 failed');
+assert.strictEqual(northPoleSectorID, 991, 'Part 2 failed');

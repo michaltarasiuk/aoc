@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputNumbers} from 'lib/input.js';
 
 const ns = await getInputNumbers({year: 2017, day: 6});
@@ -34,8 +36,5 @@ function redistributeMemoryBlocks([...blocks]: number[]) {
 
 const {cycles} = redistributeMemoryBlocks(ns).run().run();
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(cycles[0]).toBe(11137));
-  test('part 2', () => expect(cycles[1]).toBe(1037));
-}
+assert.strictEqual(cycles[0], 11137, 'Part 1 failed');
+assert.strictEqual(cycles[1], 1037, 'Part 2 failed');

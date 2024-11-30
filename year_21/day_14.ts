@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputParagraphs} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 import {isDefined} from 'lib/predicate.js';
@@ -52,7 +54,4 @@ for (let i = 0; i < StepsCount; i++) {
 const frequency = Array.from(frequencies(polymer), ([, count]) => count);
 const frequencyRange = Math.max(...frequency) - Math.min(...frequency);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(frequencyRange).toBe(2447));
-}
+assert.strictEqual(frequencyRange, 2447, 'Part 1 failed');

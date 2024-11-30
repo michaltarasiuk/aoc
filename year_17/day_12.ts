@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -44,8 +46,5 @@ const programs = new Map(
 const group0 = findGroup(programs, '0');
 const groupsCount = countGroups(programs);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(group0.size).toBe(145));
-  test('part 2', () => expect(groupsCount).toBe(207));
-}
+assert.strictEqual(group0.size, 145, 'Part 1 failed');
+assert.strictEqual(groupsCount, 207, 'Part 2 failed');

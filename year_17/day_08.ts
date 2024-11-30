@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -34,8 +36,5 @@ const {registers, maxHeldRegister} = lines.map(parseInstruction).reduce(
 );
 const maxFinalRegister = Math.max(...Object.values(registers));
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(maxFinalRegister).toBe(5966));
-  test('part 2', () => expect(maxHeldRegister).toBe(6347));
-}
+assert.strictEqual(maxFinalRegister, 5966, 'Part 1 failed');
+assert.strictEqual(maxHeldRegister, 6347, 'Part 2 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputParagraphs} from 'lib/input.js';
 import {uniq} from 'lib/iterable.js';
 import {sum} from 'lib/math.js';
@@ -21,8 +23,5 @@ const questionsCount2 = sum(
   })
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(questionsCount).toBe(6310));
-  test('part 2', () => expect(questionsCount2).toBe(3193));
-}
+assert.strictEqual(questionsCount, 6310, 'Part 1 failed');
+assert.strictEqual(questionsCount2, 3193, 'Part 2 failed');

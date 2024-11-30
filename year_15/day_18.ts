@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputGrid} from 'lib/input.js';
 
 const lights = await getInputGrid({year: 2015, day: 18});
@@ -46,7 +48,4 @@ const lightsOnCount = currentLights
   .flat()
   .filter(light => light === LightOn).length;
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(lightsOnCount).toBe(821));
-}
+assert.strictEqual(lightsOnCount, 821, 'Part 1 failed');

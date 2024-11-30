@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputNumbers} from 'lib/input.js';
 
 const [targetRow, targetCol] = await getInputNumbers({year: 2015, day: 25});
@@ -15,7 +17,4 @@ for (let i = 0; i < calcSteps(targetRow, targetCol); i++) {
   code = calcNewCode(code);
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(code).toBe(9132360));
-}
+assert.strictEqual(code, 9132360, 'Part 1 failed');

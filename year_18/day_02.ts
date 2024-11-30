@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 
@@ -15,7 +17,4 @@ for (const l of lines) {
 
 const checksum = twos * threes;
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(checksum).toBe(5880));
-}
+assert.strictEqual(checksum, 5880, 'Part 1 failed');

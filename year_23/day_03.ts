@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {isDefined} from 'lib/predicate.js';
 
@@ -30,7 +32,4 @@ const sumOfPartNumbers = nsLayers.flat().reduce((acc, segments) => {
   return acc;
 }, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(sumOfPartNumbers).toBe(531561));
-}
+assert.strictEqual(sumOfPartNumbers, 531561, 'Part 1 failed');

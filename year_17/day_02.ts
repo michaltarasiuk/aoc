@@ -1,5 +1,6 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2017, day: 2});
 
@@ -15,13 +16,12 @@ function findDivisiblePair(...ns: number[]) {
 
 const rows = lines.map(l => l.split('\t').map(Number));
 
-const spreadsheetChecksum = sum(
-  ...rows.map(row => Math.max(...row) - Math.min(...row))
-);
-const rowsSum = sum(...rows.map(row => findDivisiblePair(...row) ?? 0));
+const spreadsheetChecksum = rows
+  .map(row => Math.max(...row) - Math.min(...row))
+  .reduce((a, b) => a + b);
+const rowsSum = rows
+  .map(row => findDivisiblePair(...row) ?? 0)
+  .reduce((a, b) => a + b);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(spreadsheetChecksum).toBe(44216));
-  test('part 2', () => expect(rowsSum).toBe(320));
-}
+assert.strictEqual(spreadsheetChecksum, 44216, 'Part 1 failed');
+assert.strictEqual(rowsSum, 320, 'Part 2 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -34,7 +36,4 @@ const score = lines.reduce((acc, l) => {
   return acc + roundOutcome(them, me) + me;
 }, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(score).toBe(12855));
-}
+assert.strictEqual(score, 12855, 'Part 1 failed');

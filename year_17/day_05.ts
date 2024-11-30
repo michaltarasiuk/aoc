@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputNumbers} from 'lib/input.js';
 
 const ns = await getInputNumbers({year: 2017, day: 5});
@@ -26,8 +28,5 @@ const steps2 = (() => {
   return steps;
 })();
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(steps).toBe(373160));
-  test('part 2', () => expect(steps2).toBe(26395586));
-}
+assert.strictEqual(steps, 373160, 'Part 1 failed');
+assert.strictEqual(steps2, 26395586, 'Part 2 failed');

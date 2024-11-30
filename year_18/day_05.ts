@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2018, day: 5});
@@ -28,8 +30,5 @@ const minPolymerLength = 'abcdefghijklmnopqrstuvwxyz'
   })
   .reduce((acc, len) => Math.min(acc, len), input.length);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(reactedPolymer.length).toBe(10972));
-  test('part 2', () => expect(minPolymerLength).toBe(5278));
-}
+assert.strictEqual(reactedPolymer.length, 10972, 'Part 1 failed');
+assert.strictEqual(minPolymerLength, 5278, 'Part 2 failed');

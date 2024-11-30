@@ -5,7 +5,6 @@
     "module": "nodenext",
     "moduleDetection": "force",
     "moduleResolution": "nodenext",
-    "types": ["vitest/importMeta"],
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "allowJs": true,

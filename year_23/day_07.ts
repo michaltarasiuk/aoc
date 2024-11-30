@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 
@@ -48,7 +50,4 @@ const totalWinnings = hands
   .map(({bid, rank}) => bid * rank)
   .reduce((a, b) => a + b);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(totalWinnings).toBe(251106089));
-}
+assert.strictEqual(totalWinnings, 251106089, 'Part 1 failed');

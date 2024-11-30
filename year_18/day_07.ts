@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -32,8 +34,8 @@ while (steps.size > 0) {
   order.push(step);
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () =>
-    expect(order.join('')).toBe('JDEKPFABTUHOQSXVYMLZCNIGRW'));
-}
+assert.strictEqual(
+  order.join(''),
+  'JDEKPFABTUHOQSXVYMLZCNIGRW',
+  'Part 1 failed'
+);

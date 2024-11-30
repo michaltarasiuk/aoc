@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 import {z} from 'zod';
@@ -24,6 +26,7 @@ const MonkeySchema = z.object({
 function parseMonkey(monkey: string) {
   return {
     inspects: 0,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used in eval
     inspect(old: number) {
       this.inspects++;
       return Math.floor(eval(this.operation) / 3);
@@ -57,7 +60,4 @@ const [a, b] = monkeys
   .toSorted((a, b) => b.inspects - a.inspects);
 const businessLevel = a.inspects * b.inspects;
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(businessLevel).toBe(55458));
-}
+assert.strictEqual(businessLevel, 55458, 'Part 1 failed');

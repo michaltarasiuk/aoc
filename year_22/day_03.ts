@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
 
@@ -33,8 +35,5 @@ const prioritiesSum2 = chunkEvery(lines, 3).reduce((acc, [a, b, c]) => {
   return acc + calcPriority(char);
 }, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(prioritiesSum).toBe(8153));
-  test('part 2', () => expect(prioritiesSum2).toBe(2342));
-}
+assert.strictEqual(prioritiesSum, 8153, 'Part 1 failed');
+assert.strictEqual(prioritiesSum2, 2342, 'Part 2 failed');

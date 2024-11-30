@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputParagraphs} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 import {isDefined} from 'lib/predicate.js';
@@ -35,7 +37,4 @@ const lowestConvertedLocation = Math.min(
   )
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(lowestConvertedLocation).toBe(323142486));
-}
+assert.strictEqual(lowestConvertedLocation, 323142486, 'Part 1 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -59,8 +61,5 @@ const parsedInstructions = lines.map(
 const initialRegisters = executeProgram({a: 0, b: 0}, ...parsedInstructions);
 const modifiedRegisters = executeProgram({a: 1, b: 0}, ...parsedInstructions);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(initialRegisters.b).toBe(184));
-  test('part 2', () => expect(modifiedRegisters.b).toBe(231));
-}
+assert.strictEqual(initialRegisters.b, 184, 'Part 1 failed');
+assert.strictEqual(modifiedRegisters.b, 231, 'Part 2 failed');

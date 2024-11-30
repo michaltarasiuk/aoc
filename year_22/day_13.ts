@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {castArray} from 'lib/array.js';
 import {getInputParagraphs} from 'lib/input.js';
 import {isArray, isDefined, isNumber} from 'lib/predicate.js';
@@ -36,7 +38,4 @@ const indicesSum = paragraphs
     return acc;
   }, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(indicesSum).toBe(4734));
-}
+assert.strictEqual(indicesSum, 4734, 'Part 1 failed');

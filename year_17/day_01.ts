@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -12,8 +14,5 @@ const captchaSolution2 = sum(
   ...ns.filter((n, i) => n === ns.at((i + ns.length / 2) % ns.length))
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(captchaSolution).toBe(1203));
-  test('part 2', () => expect(captchaSolution2).toBe(1146));
-}
+assert.strictEqual(captchaSolution, 1203, 'Part 1 failed');
+assert.strictEqual(captchaSolution2, 1146, 'Part 2 solution is incorrect');

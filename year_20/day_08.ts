@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2020, day: 8});
@@ -36,7 +38,4 @@ const instructions = lines
   .map(([op, arg]) => ({op, arg: Number(arg)}));
 const acc = runProgram(...instructions);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(acc).toBe(1782));
-}
+assert.strictEqual(acc, 1782, 'Part 1 failed');

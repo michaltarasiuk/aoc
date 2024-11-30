@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {divisors} from 'lib/math.js';
 
@@ -15,7 +17,4 @@ outer: while (++i) {
   }
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(i).toBe(665280));
-}
+assert.strictEqual(i, 665280, 'Part 1 failed');

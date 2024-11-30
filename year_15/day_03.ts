@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {uniq} from 'lib/iterable.js';
 
@@ -33,8 +35,5 @@ const visitedHousesWithRoboSanta = (() => {
   );
 })();
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(visitedHouses.length).toBe(2565));
-  test('part 2', () => expect(visitedHousesWithRoboSanta.length).toBe(2639));
-}
+assert.strictEqual(visitedHouses.length, 2565, 'Part 1 failed');
+assert.strictEqual(visitedHousesWithRoboSanta.length, 2639, 'Part 2 failed');

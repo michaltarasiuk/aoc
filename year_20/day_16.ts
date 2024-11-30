@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
 
@@ -28,7 +30,4 @@ const errorRate = nearbyTickets.flatMap(parseTicket).reduce((acc, n) => {
   return acc;
 }, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(errorRate).toBe(24110));
-}
+assert.strictEqual(errorRate, 24110, 'Part 1 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
@@ -41,8 +43,5 @@ const serializedStacks2 = parsedInstructs
   .reduce((stacks, instruct) => stacks.move(instruct), createStacks(stacks))
   .toString();
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(serializedStacks).toBe('QGTHFZBHV'));
-  test('part 2', () => expect(serializedStacks2).toBe('MGDMPSZTM'));
-}
+assert.strictEqual(serializedStacks, 'QGTHFZBHV', 'Part 1 failed');
+assert.strictEqual(serializedStacks2, 'MGDMPSZTM', 'Part 2 failed');

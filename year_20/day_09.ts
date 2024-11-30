@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputNumbers} from 'lib/input.js';
 import {sum} from 'lib/math.js';
@@ -33,8 +35,5 @@ const invalid = findInvalid(ns, PreambleSize) ?? raise('Invalid not found');
 const set = findContiguousSet(ns, invalid) ?? raise('Set not found');
 const encryptionWeakness = Math.min(...set) + Math.max(...set);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(invalid).toBe(2089807806));
-  test('part 2', () => expect(encryptionWeakness).toBe(245848639));
-}
+assert.strictEqual(invalid, 2089807806, 'Part 1 failed');
+assert.strictEqual(encryptionWeakness, 245848639, 'Part 2 failed');

@@ -1,3 +1,5 @@
+import {strictEqual} from 'node:assert';
+
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isKeyOf} from 'lib/predicate.js';
@@ -24,8 +26,5 @@ const gamesIdsSum = games
 
 const setsPowerSum = games.reduce((acc, {r, g, b}) => acc + r * g * b, 0);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(gamesIdsSum).toBe(2545));
-  test('part 2', () => expect(setsPowerSum).toBe(78111));
-}
+strictEqual(gamesIdsSum, 2545, 'Part 1 failed');
+strictEqual(setsPowerSum, 78111, 'Part 2 failed');

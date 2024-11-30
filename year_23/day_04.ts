@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 
@@ -31,8 +33,5 @@ const points = cards.values().reduce((acc, matches) => {
 }, 0);
 const totalCardsCount = countTotalCards(cards);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(points).toBe(26218));
-  test('part 2', () => expect(totalCardsCount).toBe(9997537));
-}
+assert.strictEqual(points, 26218, 'Part 1 failed');
+assert.strictEqual(totalCardsCount, 9997537, 'Part 2 failed');

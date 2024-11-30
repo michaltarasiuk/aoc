@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2016, day: 1});
@@ -30,7 +32,4 @@ const distance = input
   .reduce((acc, {turn, steps}) => acc.set(turn, steps), createCoordinates())
   .calcDistance();
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(distance).toBe(273));
-}
+assert.strictEqual(distance, 273, 'Part 1 failed');

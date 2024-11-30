@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2020, day: 7});
@@ -35,8 +37,5 @@ const rules = new Map(
 const bagsWithShinyGoldCount = countBagsWith(rules, SearchBag);
 const bagsOfShinyGoldCount = countBagsOf(rules, SearchBag);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(bagsWithShinyGoldCount).toBe(242));
-  test('part 2', () => expect(bagsOfShinyGoldCount).toBe(176035));
-}
+assert.strictEqual(bagsWithShinyGoldCount, 242, 'Part 1 failed');
+assert.strictEqual(bagsOfShinyGoldCount, 176035, 'Part 2 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {parseNumbers} from 'lib/parse.js';
@@ -11,7 +13,4 @@ const pairsFullyCoveredCount = sum(
     .map(Number)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(pairsFullyCoveredCount).toBe(532));
-}
+assert.strictEqual(pairsFullyCoveredCount, 532, 'Part 1 failed');

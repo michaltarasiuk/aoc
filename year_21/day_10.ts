@@ -1,3 +1,5 @@
+import {strictEqual} from 'node:assert';
+
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isDefined, isKeyOf} from 'lib/predicate.js';
@@ -76,8 +78,5 @@ const scores = parsedLines
   .toSorted((a, b) => a - b);
 const middleScore = scores.at(Math.floor(scores.length / 2));
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(totalSyntaxErrorScore).toBe(323613));
-  test('part 2', () => expect(middleScore).toBe(3103006161));
-}
+strictEqual(totalSyntaxErrorScore, 323613, 'Part 1 failed');
+strictEqual(middleScore, 3103006161, 'Part 2 failed');

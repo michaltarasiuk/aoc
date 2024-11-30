@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 
@@ -32,7 +34,4 @@ function calcYell(
 const monkeyJobs = Object.fromEntries(lines.map(parseMonkeyJob));
 const rootYell = calcYell(monkeyJobs, 'root');
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(rootYell).toBe(142707821472432));
-}
+assert.strictEqual(rootYell, 142707821472432, 'Part 1 failed');

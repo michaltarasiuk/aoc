@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {permute} from 'lib/array.js';
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
@@ -40,8 +42,5 @@ const costs = permute(Object.keys(costMap)).reduce<number[]>(
 const minCost = Math.min(...costs);
 const maxCost = Math.max(...costs);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(minCost).toBe(251));
-  test('part 2', () => expect(maxCost).toBe(898));
-}
+assert.strictEqual(minCost, 251, 'Part 1 failed');
+assert.strictEqual(maxCost, 898, 'Part 2 failed');

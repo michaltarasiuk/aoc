@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputParagraphs} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -10,8 +12,5 @@ const elfs = paragraphs
 const maxCalories = elfs[0];
 const caloriesOfTopThreeElves = elfs[0] + elfs[1] + elfs[2];
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(maxCalories).toBe(66306));
-  test('part 2', () => expect(caloriesOfTopThreeElves).toBe(195292));
-}
+assert.strictEqual(maxCalories, 66306, 'Part 1 failed');
+assert.strictEqual(caloriesOfTopThreeElves, 195292, 'Part 2 failed');

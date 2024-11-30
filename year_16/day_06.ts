@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputCols} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 
@@ -21,8 +23,5 @@ function decodeMessage(
 const mostFrequentMessage = decodeMessage(cols, (a, b) => b - a);
 const leastFrequentMessage = decodeMessage(cols);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(mostFrequentMessage).toBe('cyxeoccr'));
-  test('part 2', () => expect(leastFrequentMessage).toBe('batwpask'));
-}
+assert.strictEqual(mostFrequentMessage, 'cyxeoccr', 'Part 1 failed');
+assert.strictEqual(leastFrequentMessage, 'batwpask', 'Part 2 failed');

@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2016, day: 2});
@@ -38,7 +40,4 @@ for (const l of lines) {
   bathroomCode += Keypad[y][x];
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(bathroomCode).toBe('19636'));
-}
+assert.strictEqual(bathroomCode, '19636', 'Part 1 failed');

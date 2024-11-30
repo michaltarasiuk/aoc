@@ -1,3 +1,5 @@
+import {strictEqual} from 'node:assert';
+
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isKeyOf} from 'lib/predicate.js';
@@ -53,8 +55,5 @@ const distance2 = calcDistance(
   {horizontal: 0, depth: 0, aim: 0}
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(distance).toBe(1714950));
-  test('part 2', () => expect(distance2).toBe(1281977850));
-}
+strictEqual(distance, 1714950, 'Part 1 failed');
+strictEqual(distance2, 1281977850, 'Part 2 failed');

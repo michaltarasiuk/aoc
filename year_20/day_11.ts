@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputGrid} from 'lib/input.js';
 
 const seats = await getInputGrid({year: 2020, day: 11});
@@ -46,7 +48,4 @@ while (changed) {
 }
 const occupiedSeatsCount = countOccupiedSeats(currentSeats.flat());
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(occupiedSeatsCount).toBe(2483));
-}
+assert.strictEqual(occupiedSeatsCount, 2483, 'Part 1 failed');

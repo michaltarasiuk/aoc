@@ -1,3 +1,4 @@
+import assert from 'node:assert';
 import crypto from 'node:crypto';
 
 import {getInput} from 'lib/input.js';
@@ -19,8 +20,5 @@ function waitUntilStartsWith(
 const coin = waitUntilStartsWith({s, searchString: '0'.repeat(5)});
 const coin2 = waitUntilStartsWith({s, searchString: '0'.repeat(6)}, coin);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(coin).toBe(346386));
-  test('part 2', () => expect(coin2).toBe(9958218));
-}
+assert.strictEqual(coin, 346386, 'Part 1 failed');
+assert.strictEqual(coin2, 9958218, 'Part 2 failed');

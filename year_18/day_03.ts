@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2018, day: 3});
@@ -34,8 +36,5 @@ const [nonOverlappingClaim] = new Set(claims.map(({id}) => id)).difference(
   overlappingClaims
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(overlappingClaimsCount).toBe(101469));
-  test('part 2', () => expect(nonOverlappingClaim).toBe(1067));
-}
+assert.strictEqual(overlappingClaimsCount, 101469, 'Part 1 failed');
+assert.strictEqual(nonOverlappingClaim, 1067, 'Part 2 failed');

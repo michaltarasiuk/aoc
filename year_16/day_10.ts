@@ -1,3 +1,5 @@
+import {strictEqual} from 'node:assert';
+
 import {assert, raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isDefined} from 'lib/predicate.js';
@@ -81,9 +83,9 @@ while (botsReadyForTransfer.length > 0) {
   botsReadyForTransfer = bots.getReadyBots();
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(responsibleBotId).toBe(141));
-  test('part 2', () =>
-    expect(output.get(0)! * output.get(1)! * output.get(2)!).toBe(1209));
-}
+strictEqual(responsibleBotId, 141, 'Part 1 failed');
+strictEqual(
+  output.get(0)! * output.get(1)! * output.get(2)!,
+  1209,
+  'Part 2 failed'
+);

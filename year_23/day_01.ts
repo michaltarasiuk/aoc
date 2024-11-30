@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
@@ -39,8 +41,5 @@ const calibrationValuesSum2 = sum(
   })
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(calibrationValuesSum).toBe(55621));
-  test('part 2', () => expect(calibrationValuesSum2).toBe(53592));
-}
+assert.strictEqual(calibrationValuesSum, 55621, 'Part 1 failed');
+assert.strictEqual(calibrationValuesSum2, 53592, 'Part 2 failed');

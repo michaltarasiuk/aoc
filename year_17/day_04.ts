@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -25,8 +27,5 @@ const validPassphrasesCount2 = sum(
     .map(Number)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(validPassphrasesCount).toBe(455));
-  test('part 2', () => expect(validPassphrasesCount2).toBe(186));
-}
+assert.strictEqual(validPassphrasesCount, 455, 'Part 1 failed');
+assert.strictEqual(validPassphrasesCount2, 186, 'Part 2 failed');

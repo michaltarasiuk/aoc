@@ -1,3 +1,5 @@
+import {strictEqual} from 'node:assert';
+
 import {assert, raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
@@ -51,8 +53,5 @@ const [totalLights, totalBrightness] = Object.values(LightModes).map(actions =>
   sum(setLights(actions, ...instructions).flat())
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(totalLights).toBe(400410));
-  test('part 2', () => expect(totalBrightness).toBe(15343601));
-}
+strictEqual(totalLights, 400410, 'Part 1 failed');
+strictEqual(totalBrightness, 15343601, 'Part 2 failed');

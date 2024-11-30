@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+
 import {getInput} from 'lib/input.js';
 import {uniq} from 'lib/iterable.js';
 
@@ -18,8 +20,5 @@ function findLastIndexOfMarker([...chars]: string, length: number) {
 const lastIndex = findLastIndexOfMarker(input, 4);
 const lastIndex2 = findLastIndexOfMarker(input, 14);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(lastIndex).toBe(1343));
-  test('part 2', () => expect(lastIndex2).toBe(2193));
-}
+assert.strictEqual(lastIndex, 1343, 'Part 1 failed');
+assert.strictEqual(lastIndex2, 2193, 'Part 2 failed');

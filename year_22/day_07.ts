@@ -1,4 +1,5 @@
-import {assert} from 'lib/assert.js';
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {isDefined} from 'lib/predicate.js';
@@ -74,7 +75,4 @@ const totalSize = sum(
   ...Object.values(filesystem).filter(size => size <= 100_000)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(totalSize).toBe(1306611));
-}
+assert.strictEqual(totalSize, 1306611, 'Part 1 failed');

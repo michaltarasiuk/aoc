@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {multiply} from 'lib/math.js';
 import {parseNumbers} from 'lib/parse.js';
@@ -26,8 +28,5 @@ const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
   Number(distances.join(''))
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(waysOfBeatRecordProduct).toBe(140220));
-  test('part 2', () => expect(longRaceWaysOfBeatRecord).toBe(39570185));
-}
+assert.strictEqual(waysOfBeatRecordProduct, 140220, 'Part 1 failed');
+assert.strictEqual(longRaceWaysOfBeatRecord, 39570185, 'Part 2 failed');

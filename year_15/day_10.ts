@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 10});
@@ -24,8 +26,5 @@ while (++iterationCount <= IterationsPart2) {
   }
 }
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(sequenceLengths[0]).toBe(492982));
-  test('part 2', () => expect(sequenceLengths[1]).toBe(6989950));
-}
+assert.strictEqual(sequenceLengths[0], 492982, 'Part 1 failed');
+assert.strictEqual(sequenceLengths[1], 6989950, 'Part 2 failed');

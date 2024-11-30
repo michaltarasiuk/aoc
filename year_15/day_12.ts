@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 import {isObject} from 'lib/predicate.js';
@@ -27,8 +29,5 @@ JSON.stringify(parsed, (_, val: unknown) => {
 const documentNsSum = sum(...ns);
 const documentNsSum2 = sum(...ns2);
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(documentNsSum).toBe(191164));
-  test('part 2', () => expect(documentNsSum2).toBe(87842));
-}
+assert.strictEqual(documentNsSum, 191164, 'Part 1 failed');
+assert.strictEqual(documentNsSum2, 87842, 'Part 2 failed');

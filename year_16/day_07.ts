@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 
@@ -33,8 +35,5 @@ const sslSupportedIpsCount = sum(
     .map(Number)
 );
 
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(tlsSupportedIpsCount).toBe(110));
-  test('part 2', () => expect(sslSupportedIpsCount).toBe(242));
-}
+assert.strictEqual(tlsSupportedIpsCount, 110, 'Part 1 failed');
+assert.strictEqual(sslSupportedIpsCount, 242, 'Part 2 failed');

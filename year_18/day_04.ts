@@ -1,3 +1,5 @@
+import assert from 'node:assert';
+
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
@@ -51,8 +53,4 @@ const [id, minutes] = Object.entries(guards).reduce((acc, guard) =>
   sum(...acc[1]) > sum(...guard[1]) ? acc : guard
 );
 const maxMinute = minutes.indexOf(Math.max(...minutes));
-
-if (import.meta.vitest) {
-  const {test, expect} = import.meta.vitest;
-  test('part 1', () => expect(Number(id) * maxMinute).toBe(115167));
-}
+assert(Number(id) * maxMinute === 115167, 'Part 1 failed');
