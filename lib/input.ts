@@ -21,9 +21,7 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
   return input.trimEnd();
 }
 
-export async function getInputCols(
-  ...params: Parameters<typeof getInputLines>
-) {
+export async function getInputCols(...params: Parameters<typeof getInputGrid>) {
   const grid = await getInputGrid(...params);
   return transpose(grid);
 }
