@@ -10,9 +10,10 @@ export default tseslint.config(
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      '@typescript-eslint/no-unused-expressions': 'off',
+      'no-empty': 'off',
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
   }
 );
