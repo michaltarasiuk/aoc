@@ -6,19 +6,18 @@ const lines = await getInputLines({year: 2024, day: 2});
 
 function isSorted(report: number[]) {
   return (
-    report.join() === report.toSorted((a, b) => a - b).join() ||
-    report.join() === report.toSorted((a, b) => b - a).join()
+    report.every((level, i, arr) => !i || arr[i - 1] <= level) ||
+    report.every((level, i, arr) => !i || arr[i - 1] >= level)
   );
 }
-function adjacentLevelsDifferByOneToThree(reports: number[]) {
-  return reports.slice(1, -1).every((level, i) => {
-    const l = reports[i];
-    const r = reports[i + 2];
-    return [level - l, r - level].map(Math.abs).every(d => d >= 1 && d <= 3);
-  });
+function areAdjacentLevelsWithinRange(report: number[], min = 1, max = 3) {
+  return report
+    .slice(0, -1)
+    .map((level, i) => Math.abs(level - report[i + 1]))
+    .every(diff => diff >= min && diff <= max);
 }
 function isSafeReport(report: number[]) {
-  return isSorted(report) && adjacentLevelsDifferByOneToThree(report);
+  return isSorted(report) && areAdjacentLevelsWithinRange(report);
 }
 
 const reportRe = /\d+/g;
