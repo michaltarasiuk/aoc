@@ -53,4 +53,5 @@ const [id, minutes] = Object.entries(guards).reduce((acc, guard) =>
   sum(...acc[1]) > sum(...guard[1]) ? acc : guard
 );
 const maxMinute = minutes.indexOf(Math.max(...minutes));
-assert(Number(id) * maxMinute === 115167, 'Part 1 failed');
+
+assert.strictEqual(Number(id) * maxMinute, 115167, 'Part 1 failed');
