@@ -6,8 +6,8 @@ const lines = await getInputLines({year: 2024, day: 2});
 
 function isSorted(report: number[]) {
   return (
-    report.every((level, i, arr) => !i || arr[i - 1] <= level) ||
-    report.every((level, i, arr) => !i || arr[i - 1] >= level)
+    report.join() === report.toSorted((a, b) => a - b).join() ||
+    report.join() === report.toSorted((a, b) => b - a).join()
   );
 }
 function areAdjacentLevelsWithinRange(report: number[], min = 1, max = 3) {
