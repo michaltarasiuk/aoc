@@ -68,13 +68,11 @@ async function fetchInput({year, day}: InputParams) {
   return await response.text();
 }
 
-class CacheFileURL extends URL {
-  constructor(cacheDir: string, {year, day}: InputParams) {
-    super(
-      `${year}/day_${String(day).padStart(2, '0')}.txt`,
-      `file://${cacheDir}/`
-    );
-  }
+function createCacheFileURL(cacheDir: string, {year, day}: InputParams) {
+  return new URL(
+    `${year}/day_${String(day).padStart(2, '0')}.txt`,
+    `file://${cacheDir}/`
+  );
 }
 function createInputCache() {
   const cacheDir = findCacheDir({name: 'advent-of-code', create: true});
@@ -82,12 +80,12 @@ function createInputCache() {
   return {
     get(params: InputParams) {
       try {
-        return fs.readFileSync(new CacheFileURL(cacheDir, params), 'utf-8');
+        return fs.readFileSync(createCacheFileURL(cacheDir, params), 'utf-8');
       } catch {}
     },
     set(params: InputParams, input: string) {
       try {
-        const cacheFileUrl = new CacheFileURL(cacheDir, params);
+        const cacheFileUrl = createCacheFileURL(cacheDir, params);
         fs.mkdirSync(path.dirname(cacheFileUrl.pathname), {recursive: true});
         fs.writeFileSync(cacheFileUrl, input);
       } catch {}
