@@ -12,7 +12,6 @@ const SyntaxErrorPoints = {
   '}': 1197,
   '>': 25137,
 };
-
 const AutocompletePoints = {
   '(': 1,
   '[': 2,

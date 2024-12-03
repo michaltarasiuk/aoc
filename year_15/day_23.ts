@@ -54,12 +54,12 @@ function executeProgram(
 }
 
 const instructionRe = /(\w+|[+-]\d+)/g;
-const parsedInstructions = lines.map(
+const instructions = lines.map(
   line => line.match(instructionRe) ?? raise('Invalid instruction')
 );
 
-const initialRegisters = executeProgram({a: 0, b: 0}, ...parsedInstructions);
-const modifiedRegisters = executeProgram({a: 1, b: 0}, ...parsedInstructions);
+const initialRegisters = executeProgram({a: 0, b: 0}, ...instructions);
+const modifiedRegisters = executeProgram({a: 1, b: 0}, ...instructions);
 
 assert.strictEqual(initialRegisters.b, 184, 'Part 1 failed');
 assert.strictEqual(modifiedRegisters.b, 231, 'Part 2 failed');

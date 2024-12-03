@@ -9,14 +9,6 @@ const lines = await getInputLines({year: 2015, day: 9});
 
 type CostMap = {[from: string]: {[to: string]: number}};
 
-function parseDistance(distance: string) {
-  const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
-  const [, a, b, cost] =
-    distance.match(distanceRe) ?? raise('Invalid distance');
-
-  return {a, b, cost: Number(cost)};
-}
-
 function calcRouteCost(costMap: CostMap, ...route: string[]) {
   return sum(
     ...route
@@ -26,8 +18,12 @@ function calcRouteCost(costMap: CostMap, ...route: string[]) {
 }
 
 const costMap = lines
-  .map(parseDistance)
-  .reduce<CostMap>((acc, {a, b, cost}) => {
+  .map(l => {
+    const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
+    const [, a, b, cost] = l.match(distanceRe) ?? raise('Invalid distance');
+    return [a, b, Number(cost)] as const;
+  })
+  .reduce<CostMap>((acc, [a, b, cost]) => {
     acc[a] ??= {};
     acc[b] ??= {};
     acc[a][b] = cost;
