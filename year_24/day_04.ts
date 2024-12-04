@@ -37,3 +37,27 @@ const Directions = {
   }
   assert.strictEqual(count, 2447, 'Part 1 failed');
 }
+
+{
+  const Word = 'MAS';
+  let count = 0;
+  for (const x of lines.keys()) {
+    for (const y of lines[x].keys()) {
+      if (lines[x][y] !== Word[1]) {
+        continue;
+      }
+      const ok = [
+        [Directions.upLeft, Directions.downRight],
+        [Directions.upRight, Directions.downLeft],
+      ]
+        .map(([[a, b], [c, d]]) => {
+          return lines[x + a]?.[y + b] + lines[x + c]?.[y + d];
+        })
+        .every(([...axis]) => axis.toSorted().join('') === Word[0] + Word[2]);
+      if (ok) {
+        count++;
+      }
+    }
+  }
+  assert.strictEqual(count, 1868, 'Part 2 failed');
+}
