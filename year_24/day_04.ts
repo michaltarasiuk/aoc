@@ -46,7 +46,7 @@ const Directions = {
       if (lines[x][y] !== Word[1]) {
         continue;
       }
-      const ok = [
+      const isXMasPattern = [
         [Directions.upLeft, Directions.downRight],
         [Directions.upRight, Directions.downLeft],
       ]
@@ -54,7 +54,7 @@ const Directions = {
           return lines[x + a]?.[y + b] + lines[x + c]?.[y + d];
         })
         .every(([...axis]) => axis.toSorted().join('') === Word[0] + Word[2]);
-      if (ok) {
+      if (isXMasPattern) {
         count++;
       }
     }
