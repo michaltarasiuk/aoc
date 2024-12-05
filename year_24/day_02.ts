@@ -20,8 +20,7 @@ function isSafeReport(report: number[]) {
   return isSorted(report) && areAdjacentLevelsWithinRange(report);
 }
 
-const reportRe = /\d+/g;
-const reports = lines.map(l => l.matchAll(reportRe).map(Number).toArray());
+const reports = lines.map(l => l.split(/\s/).map(Number));
 
 const safeReports = reports.filter(isSafeReport);
 const safeReports2 = reports.filter(report =>
