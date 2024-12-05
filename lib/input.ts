@@ -21,15 +21,11 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
   return input.trimEnd();
 }
 
-export async function getInputCols(...params: Parameters<typeof getInputGrid>) {
-  const grid = await getInputGrid(...params);
-  return transpose(grid);
-}
-export async function getInputGrid(
-  ...params: Parameters<typeof getInputLines>
+export async function getInputParagraphs(
+  ...params: Parameters<typeof getInput>
 ) {
-  const lines = await getInputLines(...params);
-  return lines.map(([...chars]) => chars);
+  const input = await getInput(...params);
+  return input.split(/\n\n+/).map(paragraph => paragraph.split(/\n/));
 }
 export async function getInputNumbers(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
@@ -39,11 +35,15 @@ export async function getInputLines(...params: Parameters<typeof getInput>) {
   const input = await getInput(...params);
   return input.split(/\n/);
 }
-export async function getInputParagraphs(
-  ...params: Parameters<typeof getInput>
+export async function getInputGrid(
+  ...params: Parameters<typeof getInputLines>
 ) {
-  const input = await getInput(...params);
-  return input.split(/\n\n+/).map(paragraph => paragraph.split(/\n/));
+  const lines = await getInputLines(...params);
+  return lines.map(([...chars]) => chars);
+}
+export async function getInputCols(...params: Parameters<typeof getInputGrid>) {
+  const grid = await getInputGrid(...params);
+  return transpose(grid);
 }
 
 class ResponseError extends Error {
