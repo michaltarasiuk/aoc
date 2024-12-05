@@ -4,10 +4,9 @@ import {getInputParagraphs} from 'lib/input.js';
 
 const paragraphs = await getInputParagraphs({year: 2024, day: 5});
 
-function isCorrectlyOrderedUpdate(
-  rules: Partial<Record<string, string[][]>>,
-  ...pageNumbers: number[]
-) {
+type Rules = typeof rules;
+
+function isCorrectlyOrderedUpdate(rules: Rules, ...pageNumbers: number[]) {
   const seen = new Set<number>();
   for (const pageNumber of pageNumbers) {
     for (const [first] of rules[pageNumber] ?? []) {
@@ -19,18 +18,32 @@ function isCorrectlyOrderedUpdate(
   }
   return true;
 }
+function findRule(rules: Rules, first: number, second: number) {
+  return rules[second]?.find(([a]) => Number(a) === first);
+}
 
 const rules = Object.groupBy(
   paragraphs[0].map(rule => rule.split('|')),
   ([, second]) => second
 );
 
-const totalOfMiddlePageNumbers = paragraphs[1].reduce((acc, update) => {
-  const pageNumbers = update.split(',').map(Number);
-  if (isCorrectlyOrderedUpdate(rules, ...pageNumbers)) {
-    acc += pageNumbers[Math.floor(pageNumbers.length / 2)];
-  }
-  return acc;
-}, 0);
+const [correctlyOrderedUpdates, incorrectlyOrderedUpdates] = paragraphs[1]
+  .map(update => update.split(',').map(Number))
+  .reduce<[number[][], number[][]]>(
+    (acc, update) => {
+      acc[isCorrectlyOrderedUpdate(rules, ...update) ? 0 : 1].push(update);
+      return acc;
+    },
+    [[], []]
+  );
+
+const totalOfMiddlePageNumbers = correctlyOrderedUpdates.reduce(
+  (acc, update) => acc + update[Math.floor(update.length / 2)],
+  0
+);
+const totalOfIncorrectlyOrderedUpdates = incorrectlyOrderedUpdates
+  .map(update => update.toSorted((a, b) => (findRule(rules, a, b) ? -1 : 1)))
+  .reduce((acc, update) => acc + update[Math.floor(update.length / 2)], 0);
 
 assert.strictEqual(totalOfMiddlePageNumbers, 7365, 'Part 1 failed');
+assert.strictEqual(totalOfIncorrectlyOrderedUpdates, 5770, 'Part 2 failed');
