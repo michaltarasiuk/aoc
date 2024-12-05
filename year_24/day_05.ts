@@ -37,13 +37,13 @@ const [correctlyOrderedUpdates, incorrectlyOrderedUpdates] = paragraphs[1]
     [[], []]
   );
 
-const totalOfMiddlePageNumbers = correctlyOrderedUpdates.reduce(
+const sumMiddleCorrect = correctlyOrderedUpdates.reduce(
   (acc, update) => acc + update[Math.floor(update.length / 2)],
   0
 );
-const totalOfIncorrectlyOrderedUpdates = incorrectlyOrderedUpdates
+const sumMiddleIncorrect = incorrectlyOrderedUpdates
   .map(update => update.toSorted((a, b) => (findRule(rules, a, b) ? -1 : 1)))
   .reduce((acc, update) => acc + update[Math.floor(update.length / 2)], 0);
 
-assert.strictEqual(totalOfMiddlePageNumbers, 7365, 'Part 1 failed');
-assert.strictEqual(totalOfIncorrectlyOrderedUpdates, 5770, 'Part 2 failed');
+assert.strictEqual(sumMiddleCorrect, 7365, 'Part 1 failed');
+assert.strictEqual(sumMiddleIncorrect, 5770, 'Part 2 failed');
