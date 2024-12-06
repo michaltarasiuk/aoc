@@ -4,18 +4,18 @@ import {getInputGrid} from 'lib/input.js';
 
 const grid = await getInputGrid({year: 2024, day: 6});
 
-const Obstacle = '#';
 const StartingPoint = '^';
-
-const directions = [
+const Obstacle = '#';
+const Directions = [
   [0, -1],
   [1, 0],
   [0, 1],
   [-1, 0],
 ];
-let currentDirection = 0;
 
 const visitedPositions = new Set<string>();
+
+let currentDirection = 0;
 let [guardX, guardY] = (() => {
   for (const y of grid.keys()) {
     for (const x of grid[y].keys()) {
@@ -29,11 +29,11 @@ let [guardX, guardY] = (() => {
 
 while (true) {
   visitedPositions.add(`${guardX},${guardY}`);
-  const nextX = guardX + directions[currentDirection][0];
-  const nextY = guardY + directions[currentDirection][1];
+  const nextX = guardX + Directions[currentDirection][0];
+  const nextY = guardY + Directions[currentDirection][1];
   const nextPosition = grid[nextY]?.[nextX];
   if (nextPosition === Obstacle) {
-    currentDirection = (currentDirection + 1) % directions.length;
+    currentDirection = (currentDirection + 1) % Directions.length;
   } else if (!nextPosition) {
     break;
   } else {
