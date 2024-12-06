@@ -37,8 +37,7 @@ while (true) {
   } else if (!nextPosition) {
     break;
   } else {
-    guardX = nextX;
-    guardY = nextY;
+    [guardX, guardY] = [nextX, nextY];
   }
 }
 
