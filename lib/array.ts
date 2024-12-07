@@ -2,22 +2,26 @@ export function castArray<T>(v: T | T[]) {
   return Array.isArray(v) ? v : [v];
 }
 
-export function permute<T>(items: T[]): T[][] {
+export function* permute<T>(items: T[]): IteratorObject<T[]> {
   if (!items.length) {
-    return [[]];
+    yield [];
+    return;
   }
   const [first, ...rest] = items;
-  return permute(rest).flatMap(items => interleave(first!, items));
+  for (const perm of permute(rest)) {
+    yield* interleave(first!, perm);
+  }
 }
-function interleave<T>(item: T, items: T[]): T[][] {
+function* interleave<T>(item: T, items: T[]): IteratorObject<T[]> {
   if (!items.length) {
-    return [[item]];
+    yield [item];
+    return;
   }
   const [first, ...rest] = items;
-  return [
-    [item, first, ...rest],
-    ...interleave(item, rest).map(items => [first, ...items]),
-  ];
+  yield [item, first, ...rest];
+  for (const perm of interleave(item, rest)) {
+    yield [first, ...perm];
+  }
 }
 
 export function transpose<T>(matrix: T[][]) {
