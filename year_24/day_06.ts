@@ -4,7 +4,7 @@ import {getInputGrid} from 'lib/input.js';
 
 const grid = await getInputGrid({year: 2024, day: 6});
 
-const StartingPoint = '^';
+const GuardStart = '^';
 const Obstacle = '#';
 const Directions = [
   [0, -1],
@@ -13,32 +13,28 @@ const Directions = [
   [-1, 0],
 ];
 
-const visitedPositions = new Set<string>();
-
-let currentDirection = 0;
-let [guardX, guardY] = (() => {
-  for (const y of grid.keys()) {
-    for (const x of grid[y].keys()) {
-      if (grid[y][x] === StartingPoint) {
-        return [x, y];
-      }
+function findGuardStart() {
+  const y = grid.findIndex(row => row.includes(GuardStart));
+  const x = grid[y].indexOf(GuardStart);
+  return [x, y] as const;
+}
+function calcGuardPath() {
+  const path: string[] = [];
+  let [[x, y], direction] = [findGuardStart(), 0];
+  while (true) {
+    path.push(`${x},${y}`);
+    const nextX = x + Directions[direction][0];
+    const nextY = y + Directions[direction][1];
+    const nextPosition = grid[nextY]?.[nextX];
+    if (nextPosition === Obstacle) {
+      direction = (direction + 1) % Directions.length;
+    } else if (!nextPosition) {
+      break;
+    } else {
+      [x, y] = [nextX, nextY];
     }
   }
-  throw new Error('No starting point found');
-})();
-
-while (true) {
-  visitedPositions.add(`${guardX},${guardY}`);
-  const nextX = guardX + Directions[currentDirection][0];
-  const nextY = guardY + Directions[currentDirection][1];
-  const nextPosition = grid[nextY]?.[nextX];
-  if (nextPosition === Obstacle) {
-    currentDirection = (currentDirection + 1) % Directions.length;
-  } else if (!nextPosition) {
-    break;
-  } else {
-    [guardX, guardY] = [nextX, nextY];
-  }
+  return path;
 }
 
-assert.strictEqual(visitedPositions.size, 4973, 'Part 1 failed');
+assert.strictEqual(new Set(calcGuardPath()).size, 4973, 'Part 1 failed');
