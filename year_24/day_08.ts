@@ -4,7 +4,7 @@ import {getInputGrid} from 'lib/input.js';
 
 const grid = await getInputGrid({year: 2024, day: 8});
 
-type AntennaPositions = Record<string, [number, number][]>;
+type AntennaPositions = Record<string, [x: number, y: number][]>;
 
 function* createAntennaPairs(antennas: AntennaPositions) {
   for (const positions of Object.values(antennas)) {
