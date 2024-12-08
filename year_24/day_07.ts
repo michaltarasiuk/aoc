@@ -10,7 +10,7 @@ const lines = await getInputLines({year: 2024, day: 7});
 const Operators = {
   '+': (a, b) => a + b,
   '*': (a, b) => a * b,
-  '||': (a, b) => Number(String(a) + String(b)),
+  '||': (a, b) => Number(a + b.toString()),
 } satisfies Record<string, (a: number, b: number) => number>;
 
 function* permuteOperators(
