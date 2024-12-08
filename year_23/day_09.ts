@@ -16,8 +16,9 @@ function extrapolate(...ns: number[]): number[] {
   return [last, ...extrapolate(...diffs)];
 }
 
-const extrapolatedValuesSum = sum(
-  ...lines.map(l => parseNumbers(l)).map(ns => sum(...extrapolate(...ns)))
-);
+const extrapolatedValuesSum = lines
+  .map(l => parseNumbers(l))
+  .map(ns => sum(...extrapolate(...ns)))
+  .reduce((a, b) => a + b);
 
 assert.strictEqual(extrapolatedValuesSum, 1939607039, 'Part 1 failed');

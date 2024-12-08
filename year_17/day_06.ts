@@ -6,7 +6,6 @@ const ns = await getInputNumbers({year: 2017, day: 6});
 
 function redistributeMemoryBlocks([...blocks]: number[]) {
   const cycles: number[] = [];
-
   function redistribute() {
     const seen = new Set<string>();
     while (true) {
@@ -16,7 +15,6 @@ function redistributeMemoryBlocks([...blocks]: number[]) {
       } else {
         seen.add(snapshot);
       }
-
       let max = Math.max(...blocks);
       let idx = blocks.indexOf(max);
       blocks[idx] = 0;
