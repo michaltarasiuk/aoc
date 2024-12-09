@@ -39,16 +39,17 @@ function evaluateLeftToRight(
 
 const equations = lines.map(l => l.split(/:? /).map(Number));
 
+const ops = Object.keys(omit(Operators, '||'));
 const totalCalibration = equations.reduce((acc, [result, ...operands]) => {
-  const operators = Object.keys(omit(Operators, '||'));
-  const isValidEquation = permuteOperators(operands.length, ...operators).some(
+  const isValidEquation = permuteOperators(operands.length, ...ops).some(
     operators => result === evaluateLeftToRight(operands, operators)
   );
   return acc + (isValidEquation ? result : 0);
 }, 0);
+
+const allOps = Object.keys(Operators);
 const totalCalibration2 = equations.reduce((acc, [result, ...operands]) => {
-  const operators = Object.keys(Operators);
-  const isValidEquation = permuteOperators(operands.length, ...operators).some(
+  const isValidEquation = permuteOperators(operands.length, ...allOps).some(
     operators => result === evaluateLeftToRight(operands, operators)
   );
   return acc + (isValidEquation ? result : 0);
