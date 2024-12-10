@@ -21,28 +21,27 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
   return input.trimEnd();
 }
 
-export async function getInputParagraphs(
-  ...params: Parameters<typeof getInput>
-) {
-  const input = await getInput(...params);
+export async function getInputParagraphs(params: InputParams) {
+  const input = await getInput(params);
   return input.split(/\n\n+/).map(paragraph => paragraph.split(/\n/));
 }
-export async function getInputNumbers(...params: Parameters<typeof getInput>) {
-  const input = await getInput(...params);
+export async function getInputNumbers(params: InputParams) {
+  const input = await getInput(params);
   return parseNumbers(input);
 }
-export async function getInputLines(...params: Parameters<typeof getInput>) {
-  const input = await getInput(...params);
+export async function getInputLines(params: InputParams) {
+  const input = await getInput(params);
   return input.split(/\n/);
 }
-export async function getInputGrid(
-  ...params: Parameters<typeof getInputLines>
+export async function getInputGrid<T extends string | unknown = string>(
+  params: InputParams,
+  fn: (char: string) => T = char => char as T
 ) {
-  const lines = await getInputLines(...params);
-  return lines.map(([...chars]) => chars);
+  const lines = await getInputLines(params);
+  return lines.map(([...chars]) => chars.map(char => fn(char)));
 }
-export async function getInputCols(...params: Parameters<typeof getInputGrid>) {
-  const grid = await getInputGrid(...params);
+export async function getInputCols(params: InputParams) {
+  const grid = await getInputGrid(params);
   return transpose(grid);
 }
 
