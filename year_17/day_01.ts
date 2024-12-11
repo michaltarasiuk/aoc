@@ -1,11 +1,10 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2017, day: 1});
 
-const ns = input.match(/\d/g)?.map(Number) ?? raise('Invalid input');
+const ns = input.matchAll(/\d/g).map(Number).toArray();
 
 const captchaSolution = ns
   .filter((n, i) => n === ns.at((i + 1) % ns.length))
