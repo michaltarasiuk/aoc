@@ -16,7 +16,6 @@ function parseCmd(cmd: string) {
 function parseFile(file: string) {
   const fileRe = /^(\d+)\s.+$/;
   const size = fileRe.exec(file)?.[1];
-
   return isDefined(size) ? Number(size) : null;
 }
 

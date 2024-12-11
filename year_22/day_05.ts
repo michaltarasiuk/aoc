@@ -4,7 +4,7 @@ import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
 import {parseNumbers} from 'lib/parse.js';
 
-const [stacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
+const [rawStacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
 
 function createStacks([...rawStacks]: string[]) {
   const ids = rawStacks.pop() ?? raise('No stack IDs found');
@@ -31,17 +31,12 @@ function createStacks([...rawStacks]: string[]) {
   };
 }
 
-const parsedInstructs = instructs.map(instruct => parseNumbers(instruct));
+const stacks = createStacks(rawStacks);
+const stacks2 = createStacks(rawStacks);
+for (const instruct of instructs.map(instruct => parseNumbers(instruct))) {
+  stacks.move(instruct, crates => crates.toReversed());
+  stacks2.move(instruct);
+}
 
-const serializedStacks = parsedInstructs
-  .reduce(
-    (stacks, instruct) => stacks.move(instruct, crates => crates.toReversed()),
-    createStacks(stacks)
-  )
-  .toString();
-const serializedStacks2 = parsedInstructs
-  .reduce((stacks, instruct) => stacks.move(instruct), createStacks(stacks))
-  .toString();
-
-assert.strictEqual(serializedStacks, 'QGTHFZBHV', 'Part 1 failed');
-assert.strictEqual(serializedStacks2, 'MGDMPSZTM', 'Part 2 failed');
+assert.strictEqual(stacks.toString(), 'QGTHFZBHV', 'Part 1 failed');
+assert.strictEqual(stacks2.toString(), 'MGDMPSZTM', 'Part 2 failed');
