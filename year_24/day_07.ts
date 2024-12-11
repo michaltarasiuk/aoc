@@ -2,7 +2,6 @@ import {strictEqual} from 'node:assert';
 
 import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
-import {omit} from 'lib/object.js';
 import {isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2024, day: 7});
@@ -10,19 +9,19 @@ const lines = await getInputLines({year: 2024, day: 7});
 const Operators = {
   '+': (a, b) => a + b,
   '*': (a, b) => a * b,
-  '||': (a, b) => Number(a + b.toString()),
+  '||': (a, b) => Number(a + String(b)),
 } satisfies Record<string, (a: number, b: number) => number>;
 
 function* permuteOperators(
   arrayLength: number,
-  ...operators: string[]
+  operators = Object.keys(Operators) as (keyof typeof Operators)[]
 ): Generator<string[]> {
   if (arrayLength === 0) {
     yield [];
     return;
   }
   for (const op of operators) {
-    for (const arr of permuteOperators(arrayLength - 1, ...operators)) {
+    for (const arr of permuteOperators(arrayLength - 1, operators)) {
       yield [op, ...arr];
     }
   }
@@ -39,17 +38,15 @@ function evaluateLeftToRight(
 
 const equations = lines.map(l => l.split(/:? /).map(Number));
 
-const ops = Object.keys(omit(Operators, '||'));
 const totalCalibration = equations.reduce((acc, [result, ...operands]) => {
-  const isValidEquation = permuteOperators(operands.length, ...ops).some(
+  const isValidEquation = permuteOperators(operands.length, ['+', '*']).some(
     operators => result === evaluateLeftToRight(operands, operators)
   );
   return acc + (isValidEquation ? result : 0);
 }, 0);
 
-const allOps = Object.keys(Operators);
 const totalCalibration2 = equations.reduce((acc, [result, ...operands]) => {
-  const isValidEquation = permuteOperators(operands.length, ...allOps).some(
+  const isValidEquation = permuteOperators(operands.length).some(
     operators => result === evaluateLeftToRight(operands, operators)
   );
   return acc + (isValidEquation ? result : 0);
