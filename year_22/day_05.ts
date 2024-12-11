@@ -2,14 +2,14 @@ import assert from 'node:assert';
 
 import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 
 const [rawStacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
 
 function createStacks([...rawStacks]: string[]) {
   const ids = rawStacks.pop() ?? raise('No stack IDs found');
   const stacks = Object.fromEntries(
-    parseNumbers(ids).map(id => {
+    extractIntegers(ids).map(id => {
       const i = ids.indexOf(String(id));
       return [
         id,
@@ -33,7 +33,7 @@ function createStacks([...rawStacks]: string[]) {
 
 const stacks = createStacks(rawStacks);
 const stacks2 = createStacks(rawStacks);
-for (const instruct of instructs.map(instruct => parseNumbers(instruct))) {
+for (const instruct of instructs.map(instruct => extractIntegers(instruct))) {
   stacks.move(instruct, crates => crates.toReversed());
   stacks2.move(instruct);
 }

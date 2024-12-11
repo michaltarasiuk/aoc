@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
 import {multiply} from 'lib/math.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 6});
 
@@ -17,7 +17,9 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-const [times, distances] = lines.map(l => parseNumbers(l, {negative: false}));
+const [times, distances] = lines.map(l =>
+  extractIntegers(l, {negative: false})
+);
 
 const waysOfBeatRecordProduct = multiply(
   ...times.map((time, i) => countWaysOfBeatRecord(time, distances[i]))

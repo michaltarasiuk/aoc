@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 4});
 
@@ -20,7 +20,7 @@ function countTotalCards(
 
 const cards = new Map(
   lines.map(l => {
-    const [[id, ...a], b] = l.split('|').map(l => parseNumbers(l));
+    const [[id, ...a], b] = l.split('|').map(l => extractIntegers(l));
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );

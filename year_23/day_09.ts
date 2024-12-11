@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 9});
 
@@ -17,7 +17,7 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 const extrapolatedValuesSum = lines
-  .map(l => parseNumbers(l))
+  .map(l => extractIntegers(l))
   .map(ns => sum(...extrapolate(...ns)))
   .reduce((a, b) => a + b);
 

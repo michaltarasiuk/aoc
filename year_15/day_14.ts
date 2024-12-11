@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 
 const reindeerDescriptions = await getInputLines({year: 2015, day: 14});
 
@@ -21,7 +21,7 @@ function calcFlyingTime(
 const RaceDuration = 2_503;
 const furthestDistance = Math.max(
   ...reindeerDescriptions
-    .map(description => parseNumbers(description))
+    .map(description => extractIntegers(description))
     .map(
       ([speed, flyingDuration, restingDuration]) =>
         speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)

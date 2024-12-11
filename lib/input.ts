@@ -6,7 +6,7 @@ import findCacheDir from 'find-cache-dir';
 import {env} from '../env.js';
 import {transpose} from './array.js';
 import {assert} from './assert.js';
-import {parseNumbers} from './parse.js';
+import {extractIntegers} from './parse.js';
 import {isDefined} from './predicate.js';
 
 type InputParams = {year: number; day: number};
@@ -27,7 +27,7 @@ export async function getInputParagraphs(params: InputParams) {
 }
 export async function getInputNumbers(params: InputParams) {
   const input = await getInput(params);
-  return parseNumbers(input);
+  return extractIntegers(input);
 }
 export async function getInputLines(params: InputParams) {
   const input = await getInput(params);

@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import {getInput} from 'lib/input.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 import {z} from 'zod';
 
 const input = await getInput({year: 2022, day: 11});
@@ -16,7 +16,7 @@ Monkey (?<id>\\d):
 
 const MonkeySchema = z.object({
   id: z.string().transform(Number),
-  items: z.string().transform(items => parseNumbers(items)),
+  items: z.string().transform(items => extractIntegers(items)),
   operation: z.string(),
   divider: z.string().transform(Number),
   throwToIfDivisble: z.string().transform(Number),

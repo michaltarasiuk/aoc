@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
 import {getInputParagraphs} from 'lib/input.js';
-import {parseNumbers} from 'lib/parse.js';
+import {extractIntegers} from 'lib/parse.js';
 import {isDefined} from 'lib/predicate.js';
 
 const [[initialSeeds], ...categoryMaps] = await getInputParagraphs({
@@ -30,9 +30,9 @@ function mapThroughCategories(
 
 const categoryLayers = categoryMaps
   .map(([, ...layer]) => layer)
-  .map(layer => layer.map(l => parseNumbers(l)));
+  .map(layer => layer.map(l => extractIntegers(l)));
 const lowestConvertedLocation = Math.min(
-  ...parseNumbers(initialSeeds).map(seed =>
+  ...extractIntegers(initialSeeds).map(seed =>
     mapThroughCategories(categoryLayers, seed)
   )
 );
