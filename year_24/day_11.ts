@@ -37,13 +37,13 @@ function blink(stonesRecord: Map<number, number>, blinkCount: number) {
 
 const stones = input.split(/\s/).map(Number);
 
-const part1 = blink(frequencies(stones), 25)
+const stoneCountAfter25Blinks = blink(frequencies(stones), 25)
   .values()
   .reduce((acc, count) => acc + count, 0);
 
-const part2 = blink(frequencies(stones), 75)
+const stoneCountAfter75Blinks = blink(frequencies(stones), 75)
   .values()
   .reduce((acc, count) => acc + count, 0);
 
-assert.strictEqual(part1, 194482, 'Part 1 failed');
-assert.strictEqual(part2, 232454623677743, 'Part 2 failed');
+assert.strictEqual(stoneCountAfter25Blinks, 194482, 'Part 1 failed');
+assert.strictEqual(stoneCountAfter75Blinks, 232454623677743, 'Part 2 failed');

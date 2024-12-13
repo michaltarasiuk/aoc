@@ -45,9 +45,13 @@ for (const [y, row] of grid.entries()) {
   }
 }
 
-const trailheadIds = Object.keys(trailheadScores);
-const totalScore = sum(...trailheadIds.map(id => trailheadScores[id].size));
-const totalRating = sum(...trailheadIds.map(id => trailheadRatings[id].length));
+const totalScore = Object.keys(trailheadScores)
+  .map(id => trailheadScores[id].size)
+  .reduce((a, b) => a + b, 0);
+
+const totalRating = Object.keys(trailheadRatings)
+  .map(id => trailheadRatings[id].length)
+  .reduce((a, b) => a + b, 0);
 
 assert.strictEqual(totalScore, 548, 'Part 1 failed');
 assert.strictEqual(totalRating, 1252, 'Part 2 failed');
