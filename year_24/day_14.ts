@@ -14,7 +14,7 @@ const verticalMiddle = Math.floor(TilesTall / 2);
 
 const robotRe = /^p=(\d+),(\d+) v=(-?\d+),(-?\d+)$/;
 const robots = lines
-  .map(l => (robotRe.exec(l) ?? raise(`Invalid input: ${l}`)).map(Number))
+  .map(l => (robotRe.exec(l) ?? raise(`Invalid robot: ${l}`)).map(Number))
   .map(([_, px, py, vx, vy]) => ({px, py, vx, vy}));
 
 const positions = robots.map(({px, py, vx, vy}) => {
