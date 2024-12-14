@@ -41,7 +41,6 @@ function executeProgram(
   ...instructions: string[][]
 ) {
   let instructionPointer = 0;
-
   while (instructionPointer < instructions.length) {
     const [name, ...args] = instructions[instructionPointer];
     const instruction = instructionSet[name];

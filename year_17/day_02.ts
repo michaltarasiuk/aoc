@@ -19,6 +19,7 @@ const rows = lines.map(l => l.split('\t').map(Number));
 const spreadsheetChecksum = rows
   .map(row => Math.max(...row) - Math.min(...row))
   .reduce((a, b) => a + b);
+
 const rowsSum = rows
   .map(row => findDivisiblePair(...row) ?? 0)
   .reduce((a, b) => a + b);

@@ -23,9 +23,9 @@ export async function getInput(...params: Parameters<typeof fetchInput>) {
 
 export async function getInputParagraphs(params: InputParams) {
   const input = await getInput(params);
-  return input.split(/\n\n+/).map(paragraph => paragraph.split(/\n/));
+  return input.split(/\n\n+/).map(p => p.split(/\n/));
 }
-export async function getInputNumbers(params: InputParams) {
+export async function getInputIntegers(params: InputParams) {
   const input = await getInput(params);
   return extractIntegers(input);
 }

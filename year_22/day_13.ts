@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import {castArray} from 'lib/array.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {isArray, isDefined, isNumber} from 'lib/predicate.js';
+import {isDefined} from 'lib/predicate.js';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 13});
 
@@ -16,12 +16,12 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
   for (const i of (a.length > b.length ? a : b).keys()) {
     if (!isDefined(a[i]) || !isDefined(b[i])) {
       return a.length < b.length;
-    } else if (isArray(a[i]) || isArray(b[i])) {
+    } else if (Array.isArray(a[i]) || Array.isArray(b[i])) {
       const isValid = isValidPacketPair([castArray(a[i]), castArray(b[i])]);
       if (isDefined(isValid)) {
         return isValid;
       }
-    } else if (isNumber(a[i]) && isNumber(b[i])) {
+    } else if (typeof a[i] === 'number' && typeof b[i] === 'number') {
       if (a[i] !== b[i]) {
         return a[i] < b[i];
       }

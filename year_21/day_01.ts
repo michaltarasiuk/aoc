@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputNumbers} from 'lib/input.js';
+import {getInputIntegers} from 'lib/input.js';
 
-const ns = await getInputNumbers({year: 2021, day: 1});
+const ns = await getInputIntegers({year: 2021, day: 1});
 
 const increasingMeasurementsCount = ns
   .map((n, i) => Number(n > ns[i - 1]))

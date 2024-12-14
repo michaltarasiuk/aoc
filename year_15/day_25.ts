@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputNumbers} from 'lib/input.js';
+import {getInputIntegers} from 'lib/input.js';
 
-const [targetRow, targetCol] = await getInputNumbers({year: 2015, day: 25});
+const [targetRow, targetCol] = await getInputIntegers({year: 2015, day: 25});
 
 function calcSteps(row: number, col: number) {
   const diagonalSum = row + col;

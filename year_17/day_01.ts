@@ -9,6 +9,7 @@ const ns = input.matchAll(/\d/g).map(Number).toArray();
 const captchaSolution = ns
   .filter((n, i) => n === ns.at((i + 1) % ns.length))
   .reduce((a, b) => a + b);
+
 const captchaSolution2 = ns
   .filter((n, i) => n === ns.at((i + ns.length / 2) % ns.length))
   .reduce((a, b) => a + b);
