@@ -6,11 +6,11 @@ const paragraphs = await getInputParagraphs({year: 2024, day: 5});
 
 type Rules = typeof rules;
 
-function isCorrectlyOrderedUpdate(rules: Rules, ...pageNumbers: number[]) {
+function isUpdateInCorrectOrder(rules: Rules, update: number[]) {
   const seen = new Set<number>();
-  for (const pageNumber of pageNumbers) {
-    for (const [first] of rules[pageNumber] ?? []) {
-      if (pageNumbers.includes(Number(first)) && !seen.has(Number(first))) {
+  for (const pageNumber of update) {
+    for (const [preceding] of rules[pageNumber] ?? []) {
+      if (update.includes(preceding) && !seen.has(preceding)) {
         return false;
       }
     }
@@ -18,30 +18,29 @@ function isCorrectlyOrderedUpdate(rules: Rules, ...pageNumbers: number[]) {
   }
   return true;
 }
-function findRule(rules: Rules, first: number, second: number) {
-  return rules[second]?.find(([a]) => Number(a) === first);
+function findRule(rules: Rules, preceding: number, succeeding: number) {
+  return rules[succeeding]?.find(rule => rule[0] === preceding);
 }
 
 const rules = Object.groupBy(
-  paragraphs[0].map(rule => rule.split('|')),
-  ([, second]) => second
+  paragraphs[0].map(rule => rule.split('|').map(Number)),
+  ([, succeeding]) => succeeding
+);
+const updates = paragraphs[1].map(update => update.split(',').map(Number));
+
+const {correctlyOrdered = [], incorrectlyOrdered = []} = Object.groupBy(
+  updates,
+  update =>
+    isUpdateInCorrectOrder(rules, update)
+      ? 'correctlyOrdered'
+      : 'incorrectlyOrdered'
 );
 
-const [correctlyOrderedUpdates, incorrectlyOrderedUpdates] = paragraphs[1]
-  .map(update => update.split(',').map(Number))
-  .reduce<[number[][], number[][]]>(
-    (acc, update) => {
-      acc[isCorrectlyOrderedUpdate(rules, ...update) ? 0 : 1].push(update);
-      return acc;
-    },
-    [[], []]
-  );
-
-const sumMiddleCorrect = correctlyOrderedUpdates.reduce(
+const sumMiddleCorrect = correctlyOrdered.reduce(
   (acc, update) => acc + update[Math.floor(update.length / 2)],
   0
 );
-const sumMiddleIncorrect = incorrectlyOrderedUpdates
+const sumMiddleIncorrect = incorrectlyOrdered
   .map(update => update.toSorted((a, b) => (findRule(rules, a, b) ? -1 : 1)))
   .reduce((acc, update) => acc + update[Math.floor(update.length / 2)], 0);
 

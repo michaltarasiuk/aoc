@@ -14,7 +14,7 @@ function calcChecksum(disk: (number | string)[]) {
 }
 
 const Space = '.';
-const parsed = input
+const parsedDisk = input
   .split('')
   .map(Number)
   .reduce<(number | string)[]>((acc, n, i) => {
@@ -23,7 +23,7 @@ const parsed = input
   }, []);
 
 {
-  const disk = [...parsed];
+  const disk = [...parsedDisk];
   while (true) {
     const i = disk.indexOf(Space);
     const j = disk.findLastIndex(v => typeof v === 'number');
@@ -36,7 +36,7 @@ const parsed = input
 }
 
 {
-  const disk = [...parsed];
+  const disk = [...parsedDisk];
   const seen = new Set<number>();
   while (true) {
     const j = disk.findLastIndex(n => typeof n === 'number' && !seen.has(n));
