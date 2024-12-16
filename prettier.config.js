@@ -1,9 +1,10 @@
 /** @type {import("prettier").Config} */
 const prettierConfig = {
-  bracketSpacing: false,
-  singleQuote: true,
+  arrowParens: 'avoid',
+  quoteProps: 'preserve',
   trailingComma: 'es5',
   printWidth: 80,
-  arrowParens: 'avoid',
+  bracketSpacing: false,
+  singleQuote: true,
 };
 export default prettierConfig;
