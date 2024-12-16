@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInputGrid} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const grid = await getInputGrid({year: 2024, day: 10}, char => Number(char));
 
