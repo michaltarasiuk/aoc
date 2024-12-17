@@ -34,11 +34,11 @@ Register B: (?<b>\\d+)
 Register C: (?<c>\\d+)
 
 Program: (?<program>.*)`);
-const {program, ...registers} = InputSchema.parse(inputRe.exec(input)?.groups);
 
-let pointer = 0;
+const {program, ...registers} = InputSchema.parse(inputRe.exec(input)?.groups);
 const output: number[] = [];
 
+let pointer = 0;
 outer: while (pointer < program.length) {
   const [opcode, operand] = program[pointer];
   switch (opcode) {
