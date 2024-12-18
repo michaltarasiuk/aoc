@@ -21,31 +21,44 @@ const Directions = [
   [-1, 0],
 ];
 
-const bytes = lines.map(l => l.split(',').map(Number));
-const memorySpace = [...Array(Size)].map(() => Array(Size).fill(Safe));
-for (const [i, j] of bytes.slice(0, MaxBytes)) {
-  memorySpace[j][i] = Corrupted;
+function findShortestPath(memoryGrid: string[][]): number {
+  const stack: [Point, steps: number][] = [[StartPoint, 0]];
+  const seen = new Set<string>();
+
+  while (stack.length > 0) {
+    const [[x, y], steps] = stack.shift()!;
+    if (seen.has(`${x},${y}`)) {
+      continue;
+    } else {
+      seen.add(`${x},${y}`);
+    }
+    if (x === EndPoint[0] && y === EndPoint[1]) {
+      return steps;
+    }
+    for (const [dx, dy] of Directions) {
+      const i = x + dx;
+      const j = y + dy;
+      if (memoryGrid[j]?.[i] === Safe) {
+        stack.push([[i, j], steps + 1]);
+      }
+    }
+  }
+  return -1;
 }
 
-const stack: [Point, steps: number][] = [[StartPoint, 0]];
-const seen = new Set<string>();
+const bytes = lines.map(l => l.split(',').map(Number));
+const memorySpace = [...Array(Size)].map(() => Array(Size).fill(Safe));
 
-while (stack.length > 0) {
-  const [[x, y], steps] = stack.shift()!;
-  if (seen.has(`${x},${y}`)) {
-    continue;
-  } else {
-    seen.add(`${x},${y}`);
-  }
-  if (x === EndPoint[0] && y === EndPoint[1]) {
-    assert.strictEqual(steps, 246, 'Part 1 failed');
-    continue;
-  }
-  for (const [dx, dy] of Directions) {
-    const i = x + dx;
-    const j = y + dy;
-    if (memorySpace[j]?.[i] === Safe) {
-      stack.push([[i, j], steps + 1]);
-    }
+for (const [i, j] of bytes.splice(0, MaxBytes)) {
+  memorySpace[j][i] = Corrupted;
+}
+assert.strictEqual(findShortestPath(memorySpace), 246, 'Part 1 failed');
+
+while (bytes.length > 0) {
+  const [i, j] = bytes.shift()!;
+  memorySpace[j][i] = Corrupted;
+  if (findShortestPath(memorySpace) === -1) {
+    assert.strictEqual(`${i},${j}`, '22,50', 'Part 2 failed');
+    break;
   }
 }
