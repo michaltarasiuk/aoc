@@ -18,7 +18,7 @@ const gates = gateDescriptions
   .map(([, a, op, b, out]) => ({a, op, b, out}));
 
 while (gates.length > 0) {
-  const {a, b, op, out} = gates.shift()!;
+  const {a, b, op, out} = gates.pop()!;
   if (a in wireValues && b in wireValues) {
     switch (op) {
       case 'AND':
@@ -34,7 +34,7 @@ while (gates.length > 0) {
         throw new Error('Invalid operator');
     }
   } else {
-    gates.push({a, op, b, out});
+    gates.unshift({a, op, b, out});
   }
 }
 
