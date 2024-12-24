@@ -40,12 +40,9 @@ while (gates.length > 0) {
 
 const zWires = Object.entries(wireValues)
   .filter(([k]) => k.startsWith('z'))
-  .sort(([a], [b]) => a.localeCompare(b));
+  .sort(([a], [b]) => b.localeCompare(a));
 
-const binaryString = zWires
-  .map(([, v]) => v)
-  .reverse()
-  .join('');
+const binaryString = zWires.map(([, v]) => v).join('');
 const decimalValue = parseInt(binaryString, 2);
 
 assert.strictEqual(decimalValue, 55114892239566, 'Part 1 failed');
