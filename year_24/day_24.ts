@@ -19,7 +19,7 @@ const gates = gateDescriptions
 
 while (gates.length > 0) {
   const {a, b, op, out} = gates.pop()!;
-  if (a in wireValues && b in wireValues) {
+  if (Object.hasOwn(wireValues, a) && Object.hasOwn(wireValues, b)) {
     switch (op) {
       case 'AND':
         wireValues[out] = wireValues[a] & wireValues[b];
