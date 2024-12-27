@@ -18,7 +18,7 @@ const steps = lines
     if (!acc.has(before)) acc.set(before, new Set());
     if (!acc.has(after)) acc.set(after, new Set());
 
-    acc.get(after)?.add(before);
+    acc.get(after)!.add(before);
     return acc;
   }, new Map());
 
