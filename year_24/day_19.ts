@@ -9,8 +9,8 @@ function countWays(
   patterns: RegExp[],
   cache: Record<typeof design, number> = {}
 ) {
-  if (design === '') return 1;
-  if (design in cache) return cache[design];
+  if (!design) return 1;
+  if (Object.hasOwn(cache, design)) return cache[design];
   let ways = 0;
   for (const pattern of patterns.filter(p => p.test(design))) {
     ways += countWays(design.replace(pattern, ''), patterns, cache);
