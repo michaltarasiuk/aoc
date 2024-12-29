@@ -33,14 +33,14 @@ const {correctlyOrdered = [], incorrectlyOrdered = []} = Object.groupBy(
       : 'incorrectlyOrdered'
 );
 
-const sumMiddleCorrect = correctlyOrdered
-  .map(update => update[Math.floor(update.length / 2)])
-  .reduce((acc, page) => acc + page, 0);
+const sumMiddleCorrect = correctlyOrdered.reduce(
+  (acc, update) => acc + update[Math.floor(update.length / 2)],
+  0
+);
 
 const sumMiddleIncorrect = incorrectlyOrdered
   .map(update => update.toSorted((a, b) => (findRule(rules, a, b) ? -1 : 1)))
-  .map(update => update[Math.floor(update.length / 2)])
-  .reduce((acc, page) => acc + page, 0);
+  .reduce((acc, update) => acc + update[Math.floor(update.length / 2)], 0);
 
 assert.strictEqual(sumMiddleCorrect, 7365, 'Part 1 failed');
 assert.strictEqual(sumMiddleIncorrect, 5770, 'Part 2 failed');
