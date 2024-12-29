@@ -7,10 +7,10 @@ const input = await getInput({year: 2015, day: 10});
 const IterationsPart1 = 40;
 const IterationsPart2 = 50;
 
+const sequenceLengths: number[] = [];
+
 let currentSequence = input;
 let iterationCount = 0;
-
-const sequenceLengths: number[] = [];
 
 while (++iterationCount <= IterationsPart2) {
   const repeatedDigitsRe = /(?:(\d)\1*)/g;
