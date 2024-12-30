@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {isDefined} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2022, day: 7});
@@ -35,7 +34,7 @@ function updateFilesystem(
   cwd: string[],
   dir: string[]
 ) {
-  const dirSize = sum(...dir.map(file => parseFile(file) ?? 0));
+  const dirSize = dir.map(file => parseFile(file) ?? 0).reduce((a, b) => a + b);
 
   for (const i of cwd.keys()) {
     const dirName = cwd.slice(0, i + 1).join('/');
@@ -70,8 +69,8 @@ for (const l of lines) {
 }
 
 const filesystem = determineFilesystem(...cmds);
-const totalSize = sum(
-  ...Object.values(filesystem).filter(size => size <= 100_000)
-);
+const totalSize = Object.values(filesystem)
+  .filter(size => size <= 100_000)
+  .reduce((a, b) => a + b);
 
 assert.strictEqual(totalSize, 1306611, 'Part 1 failed');

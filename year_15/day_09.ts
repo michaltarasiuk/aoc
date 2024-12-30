@@ -3,18 +3,15 @@ import assert from 'node:assert';
 import {permute} from 'lib/array.js';
 import {raise} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
 type CostMap = {[from: string]: {[to: string]: number}};
 
 function calcRouteCost(costMap: CostMap, ...route: string[]) {
-  return sum(
-    ...route
-      .map((from, i) => [from, route[i + 1]])
-      .map(([from, to]) => costMap[from][to] ?? 0)
-  );
+  return route
+    .map((from, i) => costMap[from][route[i + 1]] ?? 0)
+    .reduce((a, b) => a + b);
 }
 
 const costMap = lines

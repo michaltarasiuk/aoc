@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInputIntegers} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const ns = await getInputIntegers({year: 2018, day: 1});
 
@@ -21,7 +20,7 @@ function findFirstFrequencyReachesTwice(...ns: number[]) {
   }
 }
 
-const frequency = sum(...ns);
+const frequency = ns.reduce((a, b) => a + b);
 const firstFrequencyReachesTwice = findFirstFrequencyReachesTwice(...ns);
 
 assert.strictEqual(frequency, 522, 'Part 1 failed');

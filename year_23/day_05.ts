@@ -31,6 +31,7 @@ function mapThroughCategories(
 const categoryLayers = categoryMaps
   .map(([, ...layer]) => layer)
   .map(layer => layer.map(l => extractIntegers(l)));
+
 const lowestConvertedLocation = Math.min(
   ...extractIntegers(initialSeeds).map(seed =>
     mapThroughCategories(categoryLayers, seed)

@@ -2,7 +2,6 @@ import assert from 'node:assert';
 
 import {raise} from 'lib/assert.js';
 import {getInputIntegers} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const ns = await getInputIntegers({year: 2020, day: 9});
 
@@ -17,13 +16,12 @@ function findInvalid(ns: number[], preambleSize: number) {
   }
 }
 
-function findContiguousSet(ns: number[], value: number) {
+function findContiguousSet(ns: number[], v: number) {
   for (const i of ns.keys()) {
     const set: number[] = [];
-
     for (const n of ns.slice(i)) {
       set.push(n);
-      if (sum(...set) === value) {
+      if (set.reduce((a, b) => a + b) === v) {
         return set;
       }
     }

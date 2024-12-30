@@ -7,15 +7,8 @@ import {stringToCodePoints} from 'lib/string.js';
 
 const lines = await getInputLines({year: 2016, day: 4});
 
-function parseRoom(room: string) {
-  const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
-  const [, name, id, checksum] = room.match(roomRe) ?? raise('Invalid room');
-
-  return {name: name.replace(/-/g, ''), id: Number(id), checksum};
-}
-
 function calcChecksum(...chars: string[]) {
-  return Array.from(frequencies(chars))
+  return [...frequencies(chars)]
     .toSorted(([charA, countA], [charB, countB]) => {
       return countB - countA || charA.localeCompare(charB);
     })
@@ -27,23 +20,12 @@ function calcChecksum(...chars: string[]) {
 function shiftAlphabetCodePoint(codePoint: number, shift: number) {
   return ((codePoint - 97 + shift) % 26) + 97;
 }
-function findSectorID(
-  storage: string,
-  ...rooms: ReturnType<typeof parseRoom>[]
-) {
-  const room = rooms.find(
-    ({name, id}) =>
-      storage ===
-      String.fromCodePoint(
-        ...stringToCodePoints(name, codePoint =>
-          shiftAlphabetCodePoint(codePoint, id)
-        )
-      )
-  );
-  return room?.id ?? raise('Sector ID not found');
-}
 
-const rooms = lines.map(parseRoom);
+const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
+const rooms = lines.map(l => {
+  const [, name, id, checksum] = roomRe.exec(l) ?? raise('Invalid room');
+  return {name: name.replace(/-/g, ''), id: Number(id), checksum};
+});
 
 const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
   if (checksum === calcChecksum(...name)) {
@@ -51,8 +33,17 @@ const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
   }
   return acc;
 }, 0);
+
 const NorthPoleObjectStorage = 'northpoleobjectstorage';
-const northPoleSectorID = findSectorID(NorthPoleObjectStorage, ...rooms);
+const northPoleSector = rooms.find(
+  ({name, id}) =>
+    NorthPoleObjectStorage ===
+    String.fromCodePoint(
+      ...stringToCodePoints(name, codePoint =>
+        shiftAlphabetCodePoint(codePoint, id)
+      )
+    )
+);
 
 assert.strictEqual(realRoomSectorIDsSum, 409147, 'Part 1 failed');
-assert.strictEqual(northPoleSectorID, 991, 'Part 2 failed');
+assert.strictEqual(northPoleSector?.id, 991, 'Part 2 failed');

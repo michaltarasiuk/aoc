@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {extractIntegers} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2023, day: 9});
@@ -17,8 +16,7 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 const extrapolatedValuesSum = lines
-  .map(l => extractIntegers(l))
-  .map(ns => sum(...extrapolate(...ns)))
+  .flatMap(l => extrapolate(...extractIntegers(l)))
   .reduce((a, b) => a + b);
 
 assert.strictEqual(extrapolatedValuesSum, 1939607039, 'Part 1 failed');

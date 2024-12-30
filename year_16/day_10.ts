@@ -68,6 +68,7 @@ for (const l of lines) {
 }
 
 const output = new Map<number, number>();
+
 let responsibleBotId: number | undefined;
 let botsReadyForTransfer = bots.getReadyBots();
 while (botsReadyForTransfer.length > 0) {

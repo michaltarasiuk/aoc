@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInput} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 import {isObject} from 'lib/predicate.js';
 
 const input = await getInput({year: 2015, day: 12});
@@ -26,8 +25,8 @@ JSON.stringify(parsed, (_, val: unknown) => {
   return val;
 });
 
-const documentNsSum = sum(...ns);
-const documentNsSum2 = sum(...ns2);
+const documentNsSum = ns.reduce((a, b) => a + b);
+const documentNsSum2 = ns2.reduce((a, b) => a + b);
 
 assert.strictEqual(documentNsSum, 191164, 'Part 1 failed');
 assert.strictEqual(documentNsSum2, 87842, 'Part 2 failed');
