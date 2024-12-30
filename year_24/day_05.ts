@@ -33,11 +33,10 @@ const sumMiddleCorrect = correctlyOrdered.reduce(
 
 let sumMiddleIncorrect = 0;
 for (const incorrectUpdate of incorrectlyOrdered) {
-  const update = incorrectUpdate.toSorted((a, b) => {
-    const rule = groupedRules[b]?.find(rule => rule[0] === a);
-    return rule ? -1 : 1;
-  });
-  sumMiddleIncorrect += update[Math.floor(update.length / 2)];
+  const sortedUpdate = incorrectUpdate.toSorted((a, b) =>
+    groupedRules[b]?.find(rule => rule[0] === a) ? -1 : 1
+  );
+  sumMiddleIncorrect += sortedUpdate[Math.floor(sortedUpdate.length / 2)];
 }
 
 assert.strictEqual(sumMiddleCorrect, 7365, 'Part 1 failed');
