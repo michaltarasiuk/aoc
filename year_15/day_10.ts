@@ -9,20 +9,17 @@ const IterationsPart2 = 50;
 
 const sequenceLengths: number[] = [];
 
-let currentSequence = input;
-let iterationCount = 0;
+let sequence = input;
+let iteration = 0;
 
-while (++iterationCount <= IterationsPart2) {
+while (++iteration <= IterationsPart2) {
   const repeatedDigitsRe = /(?:(\d)\1*)/g;
-  currentSequence = (currentSequence.match(repeatedDigitsRe) ?? [])
+  sequence = (sequence.match(repeatedDigitsRe) ?? [])
     .map(([...digits]) => digits.length + digits[0])
     .join('');
 
-  if (
-    iterationCount === IterationsPart1 ||
-    iterationCount === IterationsPart2
-  ) {
-    sequenceLengths.push(currentSequence.length);
+  if ([IterationsPart1, IterationsPart2].includes(iteration)) {
+    sequenceLengths.push(sequence.length);
   }
 }
 

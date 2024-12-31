@@ -7,8 +7,7 @@ const lines = await getInputLines({year: 2017, day: 4});
 const passports = lines.map(l => l.split(/\s/));
 
 const validPassphrasesCount = passports
-  .map(passport => passport.length === new Set(passport).size)
-  .map(Number)
+  .map(passport => Number(passport.length === new Set(passport).size))
   .reduce((a, b) => a + b);
 
 const validPassphrasesCount2 = passports
@@ -16,9 +15,8 @@ const validPassphrasesCount2 = passports
     const uniq = new Set(
       passport.map(([...chars]) => chars.toSorted().join(''))
     );
-    return passport.length === uniq.size;
+    return Number(passport.length === uniq.size);
   })
-  .map(Number)
   .reduce((a, b) => a + b);
 
 assert.strictEqual(validPassphrasesCount, 455, 'Part 1 failed');

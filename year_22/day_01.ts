@@ -1,12 +1,11 @@
 import assert from 'node:assert';
 
 import {getInputParagraphs} from 'lib/input.js';
-import {sum} from 'lib/math.js';
 
 const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 
 const elfs = paragraphs
-  .map(paragraph => sum(...paragraph.map(Number)))
+  .map(p => p.map(Number).reduce((a, b) => a + b))
   .toSorted((a, b) => b - a);
 
 const maxCalories = elfs[0];
