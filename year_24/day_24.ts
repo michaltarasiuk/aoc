@@ -43,6 +43,6 @@ const zWires = Object.entries(wireValues)
   .sort(([a], [b]) => b.localeCompare(a));
 
 const binaryString = zWires.map(([, v]) => v).join('');
-const decimalValue = parseInt(binaryString, 2);
+const decimalValue = Number.parseInt(binaryString, 2);
 
 assert.strictEqual(decimalValue, 55114892239566, 'Part 1 failed');

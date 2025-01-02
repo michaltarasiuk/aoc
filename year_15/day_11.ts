@@ -20,7 +20,7 @@ function isValidPassword(s: string) {
 }
 
 function findNewPassword(password: string) {
-  let int = parseInt(password, 36);
+  let int = Number.parseInt(password, 36);
   let newPassword = int.toString(36);
   do {
     int++;
