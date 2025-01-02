@@ -10,6 +10,7 @@ function findMarkerEndIndex([...chars]: string, markerLength: number) {
   const markerStartIndex = chars
     .keys()
     .find(i => uniq(input.slice(i, i + markerLength)).length === markerLength);
+
   return isDefined(markerStartIndex) ? markerStartIndex + markerLength : -1;
 }
 
