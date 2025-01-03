@@ -18,7 +18,7 @@ function createBots() {
     addChip(botId: number, value: number) {
       bots.set(
         botId,
-        [...(bots.get(botId) ?? []), value].toSorted((a, b) => a - b)
+        [...(bots.get(botId) ?? []), value].sort((a, b) => a - b)
       );
     },
     deleteById(botId: number) {
@@ -29,23 +29,24 @@ function createBots() {
 
 function parseAssigmnet(s: string) {
   const assignmentRe = /^value (\d+) goes to bot (\d+)$/;
-  const match = s.match(assignmentRe);
-  return isDefined(match)
-    ? {
-        type: 'assigment' as const,
-        value: Number(match[1]),
-        botId: Number(match[2]),
-      }
-    : null;
+  const assignmentExec = assignmentRe.exec(s);
+  if (!isDefined(assignmentExec)) {
+    return null;
+  }
+  return {
+    type: 'assigment' as const,
+    value: Number(assignmentExec[1]),
+    botId: Number(assignmentExec[2]),
+  };
 }
 function parseTransfer(s: string) {
   const transferRe =
     /^bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)$/;
-  const match = s.match(transferRe);
-  if (!isDefined(match)) {
+  const transferExec = transferRe.exec(s);
+  if (!isDefined(transferExec)) {
     return null;
   }
-  const [, botId, lowType, lowId, highType, highId] = match;
+  const [, botId, lowType, lowId, highType, highId] = transferExec;
   assert(lowType === 'bot' || lowType === 'output');
   assert(highType === 'bot' || highType === 'output');
   return {
@@ -60,8 +61,7 @@ function parseTransfer(s: string) {
 
 const bots = createBots();
 const transfers = new Map<number, ReturnType<typeof parseTransfer>>();
-for (const l of lines) {
-  const parsed = parseAssigmnet(l) ?? parseTransfer(l) ?? raise('Invalid line');
+for (const parsed of lines.map(l => (parseAssigmnet(l) ?? parseTransfer(l))!)) {
   parsed.type === 'assigment'
     ? bots.addChip(parsed.botId, parsed.value)
     : transfers.set(parsed.botId, parsed);
