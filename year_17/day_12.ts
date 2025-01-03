@@ -31,7 +31,7 @@ function countGroups(programs: Map<string, string[]>) {
   const groups = new Set<string>();
 
   for (const id of programs.keys()) {
-    groups.add([...findGroup(programs, id)].toSorted().join());
+    groups.add([...findGroup(programs, id)].sort().join());
   }
   return groups.size;
 }

@@ -9,7 +9,7 @@ const lines = await getInputLines({year: 2016, day: 4});
 
 function calcChecksum(...chars: string[]) {
   return [...frequencies(chars)]
-    .toSorted(([charA, countA], [charB, countB]) => {
+    .sort(([charA, countA], [charB, countB]) => {
       return countB - countA || charA.localeCompare(charB);
     })
     .slice(0, 5)

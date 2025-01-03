@@ -43,7 +43,7 @@ function compareHands(a: string, b: string) {
 const hands = lines
   .map(l => l.split(/\s/))
   .map(([hand, bit]) => ({hand, bid: Number(bit), type: classifyHand(hand)}))
-  .toSorted((a, b) => a.type - b.type || compareHands(a.hand, b.hand));
+  .sort((a, b) => a.type - b.type || compareHands(a.hand, b.hand));
 
 const totalWinnings = hands
   .map(({bid}, i) => ({bid, rank: i + 1}))

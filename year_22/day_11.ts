@@ -56,7 +56,7 @@ for (let i = 0; i < RoundsCount; i++) {
 const [a, b] = monkeys
   .values()
   .toArray()
-  .toSorted((a, b) => b.inspects - a.inspects);
+  .sort((a, b) => b.inspects - a.inspects);
 const businessLevel = a.inspects * b.inspects;
 
 assert.strictEqual(businessLevel, 55458, 'Part 1 failed');

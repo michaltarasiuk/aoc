@@ -74,7 +74,7 @@ const scores = parsedLines
   .flatMap(l =>
     l.status === 'INCOMPLETE' ? [calcAutocompleteScore(l.stack)] : []
   )
-  .toSorted((a, b) => a - b);
+  .sort((a, b) => a - b);
 const middleScore = scores.at(Math.floor(scores.length / 2));
 
 strictEqual(totalSyntaxErrorScore, 323613, 'Part 1 failed');

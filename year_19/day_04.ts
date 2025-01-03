@@ -12,7 +12,7 @@ let passwordsCount = 0;
 for (let i = start; i <= end; i++) {
   const s = String(i);
 
-  if (twoAdjacentDigitsRe.test(s) && s === Array.from(s).toSorted().join('')) {
+  if (twoAdjacentDigitsRe.test(s) && s === [...s].sort().join('')) {
     passwordsCount++;
   }
 }

@@ -28,7 +28,7 @@ function createShift() {
 const Events = {falls: 'falls asleep', wakes: 'wakes up'};
 const records = lines
   .map(parseRecord)
-  .toSorted((a, b) => Number(a.date) - Number(b.date));
+  .sort((a, b) => Number(a.date) - Number(b.date));
 
 type Guard = number[];
 const guards: Record<string, Guard> = {};

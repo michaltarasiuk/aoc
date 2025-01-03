@@ -6,7 +6,7 @@ const paragraphs = await getInputParagraphs({year: 2022, day: 1});
 
 const elfs = paragraphs
   .map(p => p.map(Number).reduce((a, b) => a + b))
-  .toSorted((a, b) => b - a);
+  .sort((a, b) => b - a);
 
 const maxCalories = elfs[0];
 const caloriesOfTopThreeElves = elfs[0] + elfs[1] + elfs[2];

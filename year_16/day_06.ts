@@ -14,7 +14,7 @@ function decodeMessage(
     const [[mostFrequentChar]] = charFrequencies
       .entries()
       .toArray()
-      .toSorted((a, b) => compareFn(a[1], b[1]));
+      .sort((a, b) => compareFn(a[1], b[1]));
 
     return decodedMessage + mostFrequentChar;
   }, '');

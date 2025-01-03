@@ -31,7 +31,7 @@ const setsOfThree = new Set<string>();
 for (const connection of Object.keys(connections)) {
   for (const [a, b] of permuteConnections([...connections[connection]], 2)) {
     if (connections[a].has(b)) {
-      setsOfThree.add([connection, a, b].toSorted().join('-'));
+      setsOfThree.add([connection, a, b].sort().join('-'));
     }
   }
 }

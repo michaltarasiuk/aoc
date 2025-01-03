@@ -28,7 +28,7 @@ while (steps.size > 0) {
     .keys()
     .filter(k => steps.get(k)?.isSubsetOf(new Set(order)))
     .toArray()
-    .toSorted();
+    .sort();
 
   steps.delete(step);
   order.push(step);

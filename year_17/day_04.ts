@@ -12,9 +12,7 @@ const validPassphrasesCount = passports
 
 const validPassphrasesCount2 = passports
   .map(passport => {
-    const uniq = new Set(
-      passport.map(([...chars]) => chars.toSorted().join(''))
-    );
+    const uniq = new Set(passport.map(([...chars]) => chars.sort().join('')));
     return Number(passport.length === uniq.size);
   })
   .reduce((a, b) => a + b);
