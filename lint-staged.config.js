@@ -22,7 +22,7 @@ const lintStagedConfig = {
       for await (const relativeFilePath of await fs.glob('year_*/day_*.ts')) {
         const file = await fs.readFile(
           new URL(relativeFilePath, import.meta.url),
-          {'encoding': 'utf-8'}
+          {encoding: 'utf-8'}
         );
         const [imports] = parse(file);
         for (const {n} of imports) {
