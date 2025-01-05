@@ -34,7 +34,7 @@ const lintStagedConfig = {
             continue;
           }
           const absoluteFilePath = path.resolve(relativeFilePath);
-          if (stagedFiles.includes(resolvedImportPath)) {
+          if (stagedFilesSet.has(resolvedImportPath)) {
             stagedFilesSet.add(absoluteFilePath);
           }
         }
