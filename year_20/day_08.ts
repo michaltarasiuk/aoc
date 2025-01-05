@@ -33,9 +33,8 @@ function runProgram(...instructions: {op: string; arg: number}[]) {
   return acc;
 }
 
-const instructions = lines
-  .map(l => l.split(/\s/))
-  .map(([op, arg]) => ({op, arg: Number(arg)}));
-const acc = runProgram(...instructions);
+const acc = runProgram(
+  ...lines.map(l => l.split(/\s/)).map(([op, arg]) => ({op, arg: Number(arg)}))
+);
 
 assert.strictEqual(acc, 1782, 'Part 1 failed');
