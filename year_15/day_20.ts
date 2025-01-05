@@ -1,15 +1,9 @@
 import assert from 'node:assert';
 
 import {getInput} from 'lib/input.js';
+import {divisors} from 'lib/math.js';
 
 const input = await getInput({year: 2015, day: 20});
-
-function* divisors(n: number) {
-  for (let i = 1; i <= n / 2; i++) {
-    if (n % i === 0) yield i;
-  }
-  yield n;
-}
 
 let i = 0;
 const houses: Record<number, number> = {};

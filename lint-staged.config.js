@@ -1,15 +1,50 @@
+import fs from 'node:fs/promises';
+import {isBuiltin} from 'node:module';
+import path from 'node:path';
+
+import {parse} from 'es-module-lexer';
+import tsConfigPaths, {createMatchPath} from 'tsconfig-paths';
+
+const tsConfig = tsConfigPaths.loadConfig();
+if (tsConfig.resultType === 'failed') {
+  throw new Error(tsConfig.message);
+}
+
+const matchPath = createMatchPath(tsConfig.absoluteBaseUrl, tsConfig.paths);
+
 /** @type {import("lint-staged").Config} */
 const lintStagedConfig = {
   '*': [
-    'npm run prettier',
-    'npm run eslint',
-    function assert(filenames) {
-      return filenames
-        .filter(filename => {
-          const dayRe = /year_\d+\/day_\d+\.ts/;
-          return dayRe.test(filename);
+    'prettier',
+    'eslint',
+    async function assert(stagedFiles) {
+      const stagedFilesSet = new Set(stagedFiles);
+      for await (const relativeFilePath of await fs.glob('year_*/day_*.ts')) {
+        const file = await fs.readFile(
+          new URL(relativeFilePath, import.meta.url),
+          {'encoding': 'utf-8'}
+        );
+        const [imports] = parse(file);
+        for (const {n} of imports) {
+          if (!n || isBuiltin(n)) {
+            continue;
+          }
+          const resolvedImportPath = matchPath(n.replace(/\.js$/, '.ts'));
+          if (!resolvedImportPath) {
+            continue;
+          }
+          const absoluteFilePath = path.resolve(relativeFilePath);
+          if (stagedFiles.includes(resolvedImportPath)) {
+            stagedFilesSet.add(absoluteFilePath);
+          }
+        }
+      }
+      return [...stagedFilesSet]
+        .filter(file => {
+          const dayRe = /year_\d{2}\/day_\d{2}\.ts$/;
+          return dayRe.test(file);
         })
-        .map(filename => `tsx ${filename}`);
+        .map(file => `tsx ${file}`);
     },
   ],
 };
