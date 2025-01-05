@@ -7,7 +7,7 @@ const lines = await getInputLines({year: 2017, day: 7});
 
 const programRe = /(\w+|\d+)/g;
 const programs = lines
-  .map(program => program.match(programRe) ?? raise('Invalid program'))
+  .map(p => p.match(programRe) ?? raise('Invalid program'))
   .map(([name, weight, ...children]) => ({
     name,
     weight: Number(weight),
