@@ -5,60 +5,52 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
 
-type ProgramState = {
-  registers: Record<string, number>;
-  instructionPointer: number;
-};
-type Instruction = (this: ProgramState, ...args: string[]) => number | void;
+type Registers = Record<string, number>;
 
-const instructionSet: Record<string, Instruction> = {
-  hlf(register) {
-    this.registers[register] /= 2;
+const instructionMap: Record<
+  string,
+  (registers: Registers, pointer: number, ...args: string[]) => number | void
+> = {
+  hlf(registers, _pointer, register) {
+    registers[register] /= 2;
   },
-  tpl(register) {
-    this.registers[register] *= 3;
+  tpl(registers, _pointer, register) {
+    registers[register] *= 3;
   },
-  inc(register) {
-    this.registers[register] += 1;
+  inc(registers, _pointer, register) {
+    registers[register] += 1;
   },
-  jmp(offset) {
-    return this.instructionPointer + Number(offset);
+  jmp(_registers, pointer, offset) {
+    return pointer + Number(offset);
   },
-  jie(register, offset) {
-    if (this.registers[register] % 2 === 0) {
-      return this.instructionPointer + Number(offset);
+  jie(registers, pointer, register, offset) {
+    if (registers[register] % 2 === 0) {
+      return pointer + Number(offset);
     }
   },
-  jio(register, offset) {
-    if (this.registers[register] === 1) {
-      return this.instructionPointer + Number(offset);
+  jio(registers, pointer, register, offset) {
+    if (registers[register] === 1) {
+      return pointer + Number(offset);
     }
   },
 };
-
-function executeProgram(
-  registers: ProgramState['registers'],
-  ...instructions: string[][]
-) {
-  let instructionPointer = 0;
-  while (instructionPointer < instructions.length) {
-    const [name, ...args] = instructions[instructionPointer];
-    const instruction = instructionSet[name];
-
-    instructionPointer =
-      instruction.call({registers, instructionPointer}, ...args) ??
-      instructionPointer + 1;
-  }
-  return registers;
-}
 
 const instructionRe = /(\w+|[+-]\d+)/g;
 const instructions = lines.map(
-  line => line.match(instructionRe) ?? raise('Invalid instruction')
+  l => l.match(instructionRe) ?? raise('Invalid instruction')
 );
 
-const initialRegisters = executeProgram({a: 0, b: 0}, ...instructions);
-const modifiedRegisters = executeProgram({a: 1, b: 0}, ...instructions);
+const registersSet: Registers[] = [
+  {a: 0, b: 0},
+  {a: 1, b: 0},
+];
+for (const registers of registersSet) {
+  let pointer = 0;
+  while (pointer < instructions.length) {
+    const [name, ...args] = instructions[pointer];
+    pointer = instructionMap[name](registers, pointer, ...args) ?? pointer + 1;
+  }
+}
 
-assert.strictEqual(initialRegisters.b, 184, 'Part 1 failed');
-assert.strictEqual(modifiedRegisters.b, 231, 'Part 2 failed');
+assert.strictEqual(registersSet[0].b, 184, 'Part 1 failed');
+assert.strictEqual(registersSet[1].b, 231, 'Part 2 failed');
