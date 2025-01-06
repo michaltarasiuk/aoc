@@ -6,6 +6,7 @@ const lines = await getInputLines({year: 2020, day: 10});
 
 const adapters = lines.map(Number).sort((a, b) => a - b);
 assert(adapters.length > 0, 'No adapters found');
+assert(new Set(adapters).size === adapters.length, 'Duplicate adapters found');
 adapters.push(adapters[adapters.length - 1] + 3);
 
 const diffs: Record<number, number> = {};
