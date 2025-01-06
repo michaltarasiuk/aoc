@@ -4,22 +4,20 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 10});
 
-const IterationsPart1 = 40;
-const IterationsPart2 = 50;
+const Steps = 40;
+const Steps2 = 50;
 
 const sequenceLengths: number[] = [];
 
-let sequence = input;
-let iteration = 0;
+let currentSequence = input;
+let step = 0;
 
-while (++iteration <= IterationsPart2) {
-  const repeatedDigitsRe = /(?:(\d)\1*)/g;
-  sequence = (sequence.match(repeatedDigitsRe) ?? [])
-    .map(([...digits]) => digits.length + digits[0])
+while (++step <= Steps2) {
+  currentSequence = (currentSequence.match(/(?:(\d)\1*)/g) ?? [])
+    .map(([...group]) => group.length + group[0])
     .join('');
-
-  if ([IterationsPart1, IterationsPart2].includes(iteration)) {
-    sequenceLengths.push(sequence.length);
+  if ([Steps, Steps2].includes(step)) {
+    sequenceLengths.push(currentSequence.length);
   }
 }
 

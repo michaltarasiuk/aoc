@@ -4,13 +4,19 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 8});
 
-const ns = lines.map(l => l.length);
+const originalLengths = lines.map(l => l.length);
+const evaluatedLengths = (<string[]>eval(`[${lines.join()}]`)).map(
+  l => l.length
+);
+const encodedLengths = lines.map(l => JSON.stringify(l).length);
 
-const ns2 = (<string[]>eval(`[${lines.join()}]`)).map(l => l.length);
-const diff = ns.reduce((a, b) => a + b) - ns2.reduce((a, b) => a + b);
+const diff =
+  originalLengths.reduce((acc, length) => acc + length) -
+  evaluatedLengths.reduce((acc, length) => acc + length);
 
-const ns3 = lines.map(l => JSON.stringify(l).length);
-const diff2 = ns3.reduce((a, b) => a + b) - ns.reduce((a, b) => a + b);
+const diff2 =
+  encodedLengths.reduce((acc, length) => acc + length) -
+  originalLengths.reduce((acc, length) => acc + length);
 
 assert.strictEqual(diff, 1350, 'Part 1 failed');
 assert.strictEqual(diff2, 2085, 'Part 2 failed');

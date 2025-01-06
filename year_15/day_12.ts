@@ -5,28 +5,29 @@ import {isObject} from 'lib/predicate.js';
 
 const input = await getInput({year: 2015, day: 12});
 
-const ns: number[] = [];
-const ns2: number[] = [];
+const numbers: number[] = [];
+const numbersWithoutRed: number[] = [];
 
-const parsed = JSON.parse(input, (_, val: unknown) => {
-  if (typeof val === 'number') {
-    ns.push(val);
+const parsedInput = JSON.parse(input, (_, value: unknown) => {
+  if (typeof value === 'number') {
+    numbers.push(value);
   }
-  return val;
+  return value;
 });
-JSON.stringify(parsed, (_, val: unknown) => {
-  if (isObject(val)) {
-    for (const v of Object.values(val)) {
+
+JSON.stringify(parsedInput, (_, value: unknown) => {
+  if (isObject(value)) {
+    for (const v of Object.values(value)) {
       if (v === 'red') return;
     }
-  } else if (typeof val === 'number') {
-    ns2.push(val);
+  } else if (typeof value === 'number') {
+    numbersWithoutRed.push(value);
   }
-  return val;
+  return value;
 });
 
-const documentNsSum = ns.reduce((a, b) => a + b);
-const documentNsSum2 = ns2.reduce((a, b) => a + b);
+const sumOfNumbers = numbers.reduce((a, b) => a + b);
+const sumOfNumbersWithoutRed = numbersWithoutRed.reduce((a, b) => a + b);
 
-assert.strictEqual(documentNsSum, 191164, 'Part 1 failed');
-assert.strictEqual(documentNsSum2, 87842, 'Part 2 failed');
+assert.strictEqual(sumOfNumbers, 191164, 'Part 1 failed');
+assert.strictEqual(sumOfNumbersWithoutRed, 87842, 'Part 2 failed');
