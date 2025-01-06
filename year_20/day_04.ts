@@ -15,11 +15,11 @@ const PassportKeys = {
   pid: /^\d{9}$/,
 };
 
-const passports = paragraphs.map(passport => {
+const passports = paragraphs.map(p => {
   const pairRe = /(\w+):(\S+)/g;
 
   return Object.fromEntries(
-    passport
+    p
       .join(' ')
       .matchAll(pairRe)
       .map(([, k, v]) => [k, v])
@@ -27,14 +27,14 @@ const passports = paragraphs.map(passport => {
 });
 
 const validPassportsCount = passports
-  .map(passport => Object.keys(PassportKeys).every(k => isKeyOf(passport, k)))
+  .map(p => Object.keys(PassportKeys).every(k => isKeyOf(p, k)))
   .map(Number)
   .reduce((a, b) => a + b);
 
 const validPassportsCount2 = passports
-  .map(passport =>
+  .map(p =>
     Object.entries(PassportKeys).every(
-      ([k, re]) => isKeyOf(passport, k) && re.test(passport[k])
+      ([k, re]) => isKeyOf(p, k) && re.test(p[k])
     )
   )
   .map(Number)
