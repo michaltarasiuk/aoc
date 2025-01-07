@@ -4,32 +4,49 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2016, day: 1});
 
-function createCoordinates() {
-  const coordinates = {n: 0, e: 0, s: 0, w: 0};
-  const directions = Object.keys(coordinates) as (keyof typeof coordinates)[];
-  let direction = directions[0];
+function createCoords() {
+  const dirs = {n: 0, e: 0, s: 0, w: 0};
+  const dirKeys = Object.keys(dirs) as (keyof typeof dirs)[];
+  let i = 0;
 
   return {
-    set(turn: string, steps: number) {
-      const i = directions.indexOf(direction);
-      const l = directions.at(i - 1)!;
-      const r = directions.at((i + 1) % directions.length)!;
-
-      direction = turn === 'L' ? l : r;
-      coordinates[direction] += steps;
-      return this;
+    getPosition() {
+      const {n, e, s, w} = dirs;
+      return `${n - s},${e - w}`;
     },
-    calcDistance() {
-      const {n, e, s, w} = coordinates;
+    getDistance() {
+      const {n, e, s, w} = dirs;
       return Math.abs(n - s) + Math.abs(e - w);
+    },
+    *set(turn: string, steps: number) {
+      i = (i + (turn === 'L' ? -1 : 1) + dirKeys.length) % dirKeys.length;
+      for (let j = 0; j < steps; j++) {
+        dirs[dirKeys[i]]++;
+        yield;
+      }
     },
   };
 }
 
-const distance = input
+const instructions = input
   .matchAll(/([LR])(\d+)/g)
-  .map(([, turn, steps]) => ({turn, steps: Number(steps)}))
-  .reduce((acc, {turn, steps}) => acc.set(turn, steps), createCoordinates())
-  .calcDistance();
+  .map(([, turn, steps]) => ({turn, steps: Number(steps)}));
 
-assert.strictEqual(distance, 273, 'Part 1 failed');
+const coords = createCoords();
+const seen = new Set<string>();
+let firstDuplicate: number | undefined;
+
+for (const {turn, steps} of instructions) {
+  const gen = coords.set(turn, steps);
+  while (!gen.next().done) {
+    const position = coords.getPosition();
+    if (seen.has(position) && !firstDuplicate) {
+      firstDuplicate = coords.getDistance();
+    } else {
+      seen.add(position);
+    }
+  }
+}
+
+assert.strictEqual(coords.getDistance(), 273, 'Part 1 failed');
+assert.strictEqual(firstDuplicate, 115, 'Part 2 failed');
