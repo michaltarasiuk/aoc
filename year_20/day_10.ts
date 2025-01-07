@@ -16,4 +16,17 @@ for (const joltage of adapters) {
   diffs[diff] = (diffs[diff] ?? 0) + 1;
 }
 
+const paths: Record<number, number> = {0: 1};
+for (const joltage of adapters) {
+  paths[joltage] =
+    (paths[joltage - 1] ?? 0) +
+    (paths[joltage - 2] ?? 0) +
+    (paths[joltage - 3] ?? 0);
+}
+
 assert.strictEqual(diffs[1] * diffs[3], 2210, 'Part 1 failed');
+assert.strictEqual(
+  paths[adapters[adapters.length - 1]],
+  7086739046912,
+  'Part 2 failed'
+);
