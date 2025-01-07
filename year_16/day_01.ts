@@ -14,7 +14,7 @@ function createCoords() {
       const {n, e, s, w} = dirs;
       return `${n - s},${e - w}`;
     },
-    getDistance() {
+    calcDistance() {
       const {n, e, s, w} = dirs;
       return Math.abs(n - s) + Math.abs(e - w);
     },
@@ -41,12 +41,12 @@ for (const {turn, steps} of instructions) {
   while (!gen.next().done) {
     const position = coords.getPosition();
     if (seen.has(position) && !firstDuplicate) {
-      firstDuplicate = coords.getDistance();
+      firstDuplicate = coords.calcDistance();
     } else {
       seen.add(position);
     }
   }
 }
 
-assert.strictEqual(coords.getDistance(), 273, 'Part 1 failed');
+assert.strictEqual(coords.calcDistance(), 273, 'Part 1 failed');
 assert.strictEqual(firstDuplicate, 115, 'Part 2 failed');
