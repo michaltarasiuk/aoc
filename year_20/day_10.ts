@@ -7,7 +7,7 @@ const lines = await getInputLines({year: 2020, day: 10});
 const adapters = lines.map(Number).sort((a, b) => a - b);
 assert(adapters.length > 0, 'No adapters found');
 assert(new Set(adapters).size === adapters.length, 'Duplicate adapters found');
-adapters.push(adapters[adapters.length - 1] + 3);
+adapters.push(adapters.at(-1)! + 3);
 
 const diffs: Record<number, number> = {};
 for (const joltage of adapters) {
@@ -25,8 +25,4 @@ for (const joltage of adapters) {
 }
 
 assert.strictEqual(diffs[1] * diffs[3], 2210, 'Part 1 failed');
-assert.strictEqual(
-  paths[adapters[adapters.length - 1]],
-  7086739046912,
-  'Part 2 failed'
-);
+assert.strictEqual(paths[adapters.at(-1)!], 7086739046912, 'Part 2 failed');
