@@ -14,8 +14,7 @@ function calcChecksum(disk: (number | string)[]) {
 }
 
 const Space = '.';
-const parsedDisk = input
-  .split('')
+const parsedDisk = [...input]
   .map(Number)
   .reduce<(number | string)[]>((acc, n, i) => {
     acc.push(...Array(n).fill(i % 2 === 0 ? i / 2 : Space));
