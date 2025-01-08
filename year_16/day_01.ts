@@ -22,7 +22,7 @@ function createCoords() {
       i = (i + (turn === 'L' ? -1 : 1) + dirKeys.length) % dirKeys.length;
       for (let j = 0; j < steps; j++) {
         dirs[dirKeys[i]]++;
-        yield;
+        yield this.getPosition();
       }
     },
   };
@@ -37,9 +37,7 @@ const seen = new Set<string>();
 let firstDuplicate: number | undefined;
 
 for (const {turn, steps} of instructions) {
-  const gen = coords.set(turn, steps);
-  while (!gen.next().done) {
-    const position = coords.getPosition();
+  for (const position of coords.set(turn, steps)) {
     if (seen.has(position) && !firstDuplicate) {
       firstDuplicate = coords.calcDistance();
     } else {
