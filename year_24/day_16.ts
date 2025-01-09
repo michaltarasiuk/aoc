@@ -24,11 +24,11 @@ function getStartTileCoords(grid: string[][]) {
   }
   throw new Error('Start tile not found');
 }
-function toCacheKey(dir: number, x: number, y: number) {
-  return `${dir}:${x},${y}`;
+function toCacheKey(...params: [dir: number, x: number, y: number]) {
+  return params.join();
 }
 function parseCacheKey(cacheKey: string) {
-  const cacheKeyRe = /^(\d):(\d+),(\d+)$/;
+  const cacheKeyRe = /^(\d),(\d+),(\d+)$/;
   const [, dir, x, y] = cacheKeyRe.exec(cacheKey) ?? raise('Invalid cache key');
   return [Number(dir), Number(x), Number(y)] as const;
 }
