@@ -1,45 +1,43 @@
 import assert from 'node:assert';
 
+import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
 import {frequencies} from 'lib/iterable.js';
 import {isDefined} from 'lib/predicate.js';
 
-const [[polymerTemplate], pairInsertRules] = await getInputParagraphs({
+const [[polymerTemplate], rules] = await getInputParagraphs({
   year: 2021,
   day: 14,
 });
 
-function parsePairInsertRule(rule: string) {
-  const pairInsertionRule = /^(\w{2}) -> (\w)$/;
-  const [, pair, insertion] = rule.match(pairInsertionRule) ?? [];
-
-  return {pair, insertion};
-}
-
 function pairInsertion(
-  [a, b, ...rest]: string,
+  [...polymerElements]: string,
   rules: Map<string, string>
-): string {
-  if (!isDefined(b)) {
-    return a;
+) {
+  let polymer = '';
+  for (const [i, a] of polymerElements.entries()) {
+    const b = polymerElements.at(i + 1);
+    if (!isDefined(b)) {
+      return polymer + a;
+    }
+    const pair = a + b;
+    const insertion = rules.get(pair);
+    if (isDefined(insertion)) {
+      polymer += pair.replace(
+        new RegExp(pair.replace(/(\w)/, '($1)')),
+        `$1${insertion}`
+      );
+    } else {
+      polymer += pair;
+    }
   }
-  const pair = a + b;
-  const insertion = rules.get(pair);
-
-  if (!isDefined(insertion)) {
-    return pair + pairInsertion(rest.join(''), rules);
-  }
-  const pairRe = new RegExp(pair.replace(/(\w)/, '($1)'));
-
-  return (
-    pair.replace(pairRe, `$1${insertion}`) +
-    pairInsertion(b + rest.join(''), rules)
-  );
+  throw raise('Unreachable');
 }
 
-const pairInsertRulesMap = new Map(
-  pairInsertRules.map(rule => {
-    const {pair, insertion} = parsePairInsertRule(rule);
+const ruleRe = /^(\w{2}) -> (\w)$/;
+const rulesMap = new Map(
+  rules.map(rule => {
+    const [, pair, insertion] = ruleRe.exec(rule) ?? raise('Invalid rule');
     return [pair, insertion];
   })
 );
@@ -48,10 +46,10 @@ const StepsCount = 10;
 
 let polymer = polymerTemplate;
 for (let i = 0; i < StepsCount; i++) {
-  polymer = pairInsertion(polymer, pairInsertRulesMap);
+  polymer = pairInsertion(polymer, rulesMap);
 }
 
-const frequency = Array.from(frequencies(polymer), ([, count]) => count);
+const frequency = [...frequencies(polymer)].map(([_, count]) => count);
 const frequencyRange = Math.max(...frequency) - Math.min(...frequency);
 
 assert.strictEqual(frequencyRange, 2447, 'Part 1 failed');
