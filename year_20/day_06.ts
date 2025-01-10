@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInputParagraphs} from 'lib/input.js';
-import {uniq} from 'lib/iterable.js';
 
 const paragraphs = await getInputParagraphs({year: 2020, day: 6});
 
@@ -11,7 +10,7 @@ const questions = paragraphs.map(paragraph =>
 );
 
 const questionsCount = questions
-  .map(group => uniq(group.flat()).length)
+  .map(group => new Set(group.flat()).size)
   .reduce((a, b) => a + b);
 
 const questionsCount2 = questions

@@ -1,7 +1,6 @@
 import assert from 'node:assert';
 
 import {getInput} from 'lib/input.js';
-import {uniq} from 'lib/iterable.js';
 
 const input = await getInput({year: 2015, day: 3});
 
@@ -23,17 +22,21 @@ function createPosition() {
 
 const visitedHouses = (() => {
   const santa = createPosition();
-  return uniq(Array.from(input, direction => santa.move(direction).toString()));
+  const visited = new Set();
+  for (const dir of input) {
+    visited.add(santa.move(dir).toString());
+  }
+  return visited;
 })();
 
 const visitedHousesWithRoboSanta = (() => {
   const santas = [createPosition(), createPosition()];
-  return uniq(
-    Array.from(input, (direction, index) =>
-      santas[index % 2].move(direction).toString()
-    )
-  );
+  const visited = new Set();
+  for (const [i, dir] of [...input].entries()) {
+    visited.add(santas[i % 2].move(dir).toString());
+  }
+  return visited;
 })();
 
-assert.strictEqual(visitedHouses.length, 2565, 'Part 1 failed');
-assert.strictEqual(visitedHousesWithRoboSanta.length, 2639, 'Part 2 failed');
+assert.strictEqual(visitedHouses.size, 2565, 'Part 1 failed');
+assert.strictEqual(visitedHousesWithRoboSanta.size, 2639, 'Part 2 failed');

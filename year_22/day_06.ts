@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 
 import {getInput} from 'lib/input.js';
-import {uniq} from 'lib/iterable.js';
 import {isDefined} from 'lib/predicate.js';
 
 const input = await getInput({year: 2022, day: 6});
@@ -9,8 +8,7 @@ const input = await getInput({year: 2022, day: 6});
 function findMarkerEndIndex([...chars]: string, markerLength: number) {
   const markerStartIndex = chars
     .keys()
-    .find(i => uniq(input.slice(i, i + markerLength)).length === markerLength);
-
+    .find(i => new Set(input.slice(i, i + markerLength)).size === markerLength);
   return isDefined(markerStartIndex) ? markerStartIndex + markerLength : -1;
 }
 
