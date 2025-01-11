@@ -1,6 +1,6 @@
 import {strictEqual} from 'node:assert';
 
-import {assert, raise} from 'lib/assert.js';
+import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isDefined} from 'lib/predicate.js';
 
