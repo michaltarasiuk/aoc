@@ -32,7 +32,7 @@ function classifyHand(hand: string) {
   }
 }
 function compareHands(a: string, b: string) {
-  for (const [i, card] of Array.from(a).entries()) {
+  for (const [i, card] of [...a].entries()) {
     if (card !== b[i]) {
       return Cards.indexOf(card) - Cards.indexOf(b[i]);
     }

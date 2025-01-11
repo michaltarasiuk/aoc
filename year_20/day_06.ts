@@ -15,9 +15,9 @@ const questionsCount = questions
 
 const questionsCount2 = questions
   .flatMap(group => {
-    const common = group.reduce((acc, questions) =>
-      Array.from(new Set(questions).intersection(new Set(acc)))
-    );
+    const common = group.reduce((acc, questions) => [
+      ...new Set(questions).intersection(new Set(acc)),
+    ]);
     return common.length;
   })
   .reduce((a, b) => a + b);
