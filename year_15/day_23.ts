@@ -5,42 +5,12 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
 
-type Registers = Record<string, number>;
-
-const instructionMap: Record<
-  string,
-  (registers: Registers, pointer: number, ...args: string[]) => number | void
-> = {
-  hlf(registers, _pointer, register) {
-    registers[register] /= 2;
-  },
-  tpl(registers, _pointer, register) {
-    registers[register] *= 3;
-  },
-  inc(registers, _pointer, register) {
-    registers[register] += 1;
-  },
-  jmp(_registers, pointer, offset) {
-    return pointer + Number(offset);
-  },
-  jie(registers, pointer, register, offset) {
-    if (registers[register] % 2 === 0) {
-      return pointer + Number(offset);
-    }
-  },
-  jio(registers, pointer, register, offset) {
-    if (registers[register] === 1) {
-      return pointer + Number(offset);
-    }
-  },
-};
-
 const instructionRe = /(\w+|[+-]\d+)/g;
 const instructions = lines.map(
   l => l.match(instructionRe) ?? raise('Invalid instruction')
 );
 
-const registersSet: Registers[] = [
+const registersSet = [
   {a: 0, b: 0},
   {a: 1, b: 0},
 ];
@@ -48,7 +18,44 @@ for (const registers of registersSet) {
   let pointer = 0;
   while (pointer < instructions.length) {
     const [name, ...args] = instructions[pointer];
-    pointer = instructionMap[name](registers, pointer, ...args) ?? pointer + 1;
+    switch (name) {
+      case 'hlf':
+        assert(args[0] === 'a' || args[0] === 'b');
+        registers[args[0]] /= 2;
+        pointer++;
+        break;
+      case 'tpl':
+        assert(args[0] === 'a' || args[0] === 'b');
+        registers[args[0]] *= 3;
+        pointer++;
+        break;
+      case 'inc':
+        assert(args[0] === 'a' || args[0] === 'b');
+        registers[args[0]] += 1;
+        pointer++;
+        break;
+      case 'jmp':
+        pointer += Number(args[0]);
+        break;
+      case 'jie':
+        assert(args[0] === 'a' || args[0] === 'b');
+        if (registers[args[0]] % 2 === 0) {
+          pointer += Number(args[1]);
+        } else {
+          pointer++;
+        }
+        break;
+      case 'jio':
+        assert(args[0] === 'a' || args[0] === 'b');
+        if (registers[args[0]] === 1) {
+          pointer += Number(args[1]);
+        } else {
+          pointer++;
+        }
+        break;
+      default:
+        raise('Invalid instruction');
+    }
   }
 }
 

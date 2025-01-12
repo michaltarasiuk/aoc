@@ -1,6 +1,5 @@
-import {strictEqual} from 'node:assert';
+import assert from 'node:assert';
 
-import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isDefined, isKeyOf} from 'lib/predicate.js';
 
@@ -77,5 +76,5 @@ const scores = parsedLines
   .sort((a, b) => a - b);
 const middleScore = scores.at(Math.floor(scores.length / 2));
 
-strictEqual(totalSyntaxErrorScore, 323613, 'Part 1 failed');
-strictEqual(middleScore, 3103006161, 'Part 2 failed');
+assert.strictEqual(totalSyntaxErrorScore, 323613, 'Part 1 failed');
+assert.strictEqual(middleScore, 3103006161, 'Part 2 failed');

@@ -1,6 +1,5 @@
-import {strictEqual} from 'node:assert';
+import assert from 'node:assert';
 
-import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isKeyOf} from 'lib/predicate.js';
 
@@ -55,5 +54,5 @@ const distance2 = calcDistance(
   {horizontal: 0, depth: 0, aim: 0}
 );
 
-strictEqual(distance, 1714950, 'Part 1 failed');
-strictEqual(distance2, 1281977850, 'Part 2 failed');
+assert.strictEqual(distance, 1714950, 'Part 1 failed');
+assert.strictEqual(distance2, 1281977850, 'Part 2 failed');

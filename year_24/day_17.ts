@@ -1,5 +1,5 @@
-import {strictEqual} from 'assert';
-import {assert} from 'lib/assert.js';
+import assert from 'node:assert';
+
 import {getInput} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
 import {isKeyOf} from 'lib/predicate.js';
@@ -81,4 +81,4 @@ outer: while (pointer < program.length) {
   pointer += 1;
 }
 
-strictEqual(output.join(','), '1,5,0,3,7,3,0,3,1', 'Part 1 failed');
+assert.strictEqual(output.join(','), '1,5,0,3,7,3,0,3,1', 'Part 1 failed');

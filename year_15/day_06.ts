@@ -1,4 +1,6 @@
-import {strictEqual} from 'node:assert';
+import assert from 'node:assert';
+
+console.log(assert);
 
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
@@ -49,5 +51,5 @@ const brightness = setLights(
   ...instructions
 );
 
-strictEqual(sum(lights.flat()), 400410, 'Part 1 failed');
-strictEqual(sum(brightness.flat()), 15343601, 'Part 2 failed');
+assert.strictEqual(sum(lights.flat()), 400410, 'Part 1 failed');
+assert.strictEqual(sum(brightness.flat()), 15343601, 'Part 2 failed');

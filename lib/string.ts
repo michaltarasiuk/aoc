@@ -1,4 +1,5 @@
-import {assert} from './assert.js';
+import assert from 'node:assert';
+
 import {isDefined} from './predicate.js';
 
 export function stringToCodePoints(

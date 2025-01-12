@@ -1,6 +1,5 @@
-import {strictEqual} from 'node:assert';
+import assert from 'node:assert';
 
-import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isKeyOf} from 'lib/predicate.js';
 
@@ -52,5 +51,5 @@ const totalCalibration2 = equations.reduce((acc, [result, ...operands]) => {
   return acc + (isValidEquation ? result : 0);
 }, 0);
 
-strictEqual(totalCalibration, 1545311493300, 'Part 1 failed');
-strictEqual(totalCalibration2, 169122112716571, 'Part 2 failed');
+assert.strictEqual(totalCalibration, 1545311493300, 'Part 1 failed');
+assert.strictEqual(totalCalibration2, 169122112716571, 'Part 2 failed');

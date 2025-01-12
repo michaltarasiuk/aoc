@@ -1,3 +1,4 @@
+import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -5,7 +6,6 @@ import findCacheDir from 'find-cache-dir';
 
 import {env} from '../env.js';
 import {transpose} from './array.js';
-import {assert} from './assert.js';
 import {extractIntegers} from './parse.js';
 import {isDefined} from './predicate.js';
 

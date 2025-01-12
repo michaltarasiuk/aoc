@@ -1,6 +1,5 @@
-import {strictEqual} from 'node:assert';
+import assert from 'node:assert';
 
-import {assert} from 'lib/assert.js';
 import {getInputLines} from 'lib/input.js';
 import {isDefined} from 'lib/predicate.js';
 
@@ -84,8 +83,8 @@ while (botsReadyForTransfer.length > 0) {
   botsReadyForTransfer = bots.getReadyBots();
 }
 
-strictEqual(responsibleBotId, 141, 'Part 1 failed');
-strictEqual(
+assert.strictEqual(responsibleBotId, 141, 'Part 1 failed');
+assert.strictEqual(
   output.get(0)! * output.get(1)! * output.get(2)!,
   1209,
   'Part 2 failed'
