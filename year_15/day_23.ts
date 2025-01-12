@@ -10,47 +10,47 @@ const instructions = lines.map(
   l => l.match(instructionRe) ?? raise('Invalid instruction')
 );
 
-const registersSet = [
+const initialRegisters = [
   {a: 0, b: 0},
   {a: 1, b: 0},
 ];
-for (const registers of registersSet) {
-  let pointer = 0;
-  while (pointer < instructions.length) {
-    const [name, ...args] = instructions[pointer];
-    switch (name) {
+for (const registers of initialRegisters) {
+  let instructionPointer = 0;
+  while (instructionPointer < instructions.length) {
+    const [operation, ...operands] = instructions[instructionPointer];
+    switch (operation) {
       case 'hlf':
-        assert(args[0] === 'a' || args[0] === 'b');
-        registers[args[0]] /= 2;
-        pointer++;
+        assert(operands[0] === 'a' || operands[0] === 'b');
+        registers[operands[0]] /= 2;
+        instructionPointer++;
         break;
       case 'tpl':
-        assert(args[0] === 'a' || args[0] === 'b');
-        registers[args[0]] *= 3;
-        pointer++;
+        assert(operands[0] === 'a' || operands[0] === 'b');
+        registers[operands[0]] *= 3;
+        instructionPointer++;
         break;
       case 'inc':
-        assert(args[0] === 'a' || args[0] === 'b');
-        registers[args[0]] += 1;
-        pointer++;
+        assert(operands[0] === 'a' || operands[0] === 'b');
+        registers[operands[0]] += 1;
+        instructionPointer++;
         break;
       case 'jmp':
-        pointer += Number(args[0]);
+        instructionPointer += Number(operands[0]);
         break;
       case 'jie':
-        assert(args[0] === 'a' || args[0] === 'b');
-        if (registers[args[0]] % 2 === 0) {
-          pointer += Number(args[1]);
+        assert(operands[0] === 'a' || operands[0] === 'b');
+        if (registers[operands[0]] % 2 === 0) {
+          instructionPointer += Number(operands[1]);
         } else {
-          pointer++;
+          instructionPointer++;
         }
         break;
       case 'jio':
-        assert(args[0] === 'a' || args[0] === 'b');
-        if (registers[args[0]] === 1) {
-          pointer += Number(args[1]);
+        assert(operands[0] === 'a' || operands[0] === 'b');
+        if (registers[operands[0]] === 1) {
+          instructionPointer += Number(operands[1]);
         } else {
-          pointer++;
+          instructionPointer++;
         }
         break;
       default:
@@ -59,5 +59,5 @@ for (const registers of registersSet) {
   }
 }
 
-assert.strictEqual(registersSet[0].b, 184, 'Part 1 failed');
-assert.strictEqual(registersSet[1].b, 231, 'Part 2 failed');
+assert.strictEqual(initialRegisters[0].b, 184, 'Part 1 failed');
+assert.strictEqual(initialRegisters[1].b, 231, 'Part 2 failed');
