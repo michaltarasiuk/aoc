@@ -78,16 +78,16 @@ function createInputCache() {
   assert(isDefined(cacheDir), 'Cache directory not found');
   return {
     get(params: InputParams) {
-      try {
-        return fs.readFileSync(createCacheFileURL(cacheDir, params), 'utf-8');
-      } catch {}
+      const cacheFileUrl = createCacheFileURL(cacheDir, params);
+      if (!fs.existsSync(cacheFileUrl)) {
+        return;
+      }
+      return fs.readFileSync(cacheFileUrl, 'utf-8');
     },
     set(params: InputParams, input: string) {
-      try {
-        const cacheFileUrl = createCacheFileURL(cacheDir, params);
-        fs.mkdirSync(path.dirname(cacheFileUrl.pathname), {recursive: true});
-        fs.writeFileSync(cacheFileUrl, input);
-      } catch {}
+      const cacheFileUrl = createCacheFileURL(cacheDir, params);
+      fs.mkdirSync(path.dirname(cacheFileUrl.pathname), {recursive: true});
+      fs.writeFileSync(cacheFileUrl, input);
     },
   };
 }
