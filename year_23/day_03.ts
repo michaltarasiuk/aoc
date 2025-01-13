@@ -15,7 +15,7 @@ const nsLayers = lines
   .map(l =>
     l
       .matchAll(/\d+/g)
-      .map(({0: n, index}) => [Number(n), index] as const)
+      .map(match => [Number(match[0]), match.index] as const)
       .toArray()
   )
   .map((ns, y) =>
