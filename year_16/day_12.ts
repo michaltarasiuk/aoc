@@ -37,13 +37,8 @@ function execute(
 
 const instructions = lines.map(l => l.split(/\s/));
 
-assert.strictEqual(
-  execute({a: 0, b: 0, c: 0, d: 0}, ...instructions).a,
-  317993,
-  'Part 1 failed'
-);
-assert.strictEqual(
-  execute({a: 0, b: 0, c: 1, d: 0}, ...instructions).a,
-  9227647,
-  'Part 2 failed'
-);
+const registers = execute({a: 0, b: 0, c: 0, d: 0}, ...instructions);
+const registers2 = execute({a: 0, b: 0, c: 1, d: 0}, ...instructions);
+
+assert.strictEqual(registers.a, 317993, 'Part 1 failed');
+assert.strictEqual(registers2.a, 9227647, 'Part 2 failed');
