@@ -8,16 +8,16 @@ const lines = await getInputLines({year: 2017, day: 8});
 type Registers = Record<string, number>;
 
 function parseInstruction(instruct: string) {
-  const instructRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
+  const instructionRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
   const [, reg, op, val, cond] =
-    instructRe.exec(instruct) ?? raise('Invalid instruction');
+    instructionRe.exec(instruct) ?? raise('Invalid instruction');
 
   return {reg, op, val: Number(val), cond};
 }
 
 function evalCond(registers: Registers, cond: string) {
-  const conditionRe = /^(\w+) ([!<>=]=?) (-?\d+)$/;
-  const [, reg, op, val] = conditionRe.exec(cond) ?? raise('Invalid condition');
+  const condRe = /^(\w+) ([!<>=]=?) (-?\d+)$/;
+  const [, reg, op, val] = condRe.exec(cond) ?? raise('Invalid condition');
 
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
