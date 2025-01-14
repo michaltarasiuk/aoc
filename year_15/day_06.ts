@@ -1,7 +1,5 @@
 import assert from 'node:assert';
 
-console.log(assert);
-
 import {getInputLines} from 'lib/input.js';
 import {sum} from 'lib/math.js';
 

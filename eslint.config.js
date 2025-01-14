@@ -16,12 +16,13 @@ export default tseslint.config(
       'simple-import-sort': simpleImportSort,
     },
     rules: {
+      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
       'no-cond-assign': 'off',
+      'no-console': 'error',
       'no-empty': 'off',
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
     },
   }
 );
