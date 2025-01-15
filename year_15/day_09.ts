@@ -6,7 +6,9 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
-type CostMap = {[from: string]: {[to: string]: number}};
+interface CostMap {
+  [from: string]: {[to: string]: number};
+}
 
 function calcRouteCost(costMap: CostMap, ...route: string[]) {
   return route

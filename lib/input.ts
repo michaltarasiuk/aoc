@@ -9,7 +9,10 @@ import {transpose} from './array.js';
 import {extractIntegers} from './parse.js';
 import {isDefined} from './predicate.js';
 
-type InputParams = {year: number; day: number};
+interface InputParams {
+  year: number;
+  day: number;
+}
 
 const inputCache = createInputCache();
 export async function getInput(...params: Parameters<typeof fetchInput>) {
