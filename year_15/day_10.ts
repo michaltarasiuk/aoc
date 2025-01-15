@@ -13,8 +13,10 @@ let currentSequence = input;
 let step = 0;
 
 while (++step <= StepsPart2) {
-  currentSequence = (currentSequence.match(/(?:(\d)\1*)/g) ?? [])
-    .map(([...group]) => group.length + group[0])
+  currentSequence = currentSequence
+    .matchAll(/(\d)\1*/g)
+    .map(match => match[0].length + match[1])
+    .toArray()
     .join('');
   if ([StepsPart1, StepsPart2].includes(step)) {
     sequenceLengths.push(currentSequence.length);
