@@ -4,19 +4,19 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 10});
 
-const Steps = 40;
-const Steps2 = 50;
+const StepsPart1 = 40;
+const StepsPart2 = 50;
 
 const sequenceLengths: number[] = [];
 
 let currentSequence = input;
 let step = 0;
 
-while (++step <= Steps2) {
+while (++step <= StepsPart2) {
   currentSequence = (currentSequence.match(/(?:(\d)\1*)/g) ?? [])
     .map(([...group]) => group.length + group[0])
     .join('');
-  if ([Steps, Steps2].includes(step)) {
+  if ([StepsPart1, StepsPart2].includes(step)) {
     sequenceLengths.push(currentSequence.length);
   }
 }
