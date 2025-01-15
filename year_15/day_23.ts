@@ -50,11 +50,11 @@ function executeInstructions(registers: {a: number; b: number}) {
   }
 }
 
-const initialRegisters = [
+const registers = [
   {a: 0, b: 0},
   {a: 1, b: 0},
 ];
-initialRegisters.forEach(executeInstructions);
+registers.forEach(executeInstructions);
 
-assert.strictEqual(initialRegisters[0].b, 184, 'Part 1 failed');
-assert.strictEqual(initialRegisters[1].b, 231, 'Part 2 failed');
+assert.strictEqual(registers[0].b, 184, 'Part 1 failed');
+assert.strictEqual(registers[1].b, 231, 'Part 2 failed');
