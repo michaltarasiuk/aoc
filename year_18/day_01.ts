@@ -7,15 +7,14 @@ const ns = await getInputIntegers({year: 2018, day: 1});
 function findFirstFrequencyReachesTwice(...ns: number[]) {
   const frequencies = new Set<number>();
   let frequency = 0;
-
   while (true) {
     for (const n of ns) {
       frequency += n;
-
       if (frequencies.has(frequency)) {
         return frequency;
+      } else {
+        frequencies.add(frequency);
       }
-      frequencies.add(frequency);
     }
   }
 }

@@ -12,8 +12,8 @@ function countWays(
   if (!design) return 1;
   if (Object.hasOwn(cache, design)) return cache[design];
   let ways = 0;
-  for (const pattern of patterns.filter(p => p.test(design))) {
-    ways += countWays(design.replace(pattern, ''), patterns, cache);
+  for (const p of patterns.filter(p => p.test(design))) {
+    ways += countWays(design.replace(p, ''), patterns, cache);
   }
   return (cache[design] = ways);
 }
