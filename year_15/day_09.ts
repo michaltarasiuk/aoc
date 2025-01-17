@@ -6,23 +6,13 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2015, day: 9});
 
-interface CostMap {
-  [from: string]: {[to: string]: number};
-}
-
-function calcRouteCost(costMap: CostMap, ...route: string[]) {
-  return route
-    .map((from, i) => costMap[from][route[i + 1]] ?? 0)
-    .reduce((a, b) => a + b);
-}
-
+const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
 const costMap = lines
   .map(l => {
-    const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
     const [, a, b, cost] = l.match(distanceRe) ?? raise('Invalid distance');
     return [a, b, Number(cost)] as const;
   })
-  .reduce<CostMap>((acc, [a, b, cost]) => {
+  .reduce<{[from: string]: {[to: string]: number}}>((acc, [a, b, cost]) => {
     acc[a] ??= {};
     acc[b] ??= {};
     acc[a][b] = cost;
@@ -30,12 +20,16 @@ const costMap = lines
     return acc;
   }, {});
 
-const costs = permute(Object.keys(costMap)).reduce<number[]>(
-  (acc, route) => acc.concat(calcRouteCost(costMap, ...route)),
-  []
-);
-const minCost = Math.min(...costs);
-const maxCost = Math.max(...costs);
+const routes = Object.keys(costMap);
+const permutedCosts = permute(routes).reduce<number[]>((acc, route) => {
+  const cost = route
+    .map((from, i) => costMap[from][route[i + 1]] ?? 0)
+    .reduce((a, b) => a + b);
+  return acc.concat(cost);
+}, []);
+
+const minCost = Math.min(...permutedCosts);
+const maxCost = Math.max(...permutedCosts);
 
 assert.strictEqual(minCost, 251, 'Part 1 failed');
 assert.strictEqual(maxCost, 898, 'Part 2 failed');
