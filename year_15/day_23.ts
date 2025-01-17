@@ -6,14 +6,13 @@ import {isKeyOf} from 'lib/predicate.js';
 
 const lines = await getInputLines({year: 2015, day: 23});
 
-const instructions = lines.map(
-  l => l.match(/(\w+|[+-]\d+)/g) ?? raise('Invalid instruction')
-);
-
-function executeInstructions(registers: {a: number; b: number}) {
-  let instructionPointer = 0;
-  while (instructionPointer < instructions.length) {
-    const [operation, ...operands] = instructions[instructionPointer];
+function execute(
+  {...registers}: {a: number; b: number},
+  ...instructions: string[][]
+) {
+  let i = 0;
+  outer: while (i < instructions.length) {
+    const [operation, ...operands] = instructions[i];
     const reg = operands[0];
     const offset = Number(operands[1]);
 
@@ -21,40 +20,42 @@ function executeInstructions(registers: {a: number; b: number}) {
       case 'hlf':
         assert(isKeyOf(registers, reg));
         registers[reg] /= 2;
-        instructionPointer++;
         break;
       case 'tpl':
         assert(isKeyOf(registers, reg));
         registers[reg] *= 3;
-        instructionPointer++;
         break;
       case 'inc':
         assert(isKeyOf(registers, reg));
         registers[reg] += 1;
-        instructionPointer++;
         break;
       case 'jmp':
-        instructionPointer += Number(operands[0]);
-        break;
+        i += Number(operands[0]);
+        continue outer;
       case 'jie':
         assert(isKeyOf(registers, reg));
-        instructionPointer += registers[reg] % 2 === 0 ? offset : 1;
-        break;
+        i += registers[reg] % 2 === 0 ? offset : 1;
+        continue outer;
       case 'jio':
         assert(isKeyOf(registers, reg));
-        instructionPointer += registers[reg] === 1 ? offset : 1;
-        break;
+        i += registers[reg] === 1 ? offset : 1;
+        continue outer;
       default:
         raise('Invalid instruction');
     }
+    i++;
   }
+  return registers;
 }
 
+const instructionRe = /(\w+|[+-]\d+)/g;
+const instructions = lines.map(
+  l => l.match(instructionRe) ?? raise('No match')
+);
 const registers = [
-  {a: 0, b: 0},
-  {a: 1, b: 0},
+  execute({a: 0, b: 0}, ...instructions),
+  execute({a: 1, b: 0}, ...instructions),
 ];
-registers.forEach(executeInstructions);
 
 assert.strictEqual(registers[0].b, 184, 'Part 1 failed');
 assert.strictEqual(registers[1].b, 231, 'Part 2 failed');

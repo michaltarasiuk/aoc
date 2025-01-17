@@ -9,9 +9,9 @@ function execute(
   registers: Record<'a' | 'b' | 'c' | 'd', number>,
   ...instructions: string[][]
 ) {
-  let instructionPointer = 0;
-  while (instructionPointer < instructions.length) {
-    const [op, x, y] = instructions[instructionPointer];
+  let i = 0;
+  while (i < instructions.length) {
+    const [op, x, y] = instructions[i];
     switch (op) {
       case 'cpy':
         assert(isKeyOf(registers, y));
@@ -27,18 +27,18 @@ function execute(
         break;
       case 'jnz':
         if ((isKeyOf(registers, x) ? registers[x] : Number(x)) !== 0) {
-          instructionPointer += Number(y) - 1;
+          i += Number(y) - 1;
         }
     }
-    instructionPointer++;
+    i++;
   }
   return registers;
 }
 
 const instructions = lines.map(l => l.split(/\s/));
 
-const registers = execute({a: 0, b: 0, c: 0, d: 0}, ...instructions);
-const registers2 = execute({a: 0, b: 0, c: 1, d: 0}, ...instructions);
+const registersPart1 = execute({a: 0, b: 0, c: 0, d: 0}, ...instructions);
+const registersPart2 = execute({a: 0, b: 0, c: 1, d: 0}, ...instructions);
 
-assert.strictEqual(registers.a, 317993, 'Part 1 failed');
-assert.strictEqual(registers2.a, 9227647, 'Part 2 failed');
+assert.strictEqual(registersPart1.a, 317993, 'Part 1 failed');
+assert.strictEqual(registersPart2.a, 9227647, 'Part 2 failed');
