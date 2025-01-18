@@ -28,9 +28,12 @@ export async function getInputParagraphs(params: InputParams) {
   const input = await getInput(params);
   return input.split(/\n\n+/).map(p => p.split(/\n/));
 }
-export async function getInputIntegers(params: InputParams) {
+export async function getInputIntegers(
+  params: InputParams,
+  options?: Parameters<typeof extractIntegers>[1]
+) {
   const input = await getInput(params);
-  return extractIntegers(input);
+  return extractIntegers(input, options);
 }
 export async function getInputLines(params: InputParams) {
   const input = await getInput(params);
