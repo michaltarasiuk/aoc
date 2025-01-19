@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import {transpose} from 'lib/array.js';
 import {getInputLines} from 'lib/input.js';
 import {chunkEvery} from 'lib/iterable.js';
-import {extractIntegers} from 'lib/parse.js';
+import {extractInts} from 'lib/parse.js';
 
 const lines = await getInputLines({year: 2016, day: 3});
 
@@ -13,7 +13,7 @@ function isValidTriangle([a, b, c]: number[]) {
 
 const TriangleSides = 3;
 
-const trianglesByRows = lines.map(l => extractIntegers(l));
+const trianglesByRows = lines.map(l => extractInts(l));
 const validTrianglesByRows = trianglesByRows.filter(isValidTriangle);
 
 const trianglesByColumns = chunkEvery(

@@ -6,7 +6,7 @@ import {isKeyOf} from 'lib/predicate.js';
 const lines = await getInputLines({year: 2016, day: 12});
 
 function execute(
-  registers: Record<'a' | 'b' | 'c' | 'd', number>,
+  {...registers}: Record<'a' | 'b' | 'c' | 'd', number>,
   ...instructions: string[][]
 ) {
   let i = 0;

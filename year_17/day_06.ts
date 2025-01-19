@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputIntegers} from 'lib/input.js';
+import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputIntegers({year: 2017, day: 6});
+const ns = await getInputInts({year: 2017, day: 6});
 
 function redistributeMemoryBlocks([...blocks]: number[]) {
   const cycles: number[] = [];

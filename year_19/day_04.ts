@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputIntegers} from 'lib/input.js';
+import {getInputInts} from 'lib/input.js';
 
-const [start, end] = await getInputIntegers(
+const [start, end] = await getInputInts(
   {year: 2019, day: 4},
   {negative: false}
 );

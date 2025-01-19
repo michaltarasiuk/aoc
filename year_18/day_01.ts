@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputIntegers} from 'lib/input.js';
+import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputIntegers({year: 2018, day: 1});
+const ns = await getInputInts({year: 2018, day: 1});
 
 function findFirstFrequencyReachesTwice(...ns: number[]) {
   const frequencies = new Set<number>();

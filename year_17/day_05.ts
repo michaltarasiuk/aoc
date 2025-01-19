@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputIntegers} from 'lib/input.js';
+import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputIntegers({year: 2017, day: 5});
+const ns = await getInputInts({year: 2017, day: 5});
 
 const steps = (() => {
   const offsets = ns.slice();

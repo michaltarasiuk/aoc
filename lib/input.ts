@@ -6,7 +6,7 @@ import findCacheDir from 'find-cache-dir';
 
 import {env} from '../env.js';
 import {transpose} from './array.js';
-import {extractIntegers} from './parse.js';
+import {extractInts} from './parse.js';
 import {isDefined} from './predicate.js';
 
 interface InputParams {
@@ -28,12 +28,12 @@ export async function getInputParagraphs(params: InputParams) {
   const input = await getInput(params);
   return input.split(/\n\n+/).map(p => p.split(/\n/));
 }
-export async function getInputIntegers(
+export async function getInputInts(
   params: InputParams,
-  options?: Parameters<typeof extractIntegers>[1]
+  options?: Parameters<typeof extractInts>[1]
 ) {
   const input = await getInput(params);
-  return extractIntegers(input, options);
+  return extractInts(input, options);
 }
 export async function getInputLines(params: InputParams) {
   const input = await getInput(params);

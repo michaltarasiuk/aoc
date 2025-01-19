@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {raise} from 'lib/assert.js';
-import {getInputIntegers} from 'lib/input.js';
+import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputIntegers({year: 2020, day: 9});
+const ns = await getInputInts({year: 2020, day: 9});
 
 function isValid(preamble: number[], sum: number) {
   return preamble.some(n => preamble.some(n2 => n !== n2 && n + n2 === sum));

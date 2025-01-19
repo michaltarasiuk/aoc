@@ -1,17 +1,17 @@
 import assert from 'node:assert';
 
 import {getInputParagraphs} from 'lib/input.js';
-import {extractIntegers} from 'lib/parse.js';
+import {extractInts} from 'lib/parse.js';
 
 const [rules, updates] = await getInputParagraphs({year: 2024, day: 5});
 
 const groupedRules = Object.groupBy(
-  rules.map(rule => extractIntegers(rule)),
+  rules.map(rule => extractInts(rule)),
   ([, succeeding]) => succeeding
 );
 
 const {correctlyOrdered = [], incorrectlyOrdered = []} = Object.groupBy(
-  updates.map(update => extractIntegers(update)),
+  updates.map(update => extractInts(update)),
   update => {
     const seen = new Set<number>();
     for (const page of update) {
