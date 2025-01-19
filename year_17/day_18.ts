@@ -5,22 +5,18 @@ import {getInputLines} from 'lib/input.js';
 
 const lines = await getInputLines({year: 2017, day: 18});
 
-function parseJumpInstruction(instruction: string) {
-  const instructionRe = /^(\w{3}) (\w)(?: (\S+))?$/;
+const instructionRe = /^(\w{3}) (\w)(?: (\S+))?$/;
+const instructions = lines.map(l => {
   const [, operation, register, value] =
-    instructionRe.exec(instruction) ?? raise('Invalid instruction');
-
+    instructionRe.exec(l) ?? raise('Invalid instruction');
   return {operation, register, value};
-}
+});
 
 const registers: Record<string, number> = {};
-const jumpInstructions = lines.map(parseJumpInstruction);
-
 let i = 0;
 let lastSound = 0;
-
 outer: while (true) {
-  const {operation, register, value} = jumpInstructions[i];
+  const {operation, register, value} = instructions[i];
   const parsedValue = Number(registers[value] ?? value);
 
   switch (operation) {

@@ -7,13 +7,13 @@ const lines = await getInputLines({year: 2017, day: 4});
 const passports = lines.map(l => l.split(/\s/));
 
 const validPassphrasesCount = passports
-  .map(passport => Number(passport.length === new Set(passport).size))
+  .map(p => Number(p.length === new Set(p).size))
   .reduce((a, b) => a + b);
 
 const validPassphrasesCount2 = passports
-  .map(passport => {
-    const uniq = new Set(passport.map(([...chars]) => chars.sort().join('')));
-    return Number(passport.length === uniq.size);
+  .map(p => {
+    const uniq = new Set(p.map(([...chars]) => chars.sort().join('')));
+    return Number(p.length === uniq.size);
   })
   .reduce((a, b) => a + b);
 

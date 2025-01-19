@@ -7,7 +7,7 @@ import {getInputLines} from 'lib/input.js';
 const lines = await getInputLines({year: 2015, day: 9});
 
 const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
-const costMap = lines
+const routeCostMap = lines
   .map(l => {
     const [, a, b, cost] = l.match(distanceRe) ?? raise('Invalid distance');
     return [a, b, Number(cost)] as const;
@@ -20,16 +20,13 @@ const costMap = lines
     return acc;
   }, {});
 
-const routes = Object.keys(costMap);
-const permutedCosts = permute(routes).reduce<number[]>((acc, route) => {
+const costs: number[] = [];
+for (const route of permute(Object.keys(routeCostMap))) {
   const cost = route
-    .map((from, i) => costMap[from][route[i + 1]] ?? 0)
+    .map((from, i) => routeCostMap[from][route[i + 1]] ?? 0)
     .reduce((a, b) => a + b);
-  return acc.concat(cost);
-}, []);
+  costs.push(cost);
+}
 
-const minCost = Math.min(...permutedCosts);
-const maxCost = Math.max(...permutedCosts);
-
-assert.strictEqual(minCost, 251, 'Part 1 failed');
-assert.strictEqual(maxCost, 898, 'Part 2 failed');
+assert.strictEqual(Math.min(...costs), 251, 'Part 1 failed');
+assert.strictEqual(Math.max(...costs), 898, 'Part 2 failed');
