@@ -1,42 +1,38 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
 import {getInputParagraphs} from 'lib/input.js';
-import {extractIntegers} from 'lib/parse.js';
 
-const [rawStacks, instructs] = await getInputParagraphs({year: 2022, day: 5});
+const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
+const [stackIds, ...crateStacks] = stacks.toReversed();
 
-function createStacks([...rawStacks]: string[]) {
-  const ids = rawStacks.pop() ?? raise('No stack IDs found');
-  const stacks = Object.fromEntries(
-    extractIntegers(ids).map(id => {
-      const i = ids.indexOf(String(id));
-      return [
-        id,
-        rawStacks.flatMap(crates => (/\s/.test(crates[i]) ? [] : crates[i])),
-      ];
-    })
-  );
-
-  return {
-    move([count, from, to]: number[], fn = (crates: string[]) => crates) {
-      stacks[to].unshift(...fn(stacks[from].splice(0, count)));
-      return this;
-    },
-    toString() {
-      return Object.values(stacks)
-        .map(([crate]) => crate)
-        .join('');
-    },
-  };
+function parseInstruction(i: string) {
+  const instructionRe = /^move (\d+) from (\d+) to (\d+)$/;
+  const [_, amount, from, to] = instructionRe.exec(i) ?? [];
+  return [Number(amount), Number(from), Number(to)];
+}
+function cratesToString(crates: Record<string, string[]>) {
+  return Object.values(crates)
+    .map(([crate]) => crate)
+    .join('');
 }
 
-const stacks = createStacks(rawStacks);
-const stacks2 = createStacks(rawStacks);
-for (const instruct of instructs.map(instruct => extractIntegers(instruct))) {
-  stacks.move(instruct, crates => crates.toReversed());
-  stacks2.move(instruct);
+const stackIdMap = Object.fromEntries(
+  stackIds.matchAll(/\d/g).map(m => [m.index, m[0]])
+);
+const cratesPart1: Record<string, string[]> = {};
+for (const s of crateStacks) {
+  for (const m of s.matchAll(/\w+/g)) {
+    cratesPart1[stackIdMap[m.index]] ??= [];
+    cratesPart1[stackIdMap[m.index]].unshift(m[0]);
+  }
+}
+const cratesPart2 = structuredClone(cratesPart1);
+
+for (const i of instructions) {
+  const [amount, from, to] = parseInstruction(i);
+  cratesPart1[to].unshift(...cratesPart1[from].splice(0, amount).toReversed());
+  cratesPart2[to].unshift(...cratesPart2[from].splice(0, amount));
 }
 
-assert.strictEqual(stacks.toString(), 'QGTHFZBHV', 'Part 1 failed');
-assert.strictEqual(stacks2.toString(), 'MGDMPSZTM', 'Part 2 failed');
+assert.strictEqual(cratesToString(cratesPart1), 'QGTHFZBHV', 'Part 1 failed');
+assert.strictEqual(cratesToString(cratesPart2), 'MGDMPSZTM', 'Part 2 failed');
