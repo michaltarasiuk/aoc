@@ -19,6 +19,7 @@ function cratesToString(crates: Record<string, string[]>) {
 const stackIdMap = Object.fromEntries(
   stackIds.matchAll(/\d/g).map(m => [m.index, m[0]])
 );
+
 const cratesPart1: Record<string, string[]> = {};
 for (const s of crateStacks) {
   for (const m of s.matchAll(/\w+/g)) {
