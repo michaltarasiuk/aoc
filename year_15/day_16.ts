@@ -19,23 +19,47 @@ const TickerTape = {
   perfumes: 1,
 };
 
-const sueRe = /^Sue (\d+): (.*)/;
-let bestMatchSueId = -1;
-let bestMatchCount = -1;
-for (const l of lines) {
-  const [, id, items] = sueRe.exec(l) ?? raise(`Invalid sue: ${l}`);
-  const count = items
-    .matchAll(/(\w+): (\d+)/g)
-    .map(([, k, v]) => {
-      assert(isKeyOf(TickerTape, k));
-      return TickerTape[k] === Number(v);
-    })
-    .map(Number)
-    .reduce((a, b) => a + b, 0);
-  if (count > bestMatchCount) {
-    bestMatchCount = count;
-    bestMatchSueId = Number(id);
+function findBestMatchSueId(
+  sues: (readonly [number, string])[],
+  fn = (k: keyof typeof TickerTape, v: string) => TickerTape[k] === Number(v)
+) {
+  let bestMatchSueId = -1;
+  let bestMatchCount = -1;
+  for (const [id, items] of sues) {
+    const count = items
+      .matchAll(/(\w+): (\d+)/g)
+      .map(([, k, v]) => {
+        assert(isKeyOf(TickerTape, k));
+        return fn(k, v);
+      })
+      .map(Number)
+      .reduce((a, b) => a + b, 0);
+    if (count > bestMatchCount) {
+      bestMatchCount = count;
+      bestMatchSueId = id;
+    }
   }
+  return bestMatchSueId;
 }
 
+const sueRe = /^Sue (\d+): (.*)/;
+const sues = lines
+  .map(l => sueRe.exec(l) ?? raise(`Invalid sue: ${l}`))
+  .map(([, id, items]) => [Number(id), items] as const);
+
+const bestMatchSueId = findBestMatchSueId(sues);
+const bestMatchSueId2 = findBestMatchSueId(sues, (k, v) => {
+  switch (k) {
+    case 'cats':
+    case 'trees':
+      return TickerTape[k] < Number(v);
+    case 'pomeranians':
+    case 'goldfish':
+      return TickerTape[k] > Number(v);
+    default:
+      return TickerTape[k] === Number(v);
+  }
+});
+
 assert.strictEqual(bestMatchSueId, 373, 'Part 1 failed');
+assert.strictEqual(bestMatchSueId2, 260, 'Part 2 failed');
