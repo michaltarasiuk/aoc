@@ -21,7 +21,7 @@ const TickerTape = {
 
 function findBestMatchSueId(
   sues: (readonly [number, string])[],
-  fn = (k: keyof typeof TickerTape, v: string) => TickerTape[k] === Number(v)
+  fn = (k: keyof typeof TickerTape, v: number) => TickerTape[k] === v
 ) {
   let bestMatchSueId = -1;
   let bestMatchCount = -1;
@@ -30,10 +30,10 @@ function findBestMatchSueId(
       .matchAll(/(\w+): (\d+)/g)
       .map(([, k, v]) => {
         assert(isKeyOf(TickerTape, k));
-        return fn(k, v);
+        return fn(k, Number(v));
       })
       .map(Number)
-      .reduce((a, b) => a + b, 0);
+      .reduce((a, b) => a + b);
     if (count > bestMatchCount) {
       bestMatchCount = count;
       bestMatchSueId = id;
@@ -52,12 +52,12 @@ const bestMatchSueId2 = findBestMatchSueId(sues, (k, v) => {
   switch (k) {
     case 'cats':
     case 'trees':
-      return TickerTape[k] < Number(v);
+      return TickerTape[k] < v;
     case 'pomeranians':
     case 'goldfish':
-      return TickerTape[k] > Number(v);
+      return TickerTape[k] > v;
     default:
-      return TickerTape[k] === Number(v);
+      return TickerTape[k] === v;
   }
 });
 
