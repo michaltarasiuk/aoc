@@ -9,7 +9,11 @@ function calcFuel(mass: number) {
 }
 function calcFuelRecursive(mass: number): number {
   const fuel = calcFuel(mass);
-  return fuel <= 0 ? 0 : fuel + calcFuelRecursive(fuel);
+  if (fuel <= 0) {
+    return 0;
+  } else {
+    return fuel + calcFuelRecursive(fuel);
+  }
 }
 
 const fuelRequirementsSum = ns.map(calcFuel).reduce((a, b) => a + b);
