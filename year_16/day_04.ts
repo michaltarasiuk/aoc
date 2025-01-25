@@ -25,23 +25,18 @@ const rooms = lines.map(l => {
   return {name: name.replace(/-/g, ''), id: Number(id), checksum};
 });
 
-const realRoomSectorIDsSum = rooms.reduce((acc, {name, id, checksum}) => {
-  if (checksum === calcChecksum(...name)) {
-    acc += id;
-  }
-  return acc;
-}, 0);
+const realRoomSectorIDsSum = rooms
+  .filter(({name, checksum}) => checksum === calcChecksum(...name))
+  .reduce((acc, {id}) => acc + id, 0);
 
-const NorthPoleObjectStorage = 'northpoleobjectstorage';
-const northPoleSector = rooms.find(
-  ({name, id}) =>
-    NorthPoleObjectStorage ===
-    String.fromCodePoint(
-      ...stringToCodePoints(name, codePoint =>
-        shiftAlphabetCodePoint(codePoint, id)
-      )
+const northPoleSector = rooms.find(({name, id}) => {
+  const decryptedName = String.fromCodePoint(
+    ...stringToCodePoints(name, codePoint =>
+      shiftAlphabetCodePoint(codePoint, id)
     )
-);
+  );
+  return decryptedName === 'northpoleobjectstorage';
+});
 
 assert.strictEqual(realRoomSectorIDsSum, 409147, 'Part 1 failed');
 assert.strictEqual(northPoleSector?.id, 991, 'Part 2 failed');
