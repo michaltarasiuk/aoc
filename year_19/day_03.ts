@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import {getInputLines} from 'lib/input.js';
 
-const [wirePath1, wirePath2] = await getInputLines({year: 2019, day: 3});
+const wirePaths = await getInputLines({year: 2019, day: 3});
 
 function parseWirePath(path: string) {
   return path.matchAll(/([RLUD])(\d+)/g).map(([, dir, steps]) => {
@@ -37,8 +37,9 @@ function traceWirePath(path: ReturnType<typeof parseWirePath>) {
   return visitedPoints;
 }
 
-const wire1Points = traceWirePath(parseWirePath(wirePath1));
-const wire2Points = traceWirePath(parseWirePath(wirePath2));
+const [wire1Points, wire2Points] = wirePaths
+  .map(parseWirePath)
+  .map(traceWirePath);
 
 let closestDistance = Infinity;
 for (const point of wire1Points.intersection(wire2Points)) {
