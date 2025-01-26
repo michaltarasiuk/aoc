@@ -5,7 +5,7 @@ import {getInputInts} from 'lib/input.js';
 const ns = await getInputInts({year: 2017, day: 5});
 
 const steps = (() => {
-  const offsets = ns.slice();
+  const offsets = [...ns];
   let index = 0;
   let steps = 0;
 
@@ -17,7 +17,7 @@ const steps = (() => {
 })();
 
 const steps2 = (() => {
-  const offsets = ns.slice();
+  const offsets = [...ns];
   let index = 0;
   let steps = 0;
 
