@@ -10,28 +10,21 @@ function parseWirePath(path: string) {
     return [dir, Number(steps)] as const;
   });
 }
-
 function traceWirePath(path: ReturnType<typeof parseWirePath>) {
-  const visitedPoints = new Set<string>();
-  let x = 0;
-  let y = 0;
+  const visitedPoints = new Map<string, number>();
+  let [x, y, j] = [0, 0, 0];
   for (const [dir, steps] of path) {
-    for (let i = 0; i < steps; i++) {
-      switch (dir) {
-        case 'R':
-          x++;
-          break;
-        case 'L':
-          x--;
-          break;
-        case 'U':
-          y++;
-          break;
-        case 'D':
-          y--;
-          break;
+    for (let i = 0; i < steps; i++, j++) {
+      const moves = {
+        R: () => x++,
+        L: () => x--,
+        U: () => y++,
+        D: () => y--,
+      };
+      moves[dir]();
+      if (!visitedPoints.has(`${x},${y}`)) {
+        visitedPoints.set(`${x},${y}`, j + 1);
       }
-      visitedPoints.add(`${x},${y}`);
     }
   }
   return visitedPoints;
@@ -41,10 +34,17 @@ const [wire1Points, wire2Points] = wirePaths
   .map(parseWirePath)
   .map(traceWirePath);
 
-let closestDistance = Infinity;
-for (const point of wire1Points.intersection(wire2Points)) {
-  const [x, y] = point.split(',').map(Number);
-  closestDistance = Math.min(closestDistance, Math.abs(x) + Math.abs(y));
-}
+const intersections = [...wire1Points.keys()].filter(p => wire2Points.has(p));
 
-assert.strictEqual(closestDistance, 2427, 'Part 1 failed');
+const minDistance = Math.min(
+  ...intersections
+    .map(p => p.split(',').map(Number))
+    .map(([x, y]) => Math.abs(x) + Math.abs(y))
+);
+
+const fewestCombinedSteps = Math.min(
+  ...intersections.map(p => wire1Points.get(p)! + wire2Points.get(p)!)
+);
+
+assert.strictEqual(minDistance, 2427, 'Part 1 failed');
+assert.strictEqual(fewestCombinedSteps, 27890, 'Part 2 failed');
