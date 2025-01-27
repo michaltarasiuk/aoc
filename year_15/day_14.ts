@@ -19,13 +19,11 @@ function calcFlyingTime(
 }
 
 const RaceDuration = 2_503;
-const furthestDistance = Math.max(
-  ...reindeerDescriptions
-    .map(description => extractInts(description))
-    .map(
-      ([speed, flyingDuration, restingDuration]) =>
-        speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)
-    )
-);
+const distances = reindeerDescriptions
+  .map(description => extractInts(description))
+  .map(
+    ([speed, flyingDuration, restingDuration]) =>
+      speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)
+  );
 
-assert.strictEqual(furthestDistance, 2640, 'Part 1 failed');
+assert.strictEqual(Math.max(...distances), 2640, 'Part 1 failed');
