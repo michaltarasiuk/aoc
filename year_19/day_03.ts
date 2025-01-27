@@ -5,46 +5,45 @@ import {getInputLines} from 'lib/input.js';
 const wirePaths = await getInputLines({year: 2019, day: 3});
 
 function parseWirePath(path: string) {
-  return path.matchAll(/([RLUD])(\d+)/g).map(([, dir, steps]) => {
+  return path.matchAll(/([RLUD])(\d+)/g).map(([, dir, distance]) => {
     assert(dir === 'R' || dir === 'L' || dir === 'U' || dir === 'D');
-    return [dir, Number(steps)] as const;
+    return [dir, Number(distance)] as const;
   });
 }
+
 function traceWirePath(path: ReturnType<typeof parseWirePath>) {
-  const visitedPoints = new Map<string, number>();
-  let [x, y, j] = [0, 0, 0];
-  for (const [dir, steps] of path) {
-    for (let i = 0; i < steps; i++, j++) {
-      const moves = {
+  const visiteCoords = new Map<string, number>();
+  let [x, y, steps] = [0, 0, 0];
+  for (const [dir, distance] of path) {
+    for (let i = 0; i < distance; i++, steps++) {
+      const move = {
         R: () => x++,
         L: () => x--,
         U: () => y++,
         D: () => y--,
       };
-      moves[dir]();
-      if (!visitedPoints.has(`${x},${y}`)) {
-        visitedPoints.set(`${x},${y}`, j + 1);
+      move[dir]();
+      if (!visiteCoords.has(`${x},${y}`)) {
+        visiteCoords.set(`${x},${y}`, steps + 1);
       }
     }
   }
-  return visitedPoints;
+  return visiteCoords;
 }
 
-const [wire1Points, wire2Points] = wirePaths
+const [wire1Coords, wire2Coords] = wirePaths
   .map(parseWirePath)
   .map(traceWirePath);
 
-const intersections = [...wire1Points.keys()].filter(p => wire2Points.has(p));
+const intersections = [...wire1Coords.keys()].filter(p => wire2Coords.has(p));
 
-const minDistance = Math.min(
-  ...intersections
-    .map(p => p.split(',').map(Number))
-    .map(([x, y]) => Math.abs(x) + Math.abs(y))
+const manhattanDistances = intersections
+  .map(p => p.split(',').map(Number))
+  .map(([x, y]) => Math.abs(x) + Math.abs(y));
+
+const totalSteps = intersections.map(
+  p => wire1Coords.get(p)! + wire2Coords.get(p)!
 );
 
-const fewestCombinedSteps = Math.min(
-  ...intersections.map(p => wire1Points.get(p)! + wire2Points.get(p)!)
-);
-
-assert.strictEqual(minDistance, 2427, 'Part 1 failed');
-assert.strictEqual(fewestCombinedSteps, 27890, 'Part 2 failed');
+assert.strictEqual(Math.min(...manhattanDistances), 2427, 'Part 1 failed');
+assert.strictEqual(Math.min(...totalSteps), 27890, 'Part 2 failed');
