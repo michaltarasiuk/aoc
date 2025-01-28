@@ -10,7 +10,7 @@ function extractSingleChar(s: string) {
   return s.match(/^"(\w)"$/)?.[1];
 }
 function parseSubRules(s: string) {
-  return s.split(' | ').map(subRule => subRule.split(/\s/).map(Number));
+  return s.split(' | ').map(sub => sub.split(/\s/).map(Number));
 }
 function parseRule(rule: string) {
   const [id, body] = rule.split(': ');
