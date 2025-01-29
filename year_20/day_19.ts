@@ -16,15 +16,11 @@ function parseRule(rule: string) {
   const [id, body] = rule.split(': ');
   return [Number(id), extractSingleChar(body) ?? parseSubRules(body)] as const;
 }
-
 function resolveRule(rule: Rule[1], ruleMap: Map<number, Rule[1]>): string {
   if (typeof rule === 'string') {
     return rule;
   }
-  const subRuleRe = rule
-    .map(sub => sub.map(id => resolveRule(ruleMap.get(id)!, ruleMap)).join(''))
-    .join('|');
-  return `(${subRuleRe})`;
+  return `(${rule.map(sub => sub.map(id => resolveRule(ruleMap.get(id)!, ruleMap)).join('')).join('|')})`;
 }
 
 const ruleMap = new Map(rules.map(parseRule));
