@@ -23,11 +23,11 @@ for (let i = 0; password2.includes('_'); i++) {
   if (!/^0{5}/.test(hash)) {
     continue;
   }
-  const [pos, val] = [Number(hash[5]), hash[6]];
+  const pos = Number(hash[5]);
   if (!password2[pos] || password2[pos] !== '_') {
     continue;
   }
-  password2 = [...password2].toSpliced(pos, 1, val).join('');
+  password2 = [...password2].toSpliced(pos, 1, hash[6]).join('');
 }
 
 assert.strictEqual(password, 'f97c354d', 'Part 1 failed');
