@@ -22,18 +22,17 @@ function evalCond(registers: Registers, cond: string) {
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
 
-const {registers, maxHeldRegister} = lines.map(parseInstruction).reduce(
-  (acc, {reg, op, val, cond}) => {
-    if (evalCond(acc.registers, cond)) {
-      acc.registers[reg] ??= 0;
-      acc.registers[reg] += op === 'inc' ? val : -val;
+const registers: Registers = {};
+let maxHeldRegister = -Infinity;
+for (const line of lines) {
+  const {reg, op, val, cond} = parseInstruction(line);
+  if (evalCond(registers, cond)) {
+    registers[reg] ??= 0;
+    registers[reg] += op === 'inc' ? val : -val;
 
-      acc.maxHeldRegister = Math.max(acc.maxHeldRegister, acc.registers[reg]);
-    }
-    return acc;
-  },
-  {registers: {} as Registers, maxHeldRegister: -Infinity}
-);
+    maxHeldRegister = Math.max(maxHeldRegister, registers[reg]);
+  }
+}
 const maxFinalRegister = Math.max(...Object.values(registers));
 
 assert.strictEqual(maxFinalRegister, 5966, 'Part 1 failed');
