@@ -16,7 +16,7 @@ function parseCmd(cmd: string) {
 }
 function parseFile(file: string) {
   const m = file.match(fileRe);
-  return m ? Number(m[1]) : null;
+  return isDefined(m) ? Number(m[1]) : null;
 }
 
 function cd(arg: string, cwd: string[]): string[] {
