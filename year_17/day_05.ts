@@ -8,7 +8,6 @@ const steps = (() => {
   const offsets = [...ns];
   let index = 0;
   let steps = 0;
-
   while (index < offsets.length) {
     index += offsets[index]++;
     steps++;
@@ -20,7 +19,6 @@ const steps2 = (() => {
   const offsets = [...ns];
   let index = 0;
   let steps = 0;
-
   while (index < offsets.length) {
     index += offsets[index] >= 3 ? offsets[index]-- : offsets[index]++;
     steps++;

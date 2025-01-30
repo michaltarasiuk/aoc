@@ -26,7 +26,6 @@ const MonkeySchema = z.object({
 function parseMonkey(monkey: string) {
   return {
     inspects: 0,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- used in eval
     inspect(old: number) {
       this.inspects++;
       return Math.floor(eval(this.operation) / 3);

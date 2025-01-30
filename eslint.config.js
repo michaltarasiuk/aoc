@@ -18,13 +18,7 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          'argsIgnorePattern': '^_',
-          'varsIgnorePattern': '^_',
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': 'off',
       'no-cond-assign': 'off',
       'no-console': 'error',
       'no-empty': 'off',

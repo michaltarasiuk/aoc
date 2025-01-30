@@ -5,25 +5,23 @@ import {extractInts} from 'lib/parse.js';
 
 const reindeerDescriptions = await getInputLines({year: 2015, day: 14});
 
-function calcFlyingTime(
-  totalRaceTime: number,
-  flyingDuration: number,
-  restingDuration: number
+function calcFlyingDistance(
+  raceDuration: number,
+  flyingTime: number,
+  restingTime: number
 ) {
-  const fullCycles = Math.floor(
-    totalRaceTime / (flyingDuration + restingDuration)
-  );
-  const remainingTime = totalRaceTime % (flyingDuration + restingDuration);
+  const completeCycles = Math.floor(raceDuration / (flyingTime + restingTime));
+  const remainingTime = raceDuration % (flyingTime + restingTime);
 
-  return fullCycles * flyingDuration + Math.min(flyingDuration, remainingTime);
+  return completeCycles * flyingTime + Math.min(flyingTime, remainingTime);
 }
 
-const RaceDuration = 2_503;
-const distances = reindeerDescriptions
+const raceDuration = 2_503;
+const reindeerDistances = reindeerDescriptions
   .map(description => extractInts(description))
   .map(
-    ([speed, flyingDuration, restingDuration]) =>
-      speed * calcFlyingTime(RaceDuration, flyingDuration, restingDuration)
+    ([speed, flyingTime, restingTime]) =>
+      speed * calcFlyingDistance(raceDuration, flyingTime, restingTime)
   );
 
-assert.strictEqual(Math.max(...distances), 2640, 'Part 1 failed');
+assert.strictEqual(Math.max(...reindeerDistances), 2640, 'Part 1 failed');

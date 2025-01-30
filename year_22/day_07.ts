@@ -8,14 +8,11 @@ const lines = await getInputLines({year: 2022, day: 7});
 type Filesystem = Record<string, number>;
 type Cmd = [cmd: string[], ...output: string[]];
 
-const cmdRe = /^\$ (\w+)(?:\s(.+))?$/;
-const fileRe = /^(\d+)\s.+/;
-
 function parseCmd(cmd: string) {
-  return cmd.match(cmdRe)?.slice(1);
+  return cmd.match(/^\$ (\w+)(?:\s(.+))?$/)?.slice(1);
 }
 function parseFile(file: string) {
-  const m = file.match(fileRe);
+  const m = file.match(/^(\d+)\s.+/);
   return isDefined(m) ? Number(m[1]) : null;
 }
 
