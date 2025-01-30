@@ -17,12 +17,6 @@ function includesBag(rules: Rules, holder: string, search: string): boolean {
     bag => bag.color === search || includesBag(rules, bag.color, search)
   );
 }
-function countBagsWith(rules: Rules, search: string) {
-  return rules
-    .keys()
-    .map(holder => includesBag(rules, holder, search))
-    .reduce((acc, has) => acc + Number(has), 0);
-}
 
 function countBagsOf(rules: Rules, search: string): number {
   return (rules.get(search) ?? [])
@@ -34,8 +28,10 @@ const SearchBag = 'shiny gold';
 const rules = new Map(
   lines.map(parseRule).map(([{color}, ...bags]) => [color, bags])
 );
-const bagsWithShinyGoldCount = countBagsWith(rules, SearchBag);
-const bagsOfShinyGoldCount = countBagsOf(rules, SearchBag);
+const bagsWithShinyGoldCount = rules
+  .keys()
+  .map(holder => includesBag(rules, holder, SearchBag))
+  .reduce((acc, has) => acc + Number(has), 0);
 
 assert.strictEqual(bagsWithShinyGoldCount, 242, 'Part 1 failed');
-assert.strictEqual(bagsOfShinyGoldCount, 176035, 'Part 2 failed');
+assert.strictEqual(countBagsOf(rules, SearchBag), 176035, 'Part 2 failed');
