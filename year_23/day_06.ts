@@ -8,8 +8,7 @@ const lines = await getInputLines({year: 2023, day: 6});
 function countWaysOfBeatRecord(time: number, record: number) {
   let count = 0;
   for (let i = 0; i <= time; i++) {
-    const distance = i * (time - i);
-    if (distance > record) {
+    if (i * (time - i) > record) {
       count++;
     }
   }

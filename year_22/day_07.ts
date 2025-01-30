@@ -8,17 +8,18 @@ const lines = await getInputLines({year: 2022, day: 7});
 type Filesystem = Record<string, number>;
 type Cmd = [cmd: string[], ...output: string[]];
 
+const cmdRe = /^\$ (\w+)(?:\s(.+))?$/;
+const fileRe = /^(\d+)\s.+/;
+
 function parseCmd(cmd: string) {
-  const cmdRe = /^\$ (\w+)(?:\s(.+))?$/;
-  return cmdRe.exec(cmd)?.slice(1);
+  return cmd.match(cmdRe)?.slice(1);
 }
 function parseFile(file: string) {
-  const fileRe = /^(\d+)\s.+$/;
-  const size = fileRe.exec(file)?.[1];
-  return isDefined(size) ? Number(size) : null;
+  const m = file.match(fileRe);
+  return m ? Number(m[1]) : null;
 }
 
-function cd(arg: string, cwd: string[]) {
+function cd(arg: string, cwd: string[]): string[] {
   switch (arg) {
     case '/':
       return [];
@@ -26,27 +27,12 @@ function cd(arg: string, cwd: string[]) {
       assert(cwd.length > 0);
       return cwd.slice(0, -1);
     default:
-      return cwd.concat(arg);
+      return [...cwd, arg];
   }
 }
-function updateFilesystem(
-  {...filesystem}: Filesystem,
-  cwd: string[],
-  dir: string[]
-) {
-  const dirSize = dir.map(file => parseFile(file) ?? 0).reduce((a, b) => a + b);
-
-  for (const i of cwd.keys()) {
-    const dirName = cwd.slice(0, i + 1).join('/');
-    filesystem[dirName] ??= 0;
-    filesystem[dirName] += dirSize;
-  }
-  return filesystem;
-}
-function determineFilesystem(...cmds: Cmd[]) {
+function determineFilesystem(cmds: Cmd[]) {
   let filesystem: Filesystem = {};
   let cwd: string[] = [];
-
   for (const [[cmd, arg], ...output] of cmds) {
     switch (cmd) {
       case 'cd':
@@ -62,15 +48,30 @@ function determineFilesystem(...cmds: Cmd[]) {
   return filesystem;
 }
 
-const cmds: Cmd[] = [];
-for (const l of lines) {
-  const cmd = parseCmd(l);
-  isDefined(cmd) ? cmds.push([cmd]) : cmds.at(-1)?.push(l);
+function updateFilesystem(
+  filesystem: Filesystem,
+  cwd: string[],
+  dir: string[]
+) {
+  const dirSize = dir
+    .map(file => parseFile(file) ?? 0)
+    .reduce((a, b) => a + b, 0);
+  for (const i of cwd.keys()) {
+    const dirName = cwd.slice(0, i + 1).join('/');
+    filesystem[dirName] = (filesystem[dirName] ?? 0) + dirSize;
+  }
+  return filesystem;
 }
 
-const filesystem = determineFilesystem(...cmds);
+const cmds = lines.reduce<Cmd[]>((acc, l) => {
+  const cmd = parseCmd(l);
+  isDefined(cmd) ? acc.push([cmd]) : acc.at(-1)?.push(l);
+  return acc;
+}, []);
+
+const filesystem = determineFilesystem(cmds);
 const totalSize = Object.values(filesystem)
   .filter(size => size <= 100_000)
-  .reduce((a, b) => a + b);
+  .reduce((a, b) => a + b, 0);
 
 assert.strictEqual(totalSize, 1306611, 'Part 1 failed');
