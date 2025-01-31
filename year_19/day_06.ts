@@ -15,9 +15,10 @@ function countOrbits(orbits: Map<string, string>, satellite: string) {
 
 const orbitRe = /^(.*)\)(.*)$/;
 const orbits = new Map(
-  lines
-    .map(l => orbitRe.exec(l) ?? raise('Invalid orbit'))
-    .map(([, center, satellite]) => [satellite, center])
+  lines.map(l => {
+    const [, center, satellite] = orbitRe.exec(l) ?? raise('Invalid orbit');
+    return [satellite, center];
+  })
 );
 
 const totalOrbits = orbits

@@ -9,10 +9,12 @@ type Filesystem = Record<string, number>;
 type Cmd = [cmd: string[], ...output: string[]];
 
 function parseCmd(cmd: string) {
-  return cmd.match(/^\$ (\w+)(?:\s(.+))?$/)?.slice(1);
+  const cmdRe = /^\$ (\w+)(?:\s(.+))?$/;
+  return cmd.match(cmdRe)?.slice(1);
 }
 function parseFile(file: string) {
-  const m = file.match(/^(\d+)\s.+/);
+  const fileRe = /^(\d+)\s.+/;
+  const m = file.match(fileRe);
   return isDefined(m) ? Number(m[1]) : null;
 }
 
