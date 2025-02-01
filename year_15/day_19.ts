@@ -8,8 +8,8 @@ const [replacements, [molecule]] = await getInputParagraphs({
 });
 
 const distincts = new Set<string>();
-for (const replacement of replacements) {
-  const [a, b] = replacement.split(' => ');
+for (const r of replacements) {
+  const [a, b] = r.split(' => ');
   for (const m of molecule.matchAll(new RegExp(a, 'g'))) {
     distincts.add([...molecule].toSpliced(m.index, a.length, b).join(''));
   }
