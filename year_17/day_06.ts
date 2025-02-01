@@ -2,37 +2,28 @@ import assert from 'node:assert';
 
 import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputInts({year: 2017, day: 6});
+const initialMemoryBanks = await getInputInts({year: 2017, day: 6});
 
-function redistributeMemoryBlocks([...blocks]: number[]) {
-  const cycles: number[] = [];
-  function redistribute() {
-    const seen = new Set<string>();
-    while (true) {
-      const snapshot = blocks.join();
-      if (seen.has(snapshot)) {
-        return seen.size;
-      } else {
-        seen.add(snapshot);
-      }
-      let max = Math.max(...blocks);
-      let idx = blocks.indexOf(max);
-      blocks[idx] = 0;
-      while (max--) {
-        blocks[++idx % blocks.length]++;
-      }
+function* memoryReallocator([...memoryBanks]: number[]) {
+  const seen = new Set<string>();
+  while (true) {
+    const currentConfig = memoryBanks.join();
+    if (seen.has(currentConfig)) {
+      yield seen.size;
+      seen.clear();
+    } else {
+      seen.add(currentConfig);
+    }
+    let blocksToRedistribute = Math.max(...memoryBanks);
+    let index = memoryBanks.indexOf(blocksToRedistribute);
+    memoryBanks[index] = 0;
+    while (blocksToRedistribute--) {
+      memoryBanks[++index % memoryBanks.length]++;
     }
   }
-  return {
-    cycles,
-    run() {
-      cycles.push(redistribute());
-      return this;
-    },
-  };
 }
 
-const {cycles} = redistributeMemoryBlocks(ns).run().run();
+const [redistributionCycles, loopSize] = memoryReallocator(initialMemoryBanks);
 
-assert.strictEqual(cycles[0], 11137, 'Part 1 failed');
-assert.strictEqual(cycles[1], 1037, 'Part 2 failed');
+assert.strictEqual(redistributionCycles, 11137, 'Part 1 failed');
+assert.strictEqual(loopSize, 1037, 'Part 2 failed');
