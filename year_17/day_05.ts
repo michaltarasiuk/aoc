@@ -2,29 +2,25 @@ import assert from 'node:assert';
 
 import {getInputInts} from 'lib/input.js';
 
-const ns = await getInputInts({year: 2017, day: 5});
+const jumpOffsets = await getInputInts({year: 2017, day: 5});
 
-const steps = (() => {
-  const offsets = [...ns];
-  let index = 0;
+function countStepsToExit(
+  [...offsets]: number[],
+  updateOffset = (offsets: number[], index: number) => offsets[index]++
+) {
   let steps = 0;
-  while (index < offsets.length) {
-    index += offsets[index]++;
+  let currentIndex = 0;
+  while (currentIndex < offsets.length) {
+    currentIndex += updateOffset(offsets, currentIndex);
     steps++;
   }
   return steps;
-})();
+}
 
-const steps2 = (() => {
-  const offsets = [...ns];
-  let index = 0;
-  let steps = 0;
-  while (index < offsets.length) {
-    index += offsets[index] >= 3 ? offsets[index]-- : offsets[index]++;
-    steps++;
-  }
-  return steps;
-})();
+const part1Result = countStepsToExit(jumpOffsets);
+const part2Result = countStepsToExit(jumpOffsets, (offsets, i) =>
+  offsets[i] >= 3 ? offsets[i]-- : offsets[i]++
+);
 
-assert.strictEqual(steps, 373160, 'Part 1 failed');
-assert.strictEqual(steps2, 26395586, 'Part 2 failed');
+assert.strictEqual(part1Result, 373160, 'Part 1 failed');
+assert.strictEqual(part2Result, 26395586, 'Part 2 failed');
