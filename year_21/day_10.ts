@@ -20,7 +20,6 @@ const AutocompletePoints = {
 
 function analyzeLineSyntax(l: string) {
   const stack: string[] = [];
-
   for (const char of l) {
     switch (char) {
       case '(':

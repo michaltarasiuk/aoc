@@ -15,7 +15,7 @@ function findGroup(programs: Map<string, string[]>, start: string) {
   const stack = [start];
 
   while (stack.length > 0) {
-    const current = stack.pop() ?? raise('Empty stack');
+    const current = stack.shift() ?? raise('Empty stack');
     group.add(current);
 
     for (const connection of programs.get(current) ?? []) {
