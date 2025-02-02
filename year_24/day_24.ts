@@ -19,22 +19,22 @@ const gates = gateDescriptions
 
 while (gates.length > 0) {
   const {a, b, op, out} = gates.shift()!;
-  if (Object.hasOwn(wireValues, a) && Object.hasOwn(wireValues, b)) {
-    switch (op) {
-      case 'AND':
-        wireValues[out] = wireValues[a] & wireValues[b];
-        break;
-      case 'OR':
-        wireValues[out] = wireValues[a] | wireValues[b];
-        break;
-      case 'XOR':
-        wireValues[out] = wireValues[a] ^ wireValues[b];
-        break;
-      default:
-        throw new Error('Invalid operator');
-    }
-  } else {
+  if (!(Object.hasOwn(wireValues, a) && Object.hasOwn(wireValues, b))) {
     gates.push({a, op, b, out});
+    continue;
+  }
+  switch (op) {
+    case 'AND':
+      wireValues[out] = wireValues[a] & wireValues[b];
+      break;
+    case 'OR':
+      wireValues[out] = wireValues[a] | wireValues[b];
+      break;
+    case 'XOR':
+      wireValues[out] = wireValues[a] ^ wireValues[b];
+      break;
+    default:
+      throw new Error('Invalid operator');
   }
 }
 
