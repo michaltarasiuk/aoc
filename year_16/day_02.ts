@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2016, day: 2});
+const input = await getInput({year: 2016, day: 2});
 
 const Keypad = [
   ['1', '2', '3'],
@@ -33,7 +33,7 @@ const StartPoint = [1, 1];
 let [x, y] = StartPoint;
 let bathroomCode = '';
 
-for (const l of lines) {
+for (const l of input.split(/\n/)) {
   for (const char of l) {
     [x, y] = move(x, y, char);
   }

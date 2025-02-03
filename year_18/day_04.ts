@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
-import {isDefined} from 'lib/predicate.js';
+import {add} from 'lib/add.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2018, day: 4});
+const input = await getInput({year: 2018, day: 4});
 
 function parseRecord(record: string) {
   const recordRe = /^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2})\] (.+)$/;
@@ -26,7 +26,8 @@ function createShift() {
 }
 
 const Events = {falls: 'falls asleep', wakes: 'wakes up'};
-const records = lines
+const records = input
+  .split(/\n/)
   .map(parseRecord)
   .sort((a, b) => Number(a.date) - Number(b.date));
 
@@ -50,7 +51,7 @@ for (const {event, date} of records) {
 }
 
 const [id, minutes] = Object.entries(guards).reduce((acc, guard) =>
-  sum(...acc[1]) > sum(...guard[1]) ? acc : guard
+  acc[1].reduce(add) > guard[1].reduce(add) ? acc : guard
 );
 const maxMinute = minutes.indexOf(Math.max(...minutes));
 

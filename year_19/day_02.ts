@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const ints = await getInputInts({year: 2019, day: 2});
+const input = await getInput({year: 2019, day: 2});
 
 function runProgram([...ints]: number[], noun: number, verb: number) {
   ints[1] = noun;
@@ -23,6 +23,8 @@ function runProgram([...ints]: number[], noun: number, verb: number) {
   }
   return ints[0];
 }
+
+const ints = input.split(',').map(Number);
 
 assert.strictEqual(runProgram(ints, 12, 2), 3306701, 'Part 1 failed');
 

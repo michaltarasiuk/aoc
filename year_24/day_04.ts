@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const grid = await getInputGrid({year: 2024, day: 4});
+const input = await getInput({year: 2024, day: 4});
 
 type Coords = readonly [number, number];
 
@@ -36,6 +36,8 @@ function findWord(grid: string[][], [x, y]: Coords, [i, j]: Coords) {
   }
   return word;
 }
+
+const grid = input.split(/\n/).map(([...l]) => l);
 
 const count = getCoords(grid)
   .filter(([x, y]) => grid[y][x] === TargetWord[0])

@@ -1,17 +1,26 @@
 import assert from 'node:assert';
 
-import {permute} from 'lib/array.js';
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {permute} from 'lib/permute.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2015, day: 9});
+const input = await getInput({year: 2015, day: 9});
 
-const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
-const routeCostMap = lines
-  .map(l => {
-    const [, a, b, cost] = l.match(distanceRe) ?? raise('Invalid distance');
-    return [a, b, Number(cost)] as const;
-  })
+function calcDistance(route: string[]) {
+  return route
+    .slice(1)
+    .reduce((acc, to, i) => acc + distancesMap[route[i]][to], 0);
+}
+
+function parseDistance(l: string) {
+  const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
+  const [, a, b, distance] = l.match(distanceRe) ?? raise('Invalid distance');
+  return [a, b, Number(distance)] as const;
+}
+
+const distancesMap = input
+  .split(/\n/)
+  .map(parseDistance)
   .reduce<{[from: string]: {[to: string]: number}}>((acc, [a, b, cost]) => {
     acc[a] ??= {};
     acc[b] ??= {};
@@ -20,13 +29,7 @@ const routeCostMap = lines
     return acc;
   }, {});
 
-const costs: number[] = [];
-for (const route of permute(Object.keys(routeCostMap))) {
-  const cost = route
-    .map((from, i) => routeCostMap[from][route[i + 1]] ?? 0)
-    .reduce((a, b) => a + b);
-  costs.push(cost);
-}
+const distances = [...permute(Object.keys(distancesMap)).map(calcDistance)];
 
-assert.strictEqual(Math.min(...costs), 251, 'Part 1 failed');
-assert.strictEqual(Math.max(...costs), 898, 'Part 2 failed');
+assert.strictEqual(Math.min(...distances), 251, 'Part 1 failed');
+assert.strictEqual(Math.max(...distances), 898, 'Part 2 failed');

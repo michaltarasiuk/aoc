@@ -1,22 +1,22 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2018, day: 2});
+const input = await getInput({year: 2018, day: 2});
 
-let twos = 0;
-let threes = 0;
-for (const l of lines) {
-  const counts = new Map(
-    frequencies(l)
+let countOfTwos = 0;
+let countOfThrees = 0;
+for (const line of input.split(/\n/)) {
+  const charCounts = new Map(
+    frequencies(line)
       .entries()
       .map(([char, count]) => [count, char])
   );
-  if (counts.has(2)) twos++;
-  if (counts.has(3)) threes++;
+  if (charCounts.has(2)) countOfTwos++;
+  if (charCounts.has(3)) countOfThrees++;
 }
 
-const checksum = twos * threes;
+const checksum = countOfTwos * countOfThrees;
 
 assert.strictEqual(checksum, 5880, 'Part 1 failed');

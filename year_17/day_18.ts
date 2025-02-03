@@ -1,23 +1,24 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2017, day: 18});
+const input = await getInput({year: 2017, day: 18});
 
 const instructionRe = /^(\w{3}) (\w)(?: (\S+))?$/;
-const instructions = lines.map(l => {
-  const [, operation, register, value] =
-    instructionRe.exec(l) ?? raise('Invalid instruction');
-  return {operation, register, value};
+const instructions = input.split(/\n/).map(l => {
+  const [, operation, register, val] =
+    instructionRe.exec(l) ?? raise('Invalid');
+  return {operation, register, val};
 });
 
 const registers: Record<string, number> = {};
+
 let i = 0;
 let lastSound = 0;
 outer: while (true) {
-  const {operation, register, value} = instructions[i];
-  const parsedValue = Number(registers[value] ?? value);
+  const {operation, register, val} = instructions[i];
+  const parsedValue = Number(registers[val] ?? val);
 
   switch (operation) {
     case 'snd':

@@ -1,12 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const [rules, , [, ...nearbyTickets]] = await getInputParagraphs({
-  year: 2020,
-  day: 16,
-});
+const input = await getInput({year: 2020, day: 16});
 
 function parseRule(rule: string) {
   const ruleRe = /^(.+): (\d+)-(\d+) or (\d+)-(\d+)$/;
@@ -21,6 +18,10 @@ function parseRule(rule: string) {
 function parseTicket(ticket: string) {
   return ticket.split(',').map(Number);
 }
+
+const [rules, , [, ...nearbyTickets]] = input
+  .split(/\n\n/)
+  .map(p => p.split(/\n/));
 
 const ranges = rules.flatMap(parseRule);
 const errorRate = nearbyTickets.flatMap(parseTicket).reduce((acc, n) => {

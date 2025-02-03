@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lights = await getInputGrid({year: 2015, day: 18});
+const input = await getInput({year: 2015, day: 18});
 
 const LightOn = '#';
 const LightOff = '.';
@@ -36,16 +36,12 @@ function getNewLight(light: string, adjacents: string[]) {
 
 const StepsCount = 100;
 
-let currentLights = lights;
+let lights = input.split(/\n/).map(([...l]) => l);
 for (let step = 0; step < StepsCount; step++) {
-  currentLights = currentLights.map((row, y) =>
-    row.map((light, x) =>
-      getNewLight(light, getAdjacentLights(currentLights, {x, y}))
-    )
+  lights = lights.map((row, y) =>
+    row.map((light, x) => getNewLight(light, getAdjacentLights(lights, {x, y})))
   );
 }
-const lightsOnCount = currentLights
-  .flat()
-  .filter(light => light === LightOn).length;
+const lightsOnCount = lights.flat().filter(light => light === LightOn).length;
 
 assert.strictEqual(lightsOnCount, 821, 'Part 1 failed');

@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {castArray} from 'lib/array.js';
-import {getInputParagraphs} from 'lib/input.js';
-import {isDefined} from 'lib/predicate.js';
+import {castArray} from 'lib/cast_array.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 
-const paragraphs = await getInputParagraphs({year: 2022, day: 13});
+const input = await getInput({year: 2022, day: 13});
 
 type Packet = (Packet | number)[];
 
@@ -29,7 +29,9 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
   }
 }
 
-const indicesSum = paragraphs
+const indicesSum = input
+  .split(/\n\n/)
+  .map(p => p.split(/\n/))
   .map(parsePacketPair)
   .reduce((acc, packetPair, i) => {
     if (isValidPacketPair(packetPair)) {

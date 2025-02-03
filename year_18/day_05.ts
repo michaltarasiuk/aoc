@@ -10,9 +10,9 @@ function reactPolymer(polymer: string) {
   let exec: RegExpExecArray | null;
   let units = polymer;
   while ((exec = reactionRe.exec(units))) {
-    const [match, a, b] = exec;
+    const [m, a, b] = exec;
     if (a !== b) {
-      units = units.replace(match, '');
+      units = units.replace(m, '');
       reactionRe.lastIndex = 0;
     } else {
       reactionRe.lastIndex--;

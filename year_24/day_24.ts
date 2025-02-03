@@ -1,21 +1,23 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const [initialValues, gateDescriptions] = await getInputParagraphs({
-  year: 2024,
-  day: 24,
-});
+const input = await getInput({year: 2024, day: 24});
+
+const [initialValues, gateDescriptions] = input
+  .split(/\n\n/)
+  .map(p => p.split(/\n/));
 
 const wireValues = Object.fromEntries(
   initialValues.map(l => l.split(': ')).map(([k, v]) => [k, Number(v)])
 );
 
 const gateRe = /^(\w+) (AND|OR|XOR) (\w+) -> (\w+)$/;
-const gates = gateDescriptions
-  .map(l => gateRe.exec(l) ?? raise('Invalid gate'))
-  .map(([, a, op, b, out]) => ({a, op, b, out}));
+const gates = gateDescriptions.map(l => {
+  const [, a, op, b, out] = gateRe.exec(l) ?? raise('Invalid gate');
+  return {a, op, b, out};
+});
 
 while (gates.length > 0) {
   const {a, b, op, out} = gates.shift()!;

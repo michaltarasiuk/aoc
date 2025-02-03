@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
+import {chunkEvery} from 'lib/chunk_every.js';
 import {getInput} from 'lib/input.js';
-import {chunkEvery} from 'lib/iterable.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {isKeyof} from 'lib/is_keyof.js';
 import {z} from 'zod';
 
 const input = await getInput({year: 2024, day: 17});
@@ -19,7 +19,7 @@ function calcComboValue(
     5: registers.b,
     6: registers.c,
   };
-  assert(isKeyOf(operandMap, operand));
+  assert(isKeyof(operandMap, operand));
   return operandMap[operand];
 }
 

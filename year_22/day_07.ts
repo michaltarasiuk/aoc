@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isDefined} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 
-const lines = await getInputLines({year: 2022, day: 7});
+const input = await getInput({year: 2022, day: 7});
 
 type Filesystem = Record<string, number>;
 type Cmd = [cmd: string[], ...output: string[]];
@@ -42,7 +42,7 @@ function updateFilesystem(
 }
 
 const cmds: Cmd[] = [];
-for (const l of lines) {
+for (const l of input.split(/\n/)) {
   const cmd = parseCmd(l);
   if (isDefined(cmd)) {
     cmds.push([cmd]);

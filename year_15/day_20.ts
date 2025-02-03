@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
+import {divisors} from 'lib/divisors.js';
 import {getInput} from 'lib/input.js';
-import {divisors} from 'lib/math.js';
 
-const target = await getInput({year: 2015, day: 20});
+const input = await getInput({year: 2015, day: 20});
 
 const PresentsPerHouse = 10;
 
@@ -13,7 +13,7 @@ while (true) {
     (sum, elf) => sum + elf * PresentsPerHouse,
     0
   );
-  if (housePresents >= Number(target)) {
+  if (housePresents >= Number(input)) {
     break;
   } else {
     houseNumber++;

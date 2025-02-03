@@ -1,37 +1,43 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const ns = await getInputInts({year: 2020, day: 9});
+const input = await getInput({year: 2020, day: 9});
 
-function isValid(preamble: number[], sum: number) {
-  return preamble.some(n => preamble.some(n2 => n !== n2 && n + n2 === sum));
+function isSumOfTwoNumbers(preamble: number[], target: number) {
+  return preamble.some(n => preamble.some(n2 => n !== n2 && n + n2 === target));
 }
-function findInvalid(ns: number[], preambleSize: number) {
-  for (let i = preambleSize; i < ns.length; i++) {
-    if (!isValid(ns.slice(i - preambleSize, i), ns[i])) {
-      return ns[i];
+function findFirstInvalidNumber(numbers: number[], preambleLength: number) {
+  for (let i = preambleLength; i < numbers.length; i++) {
+    if (!isSumOfTwoNumbers(numbers.slice(i - preambleLength, i), numbers[i])) {
+      return numbers[i];
     }
   }
+  throw new Error('Invalid number not found');
 }
 
-function findContiguousSet(ns: number[], v: number) {
-  for (const i of ns.keys()) {
-    const set: number[] = [];
-    for (const n of ns.slice(i)) {
-      set.push(n);
-      if (set.reduce((a, b) => a + b) === v) {
-        return set;
+function findContiguousSetSummingTo(numbers: number[], target: number) {
+  for (const i of numbers.keys()) {
+    const contiguousSet: number[] = [];
+    for (const num of numbers.slice(i)) {
+      contiguousSet.push(num);
+      if (contiguousSet.reduce((a, b) => a + b) === target) {
+        return contiguousSet;
       }
     }
   }
+  throw new Error('Contiguous set not found');
 }
 
-const PreambleSize = 25;
-const invalid = findInvalid(ns, PreambleSize) ?? raise('Invalid not found');
-const set = findContiguousSet(ns, invalid) ?? raise('Set not found');
-const encryptionWeakness = Math.min(...set) + Math.max(...set);
+const PreambleLength = 25;
 
-assert.strictEqual(invalid, 2089807806, 'Part 1 failed');
+const numbers = input.split(/\n/).map(Number);
+
+const firstInvalidNumber = findFirstInvalidNumber(numbers, PreambleLength);
+
+const contiguousSet = findContiguousSetSummingTo(numbers, firstInvalidNumber);
+const encryptionWeakness =
+  Math.min(...contiguousSet) + Math.max(...contiguousSet);
+
+assert.strictEqual(firstInvalidNumber, 2089807806, 'Part 1 failed');
 assert.strictEqual(encryptionWeakness, 245848639, 'Part 2 failed');

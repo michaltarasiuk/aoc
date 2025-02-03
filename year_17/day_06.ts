@@ -1,29 +1,29 @@
 import assert from 'node:assert';
 
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const initialMemoryBanks = await getInputInts({year: 2017, day: 6});
+const input = await getInput({year: 2017, day: 6});
 
-function* memoryReallocator([...memoryBanks]: number[]) {
+function* reallocate([...banks]: number[]) {
   const seen = new Set<string>();
   while (true) {
-    const currentConfig = memoryBanks.join();
-    if (seen.has(currentConfig)) {
+    const config = banks.join();
+    if (seen.has(config)) {
       yield seen.size;
       seen.clear();
     } else {
-      seen.add(currentConfig);
+      seen.add(config);
     }
-    let blocksToRedistribute = Math.max(...memoryBanks);
-    let index = memoryBanks.indexOf(blocksToRedistribute);
-    memoryBanks[index] = 0;
-    while (blocksToRedistribute--) {
-      memoryBanks[++index % memoryBanks.length]++;
+    let blocks = Math.max(...banks);
+    let i = banks.indexOf(blocks);
+    banks[i] = 0;
+    while (blocks--) {
+      banks[++i % banks.length]++;
     }
   }
 }
 
-const [redistributionCycles, loopSize] = memoryReallocator(initialMemoryBanks);
+const [cycles, loopSize] = reallocate((input.match(/\d+/g) ?? []).map(Number));
 
-assert.strictEqual(redistributionCycles, 11137, 'Part 1 failed');
+assert.strictEqual(cycles, 11137, 'Part 1 failed');
 assert.strictEqual(loopSize, 1037, 'Part 2 failed');

@@ -1,12 +1,14 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2023, day: 1});
+const input = await getInput({year: 2023, day: 1});
 
 const digitRe = /\d/;
 const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
+
+const lines = input.split('\n');
 
 const calibrationValuesSum = lines
   .map(l => {

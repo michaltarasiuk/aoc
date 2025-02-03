@@ -4,15 +4,15 @@ import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2017, day: 1});
 
-const ns = input.matchAll(/\d/g).map(Number).toArray();
+const digits = (input.match(/\d/g) ?? []).map(Number);
 
-const captchaSolution = ns
-  .filter((n, i) => n === ns.at((i + 1) % ns.length))
+const captchaPart1 = digits
+  .filter((d, i) => d === digits.at((i + 1) % digits.length))
   .reduce((a, b) => a + b);
 
-const captchaSolution2 = ns
-  .filter((n, i) => n === ns.at((i + ns.length / 2) % ns.length))
+const captchaPart2 = digits
+  .filter((d, i) => d === digits.at((i + digits.length / 2) % digits.length))
   .reduce((a, b) => a + b);
 
-assert.strictEqual(captchaSolution, 1203, 'Part 1 failed');
-assert.strictEqual(captchaSolution2, 1146, 'Part 2 solution is incorrect');
+assert.strictEqual(captchaPart1, 1203, 'Part 1 failed');
+assert.strictEqual(captchaPart2, 1146, 'Part 2 failed');

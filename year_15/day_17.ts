@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2015, day: 17});
+const input = await getInput({year: 2015, day: 17});
 
 function* permuteContainers(
   liters: number,
@@ -24,7 +24,9 @@ function* permuteContainers(
 
 const Liters = 150;
 
+const lines = input.split(/\n/);
 const combinations = [...permuteContainers(Liters, ...lines.map(Number))];
+
 const combinationsByLength = Object.groupBy(combinations, c => c.length);
 const containerCounts = Object.keys(combinationsByLength).map(Number);
 

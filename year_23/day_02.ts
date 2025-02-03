@@ -1,17 +1,17 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
 
-const lines = await getInputLines({year: 2023, day: 2});
+const input = await getInput({year: 2023, day: 2});
 
-const games = lines.map(l =>
+const games = input.split(/\n/).map(l =>
   l
     .matchAll(/(\d+) (r|g|b)/g)
     .map(([, n, color]) => [color, Number(n)] as const)
     .reduce(
       (acc, [k, v]) => {
-        assert(isKeyOf(acc, k));
+        assert(isKeyof(acc, k));
         return {...acc, [k]: Math.max(acc[k], v)};
       },
       {r: 0, g: 0, b: 0}

@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2017, day: 12});
+const input = await getInput({year: 2017, day: 12});
 
 function parseProgram(program: string) {
   const [id, connections] = program.split(' <-> ');
@@ -37,7 +37,7 @@ function countGroups(programs: Map<string, string[]>) {
 }
 
 const programs = new Map(
-  lines.map(l => {
+  input.split(/\n/).map(l => {
     const {id, connections} = parseProgram(l);
     return [id, connections];
   })

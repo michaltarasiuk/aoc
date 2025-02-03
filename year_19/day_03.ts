@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const wirePaths = await getInputLines({year: 2019, day: 3});
+const input = await getInput({year: 2019, day: 3});
 
 function parseWirePath(path: string) {
   return path.matchAll(/([RLUD])(\d+)/g).map(([, dir, distance]) => {
@@ -31,7 +31,8 @@ function traceWirePath(path: ReturnType<typeof parseWirePath>) {
   return visiteCoords;
 }
 
-const [wire1Coords, wire2Coords] = wirePaths
+const [wire1Coords, wire2Coords] = input
+  .split(/\n/)
   .map(parseWirePath)
   .map(traceWirePath);
 

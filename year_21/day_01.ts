@@ -1,16 +1,19 @@
 import assert from 'node:assert';
 
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const ns = await getInputInts({year: 2021, day: 1});
+const input = await getInput({year: 2021, day: 1});
 
-const increasingMeasurementsCount = ns
-  .map((n, i) => Number(n > ns[i - 1]))
-  .reduce((a, b) => a + b);
+function countIncreases(measurements: number[], windowSize: number) {
+  return measurements.reduce((acc, depth, i) => {
+    if (i >= windowSize && depth > measurements[i - windowSize]) {
+      acc++;
+    }
+    return acc;
+  }, 0);
+}
 
-const increasingMeasurementsSumCount = ns
-  .map((n, i) => Number(n > ns[i - 3]))
-  .reduce((a, b) => a + b);
+const depths = (input.match(/\d+/g) ?? []).map(Number);
 
-assert.strictEqual(increasingMeasurementsCount, 1559, 'Part 1 failed');
-assert.strictEqual(increasingMeasurementsSumCount, 1600, 'Part 2 failed');
+assert.strictEqual(countIncreases(depths, 1), 1559, 'Part 1 failed');
+assert.strictEqual(countIncreases(depths, 3), 1600, 'Part 2 failed');

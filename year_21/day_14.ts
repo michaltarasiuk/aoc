@@ -1,14 +1,11 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputParagraphs} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
-import {isDefined} from 'lib/predicate.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
+import {raise} from 'lib/raise.js';
 
-const [[polymerTemplate], rules] = await getInputParagraphs({
-  year: 2021,
-  day: 14,
-});
+const input = await getInput({year: 2021, day: 14});
 
 function pairInsertion(
   [...polymerElements]: string,
@@ -33,6 +30,8 @@ function pairInsertion(
   }
   throw raise('Unreachable');
 }
+
+const [[polymerTemplate], rules] = input.split(/\n\n/).map(p => p.split(/\n/));
 
 const ruleRe = /^(\w{2}) -> (\w)$/;
 const rulesMap = new Map(

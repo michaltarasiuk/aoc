@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2023, day: 7});
+const input = await getInput({year: 2023, day: 7});
 
 const Cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const HandTypes = {
@@ -40,7 +40,8 @@ function compareHands(a: string, b: string) {
   return 0;
 }
 
-const hands = lines
+const hands = input
+  .split(/\n/)
   .map(l => l.split(/\s/))
   .map(([hand, bit]) => ({hand, bid: Number(bit), type: classifyHand(hand)}))
   .sort((a, b) => a.type - b.type || compareHands(a.hand, b.hand));

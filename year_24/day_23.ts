@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2024, day: 23});
+const input = await getInput({year: 2024, day: 23});
 
 function* permuteConnections(
   connections: string[],
@@ -19,7 +19,8 @@ function* permuteConnections(
   }
 }
 
-const connections = lines
+const connections = input
+  .split(/\n/)
   .map(l => l.split('-'))
   .reduce<Record<string, Set<string>>>((acc, [a, b]) => {
     (acc[a] ??= new Set()).add(b);

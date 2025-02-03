@@ -1,26 +1,35 @@
 import assert from 'node:assert';
 
-import {transpose} from 'lib/array.js';
-import {getInputLines} from 'lib/input.js';
-import {chunkEvery} from 'lib/iterable.js';
-import {extractInts} from 'lib/parse.js';
+import {chunkEvery} from 'lib/chunk_every.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2016, day: 3});
+const input = await getInput({year: 2016, day: 3});
+
+const TriangleSides = 3;
 
 function isValidTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const TriangleSides = 3;
+const trianglesByRows = input
+  .split(/\n/)
+  .map(l => (l.match(/\d+/g) ?? []).map(Number));
 
-const trianglesByRows = lines.map(l => extractInts(l));
-const validTrianglesByRows = trianglesByRows.filter(isValidTriangle);
+const cols: number[][] = [];
+for (const triangle of trianglesByRows) {
+  for (const [k, v] of triangle.entries()) {
+    (cols[k] ??= []).push(v);
+  }
+}
+const trianglesByCols = chunkEvery(cols.flat(), TriangleSides);
 
-const trianglesByColumns = chunkEvery(
-  transpose(trianglesByRows).flat(),
-  TriangleSides
+assert.strictEqual(
+  trianglesByRows.filter(isValidTriangle).length,
+  993,
+  'Part 1 failed'
 );
-const validTrianglesByColumns = trianglesByColumns.filter(isValidTriangle);
-
-assert.strictEqual(validTrianglesByRows.length, 993, 'Part 1 failed');
-assert.strictEqual(validTrianglesByColumns.length, 1849, 'Part 2 failed');
+assert.strictEqual(
+  trianglesByCols.filter(isValidTriangle).length,
+  1849,
+  'Part 2 failed'
+);

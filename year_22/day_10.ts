@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 import {z} from 'zod';
 
-const lines = await getInputLines({year: 2022, day: 10});
+const input = await getInput({year: 2022, day: 10});
 
 const InstructionSchema = z.union([
   z.object({op: z.literal('addx'), arg: z.string().transform(Number)}),
@@ -20,7 +20,8 @@ function calcSignal(instructions: z.infer<typeof InstructionSchema>[]) {
   }, 1);
 }
 
-const instructions = lines
+const instructions = input
+  .split(/\n/)
   .map(parseInstruction)
   .flatMap((instruction): z.infer<typeof InstructionSchema>[] =>
     instruction.op === 'addx' ? [{op: 'noop'}, instruction] : [instruction]

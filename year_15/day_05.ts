@@ -1,10 +1,11 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2015, day: 5});
+const input = await getInput({year: 2015, day: 5});
 
-const niceStringsCount = lines
+const niceStringsCount = input
+  .split(/\n/)
   .map(l => {
     const hasAtLeastThreeVowels = /(.*[aeuio].*){3}/.test(l);
     const hasDoubleLetter = /(?:(\w)\1+)/.test(l);
@@ -16,7 +17,8 @@ const niceStringsCount = lines
   })
   .reduce((a, b) => a + b);
 
-const niceStringsCount2 = lines
+const niceStringsCount2 = input
+  .split(/\n/)
   .map(l => {
     const hasPairOfTwoLetters = /(\w{2}).*\1/.test(l);
     const hasRepeatingLetter = /(\w)\w\1/.test(l);

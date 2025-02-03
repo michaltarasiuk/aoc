@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 
 import {getInput} from 'lib/input.js';
-import {isDefined} from 'lib/predicate.js';
+import {isDefined} from 'lib/is_defined.js';
 
 const input = await getInput({year: 2022, day: 6});
 

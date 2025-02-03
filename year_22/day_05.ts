@@ -1,9 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const [stacks, instructions] = await getInputParagraphs({year: 2022, day: 5});
-const [stackIds, ...crateStacks] = stacks.toReversed();
+const input = await getInput({year: 2022, day: 5});
 
 function parseInstruction(i: string) {
   const instructionRe = /^move (\d+) from (\d+) to (\d+)$/;
@@ -15,6 +14,9 @@ function cratesToString(crates: Record<string, string[]>) {
     .map(([crate]) => crate)
     .join('');
 }
+
+const [stacks, instructions] = input.split(/\n\n/).map(l => l.split(/\n/));
+const [stackIds, ...crateStacks] = stacks.toReversed();
 
 const stackIdMap = Object.fromEntries(
   stackIds.matchAll(/\d/g).map(m => [m.index, m[0]])

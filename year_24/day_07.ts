@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
 
-const lines = await getInputLines({year: 2024, day: 7});
+const input = await getInput({year: 2024, day: 7});
 
 const Operators = {
   '+': (a, b) => a + b,
@@ -30,12 +30,12 @@ function evaluateLeftToRight(
   operators: string[]
 ) {
   return operands.reduce((acc, operand, i) => {
-    assert(isKeyOf(Operators, operators[i]));
+    assert(isKeyof(Operators, operators[i]));
     return Operators[operators[i]](acc, operand);
   }, initialValue);
 }
 
-const equations = lines.map(l => l.split(/:? /).map(Number));
+const equations = input.split(/\n/).map(l => l.split(/:? /).map(Number));
 
 const totalCalibration = equations.reduce((acc, [result, ...operands]) => {
   const isValidEquation = permuteOperators(operands.length, ['+', '*']).some(

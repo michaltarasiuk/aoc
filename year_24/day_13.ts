@@ -1,13 +1,11 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
+import {getInput} from 'lib/input.js';
 
-const paragraphs = await getInputParagraphs({year: 2024, day: 13});
+const input = await getInput({year: 2024, day: 13});
 
 type Buttons = [A: [x: number, y: number], B: [x: number, y: number]];
 type Shape = [...Buttons, Prize: [X: number, Y: number]];
-const games = paragraphs.map(p => p.map(l => extractInts(l))) as Shape[];
 
 function getPoint(
   [aClicks, bClicks]: [number, number],
@@ -25,6 +23,11 @@ function isOut(
 
 const A = 3;
 const B = 1;
+
+const paragraphs = input.split(/\n\n/).map(p => p.split(/\n/));
+const games = paragraphs.map(
+  p => p.map(l => (l.match(/\d+/g) ?? []).map(Number)) as Shape
+);
 
 let totalTokensSpent = 0;
 for (const game of games) {

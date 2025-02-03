@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 import {z} from 'zod';
 
-const lines = await getInputLines({year: 2021, day: 5});
+const input = await getInput({year: 2021, day: 5});
 
 const Coordinate = z.string().transform(Number);
 const VentSchema = z
@@ -20,7 +20,7 @@ function parseVent(l: string) {
 }
 
 const diagram: Record<string, number> = {};
-for (const l of lines) {
+for (const l of input.split(/\n/)) {
   const {x1, x2, y1, y2} = parseVent(l);
   if (x1 !== x2 && y1 !== y2) {
     continue;

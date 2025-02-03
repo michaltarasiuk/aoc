@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2022, day: 2});
+const input = await getInput({year: 2022, day: 2});
 
 const ShapesCount = 3;
 const Points = {win: 6, draw: 3, lose: 0};
@@ -31,7 +31,7 @@ function roundOutcome(them: number, me: number) {
   throw new Error('Invalid round outcome');
 }
 
-const score = lines.reduce((acc, l) => {
+const score = input.split(/\n/).reduce((acc, l) => {
   const [them, me] = parseRound(l);
   return acc + roundOutcome(them, me) + me;
 }, 0);

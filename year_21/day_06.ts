@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lanternfishes = await getInputInts({year: 2021, day: 6});
+const input = await getInput({year: 2021, day: 6});
 
 function simulateLanternfishGrowth([...fishTimers]: number[], days: number) {
   for (let day = 1; day <= days; day++) {
@@ -14,8 +14,8 @@ function simulateLanternfishGrowth([...fishTimers]: number[], days: number) {
 }
 
 const timers = Array<number>(9).fill(0);
-for (const fish of lanternfishes) {
-  timers[fish]++;
+for (const lanternfish of input.split('').map(Number)) {
+  timers[lanternfish]++;
 }
 
 assert.strictEqual(simulateLanternfishGrowth(timers, 80), 385391, 'Part 1');

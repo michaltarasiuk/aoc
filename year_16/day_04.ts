@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
-import {stringToCodePoints} from 'lib/string.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
+import {stringToCodePoints} from 'lib/string_to_code_points.js';
 
-const lines = await getInputLines({year: 2016, day: 4});
+const input = await getInput({year: 2016, day: 4});
 
 function calcChecksum(...chars: string[]) {
   return [...frequencies(chars)]
@@ -20,7 +20,7 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 }
 
 const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/;
-const rooms = lines.map(l => {
+const rooms = input.split(/\n/).map(l => {
   const [, name, id, checksum] = roomRe.exec(l) ?? raise('Invalid room');
   return {name: name.replace(/-/g, ''), id: Number(id), checksum};
 });

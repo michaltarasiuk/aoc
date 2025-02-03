@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
 
-const lines = await getInputLines({year: 2016, day: 12});
+const input = await getInput({year: 2016, day: 12});
 
 function execute(
   {...registers}: Record<'a' | 'b' | 'c' | 'd', number>,
@@ -14,19 +14,19 @@ function execute(
     const [op, x, y] = instructions[i];
     switch (op) {
       case 'cpy':
-        assert(isKeyOf(registers, y));
-        registers[y] = isKeyOf(registers, x) ? registers[x] : Number(x);
+        assert(isKeyof(registers, y));
+        registers[y] = isKeyof(registers, x) ? registers[x] : Number(x);
         break;
       case 'inc':
-        assert(isKeyOf(registers, x));
+        assert(isKeyof(registers, x));
         registers[x]++;
         break;
       case 'dec':
-        assert(isKeyOf(registers, x));
+        assert(isKeyof(registers, x));
         registers[x]--;
         break;
       case 'jnz':
-        if ((isKeyOf(registers, x) ? registers[x] : Number(x)) !== 0) {
+        if ((isKeyof(registers, x) ? registers[x] : Number(x)) !== 0) {
           i += Number(y) - 1;
         }
     }
@@ -35,7 +35,7 @@ function execute(
   return registers;
 }
 
-const instructions = lines.map(l => l.split(/\s/));
+const instructions = input.split(/\n/).map(l => l.split(/\s/));
 
 const registersPart1 = execute({a: 0, b: 0, c: 0, d: 0}, ...instructions);
 const registersPart2 = execute({a: 0, b: 0, c: 1, d: 0}, ...instructions);

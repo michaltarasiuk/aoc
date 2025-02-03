@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
 
-const paragraphs = await getInputParagraphs({year: 2020, day: 4});
+const input = await getInput({year: 2020, day: 4});
 
 const PassportKeys = {
   byr: /^(19[2-9]\d|200[0-2])$/,
@@ -15,11 +15,11 @@ const PassportKeys = {
   pid: /^\d{9}$/,
 };
 
-const passports = paragraphs.map(p => {
+const passports = input.split(/\n\n/).map(p => {
   const pairRe = /(\w+):(\S+)/g;
-
   return Object.fromEntries(
     p
+      .split(/\n/)
       .join(' ')
       .matchAll(pairRe)
       .map(([, k, v]) => [k, v])
@@ -27,14 +27,14 @@ const passports = paragraphs.map(p => {
 });
 
 const validPassportsCount = passports
-  .map(p => Object.keys(PassportKeys).every(k => isKeyOf(p, k)))
+  .map(p => Object.keys(PassportKeys).every(k => isKeyof(p, k)))
   .map(Number)
   .reduce((a, b) => a + b);
 
 const validPassportsCount2 = passports
   .map(p =>
     Object.entries(PassportKeys).every(
-      ([k, re]) => isKeyOf(p, k) && re.test(p[k])
+      ([k, re]) => isKeyof(p, k) && re.test(p[k])
     )
   )
   .map(Number)

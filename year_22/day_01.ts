@@ -1,8 +1,10 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const paragraphs = await getInputParagraphs({year: 2022, day: 1});
+const input = await getInput({year: 2022, day: 1});
+
+const paragraphs = input.split(/\n\n/).map(p => p.split(/\n/));
 
 const elfs = paragraphs
   .map(p => p.map(Number).reduce((a, b) => a + b))

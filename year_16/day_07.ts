@@ -1,17 +1,15 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2016, day: 7});
+const input = await getInput({year: 2016, day: 7});
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/;
 
-const ipAddresses = lines.map(l => {
-  const squareBracketRe = /\[|\]/;
-  const {supers = [], hypers = []} = Object.groupBy(
-    l.split(squareBracketRe),
-    (_, i) => (i % 2 === 0 ? 'supers' : 'hypers')
+const ipAddresses = input.split(/\n/).map(l => {
+  const {supers = [], hypers = []} = Object.groupBy(l.split(/\[|\]/), (_, i) =>
+    i % 2 === 0 ? 'supers' : 'hypers'
   );
   return {supers: supers.join(), hypers: hypers.join()};
 });

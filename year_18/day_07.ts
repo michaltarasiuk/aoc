@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2018, day: 7});
+const input = await getInput({year: 2018, day: 7});
 
 function parseStep(step: string) {
   const stepRe = /^Step (\w) must be finished before step (\w) can begin.$/;
@@ -12,7 +12,8 @@ function parseStep(step: string) {
   return {before, after};
 }
 
-const steps = lines
+const steps = input
+  .split(/\n/)
   .map(parseStep)
   .reduce<Map<string, Set<string>>>((acc, {before, after}) => {
     if (!acc.has(before)) acc.set(before, new Set());

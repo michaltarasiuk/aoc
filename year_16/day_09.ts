@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
 import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 import {z} from 'zod';
 
 const input = await getInput({year: 2016, day: 9});

@@ -1,9 +1,10 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isDefined, isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
+import {isKeyof} from 'lib/is_keyof.js';
 
-const lines = await getInputLines({year: 2021, day: 10});
+const input = await getInput({year: 2021, day: 10});
 
 const SyntaxErrorPoints = {
   ')': 3,
@@ -57,12 +58,12 @@ function isMatchingPair(open: string, close: string) {
 
 function calcAutocompleteScore(stack: string[]) {
   return stack.toReversed().reduce((acc, char) => {
-    assert(isKeyOf(AutocompletePoints, char));
+    assert(isKeyof(AutocompletePoints, char));
     return 5 * acc + AutocompletePoints[char];
   }, 0);
 }
 
-const parsedLines = lines.map(analyzeLineSyntax);
+const parsedLines = input.split(/\n/).map(analyzeLineSyntax);
 
 const totalSyntaxErrorScore = parsedLines
   .flatMap(l => (l.status === 'SYNTAX_ERROR' ? [l.score] : []))

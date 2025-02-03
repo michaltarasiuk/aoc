@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2015, day: 23});
+const input = await getInput({year: 2015, day: 23});
 
 function execute(
   {...registers}: {a: number; b: number},
@@ -18,26 +18,26 @@ function execute(
 
     switch (operation) {
       case 'hlf':
-        assert(isKeyOf(registers, reg));
+        assert(isKeyof(registers, reg));
         registers[reg] /= 2;
         break;
       case 'tpl':
-        assert(isKeyOf(registers, reg));
+        assert(isKeyof(registers, reg));
         registers[reg] *= 3;
         break;
       case 'inc':
-        assert(isKeyOf(registers, reg));
+        assert(isKeyof(registers, reg));
         registers[reg] += 1;
         break;
       case 'jmp':
         i += Number(operands[0]);
         continue outer;
       case 'jie':
-        assert(isKeyOf(registers, reg));
+        assert(isKeyof(registers, reg));
         i += registers[reg] % 2 === 0 ? offset : 1;
         continue outer;
       case 'jio':
-        assert(isKeyOf(registers, reg));
+        assert(isKeyof(registers, reg));
         i += registers[reg] === 1 ? offset : 1;
         continue outer;
       default:
@@ -49,9 +49,10 @@ function execute(
 }
 
 const instructionRe = /(\w+|[+-]\d+)/g;
-const instructions = lines.map(
-  l => l.match(instructionRe) ?? raise('No match')
-);
+const instructions = input
+  .split(/\n/)
+  .map(l => l.match(instructionRe) ?? raise('No match'));
+
 const registers = [
   execute({a: 0, b: 0}, ...instructions),
   execute({a: 1, b: 0}, ...instructions),

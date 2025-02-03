@@ -1,10 +1,11 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2020, day: 7});
+const input = await getInput({year: 2020, day: 7});
 
-type Rules = Map<string, {color: string; count: number}[]>;
+type Rules = typeof rules;
+
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g;
   return rule
@@ -26,7 +27,10 @@ function countBagsOf(rules: Rules, search: string): number {
 
 const SearchBag = 'shiny gold';
 const rules = new Map(
-  lines.map(parseRule).map(([{color}, ...bags]) => [color, bags])
+  input
+    .split(/\n/)
+    .map(parseRule)
+    .map(([{color}, ...bags]) => [color, bags])
 );
 const bagsWithShinyGoldCount = rules
   .keys()

@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputCols} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
 
-const cols = await getInputCols({year: 2016, day: 6});
+const input = await getInput({year: 2016, day: 6});
 
 function decodeMessage(
   cols: string[][],
@@ -18,6 +18,13 @@ function decodeMessage(
 
     return decodedMessage + mostFrequentChar;
   }, '');
+}
+
+const cols: string[][] = [];
+for (const [...l] of input.split('\n')) {
+  for (const [k, v] of l.entries()) {
+    (cols[k] ??= []).push(v);
+  }
 }
 
 const mostFrequentMessage = decodeMessage(cols, (a, b) => b - a);

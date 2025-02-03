@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2024, day: 18});
+const input = await getInput({year: 2024, day: 18});
 
 const Size = 71;
 const MaxBytes = 1024;
@@ -46,7 +46,7 @@ function findShortestPath(memoryGrid: string[][]): number {
   return -1;
 }
 
-const bytes = lines.map(l => l.split(',').map(Number));
+const bytes = input.split(/\n/).map(l => l.split(',').map(Number));
 const memorySpace = [...Array(Size)].map(() => Array(Size).fill(Safe));
 
 for (const [i, j] of bytes.splice(0, MaxBytes)) {

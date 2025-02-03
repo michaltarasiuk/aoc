@@ -1,58 +1,50 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
 
-const commands = await getInputLines({year: 2021, day: 2});
+const input = await getInput({year: 2021, day: 2});
 
-function calcDistance<T extends Record<string, number>>(
-  instructs: Record<
-    'forward' | 'down' | 'up',
-    (position: T, units: number) => void
-  >,
-  position: T
-) {
-  const {horizontal, depth} = commands
-    .map(command => command.split(/\s/))
-    .reduce((acc, [instruct, units]) => {
-      assert(isKeyOf(instructs, instruct));
-      instructs[instruct](acc, Number(units));
-      return acc;
-    }, position);
+const commands = input
+  .split(/\n/)
+  .map(l => l.split(/\s/))
+  .map(([name, units]) => ({name, units: Number(units)}));
 
-  return horizontal * depth;
+{
+  let horizontal = 0;
+  let depth = 0;
+  for (const {name, units} of commands) {
+    switch (name) {
+      case 'forward':
+        horizontal += units;
+        break;
+      case 'down':
+        depth += units;
+        break;
+      case 'up':
+        depth -= units;
+        break;
+    }
+  }
+  assert.strictEqual(horizontal * depth, 1714950, 'Part 1 failed');
 }
 
-const distance = calcDistance(
-  {
-    forward(acc, units) {
-      acc.horizontal += units;
-    },
-    down(acc, units) {
-      acc.depth += units;
-    },
-    up(acc, units) {
-      acc.depth -= units;
-    },
-  },
-  {horizontal: 0, depth: 0}
-);
-
-const distance2 = calcDistance(
-  {
-    forward(acc, units) {
-      acc.horizontal += units;
-      acc.depth += acc.aim * units;
-    },
-    down(acc, units) {
-      acc.aim += units;
-    },
-    up(acc, units) {
-      acc.aim -= units;
-    },
-  },
-  {horizontal: 0, depth: 0, aim: 0}
-);
-
-assert.strictEqual(distance, 1714950, 'Part 1 failed');
-assert.strictEqual(distance2, 1281977850, 'Part 2 failed');
+{
+  let horizontal = 0;
+  let depth = 0;
+  let aim = 0;
+  for (const {name, units} of commands) {
+    switch (name) {
+      case 'forward':
+        horizontal += units;
+        depth += aim * units;
+        break;
+      case 'down':
+        aim += units;
+        break;
+      case 'up':
+        aim -= units;
+        break;
+    }
+  }
+  assert.strictEqual(horizontal * depth, 1281977850, 'Part 2 failed');
+}

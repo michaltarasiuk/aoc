@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2020, day: 10});
+const input = await getInput({year: 2020, day: 10});
 
-const adapters = lines.map(Number).sort((a, b) => a - b);
+const adapters = (input.match(/\d+/g) ?? []).map(Number).sort((a, b) => a - b);
 assert(adapters.length > 0, 'No adapters found');
 assert(new Set(adapters).size === adapters.length, 'Duplicate adapters found');
 adapters.push(adapters.at(-1)! + 3);

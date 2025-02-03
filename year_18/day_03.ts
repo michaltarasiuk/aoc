@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2018, day: 3});
+const input = await getInput({year: 2018, day: 3});
 
 function parseClaim(claim: string) {
   const claimRe = /^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$/;
@@ -11,7 +11,7 @@ function parseClaim(claim: string) {
   return {id, x, y, width, height};
 }
 
-const claims = lines.map(parseClaim);
+const claims = input.split(/\n/).map(parseClaim);
 const overlappingClaims = new Set<number>();
 
 const FabricSize = 1_000;

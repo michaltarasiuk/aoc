@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const grid = await getInputGrid({year: 2024, day: 16});
+const input = await getInput({year: 2024, day: 16});
 
 const StartTile = 'S';
 const EndTile = 'E';
@@ -32,6 +32,8 @@ function parseCacheKey(cacheKey: string) {
   const [, dir, x, y] = cacheKeyRe.exec(cacheKey) ?? raise('Invalid cache key');
   return [Number(dir), Number(x), Number(y)] as const;
 }
+
+const grid = input.split(/\n/).map(([...l]) => l);
 
 const stack = new Map([
   [toCacheKey(InitialFacing, ...getStartTileCoords(grid)), 0],

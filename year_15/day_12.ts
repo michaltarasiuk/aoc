@@ -1,7 +1,8 @@
 import assert from 'node:assert';
 
+import {add} from 'lib/add.js';
 import {getInput} from 'lib/input.js';
-import {isObject} from 'lib/predicate.js';
+import {isRecord} from 'lib/is_record.js';
 
 const input = await getInput({year: 2015, day: 12});
 
@@ -16,7 +17,7 @@ const parsedInput = JSON.parse(input, (_, value: unknown) => {
 });
 
 JSON.stringify(parsedInput, (_, value: unknown) => {
-  if (isObject(value)) {
+  if (isRecord(value)) {
     for (const v of Object.values(value)) {
       if (v === 'red') return;
     }
@@ -26,8 +27,5 @@ JSON.stringify(parsedInput, (_, value: unknown) => {
   return value;
 });
 
-const sumOfNumbers = numbers.reduce((a, b) => a + b);
-const sumOfNumbersWithoutRed = numbersWithoutRed.reduce((a, b) => a + b);
-
-assert.strictEqual(sumOfNumbers, 191164, 'Part 1 failed');
-assert.strictEqual(sumOfNumbersWithoutRed, 87842, 'Part 2 failed');
+assert.strictEqual(numbers.reduce(add), 191164, 'Part 1 failed');
+assert.strictEqual(numbersWithoutRed.reduce(add), 87842, 'Part 2 failed');

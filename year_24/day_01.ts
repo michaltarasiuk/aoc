@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
+import {frequencies} from 'lib/frequencies.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2024, day: 1});
+const input = await getInput({year: 2024, day: 1});
 
-const locations = lines.map(ln => {
+const locations = input.split(/\n/).map(ln => {
   const locationPairRe = /^(\d+) {3}(\d+)$/;
   const [, l, r] = locationPairRe.exec(ln) ?? raise(`Invalid pair: ${ln}`);
   return [Number(l), Number(r)] as const;

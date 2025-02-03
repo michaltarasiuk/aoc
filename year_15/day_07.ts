@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isDefined} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 
-const lines = await getInputLines({year: 2015, day: 7});
+const input = await getInput({year: 2015, day: 7});
 
 function parseInstruction(instruction: string) {
   return [
@@ -11,7 +11,7 @@ function parseInstruction(instruction: string) {
     ...(instruction.match(/([a-z]|[0-9])+/g) ?? []),
   ];
 }
-const circuit = lines.reduce<Record<string, string[]>>((acc, l) => {
+const circuit = input.split(/\n/).reduce<Record<string, string[]>>((acc, l) => {
   const instruction = parseInstruction(l);
   const dest = instruction.pop();
   if (isDefined(dest)) {

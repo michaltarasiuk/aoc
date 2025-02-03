@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2019, day: 6});
+const input = await getInput({year: 2019, day: 6});
 
 type OrbitGraph = Record<string, Set<string>>;
 
@@ -38,7 +38,7 @@ function findMinimumTransfers(
 
 const orbitRe = /^(.*)\)(.*)$/;
 const orbits = new Map(
-  lines.map(l => {
+  input.split(/\n/).map(l => {
     const [, center, satellite] = orbitRe.exec(l) ?? raise('Invalid orbit');
     return [satellite, center];
   })

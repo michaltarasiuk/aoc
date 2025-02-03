@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2024, day: 2});
+const input = await getInput({year: 2024, day: 2});
 
 function isSorted(report: number[]) {
   return (
@@ -20,7 +20,7 @@ function isSafeReport(report: number[]) {
   return isSorted(report) && areAdjacentLevelsWithinRange(report);
 }
 
-const reports = lines.map(l => l.split(/\s/).map(Number));
+const reports = input.split(/\n/).map(l => l.split(/\s/).map(Number));
 
 const safeReports = reports.filter(isSafeReport);
 const safeReports2 = reports.filter(report =>

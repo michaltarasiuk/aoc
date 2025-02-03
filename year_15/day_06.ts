@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {sum} from 'lib/math.js';
+import {add} from 'lib/add.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2015, day: 6});
+const input = await getInput({year: 2015, day: 6});
 
 function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
@@ -30,7 +30,7 @@ function setLights(
 }
 
 const Actions = {turnOn: 'turn on', turnOff: 'turn off', toggle: 'toggle'};
-const instructions = lines.map(parseInstruction);
+const instructions = input.split(/\n/).map(parseInstruction);
 
 const lights = setLights(
   {
@@ -49,5 +49,5 @@ const brightness = setLights(
   ...instructions
 );
 
-assert.strictEqual(sum(lights.flat()), 400410, 'Part 1 failed');
-assert.strictEqual(sum(brightness.flat()), 15343601, 'Part 2 failed');
+assert.strictEqual(lights.flat().reduce(add), 400410, 'Part 1 failed');
+assert.strictEqual(brightness.flat().reduce(add), 15343601, 'Part 2 failed');

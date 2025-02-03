@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const grid = await getInputGrid({year: 2024, day: 10}, char => Number(char));
+const input = await getInput({year: 2024, day: 10});
 
 const Directions = [
   [0, -1],
@@ -29,6 +29,8 @@ function* findTrails(
   }
 }
 
+const grid = input.split(/\n/).map(([...l]) => l.map(Number));
+
 const trailheadScores: Record<string, Set<string>> = {};
 const trailheadRatings: Record<string, Array<string>> = {};
 
@@ -46,11 +48,11 @@ for (const [y, row] of grid.entries()) {
 
 const totalScore = Object.keys(trailheadScores)
   .map(id => trailheadScores[id].size)
-  .reduce((a, b) => a + b, 0);
+  .reduce((a, b) => a + b);
 
 const totalRating = Object.keys(trailheadRatings)
   .map(id => trailheadRatings[id].length)
-  .reduce((a, b) => a + b, 0);
+  .reduce((a, b) => a + b);
 
 assert.strictEqual(totalScore, 548, 'Part 1 failed');
 assert.strictEqual(totalRating, 1252, 'Part 2 failed');

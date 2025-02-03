@@ -1,36 +1,38 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2020, day: 8});
+const input = await getInput({year: 2020, day: 8});
 
-const instructions = lines
+const instructions = input
+  .split(/\n/)
   .map(l => l.split(/\s/))
-  .map(([op, arg]) => ({op, arg: Number(arg)}));
+  .map(([operation, argument]) => ({operation, argument: Number(argument)}));
 
-const seen = new Set<number>();
-let acc = 0;
-let ip = 0;
+const executedInstructions = new Set<number>();
+
+let accumulator = 0;
+let instructionPointer = 0;
 
 while (true) {
-  if (seen.has(ip)) {
+  if (executedInstructions.has(instructionPointer)) {
     break;
   } else {
-    seen.add(ip);
+    executedInstructions.add(instructionPointer);
   }
-  const {op, arg} = instructions[ip];
-  switch (op) {
+  const {operation, argument} = instructions[instructionPointer];
+  switch (operation) {
     case 'acc':
-      acc += arg;
-      ip++;
+      accumulator += argument;
+      instructionPointer++;
       break;
     case 'jmp':
-      ip += arg;
+      instructionPointer += argument;
       break;
     case 'nop':
-      ip++;
+      instructionPointer++;
       break;
   }
 }
 
-assert.strictEqual(acc, 1782, 'Part 1 failed');
+assert.strictEqual(accumulator, 1782, 'Part 1 failed');

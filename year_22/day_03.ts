@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {chunkEvery} from 'lib/iterable.js';
+import {chunkEvery} from 'lib/chunk_every.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2022, day: 3});
+const input = await getInput({year: 2022, day: 3});
 
 function splitRucksack(rucksack: string) {
   return [
@@ -22,6 +22,8 @@ function calcPriority(char: string) {
   }
   throw new Error(`Invalid char: ${char}`);
 }
+
+const lines = input.split(/\n/);
 
 const prioritiesSum = lines.reduce((acc, rucksack) => {
   const [a, b] = splitRucksack(rucksack);

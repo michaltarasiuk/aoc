@@ -1,37 +1,32 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2022, day: 21});
+const input = await getInput({year: 2022, day: 21});
 
 function parseMonkeyJob(monkeyJob: string) {
   const monkeyJobRe = /^(\w{4}): (.+)$/;
-  const [, monkeyName, jobDescription] =
+  const [, name, description] =
     monkeyJobRe.exec(monkeyJob) ?? raise('Invalid monkey job');
 
-  return [monkeyName, jobDescription] as const;
+  return [name, description] as const;
 }
 
 function calcYell(
   monkeyJobs: Record<string, string>,
   monkeyName: string
 ): number {
-  const jobDescription = monkeyJobs[monkeyName];
-  const numericJob = Number(jobDescription);
-
-  if (Number.isNaN(numericJob)) {
-    const [firstMonkey, operator, secondMonkey] = jobDescription.split(/\s/);
-    return eval(
-      calcYell(monkeyJobs, firstMonkey) +
-        operator +
-        calcYell(monkeyJobs, secondMonkey)
-    );
+  const job = monkeyJobs[monkeyName];
+  const parsedJob = Number(job);
+  if (Number.isNaN(parsedJob)) {
+    const [a, operator, b] = job.split(/\s/);
+    return eval(calcYell(monkeyJobs, a) + operator + calcYell(monkeyJobs, b));
   }
-  return numericJob;
+  return parsedJob;
 }
 
-const monkeyJobs = Object.fromEntries(lines.map(parseMonkeyJob));
+const monkeyJobs = Object.fromEntries(input.split(/\n/).map(parseMonkeyJob));
 const rootYell = calcYell(monkeyJobs, 'root');
 
 assert.strictEqual(rootYell, 142707821472432, 'Part 1 failed');

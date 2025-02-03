@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
+import {extractInts} from 'lib/extract_ints.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2023, day: 6});
+const input = await getInput({year: 2023, day: 6});
 
 function countWaysOfBeatRecord(time: number, record: number) {
   let count = 0;
@@ -15,7 +15,9 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-const [times, distances] = lines.map(l => extractInts(l, {negative: false}));
+const [times, distances] = input
+  .split(/\n/)
+  .map(l => extractInts(l, {negative: false}));
 
 const waysOfBeatRecordProduct = times
   .map((time, i) => countWaysOfBeatRecord(time, distances[i]))

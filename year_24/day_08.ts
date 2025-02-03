@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const grid = await getInputGrid({year: 2024, day: 8});
+const input = await getInput({year: 2024, day: 8});
 
 type AntennaPositions = Record<string, [x: number, y: number][]>;
 
@@ -18,6 +18,8 @@ function* createAntennaPairs(antennas: AntennaPositions) {
     }
   }
 }
+
+const grid = input.split(/\n/).map(([...l]) => l);
 
 const antennaPositions = grid.keys().reduce<AntennaPositions>((acc, y) => {
   grid[y].forEach((frequency, x) => {

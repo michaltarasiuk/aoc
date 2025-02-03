@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const schematics = await getInputParagraphs({year: 2024, day: 25});
+const input = await getInput({year: 2024, day: 25});
 
 const SchematicSize = 5;
 const Filled = '#';
@@ -24,6 +24,7 @@ function overlaps(lockHeights: number[], keyHeights: number[]) {
   );
 }
 
+const schematics = input.split(/\n\n/).map(p => p.split(/\n/));
 const {locks = [], keys = []} = Object.groupBy(schematics, schematic =>
   new RegExp(`^${Filled}{${SchematicSize}}$`).test(schematic[0])
     ? 'locks'

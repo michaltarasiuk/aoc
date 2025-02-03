@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
-import {isDefined} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 
-const lines = await getInputLines({year: 2023, day: 3});
+const input = await getInput({year: 2023, day: 3});
 
 function range(n: number, x: number) {
   const Offset = 1;
@@ -11,6 +11,8 @@ function range(n: number, x: number) {
 }
 
 const Offsets = [-1, 0, 1];
+
+const lines = input.split(/\n/);
 const nsLayers = lines
   .map(l =>
     l

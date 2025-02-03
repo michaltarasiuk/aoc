@@ -1,11 +1,10 @@
 import assert from 'node:assert';
 
-import {getInputInts} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const [start, end] = await getInputInts(
-  {year: 2019, day: 4},
-  {negative: false}
-);
+const input = await getInput({year: 2019, day: 4});
+
+const [start, end] = input.split('-').map(Number);
 
 let part1PasswordsCount = 0;
 let part2PasswordsCount = 0;

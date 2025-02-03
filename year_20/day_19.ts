@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const [rules, messages] = await getInputParagraphs({year: 2020, day: 19});
+const input = await getInput({year: 2020, day: 19});
 
 type Rule = ReturnType<typeof parseRule>;
 
@@ -22,6 +22,8 @@ function resolveRule(rule: Rule[1], ruleMap: Map<number, Rule[1]>): string {
   }
   return `(${rule.map(sub => sub.map(id => resolveRule(ruleMap.get(id)!, ruleMap)).join('')).join('|')})`;
 }
+
+const [rules, messages] = input.split(/\n\n/).map(s => s.split(/\n/));
 
 const ruleMap = new Map(rules.map(parseRule));
 const ruleZeroRe = new RegExp(`^${resolveRule(ruleMap.get(0)!, ruleMap)}$`);

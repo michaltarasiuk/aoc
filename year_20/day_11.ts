@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputGrid} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const seats = await getInputGrid({year: 2020, day: 11});
+const input = await getInput({year: 2020, day: 11});
 
 const Seats = {empty: 'L', occupied: '#', floor: '.'};
 
@@ -36,7 +36,7 @@ function getNewSeat(seat: string, adjacents: string[]) {
 }
 
 let changed = true;
-let currentSeats = seats;
+let currentSeats = input.split(/\n/).map(([...l]) => l);
 while (changed) {
   const newSeats = currentSeats.map((row, y) =>
     row.map((seat, x) =>

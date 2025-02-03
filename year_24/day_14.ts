@@ -1,9 +1,8 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2024, day: 14});
+const input = await getInput({year: 2024, day: 14});
 
 const Time = 100;
 const TilesWide = 101;
@@ -13,9 +12,10 @@ const horizontalMiddle = Math.floor(TilesWide / 2);
 const verticalMiddle = Math.floor(TilesTall / 2);
 
 const robotRe = /^p=(\d+),(\d+) v=(-?\d+),(-?\d+)$/;
-const robots = lines
-  .map(l => (robotRe.exec(l) ?? raise(`Invalid robot: ${l}`)).map(Number))
-  .map(([_, px, py, vx, vy]) => ({px, py, vx, vy}));
+const robots = input.split(/\n/).map(l => {
+  const [, px, py, vx, vy] = (robotRe.exec(l) ?? []).map(Number);
+  return {px, py, vx, vy};
+});
 
 const positions = robots.map(({px, py, vx, vy}) => {
   const x = (px + vx * Time) % TilesWide;

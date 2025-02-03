@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- `old` is used by eval */
 import assert from 'node:assert';
 
+import {extractInts} from 'lib/extract_ints.js';
 import {getInput} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
 import {z} from 'zod';
 
 const input = await getInput({year: 2022, day: 11});

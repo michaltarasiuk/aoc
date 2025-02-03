@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
+import {frequencies} from 'lib/frequencies.js';
 import {getInput} from 'lib/input.js';
-import {frequencies} from 'lib/iterable.js';
 
 const input = await getInput({year: 2024, day: 11});
 

@@ -1,13 +1,10 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
-import {extractInts} from 'lib/parse.js';
-import {isDefined} from 'lib/predicate.js';
+import {extractInts} from 'lib/extract_ints.js';
+import {getInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 
-const [[seeds], ...layers] = await getInputParagraphs({
-  year: 2023,
-  day: 5,
-});
+const input = await getInput({year: 2023, day: 5});
 
 function mapLayers([...layerGroups]: number[][][], value: number): number {
   const layerGroup = layerGroups.shift();
@@ -21,6 +18,8 @@ function mapLayers([...layerGroups]: number[][][], value: number): number {
   }
   return mapLayers(layerGroups, value);
 }
+
+const [[seeds], ...layers] = input.split(/\n\n/).map(p => p.split(/\n/));
 
 const layerGroups = layers
   .map(([, ...group]) => group)

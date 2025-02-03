@@ -1,17 +1,15 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2017, day: 7});
+const input = await getInput({year: 2017, day: 7});
 
-const programs = lines.map(l => {
-  const [name, weight, ...children] =
-    l.match(/(\w+|\d+)/g) ?? raise(`Invalid program: ${l}`);
+const programs = input.split(/\n/).map(l => {
+  const [name, weight, ...children] = l.match(/(\w+|\d+)/g)!;
   return {name, weight: Number(weight), children};
 });
 
-const childrenSet = new Set(programs.flatMap(p => p.children));
-const root = programs.find(({name}) => !childrenSet.has(name));
+const children = new Set(programs.flatMap(p => p.children));
+const root = programs.find(p => !children.has(p.name));
 
 assert.strictEqual(root?.name, 'rqwgj', 'Part 1 failed');

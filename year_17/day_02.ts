@@ -1,28 +1,26 @@
 import assert from 'node:assert';
 
-import {getInputLines} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const lines = await getInputLines({year: 2017, day: 2});
+const input = await getInput({year: 2017, day: 2});
 
-function findDivisiblePair(...ns: number[]) {
-  for (const n of ns) {
-    for (const m of ns) {
-      if (n !== m && n % m === 0) {
-        return n / m;
+const rows = input.split(/\n/).map(l => (l.match(/\d+/g) ?? []).map(Number));
+
+let checksum = 0;
+for (const r of rows) {
+  checksum += Math.max(...r) - Math.min(...r);
+}
+
+let divsum = 0;
+for (const r of rows) {
+  for (const n1 of r) {
+    for (const n2 of r) {
+      if (n1 !== n2 && n1 % n2 === 0) {
+        divsum += n1 / n2;
       }
     }
   }
 }
 
-const rows = lines.map(l => l.split('\t').map(Number));
-
-const spreadsheetChecksum = rows
-  .map(row => Math.max(...row) - Math.min(...row))
-  .reduce((a, b) => a + b);
-
-const rowsSum = rows
-  .map(row => findDivisiblePair(...row) ?? 0)
-  .reduce((a, b) => a + b);
-
-assert.strictEqual(spreadsheetChecksum, 44216, 'Part 1 failed');
-assert.strictEqual(rowsSum, 320, 'Part 2 failed');
+assert.strictEqual(checksum, 44216, 'Part 1 failed');
+assert.strictEqual(divsum, 320, 'Part 2 failed');

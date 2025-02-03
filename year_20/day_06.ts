@@ -1,13 +1,14 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const paragraphs = await getInputParagraphs({year: 2020, day: 6});
+const input = await getInput({year: 2020, day: 6});
 
 const questionRe = /[a-z]/g;
-const questions = paragraphs.map(paragraph =>
-  paragraph.map((l): string[] => l.match(questionRe) ?? [])
-);
+const questions = input
+  .split(/\n\n/)
+  .map(p => p.split(/\n/))
+  .map(p => p.map((l): string[] => l.match(questionRe) ?? []));
 
 const questionsCount = questions
   .map(group => new Set(group.flat()).size)
@@ -15,10 +16,10 @@ const questionsCount = questions
 
 const questionsCount2 = questions
   .flatMap(group => {
-    const common = group.reduce((acc, questions) => [
+    const intersection = group.reduce((acc, questions) => [
       ...new Set(questions).intersection(new Set(acc)),
     ]);
-    return common.length;
+    return intersection.length;
   })
   .reduce((a, b) => a + b);
 

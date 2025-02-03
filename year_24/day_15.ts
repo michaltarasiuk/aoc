@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInputParagraphs} from 'lib/input.js';
+import {getInput} from 'lib/input.js';
 
-const [a, b] = await getInputParagraphs({year: 2024, day: 15});
+const input = await getInput({year: 2024, day: 15});
 
 const Robot = '@';
 const Box = 'O';
@@ -14,6 +14,8 @@ const Directions = {
   'v': [0, 1],
   '<': [-1, 0],
 };
+
+const [a, b] = input.split(/\n\n/).map(p => p.split(/\n/));
 
 const warehouse = a.map(([...l]) => l);
 const moves = b.flatMap(([...l]) => l);

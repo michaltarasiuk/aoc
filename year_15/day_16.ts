@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {raise} from 'lib/assert.js';
-import {getInputLines} from 'lib/input.js';
-import {isKeyOf} from 'lib/predicate.js';
+import {getInput} from 'lib/input.js';
+import {isKeyof} from 'lib/is_keyof.js';
+import {raise} from 'lib/raise.js';
 
-const lines = await getInputLines({year: 2015, day: 16});
+const input = await getInput({year: 2015, day: 16});
 
 const TickerTape = {
   children: 3,
@@ -29,7 +29,7 @@ function findBestMatchSueId(
     const count = items
       .matchAll(/(\w+): (\d+)/g)
       .map(([, k, v]) => {
-        assert(isKeyOf(TickerTape, k));
+        assert(isKeyof(TickerTape, k));
         return fn(k, Number(v));
       })
       .map(Number)
@@ -43,9 +43,10 @@ function findBestMatchSueId(
 }
 
 const sueRe = /^Sue (\d+): (.*)/;
-const sues = lines
-  .map(l => sueRe.exec(l) ?? raise(`Invalid sue: ${l}`))
-  .map(([, id, items]) => [Number(id), items] as const);
+const sues = input.split(/\n/).map(l => {
+  const [, id, items] = l.match(sueRe) ?? raise('No match');
+  return [Number(id), items] as const;
+});
 
 const bestMatchSueId = findBestMatchSueId(sues);
 const bestMatchSueId2 = findBestMatchSueId(sues, (k, v) => {
