@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {extractInts} from 'lib/extract_ints.js';
 import {getInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
@@ -19,14 +18,14 @@ function mapLayers([...layerGroups]: number[][][], value: number): number {
   return mapLayers(layerGroups, value);
 }
 
-const [[seeds], ...layers] = input.split(/\n\n/).map(p => p.split(/\n/));
+const [seeds, ...layers] = input.split(/\n\n/);
 
 const layerGroups = layers
-  .map(([, ...group]) => group)
-  .map(group => group.map(g => extractInts(g)));
+  .map(l => l.split(/\n/))
+  .map(([, ...group]) => group.map(l => l.match(/\d+/g)!.map(Number)));
 
 const minConverted = Math.min(
-  ...extractInts(seeds).map(seed => mapLayers(layerGroups, seed))
+  ...(seeds.match(/\d+/g) ?? []).map(s => mapLayers(layerGroups, Number(s)))
 );
 
 assert.strictEqual(minConverted, 323142486, 'Part 1 failed');

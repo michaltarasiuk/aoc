@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {extractInts} from 'lib/extract_ints.js';
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2023, day: 9});
@@ -17,7 +16,7 @@ function extrapolate(...ns: number[]): number[] {
 
 const extrapolatedValuesSum = input
   .split(/\n/)
-  .flatMap(l => extrapolate(...extractInts(l)))
+  .flatMap(l => extrapolate(...l.split(/\s/).map(Number)))
   .reduce((a, b) => a + b);
 
 assert.strictEqual(extrapolatedValuesSum, 1939607039, 'Part 1 failed');

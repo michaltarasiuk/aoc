@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- `old` is used by eval */
 import assert from 'node:assert';
 
-import {extractInts} from 'lib/extract_ints.js';
 import {getInput} from 'lib/input.js';
 import {z} from 'zod';
 
@@ -17,7 +16,7 @@ Monkey (?<id>\\d):
 
 const MonkeySchema = z.object({
   id: z.string().transform(Number),
-  items: z.string().transform(items => extractInts(items)),
+  items: z.string().transform(items => items.split(', ').map(Number)),
   operation: z.string(),
   divider: z.string().transform(Number),
   throwToIfDivisble: z.string().transform(Number),

@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {extractInts} from 'lib/extract_ints.js';
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2023, day: 4});
@@ -20,7 +19,7 @@ function countTotalCards(
 
 const cards = new Map(
   input.split(/\n/).map(l => {
-    const [[id, ...a], b] = l.split('|').map(l => extractInts(l));
+    const [[id, ...a], b] = l.split('|').map(l => l.match(/\d+/g)!.map(Number));
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );
