@@ -21,8 +21,8 @@ function mapLayers([...layerGroups]: number[][][], value: number): number {
 const [seeds, ...layers] = input.split(/\n\n/);
 
 const layerGroups = layers
-  .map(l => l.split(/\n/))
-  .map(([, ...group]) => group.map(l => l.match(/\d+/g)!.map(Number)));
+  .map(l => l.split(/\n/).slice(1))
+  .map(g => g.map(l => l.match(/\d+/g)!.map(Number)));
 
 const minConverted = Math.min(
   ...(seeds.match(/\d+/g) ?? []).map(s => mapLayers(layerGroups, Number(s)))
