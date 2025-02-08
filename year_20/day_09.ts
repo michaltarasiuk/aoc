@@ -7,20 +7,20 @@ const input = await getInput({year: 2020, day: 9});
 function isSumOfTwoNumbers(preamble: number[], target: number) {
   return preamble.some(n => preamble.some(n2 => n !== n2 && n + n2 === target));
 }
-function findFirstInvalidNumber(numbers: number[], preambleLength: number) {
-  for (let i = preambleLength; i < numbers.length; i++) {
-    if (!isSumOfTwoNumbers(numbers.slice(i - preambleLength, i), numbers[i])) {
-      return numbers[i];
+function findFirstInvalidNumber(ns: number[], preambleLength: number) {
+  for (let i = preambleLength; i < ns.length; i++) {
+    if (!isSumOfTwoNumbers(ns.slice(i - preambleLength, i), ns[i])) {
+      return ns[i];
     }
   }
   throw new Error('Invalid number not found');
 }
 
-function findContiguousSetSummingTo(numbers: number[], target: number) {
-  for (const i of numbers.keys()) {
+function findContiguousSetSummingTo(ns: number[], target: number) {
+  for (const i of ns.keys()) {
     const contiguousSet: number[] = [];
-    for (const num of numbers.slice(i)) {
-      contiguousSet.push(num);
+    for (const n of ns.slice(i)) {
+      contiguousSet.push(n);
       if (contiguousSet.reduce((a, b) => a + b) === target) {
         return contiguousSet;
       }
@@ -31,11 +31,11 @@ function findContiguousSetSummingTo(numbers: number[], target: number) {
 
 const PreambleLength = 25;
 
-const numbers = input.split(/\n/).map(Number);
+const ns = input.split(/\n/).map(Number);
 
-const firstInvalidNumber = findFirstInvalidNumber(numbers, PreambleLength);
+const firstInvalidNumber = findFirstInvalidNumber(ns, PreambleLength);
 
-const contiguousSet = findContiguousSetSummingTo(numbers, firstInvalidNumber);
+const contiguousSet = findContiguousSetSummingTo(ns, firstInvalidNumber);
 const encryptionWeakness =
   Math.min(...contiguousSet) + Math.max(...contiguousSet);
 

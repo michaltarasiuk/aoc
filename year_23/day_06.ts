@@ -18,9 +18,10 @@ const [times, distances] = input
   .split(/\n/)
   .map(l => (l.match(/\d+/g) ?? []).map(Number));
 
-const waysOfBeatRecordProduct = times
-  .map((t, i) => countWaysOfBeatRecord(t, distances[i]))
-  .reduce((a, b) => a * b, 1);
+let waysOfBeatRecordProduct = 1;
+for (const [i, t] of times.entries()) {
+  waysOfBeatRecordProduct *= countWaysOfBeatRecord(t, distances[i]);
+}
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
   Number(times.join('')),

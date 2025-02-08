@@ -15,11 +15,11 @@ const Directions = [
 
 const grid = input.split(/\n/).map(([...l]) => l);
 
+const path: string[] = [];
+
+let dir = 0;
 let y = grid.findIndex(l => l.includes(GuardStart));
 let x = grid[y].indexOf(GuardStart);
-
-const path: string[] = [];
-let dir = 0;
 while (true) {
   path.push(`${x},${y}`);
   const nextX = x + Directions[dir][0];
