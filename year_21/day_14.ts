@@ -31,11 +31,11 @@ function pairInsertion(
   throw raise('Unreachable');
 }
 
-const [[polymerTemplate], rules] = input.split(/\n\n/).map(p => p.split(/\n/));
+const [polymerTemplate, rules] = input.split(/\n\n/);
 
 const ruleRe = /^(\w{2}) -> (\w)$/;
 const rulesMap = new Map(
-  rules.map(rule => {
+  rules.split(/\n/).map(rule => {
     const [, pair, insertion] = ruleRe.exec(rule) ?? raise('Invalid rule');
     return [pair, insertion];
   })
