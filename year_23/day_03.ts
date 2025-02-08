@@ -17,13 +17,11 @@ const nsLayers = lines
   .map(l =>
     l
       .matchAll(/\d+/g)
-      .map(match => [Number(match[0]), match.index] as const)
+      .map(m => [Number(m[0]), m.index] as const)
       .toArray()
   )
   .map((ns, y) =>
-    ns.map(([n, x]) =>
-      Offsets.map(offset => lines[offset + y]?.slice(...range(n, x)))
-    )
+    ns.map(([n, x]) => Offsets.map(j => lines[y + j]?.slice(...range(n, x))))
   );
 
 const symbolRe = /[^\d.]/;

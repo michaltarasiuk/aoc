@@ -7,7 +7,7 @@ const input = await getInput({year: 2023, day: 6});
 function countWaysOfBeatRecord(time: number, record: number) {
   let count = 0;
   for (let i = 0; i <= time; i++) {
-    if (i * (time - i) > record) {
+    if (record < i * (time - i)) {
       count++;
     }
   }
@@ -19,7 +19,7 @@ const [times, distances] = input
   .map(l => (l.match(/\d+/g) ?? []).map(Number));
 
 const waysOfBeatRecordProduct = times
-  .map((time, i) => countWaysOfBeatRecord(time, distances[i]))
+  .map((t, i) => countWaysOfBeatRecord(t, distances[i]))
   .reduce((a, b) => a * b, 1);
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
