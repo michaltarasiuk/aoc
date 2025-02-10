@@ -14,7 +14,6 @@ const Directions = [
 ];
 
 const grid = input.split(/\n/).map(([...l]) => l);
-
 const path: string[] = [];
 
 let dir = 0;
