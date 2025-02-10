@@ -24,10 +24,10 @@ function isOut(
 const A = 3;
 const B = 1;
 
-const paragraphs = input.split(/\n\n/).map(p => p.split(/\n/));
-const games = paragraphs.map(
-  p => p.map(l => (l.match(/\d+/g) ?? []).map(Number)) as Shape
-);
+const games = input
+  .split(/\n\n/)
+  .map(p => p.split(/\n/))
+  .map(p => p.map(l => (l.match(/\d+/g) ?? []).map(Number)) as Shape);
 
 let totalTokensSpent = 0;
 for (const game of games) {
