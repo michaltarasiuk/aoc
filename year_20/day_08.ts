@@ -7,32 +7,31 @@ const input = await getInput({year: 2020, day: 8});
 const instructions = input
   .split(/\n/)
   .map(l => l.split(/\s/))
-  .map(([operation, argument]) => ({operation, argument: Number(argument)}));
+  .map(([operation, arg]) => ({operation, arg: Number(arg)}));
 
-const executedInstructions = new Set<number>();
+const executed = new Set<number>();
 
-let accumulator = 0;
-let instructionPointer = 0;
-
+let acc = 0;
+let pointer = 0;
 while (true) {
-  if (executedInstructions.has(instructionPointer)) {
+  if (executed.has(pointer)) {
     break;
   } else {
-    executedInstructions.add(instructionPointer);
+    executed.add(pointer);
   }
-  const {operation, argument} = instructions[instructionPointer];
+  const {operation, arg} = instructions[pointer];
   switch (operation) {
     case 'acc':
-      accumulator += argument;
-      instructionPointer++;
+      acc += arg;
+      pointer++;
       break;
     case 'jmp':
-      instructionPointer += argument;
+      pointer += arg;
       break;
     case 'nop':
-      instructionPointer++;
+      pointer++;
       break;
   }
 }
 
-assert.strictEqual(accumulator, 1782, 'Part 1 failed');
+assert.strictEqual(acc, 1782, 'Part 1 failed');

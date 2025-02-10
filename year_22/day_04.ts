@@ -6,10 +6,8 @@ const input = await getInput({year: 2022, day: 4});
 
 const fullyContainedPairsCount = input
   .split('\n')
-  .map(l => {
-    const [a, b, c, d] = (l.match(/\d+/g) ?? []).map(Number);
-    return (a <= c && b >= d) || (c <= a && d >= b);
-  })
-  .reduce((acc, cond) => acc + Number(cond), 0);
+  .map(l => (l.match(/\d+/g) ?? []).map(Number))
+  .map(([a, b, c, d]) => Number((a <= c && b >= d) || (c <= a && d >= b)))
+  .reduce((a, b) => a + b);
 
 assert.strictEqual(fullyContainedPairsCount, 532, 'Part 1 failed');

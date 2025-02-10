@@ -5,9 +5,9 @@ import {getInput} from 'lib/input.js';
 const input = await getInput({year: 2015, day: 14});
 
 function parseReindeerDescription(description: string) {
-  const match = (description.match(/\d+/g) ?? []).map(Number);
-  assert(match.length === 3, 'Invalid reindeer description');
-  return match as [number, number, number];
+  const m = (description.match(/\d+/g) ?? []).map(Number);
+  assert(m.length === 3, 'Invalid reindeer description');
+  return m as [number, number, number];
 }
 
 function calcFlyingDistance(
