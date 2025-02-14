@@ -16,12 +16,11 @@ function countWaysOfBeatRecord(time: number, record: number) {
 
 const [times, distances] = input
   .split(/\n/)
-  .map(l => (l.match(/\d+/g) ?? []).map(Number));
+  .map(l => l.match(/\d+/g)!.map(Number));
 
-let waysOfBeatRecordProduct = 1;
-for (const [i, t] of times.entries()) {
-  waysOfBeatRecordProduct *= countWaysOfBeatRecord(t, distances[i]);
-}
+const waysOfBeatRecordProduct = times
+  .entries()
+  .reduce((acc, [i, t]) => acc * countWaysOfBeatRecord(t, distances[i]), 1);
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
   Number(times.join('')),
