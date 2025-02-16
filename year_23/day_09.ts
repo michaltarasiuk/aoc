@@ -14,9 +14,11 @@ function extrapolate(...ns: number[]): number[] {
   return [last, ...extrapolate(...diffs)];
 }
 
-const extrapolatedValuesSum = input
-  .split(/\n/)
-  .flatMap(l => extrapolate(...l.split(/\s/).map(Number)))
-  .reduce((a, b) => a + b);
+let extrapolatedValuesSum = 0;
+for (const l of input.split(/\n/)) {
+  for (const v of extrapolate(...l.split(/\s/).map(Number))) {
+    extrapolatedValuesSum += v;
+  }
+}
 
 assert.strictEqual(extrapolatedValuesSum, 1939607039, 'Part 1 failed');
