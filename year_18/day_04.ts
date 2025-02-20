@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {add} from 'lib/add.js';
 import {getInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 import {raise} from 'lib/raise.js';
@@ -51,7 +50,9 @@ for (const {event, date} of records) {
 }
 
 const [id, minutes] = Object.entries(guards).reduce((acc, guard) =>
-  acc[1].reduce(add) > guard[1].reduce(add) ? acc : guard
+  acc[1].reduce((a, b) => a + b) > guard[1].reduce((a, b) => a + b)
+    ? acc
+    : guard
 );
 const maxMinute = minutes.indexOf(Math.max(...minutes));
 

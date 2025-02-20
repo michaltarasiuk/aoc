@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {add} from 'lib/add.js';
 import {getInput} from 'lib/input.js';
 
 const input = await getInput({year: 2015, day: 6});
@@ -49,5 +48,12 @@ const brightness = setLights(
   ...instructions
 );
 
-assert.strictEqual(lights.flat().reduce(add), 400410, 'Part 1 failed');
-assert.strictEqual(brightness.flat().reduce(add), 15343601, 'Part 2 failed');
+assert.strictEqual(
+  lights.flat().reduce((a, b) => a + b),
+  400410
+);
+assert.strictEqual(
+  brightness.flat().reduce((a, b) => a + b),
+  15343601,
+  'Part 2 failed'
+);

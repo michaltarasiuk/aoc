@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 
-import {add} from 'lib/add.js';
 import {getInput} from 'lib/input.js';
 import {isRecord} from 'lib/is_record.js';
 
@@ -27,5 +26,13 @@ JSON.stringify(parsedInput, (_, value: unknown) => {
   return value;
 });
 
-assert.strictEqual(numbers.reduce(add), 191164, 'Part 1 failed');
-assert.strictEqual(numbersWithoutRed.reduce(add), 87842, 'Part 2 failed');
+assert.strictEqual(
+  numbers.reduce((a, b) => a + b),
+  191164,
+  'Part 1 failed'
+);
+assert.strictEqual(
+  numbersWithoutRed.reduce((a, b) => a + b),
+  87842,
+  'Part 2 failed'
+);
