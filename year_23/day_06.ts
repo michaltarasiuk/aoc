@@ -7,16 +7,13 @@ const input = await getInput({year: 2023, day: 6});
 function countWaysOfBeatRecord(time: number, record: number) {
   let count = 0;
   for (let i = 0; i <= time; i++) {
-    if (record < i * (time - i)) {
-      count++;
-    }
+    if (record < i * (time - i)) count++;
   }
   return count;
 }
 
-const [times, distances] = input
-  .split(/\n/)
-  .map(l => l.match(/\d+/g)!.map(Number));
+const lines = input.split(/\n/);
+const [times, distances] = lines.map(l => l.match(/\d+/g)!.map(Number));
 
 const waysOfBeatRecordProduct = times
   .entries()
