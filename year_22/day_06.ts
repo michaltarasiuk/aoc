@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
-const input = await getInput({year: 2022, day: 6});
+const input = await readInput({year: 2022, day: 6});
 
 function findMarkerEndIndex([...chars]: string, markerLength: number) {
   const markerStartIndex = chars

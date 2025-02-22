@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {divisors} from 'lib/divisors.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2015, day: 20});
+const input = await readInput({year: 2015, day: 20});
 
 const PresentsPerHouse = 10;
 

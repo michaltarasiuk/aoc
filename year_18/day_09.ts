@@ -2,9 +2,9 @@ import assert from 'node:assert';
 
 import {chunkEvery} from 'lib/chunk_every.js';
 import {frequencies} from 'lib/frequencies.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2019, day: 8});
+const input = await readInput({year: 2019, day: 8});
 
 const Wide = 25;
 const Tall = 6;

@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 import crypto from 'node:crypto';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const doorId = await getInput({year: 2016, day: 5});
+const doorId = await readInput({year: 2016, day: 5});
 
 function md5(binaryLike: crypto.BinaryLike) {
   return crypto.createHash('md5').update(binaryLike).digest('hex');

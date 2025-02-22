@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {chunkEvery} from 'lib/chunk_every.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2016, day: 3});
+const input = await readInput({year: 2016, day: 3});
 
 const TriangleSides = 3;
 
@@ -11,9 +11,8 @@ function isValidTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const trianglesByRows = input
-  .split(/\n/)
-  .map(l => (l.match(/\d+/g) ?? []).map(Number));
+const liens = input.split(/\n/);
+const trianglesByRows = liens.map(l => (l.match(/\d+/g) ?? []).map(Number));
 
 const cols: number[][] = [];
 for (const triangle of trianglesByRows) {

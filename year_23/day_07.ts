@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2023, day: 7});
+const input = await readInput({year: 2023, day: 7});
 
 const Cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
 const HandTypes = {

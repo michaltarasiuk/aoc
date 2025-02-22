@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await getInput({year: 2018, day: 7});
+const input = await readInput({year: 2018, day: 7});
 
 function parseStep(step: string) {
   const stepRe = /^Step (\w) must be finished before step (\w) can begin.$/;

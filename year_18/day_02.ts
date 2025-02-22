@@ -1,15 +1,15 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2018, day: 2});
+const input = await readInput({year: 2018, day: 2});
 
 let countOfTwos = 0;
 let countOfThrees = 0;
-for (const line of input.split(/\n/)) {
+for (const l of input.split(/\n/)) {
   const charCounts = new Map(
-    frequencies(line)
+    frequencies(l)
       .entries()
       .map(([char, count]) => [count, char])
   );

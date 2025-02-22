@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2015, day: 2});
+const input = await readInput({year: 2015, day: 2});
 
 function calcPaper({l, w, h}: {l: number; w: number; h: number}) {
   const [lw, wh, hl] = [l * w, w * h, h * l];

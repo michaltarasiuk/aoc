@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {stringToCodePoints} from 'lib/string_to_code_points.js';
 
-const input = await getInput({year: 2015, day: 11});
+const input = await readInput({year: 2015, day: 11});
 
 function hasIncreasingStraightOf3Chars(s: string) {
   return stringToCodePoints(s).some((_, i, codePoints) => {

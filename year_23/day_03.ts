@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
-const input = await getInput({year: 2023, day: 3});
+const input = await readInput({year: 2023, day: 3});
 
 function range(n: number, x: number) {
   const Offset = 1;

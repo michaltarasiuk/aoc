@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {permute} from 'lib/permute.js';
 import {raise} from 'lib/raise.js';
 
-const input = await getInput({year: 2015, day: 9});
+const input = await readInput({year: 2015, day: 9});
 
 const distancesMap = input
   .split(/\n/)

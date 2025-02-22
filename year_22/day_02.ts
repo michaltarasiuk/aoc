@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await getInput({year: 2022, day: 2});
+const input = await readInput({year: 2022, day: 2});
 
 const ShapesCount = 3;
 const Points = {win: 6, draw: 3, lose: 0};

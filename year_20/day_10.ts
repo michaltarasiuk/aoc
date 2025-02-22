@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2020, day: 10});
+const input = await readInput({year: 2020, day: 10});
 
 const adapters = (input.match(/\d+/g) ?? []).map(Number).sort((a, b) => a - b);
 assert(adapters.length > 0, 'No adapters found');

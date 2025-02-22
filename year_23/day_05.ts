@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
-const input = await getInput({year: 2023, day: 5});
+const input = await readInput({year: 2023, day: 5});
 
 function mapLayers([...layerGroups]: number[][][], value: number): number {
   const layerGroup = layerGroups.shift();

@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2016, day: 1});
+const input = await readInput({year: 2016, day: 1});
 
 function createCoords() {
   const dirs = {n: 0, e: 0, s: 0, w: 0};

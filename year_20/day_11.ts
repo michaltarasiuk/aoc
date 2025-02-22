@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2020, day: 11});
+const input = await readInput({year: 2020, day: 11});
 
 const Seats = {empty: 'L', occupied: '#', floor: '.'};
 

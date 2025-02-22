@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 import {stringToCodePoints} from 'lib/string_to_code_points.js';
 
-const input = await getInput({year: 2016, day: 4});
+const input = await readInput({year: 2016, day: 4});
 
 function calcChecksum(...chars: string[]) {
   return [...frequencies(chars)]

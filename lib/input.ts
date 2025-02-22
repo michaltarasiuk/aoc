@@ -12,7 +12,7 @@ interface InputParams {
   day: number;
 }
 
-export async function getInput(params: InputParams) {
+export async function readInput(params: InputParams) {
   let input = await getCachedInput(params);
   if (!isDefined(input)) {
     input = await fetchInput(params);

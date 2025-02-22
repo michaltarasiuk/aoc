@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2015, day: 10});
+const input = await readInput({year: 2015, day: 10});
 
 const StepsPart1 = 40;
 const StepsPart2 = 50;
@@ -15,7 +15,7 @@ let step = 0;
 while (++step <= StepsPart2) {
   currentSequence = currentSequence
     .matchAll(/(\d)\1*/g)
-    .map(match => match[0].length + match[1])
+    .map(m => m[0].length + m[1])
     .toArray()
     .join('');
   if ([StepsPart1, StepsPart2].includes(step)) {

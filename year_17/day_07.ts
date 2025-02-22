@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2017, day: 7});
+const input = await readInput({year: 2017, day: 7});
 
 const programs = input.split(/\n/).map(l => {
   const [name, weight, ...children] = l.match(/(\w+|\d+)/g)!;

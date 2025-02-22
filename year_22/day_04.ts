@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 
-import {getInput} from 'lib/input.js';
+import {readInput} from 'lib/input.js';
 
-const input = await getInput({year: 2022, day: 4});
+const input = await readInput({year: 2022, day: 4});
 
 let fullyContainedPairsCount = 0;
-for (const line of input.split('\n')) {
-  const [a, b, c, d] = line.match(/\d+/g)!.map(Number);
+for (const l of input.split('\n')) {
+  const [a, b, c, d] = l.match(/\d+/g)!.map(Number);
   if ((a <= c && b >= d) || (c <= a && d >= b)) {
     fullyContainedPairsCount++;
   }
