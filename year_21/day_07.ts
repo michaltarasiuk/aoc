@@ -3,12 +3,25 @@ import assert from 'node:assert';
 import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2021, day: 7});
-const positions = input.split(',').map(Number);
 
-let minFuel = Infinity;
-for (let i = Math.min(...positions); i <= Math.max(...positions); i++) {
-  const fuel = positions.reduce((acc, p) => acc + Math.abs(p - i), 0);
-  minFuel = Math.min(minFuel, fuel);
+function* getPositionRange(positions: number[]) {
+  for (let i = Math.min(...positions); i <= Math.max(...positions); i++) {
+    yield i;
+  }
 }
 
-assert.strictEqual(minFuel, 331067, 'Part 1 failed');
+const positions = input.split(',').map(Number);
+
+const fuelsPart1 = getPositionRange(positions).map(t =>
+  positions.reduce((acc, p) => acc + Math.abs(p - t), 0)
+);
+
+const fuelsPart2 = getPositionRange(positions).map(t =>
+  positions.reduce(
+    (acc, p) => acc + (Math.abs(p - t) * (Math.abs(p - t) + 1)) / 2,
+    0
+  )
+);
+
+assert.strictEqual(Math.min(...fuelsPart1), 331067, 'Part 1 failed');
+assert.strictEqual(Math.min(...fuelsPart2), 92881128, 'Part 2 failed');
