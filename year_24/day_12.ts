@@ -36,11 +36,11 @@ function* exploreRegion(
 
 const grid = input.split(/\n/).map(([...l]) => l);
 
-const seen = new Set<string>();
+const visted = new Set<string>();
 let totalCost = 0;
 for (const [y, row] of grid.entries()) {
   for (const [x, plantType] of row.entries()) {
-    if (seen.has(`${x},${y}`)) {
+    if (visted.has(`${x},${y}`)) {
       continue;
     }
     const region = [...exploreRegion(grid, plantType, x, y)];
@@ -49,7 +49,7 @@ for (const [y, row] of grid.entries()) {
       0
     );
     totalCost += region.length * regionPerimeter;
-    region.forEach(([coord]) => seen.add(coord));
+    region.forEach(([coord]) => visted.add(coord));
   }
 }
 

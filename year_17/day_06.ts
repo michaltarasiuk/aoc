@@ -5,20 +5,19 @@ import {readInput} from 'lib/input.js';
 const input = await readInput({year: 2017, day: 6});
 
 function* reallocate([...banks]: number[]) {
-  const seen = new Set<string>();
+  const visited = new Set<string>();
   while (true) {
-    const config = banks.join();
-    if (seen.has(config)) {
-      yield seen.size;
-      seen.clear();
+    if (visited.has(banks.join())) {
+      yield visited.size;
+      visited.clear();
     } else {
-      seen.add(config);
+      visited.add(banks.join());
     }
     let blocks = Math.max(...banks);
-    let i = banks.indexOf(blocks);
-    banks[i] = 0;
+    let index = banks.indexOf(blocks);
+    banks[index] = 0;
     while (blocks--) {
-      banks[++i % banks.length]++;
+      banks[++index % banks.length]++;
     }
   }
 }

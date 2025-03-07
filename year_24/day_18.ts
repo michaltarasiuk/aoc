@@ -23,14 +23,14 @@ const Directions = [
 
 function findShortestPath(memoryGrid: string[][]): number {
   const stack: [Point, steps: number][] = [[StartPoint, 0]];
-  const seen = new Set<string>();
+  const visted = new Set<string>();
 
   while (stack.length > 0) {
     const [[x, y], steps] = stack.shift()!;
-    if (seen.has(`${x},${y}`)) {
+    if (visted.has(`${x},${y}`)) {
       continue;
     } else {
-      seen.add(`${x},${y}`);
+      visted.add(`${x},${y}`);
     }
     if (x === EndPoint[0] && y === EndPoint[1]) {
       return steps;

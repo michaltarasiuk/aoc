@@ -14,11 +14,11 @@ const groupedRules = Object.groupBy(
 const {correctlyOrdered = [], incorrectlyOrdered = []} = Object.groupBy(
   updates.map(u => u.split(',').map(Number)),
   update => {
-    const seen = new Set<number>();
+    const visted = new Set<number>();
     for (const page of update) {
-      seen.add(page);
+      visted.add(page);
       for (const [preceding] of groupedRules[page] ?? []) {
-        if (update.includes(preceding) && !seen.has(preceding)) {
+        if (update.includes(preceding) && !visted.has(preceding)) {
           return 'incorrectlyOrdered';
         }
       }

@@ -38,7 +38,7 @@ const grid = input.split(/\n/).map(([...l]) => l);
 const stack = new Map([
   [toCacheKey(InitialFacing, ...getStartTileCoords(grid)), 0],
 ]);
-const seen = new Set<string>();
+const visted = new Set<string>();
 
 outer: while (stack.size > 0) {
   const {cacheKey, score} = stack
@@ -46,10 +46,10 @@ outer: while (stack.size > 0) {
     .map(([cacheKey, score]) => ({cacheKey, score}))
     .reduce((acc, v) => (v.score < acc.score ? v : acc));
   stack.delete(cacheKey);
-  if (seen.has(cacheKey)) {
+  if (visted.has(cacheKey)) {
     continue;
   } else {
-    seen.add(cacheKey);
+    visted.add(cacheKey);
   }
   const [dir, x, y] = parseCacheKey(cacheKey);
   for (const direction of Directions) {
