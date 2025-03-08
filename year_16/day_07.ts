@@ -11,7 +11,10 @@ const ipAddresses = input.split(/\n/).map(l => {
   const {supers = [], hypers = []} = Object.groupBy(l.split(/\[|\]/), (_, i) =>
     i % 2 === 0 ? 'supers' : 'hypers'
   );
-  return {supers: supers.join(), hypers: hypers.join()};
+  return {
+    supers: supers.join(),
+    hypers: hypers.join(),
+  };
 });
 
 const tlsSupportedIpsCount = ipAddresses
