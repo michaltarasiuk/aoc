@@ -9,7 +9,7 @@ type Registers = Record<string, number>;
 
 function evalCond(registers: Registers, cond: string) {
   const condRe = /^(\w+) ([!<>=]=?) (-?\d+)$/;
-  const [, reg, op, val] = condRe.exec(cond) ?? raise('Invalid');
+  const [, reg, op, val] = condRe.exec(cond) ?? raise('Invalid condition');
 
   return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
 }
@@ -19,7 +19,8 @@ const registers: Registers = {};
 
 let maxHeldRegister = -Infinity;
 for (const l of input.split(/\n/)) {
-  const [, reg, op, val, cond] = instructionRe.exec(l) ?? raise('Invalid');
+  const [, reg, op, val, cond] =
+    instructionRe.exec(l) ?? raise('Invalid instruction');
   if (evalCond(registers, cond)) {
     registers[reg] ??= 0;
     registers[reg] += op === 'inc' ? Number(val) : -Number(val);
