@@ -19,10 +19,10 @@ const easyDigitCount = input
   .split('\n')
   .map(parseEntry)
   .reduce((acc, [, fourDigitOutputs]) => {
-    for (const output of fourDigitOutputs) {
-      UniqSegments.includes(output.length) && acc++;
-    }
-    return acc;
+    return fourDigitOutputs
+      .map(output => UniqSegments.includes(output.length))
+      .map(Number)
+      .reduce((a, b) => a + b, acc);
   }, 0);
 
 assert.strictEqual(easyDigitCount, 519, 'Part 1 failed');
