@@ -13,11 +13,9 @@ function parseProgram(program: string) {
 function findGroup(programs: Map<string, string[]>, start: string) {
   const group = new Set<string>();
   const stack = [start];
-
   while (stack.length > 0) {
     const current = stack.shift() ?? raise('Empty stack');
     group.add(current);
-
     for (const connection of programs.get(current) ?? []) {
       if (!group.has(connection)) {
         stack.push(connection);
@@ -29,7 +27,6 @@ function findGroup(programs: Map<string, string[]>, start: string) {
 
 function countGroups(programs: Map<string, string[]>) {
   const groups = new Set<string>();
-
   for (const id of programs.keys()) {
     groups.add([...findGroup(programs, id)].sort().join());
   }

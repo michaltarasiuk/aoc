@@ -22,10 +22,10 @@ function* createAntennaPairs(antennas: AntennaPositions) {
 const grid = input.split(/\n/).map(([...l]) => l);
 
 const antennaPositions = grid.keys().reduce<AntennaPositions>((acc, y) => {
-  grid[y].forEach((frequency, x) => {
-    if (/\w/.test(frequency)) {
-      acc[frequency] ??= [];
-      acc[frequency].push([x, y]);
+  grid[y].forEach((f, x) => {
+    if (/\w/.test(f)) {
+      acc[f] ??= [];
+      acc[f].push([x, y]);
     }
   });
   return acc;
