@@ -10,12 +10,10 @@ function decodeMessage(
   compareFn = (a: number, b: number) => a - b
 ) {
   return cols.reduce((decodedMessage, columnChars) => {
-    const charFrequencies = frequencies(columnChars);
-    const [[mostFrequentChar]] = charFrequencies
+    const [[mostFrequentChar]] = frequencies(columnChars)
       .entries()
       .toArray()
       .sort((a, b) => compareFn(a[1], b[1]));
-
     return decodedMessage + mostFrequentChar;
   }, '');
 }
