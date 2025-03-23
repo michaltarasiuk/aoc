@@ -3,7 +3,8 @@
   "scripts": {
     "prepare": "husky",
     "eslint": "eslint --no-warn-ignored",
-    "prettier": "prettier --ignore-unknown --write"
+    "prettier": "prettier --ignore-unknown --write",
+    "clean-cache": "rm -rf ./node_modules/.cache"
   },
   "dependencies": {
     "find-cache-dir": "^5.0.0",
