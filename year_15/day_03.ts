@@ -7,7 +7,6 @@ const input = await readInput({year: 2015, day: 3});
 function createPosition() {
   let x = 0;
   let y = 0;
-
   return {
     toString() {
       return `${x},${y}`;
