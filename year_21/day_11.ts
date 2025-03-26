@@ -17,8 +17,8 @@ const Directions = [
   [1, 1],
 ];
 
-let flashes = 0;
 let octopuses = input.split(/\n/).map(([...l]) => l.map(Number));
+let flashes = 0;
 let firstStepAllFlash: number | undefined;
 
 for (let step = 1; ; step++) {
