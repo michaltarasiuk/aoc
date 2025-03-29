@@ -6,39 +6,39 @@ const input = await readInput({year: 2024, day: 5});
 
 const [rules, updates] = input.split(/\n\n/).map(p => p.split(/\n/));
 
-const groupedRules = Object.groupBy(
+const rulesByPage = Object.groupBy(
   rules.map(r => r.split('|').map(Number)),
-  ([, succeeding]) => succeeding
+  ([, after]) => after
 );
 
-const {correctlyOrdered = [], incorrectlyOrdered = []} = Object.groupBy(
+const {valid = [], invalid = []} = Object.groupBy(
   updates.map(u => u.split(',').map(Number)),
   update => {
-    const visted = new Set<number>();
+    const visited = new Set<number>();
     for (const page of update) {
-      visted.add(page);
-      for (const [preceding] of groupedRules[page] ?? []) {
-        if (update.includes(preceding) && !visted.has(preceding)) {
-          return 'incorrectlyOrdered';
+      visited.add(page);
+      for (const [before] of rulesByPage[page] ?? []) {
+        if (update.includes(before) && !visited.has(before)) {
+          return 'invalid';
         }
       }
     }
-    return 'correctlyOrdered';
+    return 'valid';
   }
 );
 
-const sumMiddleCorrect = correctlyOrdered.reduce(
-  (acc, update) => acc + update[Math.floor(update.length / 2)],
+const validMiddleSum = valid.reduce(
+  (sum, update) => sum + update[Math.floor(update.length / 2)],
   0
 );
 
-let sumMiddleIncorrect = 0;
-for (const incorrectUpdate of incorrectlyOrdered) {
-  const sortedUpdate = incorrectUpdate.toSorted((a, b) =>
-    groupedRules[b]?.find(rule => rule[0] === a) ? -1 : 1
+let invalidMiddleSum = 0;
+for (const update of invalid) {
+  const sorted = update.toSorted((a, b) =>
+    rulesByPage[b]?.find(rule => rule[0] === a) ? -1 : 1
   );
-  sumMiddleIncorrect += sortedUpdate[Math.floor(sortedUpdate.length / 2)];
+  invalidMiddleSum += sorted[Math.floor(sorted.length / 2)];
 }
 
-assert.strictEqual(sumMiddleCorrect, 7365, 'Part 1 failed');
-assert.strictEqual(sumMiddleIncorrect, 5770, 'Part 2 failed');
+assert.strictEqual(validMiddleSum, 7365, 'Part 1 failed');
+assert.strictEqual(invalidMiddleSum, 5770, 'Part 2 failed');
