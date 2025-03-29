@@ -25,7 +25,7 @@ const layerGroups = layers
   .map(g => g.map(l => l.match(/\d+/g)!.map(Number)));
 
 const minConverted = Math.min(
-  ...(seeds.match(/\d+/g) ?? []).map(s => mapLayers(layerGroups, Number(s)))
+  ...seeds.match(/\d+/g)!.map(s => mapLayers(layerGroups, Number(s)))
 );
 
 assert.strictEqual(minConverted, 323142486, 'Part 1 failed');
