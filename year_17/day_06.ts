@@ -7,11 +7,12 @@ const input = await readInput({year: 2017, day: 6});
 function* reallocate([...banks]: number[]) {
   const visited = new Set<string>();
   while (true) {
-    if (visited.has(banks.join())) {
+    const key = banks.join();
+    if (visited.has(key)) {
       yield visited.size;
       visited.clear();
     } else {
-      visited.add(banks.join());
+      visited.add(key);
     }
     let blocks = Math.max(...banks);
     let index = banks.indexOf(blocks);
