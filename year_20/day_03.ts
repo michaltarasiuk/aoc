@@ -13,23 +13,23 @@ const Slopes = [
   [1, 2],
 ] satisfies [number, number][];
 
-function countTrees(tobogganMap: string[][], slope: (typeof Slopes)[number]) {
+function countTrees(toboggan: string[], slope: (typeof Slopes)[number]) {
   let trees = 0;
   let [x, y] = [0, 0];
-  while (y < tobogganMap.length - 1) {
-    [x, y] = [(x + slope[0]) % tobogganMap[0].length, y + slope[1]];
-    if (tobogganMap[y][x] === Tree) {
+  while (y < toboggan.length - 1) {
+    [x, y] = [(x + slope[0]) % toboggan[0].length, y + slope[1]];
+    if (toboggan[y][x] === Tree) {
       trees++;
     }
   }
   return trees;
 }
 
-const tobogganMap = input.split('\n').map(([...l]) => l);
+const toboggan = input.split('\n');
 
-const treesForSlope = countTrees(tobogganMap, Slopes[1]);
+const treesForSlope = countTrees(toboggan, Slopes[1]);
 const multipliedTrees = Slopes.reduce(
-  (acc, slope) => acc * countTrees(tobogganMap, slope),
+  (acc, slope) => acc * countTrees(toboggan, slope),
   1
 );
 
