@@ -11,7 +11,7 @@ const Slopes = [
   [5, 1],
   [7, 1],
   [1, 2],
-] as const;
+] satisfies [number, number][];
 
 function countTrees(tobogganMap: string[][], slope: (typeof Slopes)[number]) {
   let trees = 0;
