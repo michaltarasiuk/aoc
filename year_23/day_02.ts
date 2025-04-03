@@ -5,7 +5,8 @@ import {isKeyof} from 'lib/is_keyof.js';
 
 const input = await readInput({year: 2023, day: 2});
 
-const games = input.split(/\n/).map(l =>
+const lines = input.split(/\n/);
+const games = lines.map(l =>
   l
     .matchAll(/(\d+) (r|g|b)/g)
     .map(([, n, color]) => [color, Number(n)] as const)

@@ -6,8 +6,8 @@ import {raise} from 'lib/raise.js';
 
 const input = await readInput({year: 2015, day: 9});
 
-const distancesMap = input
-  .split(/\n/)
+const lines = input.split(/\n/);
+const distancesMap = lines
   .map(l => {
     const distanceRe = /^(\w+) to (\w+) = (\d+)$/;
     const [, a, b, distance] = l.match(distanceRe) ?? raise('Invalid distance');

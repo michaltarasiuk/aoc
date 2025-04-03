@@ -22,8 +22,7 @@ function reactPolymer(polymer: string) {
 }
 
 const reactedPolymer = reactPolymer(input);
-const minPolymerLength = 'abcdefghijklmnopqrstuvwxyz'
-  .split('')
+const minPolymerLength = [...'abcdefghijklmnopqrstuvwxyz']
   .map(unit => {
     const unitRe = new RegExp(unit, 'gi');
     return reactPolymer(input.replace(unitRe, '')).length;

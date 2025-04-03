@@ -12,7 +12,7 @@ function isValidTriangle([a, b, c]: number[]) {
 }
 
 const liens = input.split(/\n/);
-const trianglesByRows = liens.map(l => (l.match(/\d+/g) ?? []).map(Number));
+const trianglesByRows = liens.map(l => l.match(/\d+/g)?.map(Number) ?? []);
 
 const cols: number[][] = [];
 for (const triangle of trianglesByRows) {

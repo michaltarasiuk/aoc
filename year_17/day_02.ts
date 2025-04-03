@@ -4,7 +4,7 @@ import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2017, day: 2});
 
-const rows = input.split(/\n/).map(l => (l.match(/\d+/g) ?? []).map(Number));
+const rows = input.split(/\n/).map(l => l.match(/\d+/g)?.map(Number) ?? []);
 
 let checksum = 0;
 for (const r of rows) {

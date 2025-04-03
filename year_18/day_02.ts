@@ -28,7 +28,8 @@ const indexedBoxIds = boxIds.map(mapBoxIdToIndexedChars);
 let commonChars = '';
 outer: for (const [i, boxA] of indexedBoxIds.entries()) {
   for (const boxB of indexedBoxIds.slice(i + 1)) {
-    if (new Set(boxA).difference(new Set(boxB)).size !== 1) {
+    const diff = new Set(boxA).difference(new Set(boxB));
+    if (diff.size !== 1) {
       continue;
     }
     commonChars = [...new Set(boxA).intersection(new Set(boxB))]
