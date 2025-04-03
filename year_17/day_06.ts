@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 
 import {readInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
 const input = await readInput({year: 2017, day: 6});
 
@@ -23,7 +24,8 @@ function* reallocate([...banks]: number[]) {
   }
 }
 
-const [cycles, loopSize] = reallocate((input.match(/\d+/g) ?? []).map(Number));
+const banks = input.match(/\d+/g)?.map(Number) ?? raise('Invalid input');
+const [cycles, loopSize] = reallocate(banks);
 
 assert.strictEqual(cycles, 11137, 'Part 1 failed');
 assert.strictEqual(loopSize, 1037, 'Part 2 failed');
