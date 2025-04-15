@@ -5,29 +5,21 @@ import {raise} from 'lib/raise.js';
 
 const input = await readInput({year: 2017, day: 8});
 
-type Registers = Record<string, number>;
+const condRe = /^(\w+) ([!<>=]=?) (-?\d+)$/;
+const instructionRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
 
-function evalCond(registers: Registers, cond: string) {
-  const condRe = /^(\w+) ([!<>=]=?) (-?\d+)$/;
-  const [, reg, op, val] = condRe.exec(cond) ?? raise('Invalid condition');
-  return eval(`${(registers[reg] ??= 0)} ${op} ${val}`);
-}
-
-function parseInstruction(l: string) {
-  const instructionRe = /^(\w+) (inc|dec) (-?\d+) if (.+)$/;
-  const [, reg, op, val, cond] = instructionRe.exec(l) ?? raise('Invalid line');
-  return {reg, op, val, cond} as const;
-}
-
-const registers: Registers = {};
+const registers: Record<string, number> = {};
 let maxHeldRegister = -Infinity;
-for (const {reg, op, val, cond} of input.split(/\n/).map(parseInstruction)) {
-  if (evalCond(registers, cond)) {
-    registers[reg] ??= 0;
-    registers[reg] += op === 'inc' ? Number(val) : -Number(val);
-
-    maxHeldRegister = Math.max(maxHeldRegister, registers[reg]);
+for (const l of input.split(/\n/)) {
+  const [, reg, op, val, cond] = instructionRe.exec(l) ?? raise('No line');
+  const [, condReg, condOp, condVal] = condRe.exec(cond) ?? raise('No cond');
+  if (!eval(`${(registers[condReg] ??= 0)} ${condOp} ${condVal}`)) {
+    continue;
   }
+  registers[reg] ??= 0;
+  registers[reg] += op === 'inc' ? Number(val) : -Number(val);
+
+  maxHeldRegister = Math.max(maxHeldRegister, registers[reg]);
 }
 
 const maxFinalRegister = Math.max(...Object.values(registers));

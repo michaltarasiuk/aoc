@@ -15,7 +15,7 @@ const matchPath = createMatchPath(tsConfig.absoluteBaseUrl, tsConfig.paths);
 /** @type {import("lint-staged").Config} */
 const lintStagedConfig = {
   '*': [
-    'prettier',
+    'prettier --ignore-unknown',
     'eslint',
     async function assert(stagedFiles) {
       const stagedFilesSet = new Set(stagedFiles);
