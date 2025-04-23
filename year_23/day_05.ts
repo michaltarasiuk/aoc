@@ -5,27 +5,37 @@ import {isDefined} from 'lib/is_defined.js';
 
 const input = await readInput({year: 2023, day: 5});
 
-function mapLayers([...layerGroups]: number[][][], value: number): number {
-  const layerGroup = layerGroups.shift();
-  if (!isDefined(layerGroup)) {
+function mapValueThroughLayers(
+  [...conversionLayers]: number[][][],
+  value: number
+) {
+  const currentLayer = conversionLayers.shift();
+  if (!isDefined(currentLayer)) {
     return value;
   }
-  for (const [destStart, srcStart, length] of layerGroup) {
+  for (const [destStart, srcStart, length] of currentLayer) {
     if (value >= srcStart && value < srcStart + length) {
-      return mapLayers(layerGroups, destStart + (value - srcStart));
+      return mapValueThroughLayers(
+        conversionLayers,
+        destStart + (value - srcStart)
+      );
     }
   }
-  return mapLayers(layerGroups, value);
+  return mapValueThroughLayers(conversionLayers, value);
 }
 
-const [seeds, ...layers] = input.split(/\n\n/);
+const [seedRanges, ...conversionMaps] = input.split(/\n\n/);
 
-const layerGroups = layers
-  .map(l => l.split(/\n/).slice(1))
-  .map(g => g.map(l => l.match(/\d+/g)!.map(Number)));
+const conversionLayers = conversionMaps
+  .map(map => map.split(/\n/).slice(1))
+  .map(layer => layer.map(l => l.split(/\s+/).map(Number)));
 
-const minConverted = Math.min(
-  ...seeds.match(/\d+/g)!.map(s => mapLayers(layerGroups, Number(s)))
+const minLocation = Math.min(
+  ...seedRanges
+    .replace(/^seeds: /, '')
+    .split(/\s+/)
+    .map(Number)
+    .map(seed => mapValueThroughLayers(conversionLayers, Number(seed)))
 );
 
-assert.strictEqual(minConverted, 323142486, 'Part 1 failed');
+assert.strictEqual(minLocation, 323142486, 'Part 1 failed');

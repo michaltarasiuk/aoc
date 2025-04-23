@@ -4,7 +4,7 @@ import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2017, day: 1});
 
-const digits = input.match(/\d/g)?.map(Number) ?? [];
+const digits = [...input].map(Number);
 
 const captchaPart1 = digits
   .filter((d, i) => d === digits.at((i + 1) % digits.length))

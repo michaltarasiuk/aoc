@@ -8,12 +8,12 @@ const abbaRe = /(\w)((?!\1)\w)\2\1/;
 const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/;
 
 const ipAddresses = input.split(/\n/).map(l => {
-  const {supers = [], hypers = []} = Object.groupBy(l.split(/\[|\]/), (_, i) =>
+  const groups = Object.groupBy(l.split(/\[|\]/), (_, i) =>
     i % 2 === 0 ? 'supers' : 'hypers'
   );
   return {
-    supers: supers.join(),
-    hypers: hypers.join(),
+    supers: groups.supers?.join() ?? '',
+    hypers: groups.hypers?.join() ?? '',
   };
 });
 

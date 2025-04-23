@@ -7,7 +7,8 @@ const input = await readInput({year: 2020, day: 2});
 
 const passwordRe = /^(\d+)-(\d+) (\w): (\w+)$/;
 const passwords = input.split(/\n/).map(l => {
-  const [, min, max, char, password] = passwordRe.exec(l) ?? raise('Invalid');
+  const [, min, max, char, password] =
+    passwordRe.exec(l) ?? raise('Invalid password');
   return {min: Number(min), max: Number(max), char, password};
 });
 
