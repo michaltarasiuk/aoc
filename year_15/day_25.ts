@@ -5,7 +5,11 @@ import {raise} from 'lib/raise.js';
 
 const input = await readInput({year: 2015, day: 25});
 
-const [row, col] = input.match(/\d+/g)?.map(Number) ?? raise('Invalid input');
+const inputRe = /Enter the code at row (\d+), column (\d+)/;
+const inputMatch = input.match(inputRe) ?? raise('Invalid input format');
+
+const row = Number(inputMatch[1]);
+const col = Number(inputMatch[2]);
 
 const StartingCode = 20151125;
 const Multiplier = 252533;
