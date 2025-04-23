@@ -12,16 +12,26 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count;
 }
 
-const lines = input.split(/\n/);
-const [times, distances] = lines.map(l => l.match(/\d+/g)!.map(Number));
+const [times, distances] = input.split(/\n/);
 
-const waysOfBeatRecordProduct = times
-  .entries()
-  .reduce((acc, [i, t]) => acc * countWaysOfBeatRecord(t, distances[i]), 1);
+const parsedTimes = times
+  .replace(/^Time:\s+/, '')
+  .split(/\s+/)
+  .map(Number);
+
+const parsedDistances = distances
+  .replace(/^Distance:\s+/, '')
+  .split(/\s+/)
+  .map(Number);
+
+const waysOfBeatRecordProduct = parsedTimes.reduce(
+  (acc, t, i) => acc * countWaysOfBeatRecord(t, parsedDistances[i]),
+  1
+);
 
 const longRaceWaysOfBeatRecord = countWaysOfBeatRecord(
-  Number(times.join('')),
-  Number(distances.join(''))
+  Number(parsedTimes.join('')),
+  Number(parsedDistances.join(''))
 );
 
 assert.strictEqual(waysOfBeatRecordProduct, 140220, 'Part 1 failed');
