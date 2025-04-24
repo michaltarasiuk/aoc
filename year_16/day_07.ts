@@ -17,13 +17,13 @@ const ipAddresses = input.split(/\n/).map(l => {
   };
 });
 
-const tlsSupportedIpsCount = ipAddresses
-  .map(({supers, hypers}) => abbaRe.test(supers) && !abbaRe.test(hypers))
-  .reduce((acc, abba) => acc + Number(abba), 0);
+const tlsSupportedIpsCount = ipAddresses.filter(
+  ({supers, hypers}) => abbaRe.test(supers) && !abbaRe.test(hypers)
+).length;
 
-const sslSupportedIpsCount = ipAddresses
-  .map(({supers, hypers}) => abaRe.test(supers + ' ' + hypers))
-  .reduce((acc, aba) => acc + Number(aba), 0);
+const sslSupportedIpsCount = ipAddresses.filter(({supers, hypers}) =>
+  abaRe.test(supers + ' ' + hypers)
+).length;
 
 assert.strictEqual(tlsSupportedIpsCount, 110, 'Part 1 failed');
 assert.strictEqual(sslSupportedIpsCount, 242, 'Part 2 failed');
