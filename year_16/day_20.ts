@@ -1,6 +1,7 @@
 import assert from 'node:assert';
 
 import {readInput} from 'lib/input.js';
+import {isDefined} from 'lib/is_defined.js';
 import {raise} from 'lib/raise.js';
 
 const input = await readInput({year: 2016, day: 20});
@@ -21,7 +22,7 @@ const ranges = input
 const mergedRanges: Range[] = [];
 for (const range of ranges) {
   const lastRange = mergedRanges.at(-1);
-  if (!lastRange || range.start > lastRange.end + 1) {
+  if (!isDefined(lastRange) || range.start > lastRange.end + 1) {
     mergedRanges.push(range);
   } else {
     lastRange.end = Math.max(lastRange.end, range.end);

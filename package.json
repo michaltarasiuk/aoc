@@ -7,7 +7,7 @@
     "clean-cache": "rm -rf ./node_modules/.cache"
   },
   "dependencies": {
-    "find-cache-dir": "^5.0.0",
+    "find-cache-directory": "^6.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

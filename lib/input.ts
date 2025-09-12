@@ -2,61 +2,60 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import findCacheDir from 'find-cache-dir';
+import findCacheDirectory from 'find-cache-directory';
 
 import {env} from '../env.js';
 import {isDefined} from './is_defined.js';
 
-interface InputParams {
+interface InputOptions {
   year: number;
   day: number;
 }
 
-export async function readInput(params: InputParams) {
-  let input = await getCachedInput(params);
+export async function readInput({year, day}: InputOptions) {
+  let input = getCachedInput({year, day});
   if (!isDefined(input)) {
-    input = await fetchInput(params);
-    cacheInput(params, input);
+    const response = await fetch(
+      `https://adventofcode.com/${year}/day/${day}/input`,
+      {
+        headers: {
+          'Accept': 'text/plain',
+          'Cookie': `session=${env.session}`,
+        },
+      }
+    );
+    input = await response.text();
+    if (response.ok) {
+      cacheInput({year, day}, input);
+    }
   }
   return input.trimEnd();
 }
 
-async function fetchInput({year, day}: InputParams) {
-  const response = await fetch(
-    new URL(`${year}/day/${day}/input`, 'https://adventofcode.com'),
-    {
-      headers: {
-        Accept: 'text/plain',
-        Cookie: `session=${env.session}`,
-      },
-    }
-  );
-  return await response.text();
+function getCacheDirectory() {
+  const cacheDirectory = findCacheDirectory({
+    name: 'advent-of-code',
+    create: true,
+  });
+  assert(isDefined(cacheDirectory), 'Cache directory not found');
+  return cacheDirectory;
 }
 
-function getCacheDir() {
-  const cacheDir = findCacheDir({name: 'advent-of-code', create: true});
-  assert(isDefined(cacheDir), 'Cache directory not found');
-  return cacheDir;
+function createCacheFilePath({year, day}: InputOptions) {
+  const filename = `day_${String(day).padStart(2, '0')}.txt`;
+  return path.join(getCacheDirectory(), String(year), filename);
 }
 
-function createCacheFileUrl({year, day}: InputParams) {
-  return new URL(
-    `${year}/day_${String(day).padStart(2, '0')}.txt`,
-    `file://${getCacheDir()}/`
-  );
-}
-
-function getCachedInput(params: InputParams) {
-  const cacheFileUrl = createCacheFileUrl(params);
-  if (!fs.existsSync(cacheFileUrl)) {
+function getCachedInput(params: InputOptions) {
+  const cacheFilePath = createCacheFilePath(params);
+  if (!fs.existsSync(cacheFilePath)) {
     return;
   }
-  return fs.readFileSync(cacheFileUrl, 'utf-8');
+  return fs.readFileSync(cacheFilePath, 'utf-8');
 }
 
-function cacheInput(params: InputParams, input: string) {
-  const cacheFileUrl = createCacheFileUrl(params);
-  fs.mkdirSync(path.dirname(cacheFileUrl.pathname), {recursive: true});
-  fs.writeFileSync(cacheFileUrl, input);
+function cacheInput(params: InputOptions, input: string) {
+  const cacheFilePath = createCacheFilePath(params);
+  fs.mkdirSync(path.dirname(cacheFilePath), {recursive: true});
+  fs.writeFileSync(cacheFilePath, input);
 }
