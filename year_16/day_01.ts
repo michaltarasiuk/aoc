@@ -33,15 +33,15 @@ const instructions = input
   .map(([, turn, steps]) => ({turn, steps: Number(steps)}));
 
 const coords = createCoords();
-const visted = new Set<string>();
+const visited = new Set<string>();
 let firstDuplicate: number | undefined;
 
 for (const {turn, steps} of instructions) {
   for (const position of coords.set(turn, steps)) {
-    if (visted.has(position) && !firstDuplicate) {
+    if (visited.has(position) && !firstDuplicate) {
       firstDuplicate = coords.calcDistance();
     } else {
-      visted.add(position);
+      visited.add(position);
     }
   }
 }
