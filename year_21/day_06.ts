@@ -4,7 +4,7 @@ import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2021, day: 6});
 
-function simulateLanternfishGrowth([...fishTimers]: number[], days: number) {
+function simulateLanternFishGrowth([...fishTimers]: number[], days: number) {
   for (let day = 1; day <= days; day++) {
     const spawningFish = fishTimers.shift()!;
     fishTimers[6] += spawningFish;
@@ -14,13 +14,13 @@ function simulateLanternfishGrowth([...fishTimers]: number[], days: number) {
 }
 
 const timers = Array<number>(9).fill(0);
-for (const lanternfish of input.split('').map(Number)) {
-  timers[lanternfish]++;
+for (const lanternFish of input.split('').map(Number)) {
+  timers[lanternFish]++;
 }
 
-assert.strictEqual(simulateLanternfishGrowth(timers, 80), 385391, 'Part 1');
+assert.strictEqual(simulateLanternFishGrowth(timers, 80), 385391, 'Part 1');
 assert.strictEqual(
-  simulateLanternfishGrowth(timers, 256),
+  simulateLanternFishGrowth(timers, 256),
   1728611055389,
   'Part 2'
 );

@@ -12,7 +12,7 @@ function parseWirePath(path: string) {
 }
 
 function traceWirePath(path: ReturnType<typeof parseWirePath>) {
-  const visiteCoords = new Map<string, number>();
+  const visitedCoords = new Map<string, number>();
   let [x, y, steps] = [0, 0, 0];
   for (const [dir, distance] of path) {
     for (let i = 0; i < distance; i++, steps++) {
@@ -23,12 +23,12 @@ function traceWirePath(path: ReturnType<typeof parseWirePath>) {
         D: () => y--,
       };
       move[dir]();
-      if (!visiteCoords.has(`${x},${y}`)) {
-        visiteCoords.set(`${x},${y}`, steps + 1);
+      if (!visitedCoords.has(`${x},${y}`)) {
+        visitedCoords.set(`${x},${y}`, steps + 1);
       }
     }
   }
-  return visiteCoords;
+  return visitedCoords;
 }
 
 const [wire1Coords, wire2Coords] = input

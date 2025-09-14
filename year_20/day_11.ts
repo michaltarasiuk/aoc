@@ -4,48 +4,55 @@ import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2020, day: 11});
 
-const Seats = {empty: 'L', occupied: '#', floor: '.'};
+const SeatState = {
+  empty: 'L',
+  occupied: '#',
+  floor: '.',
+};
 
-function getAdjacentSeats(seats: string[][], {x, y}: {x: number; y: number}) {
-  const AdjacentOffsets = [
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    [0, 1],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-  ];
-  return AdjacentOffsets.flatMap(
-    ([offsetY, offsetX]) => seats[y + offsetY]?.[x + offsetX] ?? []
-  );
+const NeighborOffsets = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+];
+function getImmediateNeighbors(
+  grid: string[][],
+  {x, y}: {x: number; y: number}
+) {
+  return NeighborOffsets.flatMap(([dy, dx]) => grid[y + dy]?.[x + dx] ?? []);
 }
-function countOccupiedSeats(seats: string[]) {
-  return seats.filter(seat => seat === Seats.occupied).length;
+
+function countOccupied(seats: string[]) {
+  return seats.filter(seat => seat === SeatState.occupied).length;
 }
-function getNewSeat(seat: string, adjacents: string[]) {
-  const occupiedSeatsCount = countOccupiedSeats(adjacents);
-  if (seat === Seats.empty && occupiedSeatsCount === 0) {
-    return Seats.occupied;
-  } else if (seat === Seats.occupied && occupiedSeatsCount >= 4) {
-    return Seats.empty;
+
+function nextSeatState(seat: string, neighbors: string[]) {
+  const occupiedCount = countOccupied(neighbors);
+  if (seat === SeatState.empty && occupiedCount === 0) {
+    return SeatState.occupied;
+  } else if (seat === SeatState.occupied && occupiedCount >= 4) {
+    return SeatState.empty;
   } else {
     return seat;
   }
 }
 
-let changed = true;
-let currentSeats = input.split(/\n/).map(([...l]) => l);
-while (changed) {
-  const newSeats = currentSeats.map((row, y) =>
+let hasChanged = true;
+let seatGrid = input.split(/\n/).map(([...l]) => l);
+while (hasChanged) {
+  const nextGrid = seatGrid.map((row, y) =>
     row.map((seat, x) =>
-      getNewSeat(seat, getAdjacentSeats(currentSeats, {x, y}))
+      nextSeatState(seat, getImmediateNeighbors(seatGrid, {x, y}))
     )
   );
-  changed = newSeats.flat().join('') !== currentSeats.flat().join('');
-  currentSeats = newSeats;
+  hasChanged = nextGrid.flat().join('') !== seatGrid.flat().join('');
+  seatGrid = nextGrid;
 }
-const occupiedSeatsCount = countOccupiedSeats(currentSeats.flat());
+const finalOccupiedCount = countOccupied(seatGrid.flat());
 
-assert.strictEqual(occupiedSeatsCount, 2483, 'Part 1 failed');
+assert.strictEqual(finalOccupiedCount, 2483, 'Part 1 failed');

@@ -2,46 +2,44 @@ import assert from 'node:assert';
 
 import {readInput} from 'lib/input.js';
 
-const input = await readInput({year: 2015, day: 18});
+const Input = await readInput({year: 2015, day: 18});
+
+type Grid = typeof grid;
 
 const LightOn = '#';
 const LightOff = '.';
 
-type Lights = typeof lights;
-
-function getAdjacentLights(lights: Lights, {x, y}: {x: number; y: number}) {
-  const NeighborOffsets = [
-    [-1, -1],
-    [-1, 0],
-    [-1, 1],
-    [0, -1],
-    [0, 1],
-    [1, -1],
-    [1, 0],
-    [1, 1],
-  ];
-  return NeighborOffsets.map(
-    ([dy, dx]) => lights[y + dy]?.[x + dx] ?? LightOff
-  );
+const NeighborOffsets = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, -1],
+  [1, 0],
+  [1, 1],
+];
+function getAdjacentCells(grid: Grid, {x, y}: {x: number; y: number}) {
+  return NeighborOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? LightOff);
 }
 
-function getNewLight(light: string, adjacents: string[]) {
-  const lightsOnCount = adjacents.filter(light => light === LightOn).length;
-  if (light === LightOn) {
-    return lightsOnCount === 2 || lightsOnCount === 3 ? LightOn : LightOff;
+function getNextCellState(cell: string, neighbors: string[]) {
+  const onCount = neighbors.filter(n => n === LightOn).length;
+  if (cell === LightOn) {
+    return onCount === 2 || onCount === 3 ? LightOn : LightOff;
   } else {
-    return lightsOnCount === 3 ? LightOn : LightOff;
+    return onCount === 3 ? LightOn : LightOff;
   }
 }
 
-const StepsCount = 100;
+const Steps = 100;
 
-let lights = input.split(/\n/).map(([...l]) => l);
-for (let step = 0; step < StepsCount; step++) {
-  lights = lights.map((row, y) =>
-    row.map((light, x) => getNewLight(light, getAdjacentLights(lights, {x, y})))
+let grid = Input.split(/\n/).map(row => [...row]);
+for (let step = 0; step < Steps; step++) {
+  grid = grid.map((row, y) =>
+    row.map((cell, x) => getNextCellState(cell, getAdjacentCells(grid, {x, y})))
   );
 }
-const lightsOnCount = lights.flat().filter(light => light === LightOn).length;
+const lightsOnCount = grid.flat().filter(cell => cell === LightOn).length;
 
 assert.strictEqual(lightsOnCount, 821, 'Part 1 failed');

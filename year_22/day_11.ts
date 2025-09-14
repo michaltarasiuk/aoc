@@ -11,7 +11,7 @@ Monkey (?<id>\\d):
   Starting items: (?<items>.*)
   Operation: new = (?<operation>.*)
   Test: divisible by (?<divider>\\d+)
-    If true: throw to monkey (?<throwToIfDivisble>\\d+)
+    If true: throw to monkey (?<throwToIfDivisible>\\d+)
     If false: throw to monkey (?<throwToIfIndivisible>\\d+)`);
 
 const MonkeySchema = z.object({
@@ -19,7 +19,7 @@ const MonkeySchema = z.object({
   items: z.string().transform(items => items.split(', ').map(Number)),
   operation: z.string(),
   divider: z.string().transform(Number),
-  throwToIfDivisble: z.string().transform(Number),
+  throwToIfDivisible: z.string().transform(Number),
   throwToIfIndivisible: z.string().transform(Number),
   inspects: z.number().default(0),
 });
@@ -45,7 +45,7 @@ for (let i = 0; i < RoundsCount; i++) {
       m.items.splice(0).map(old => m.inspect(old)),
       item => (item % m.divider === 0 ? 'divisible' : 'indivisible')
     );
-    monkeys.get(m.throwToIfDivisble)?.items.push(...divisible);
+    monkeys.get(m.throwToIfDivisible)?.items.push(...divisible);
     monkeys.get(m.throwToIfIndivisible)?.items.push(...indivisible);
   }
 }
