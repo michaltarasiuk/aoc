@@ -2,14 +2,14 @@ import assert from 'node:assert';
 
 import {readInput} from 'lib/input.js';
 
-const Input = await readInput({year: 2015, day: 18});
+const input = await readInput({year: 2015, day: 18});
 
-type Grid = typeof grid;
+type LightGrid = typeof initialGrid;
 
-const LightOn = '#';
-const LightOff = '.';
+const On = '#';
+const Off = '.';
 
-const NeighborOffsets = [
+const AdjacentOffsets = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -19,27 +19,28 @@ const NeighborOffsets = [
   [1, 0],
   [1, 1],
 ];
-function getAdjacentCells(grid: Grid, {x, y}: {x: number; y: number}) {
-  return NeighborOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? LightOff);
+function getNeighbors(grid: LightGrid, {x, y}: {x: number; y: number}) {
+  return AdjacentOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? Off);
 }
 
-function getNextCellState(cell: string, neighbors: string[]) {
-  const onCount = neighbors.filter(n => n === LightOn).length;
-  if (cell === LightOn) {
-    return onCount === 2 || onCount === 3 ? LightOn : LightOff;
+function computeNextState(current: string, neighbors: string[]) {
+  const onCount = neighbors.filter(n => n === On).length;
+  if (current === On) {
+    return onCount === 2 || onCount === 3 ? On : Off;
   } else {
-    return onCount === 3 ? LightOn : LightOff;
+    return onCount === 3 ? On : Off;
   }
 }
 
 const Steps = 100;
 
-let grid = Input.split(/\n/).map(row => [...row]);
+const initialGrid = input.split(/\n/).map(row => [...row]);
+let grid = initialGrid;
 for (let step = 0; step < Steps; step++) {
   grid = grid.map((row, y) =>
-    row.map((cell, x) => getNextCellState(cell, getAdjacentCells(grid, {x, y})))
+    row.map((cell, x) => computeNextState(cell, getNeighbors(grid, {x, y})))
   );
 }
-const lightsOnCount = grid.flat().filter(cell => cell === LightOn).length;
+const totalOn = grid.flat().filter(cell => cell === On).length;
 
-assert.strictEqual(lightsOnCount, 821, 'Part 1 failed');
+assert.strictEqual(totalOn, 821, 'Part 1 failed');

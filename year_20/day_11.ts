@@ -4,10 +4,10 @@ import {readInput} from 'lib/input.js';
 
 const input = await readInput({year: 2020, day: 11});
 
-const SeatState = {
-  empty: 'L',
-  occupied: '#',
-  floor: '.',
+const Seat = {
+  Empty: 'L',
+  Occupied: '#',
+  Floor: '.',
 };
 
 const NeighborOffsets = [
@@ -20,39 +20,34 @@ const NeighborOffsets = [
   [1, 0],
   [1, 1],
 ];
-function getImmediateNeighbors(
-  grid: string[][],
-  {x, y}: {x: number; y: number}
-) {
+function getAdjacentSeats(grid: string[][], {x, y}: {x: number; y: number}) {
   return NeighborOffsets.flatMap(([dy, dx]) => grid[y + dy]?.[x + dx] ?? []);
 }
 
-function countOccupied(seats: string[]) {
-  return seats.filter(seat => seat === SeatState.occupied).length;
+function countOccupiedSeats(seats: string[]) {
+  return seats.filter(seat => seat === Seat.Occupied).length;
 }
 
-function nextSeatState(seat: string, neighbors: string[]) {
-  const occupiedCount = countOccupied(neighbors);
-  if (seat === SeatState.empty && occupiedCount === 0) {
-    return SeatState.occupied;
-  } else if (seat === SeatState.occupied && occupiedCount >= 4) {
-    return SeatState.empty;
+function getNextSeatState(seat: string, neighbors: string[]) {
+  const occupiedCount = countOccupiedSeats(neighbors);
+  if (seat === Seat.Empty && occupiedCount === 0) {
+    return Seat.Occupied;
+  } else if (seat === Seat.Occupied && occupiedCount >= 4) {
+    return Seat.Empty;
   } else {
     return seat;
   }
 }
 
-let hasChanged = true;
-let seatGrid = input.split(/\n/).map(([...l]) => l);
-while (hasChanged) {
-  const nextGrid = seatGrid.map((row, y) =>
-    row.map((seat, x) =>
-      nextSeatState(seat, getImmediateNeighbors(seatGrid, {x, y}))
-    )
+let changed = true;
+let grid = input.split(/\n/).map(([...l]) => l);
+while (changed) {
+  const nextGridState = grid.map((row, y) =>
+    row.map((seat, x) => getNextSeatState(seat, getAdjacentSeats(grid, {x, y})))
   );
-  hasChanged = nextGrid.flat().join('') !== seatGrid.flat().join('');
-  seatGrid = nextGrid;
+  changed = nextGridState.flat().join('') !== grid.flat().join('');
+  grid = nextGridState;
 }
-const finalOccupiedCount = countOccupied(seatGrid.flat());
+const finalOccupiedCount = countOccupiedSeats(grid.flat());
 
 assert.strictEqual(finalOccupiedCount, 2483, 'Part 1 failed');
