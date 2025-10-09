@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- `old` is used by eval */
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {z} from 'zod';
 
-const input = await readInput({year: 2022, day: 11});
+const input = await fetchInput({year: 2022, day: 11});
 
 const monkeyRe = new RegExp(`\
 Monkey (?<id>\\d):

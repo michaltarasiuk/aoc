@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isKeyof} from 'lib/is_keyof.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2015, day: 23});
+const input = await fetchInput({year: 2015, day: 23});
 
 function execute(
   {...registers}: {a: number; b: number},

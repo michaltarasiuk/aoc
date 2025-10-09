@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2018, day: 2});
+const input = await fetchInput({year: 2018, day: 2});
 
 function mapBoxIdToIndexedChars(boxId: string) {
   return Array.from(boxId, (char, i) => char + `[${i}]`);

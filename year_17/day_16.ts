@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2017, day: 16});
+const input = await fetchInput({year: 2017, day: 16});
 
 function dance(moves: string[], ...programs: string[]) {
   for (const m of moves) {

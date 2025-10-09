@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
-const input = await readInput({year: 2023, day: 3});
+const input = await fetchInput({year: 2023, day: 3});
 
 type Layer = string[][];
 

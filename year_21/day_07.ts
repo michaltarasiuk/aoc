@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2021, day: 7});
+const input = await fetchInput({year: 2021, day: 7});
 
 function* getPositionRange(positions: number[]) {
   for (let i = Math.min(...positions); i <= Math.max(...positions); i++) {

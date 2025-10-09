@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2024, day: 24});
+const input = await fetchInput({year: 2024, day: 24});
 
 const [initialValues, gateDescriptions] = input
   .split(/\n\n/)

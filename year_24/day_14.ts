@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2024, day: 14});
+const input = await fetchInput({year: 2024, day: 14});
 
 const Time = 100;
 const TilesWide = 101;

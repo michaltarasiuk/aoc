@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2023, day: 6});
+const input = await fetchInput({year: 2023, day: 6});
 
 function countWaysOfBeatRecord(time: number, record: number) {
   let count = 0;

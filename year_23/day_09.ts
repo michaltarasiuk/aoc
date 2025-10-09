@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2023, day: 9});
+const input = await fetchInput({year: 2023, day: 9});
 
 function extrapolate(...ns: number[]): number[] {
   const diffs = ns.slice(0, -1).map((n, i) => ns.at(i + 1)! - n);

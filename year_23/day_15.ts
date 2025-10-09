@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2023, day: 15});
+const input = await fetchInput({year: 2023, day: 15});
 
 const Multiplier = 17;
 const Modulo = 256;

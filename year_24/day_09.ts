@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2024, day: 9});
+const input = await fetchInput({year: 2024, day: 9});
 
 type DiskElement = number | string;
 
@@ -10,7 +10,11 @@ const Space = '.';
 
 function calcChecksum(disk: DiskElement[]) {
   let sum = 0;
-  for (const [i, n] of disk.entries()) typeof n === 'number' && (sum += i * n);
+  for (const [i, n] of disk.entries()) {
+    if (typeof n === 'number') {
+      sum += i * n;
+    }
+  }
   return sum;
 }
 

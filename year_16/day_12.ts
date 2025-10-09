@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isKeyof} from 'lib/is_keyof.js';
 
-const input = await readInput({year: 2016, day: 12});
+const input = await fetchInput({year: 2016, day: 12});
 
 function execute(
   {...registers}: Record<'a' | 'b' | 'c' | 'd', number>,

@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {z} from 'zod';
 
-const input = await readInput({year: 2021, day: 5});
+const input = await fetchInput({year: 2021, day: 5});
 
 const Coordinate = z.string().transform(Number);
 const VentSchema = z

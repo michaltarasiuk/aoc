@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {chunkEvery} from 'lib/chunk_every.js';
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2022, day: 3});
+const input = await fetchInput({year: 2022, day: 3});
 
 function splitRucksack(rucksack: string) {
   return [

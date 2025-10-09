@@ -1,13 +1,13 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2017, day: 20});
+const input = await fetchInput({year: 2017, day: 20});
 
 function parseCoords(coords: string) {
   const coordsRe = /^[pva]=<(-?\d+),(-?\d+),(-?\d+)>$/;
-  const [_, x, y, z] = coordsRe.exec(coords) ?? raise('Invalid coords');
+  const [, x, y, z] = coordsRe.exec(coords) ?? raise('Invalid coords');
   return {x: Number(x), y: Number(y), z: Number(z)};
 }
 

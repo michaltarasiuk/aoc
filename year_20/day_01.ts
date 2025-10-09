@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2020, day: 1});
+const input = await fetchInput({year: 2020, day: 1});
 
 function hasSumOf2020(...entries: number[]) {
   return entries.reduce((acc, entry) => acc + entry, 0) === 2020;

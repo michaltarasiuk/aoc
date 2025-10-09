@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2021, day: 1});
+const input = await fetchInput({year: 2021, day: 1});
 
 function countIncreases(measurements: number[], windowSize: number) {
   return measurements.reduce((acc, depth, i) => {

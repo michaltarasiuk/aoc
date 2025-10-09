@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2017, day: 13});
+const input = await fetchInput({year: 2017, day: 13});
 
 function isCaught({depth, range}: {depth: number; range: number}, delay = 0) {
   return (depth + delay) % (2 * range - 2) === 0;

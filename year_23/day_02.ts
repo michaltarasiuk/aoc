@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isKeyof} from 'lib/is_keyof.js';
 
-const input = await readInput({year: 2023, day: 2});
+const input = await fetchInput({year: 2023, day: 2});
 
 const lines = input.split(/\n/);
 const games = lines.map(l =>

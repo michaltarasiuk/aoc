@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2015, day: 25});
+const input = await fetchInput({year: 2015, day: 25});
 
 const inputRe = /Enter the code at row (\d+), column (\d+)/;
 const inputMatch = input.match(inputRe) ?? raise('Invalid input format');

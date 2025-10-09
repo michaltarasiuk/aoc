@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 import {z} from 'zod';
 
-const input = await readInput({year: 2016, day: 9});
+const input = await fetchInput({year: 2016, day: 9});
 
 const MarkerGroupsSchema = z.object({
   length: z.string().transform(Number),

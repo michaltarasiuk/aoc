@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2020, day: 3});
+const input = await fetchInput({year: 2020, day: 3});
 
 const Tree = '#';
 const Slopes = [

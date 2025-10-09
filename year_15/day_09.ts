@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {permute} from 'lib/permute.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2015, day: 9});
+const input = await fetchInput({year: 2015, day: 9});
 
 function parseDistance(l: string) {
   const distanceRe = /^(\w+) to (\w+) = (\d+)$/;

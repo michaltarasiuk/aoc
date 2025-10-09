@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2017, day: 12});
+const input = await fetchInput({year: 2017, day: 12});
 
 function parseProgram(program: string) {
   const [id, connections] = program.split(' <-> ');

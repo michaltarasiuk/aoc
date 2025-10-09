@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2021, day: 11});
+const input = await fetchInput({year: 2021, day: 11});
 
 const Steps = 100;
 const Threshold = 9;

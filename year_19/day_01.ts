@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2019, day: 1});
+const input = await fetchInput({year: 2019, day: 1});
 
 function calcFuel(mass: number) {
   return Math.floor(mass / 3) - 2;

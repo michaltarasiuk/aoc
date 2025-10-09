@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2022, day: 1});
+const input = await fetchInput({year: 2022, day: 1});
 
 const paragraphs = input.split(/\n\n/).map(p => p.split(/\n/));
 

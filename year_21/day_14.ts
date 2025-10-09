@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2021, day: 14});
+const input = await fetchInput({year: 2021, day: 14});
 
 function pairInsertion(
   [...polymerElements]: string,
@@ -48,7 +48,7 @@ for (let i = 0; i < StepsCount; i++) {
   polymer = pairInsertion(polymer, rulesMap);
 }
 
-const frequency = [...frequencies(polymer)].map(([_, count]) => count);
+const frequency = [...frequencies(polymer)].map(([, count]) => count);
 const frequencyRange = Math.max(...frequency) - Math.min(...frequency);
 
 assert.strictEqual(frequencyRange, 2447, 'Part 1 failed');

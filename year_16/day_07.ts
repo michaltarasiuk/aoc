@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2016, day: 7});
+const input = await fetchInput({year: 2016, day: 7});
 
 const abbaRe = /(\w)((?!\1)\w)\2\1/;
 const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/;

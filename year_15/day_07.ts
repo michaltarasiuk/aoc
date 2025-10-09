@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 
-const input = await readInput({year: 2015, day: 7});
+const input = await fetchInput({year: 2015, day: 7});
 
 function parseInstruction(instruction: string) {
   return [

@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2022, day: 5});
+const input = await fetchInput({year: 2022, day: 5});
 
 function parseInstruction(i: string) {
   const instructionRe = /^move (\d+) from (\d+) to (\d+)$/;
-  const [_, amount, from, to] = instructionRe.exec(i) ?? [];
+  const [, amount, from, to] = instructionRe.exec(i) ?? [];
   return [Number(amount), Number(from), Number(to)];
 }
 function cratesToString(crates: Record<string, string[]>) {

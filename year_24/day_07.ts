@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isKeyof} from 'lib/is_keyof.js';
 
-const input = await readInput({year: 2024, day: 7});
+const input = await fetchInput({year: 2024, day: 7});
 
 const Operators = {
   '+': (a, b) => a + b,

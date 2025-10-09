@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2016, day: 8});
+const input = await fetchInput({year: 2016, day: 8});
 
 const Tall = 6;
 const Wide = 50;

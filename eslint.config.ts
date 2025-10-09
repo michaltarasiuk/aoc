@@ -1,35 +1,41 @@
-import eslint from '@eslint/js';
+import js from '@eslint/js';
+import {defineConfig} from 'eslint/config';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+export default defineConfig([
   {
-    languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-    },
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     plugins: {
-      'simple-import-sort': simpleImportSort,
+      js,
     },
-    rules: {
+    extends: ['js/recommended'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  tseslint.configs.recommended,
+  {
+    'rules': {
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
-          'argsIgnorePattern': '^_',
-          'varsIgnorePattern': '^_',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
-      'no-cond-assign': 'off',
-      'no-console': 'error',
-      'no-empty': 'off',
+    },
+  },
+  {
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: {
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
     },
-  }
-);
+  },
+]);

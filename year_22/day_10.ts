@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {z} from 'zod';
 
-const input = await readInput({year: 2022, day: 10});
+const input = await fetchInput({year: 2022, day: 10});
 
 const InstructionSchema = z.union([
   z.object({op: z.literal('addx'), arg: z.string().transform(Number)}),

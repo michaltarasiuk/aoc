@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
 import {frequencies} from 'lib/frequencies.js';
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2024, day: 11});
+const input = await fetchInput({year: 2024, day: 11});
 
 function getNextStones(stone: number) {
   let newStones: number[];

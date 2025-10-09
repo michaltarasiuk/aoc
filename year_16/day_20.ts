@@ -1,16 +1,16 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 import {isDefined} from 'lib/is_defined.js';
 import {raise} from 'lib/raise.js';
 
-const input = await readInput({year: 2016, day: 20});
+const input = await fetchInput({year: 2016, day: 20});
 
 type Range = ReturnType<typeof parseRange>;
 
 function parseRange(range: string) {
   const rangeRe = /^(\d+)-(\d+)$/;
-  const [_, start, end] = rangeRe.exec(range) ?? raise('Invalid range');
+  const [, start, end] = rangeRe.exec(range) ?? raise('Invalid range');
   return {start: Number(start), end: Number(end)};
 }
 

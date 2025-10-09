@@ -1,14 +1,17 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2023, day: 13});
+const input = await fetchInput({year: 2023, day: 13});
 
 function parsePattern(p: string) {
   const rows = p.split(/\n/);
   const cols: string[] = [];
   for (const [...row] of rows) {
-    for (const [i, v] of row.entries()) (cols[i] ??= ''), (cols[i] += v);
+    for (const [i, v] of row.entries()) {
+      cols[i] ??= '';
+      cols[i] += v;
+    }
   }
   return [rows, cols] as const;
 }

@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {readInput} from 'lib/input.js';
+import {fetchInput} from 'lib/input.js';
 
-const input = await readInput({year: 2019, day: 2});
+const input = await fetchInput({year: 2019, day: 2});
 
 function runProgram([...ints]: number[], noun: number, verb: number) {
   ints[1] = noun;
