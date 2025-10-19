@@ -10,13 +10,10 @@ function uniqueSortedWords(passphrase: string[]) {
 
 const passports = input.split(/\n/).map(l => l.split(/\s/));
 
-const validPassphrasesCount = passports.filter(
-  p => p.length === new Set(p).size
-).length;
-
-const validPassphrasesCount2 = passports.filter(
+const validPassphrases = passports.filter(p => p.length === new Set(p).size);
+const validPassphrases2 = passports.filter(
   p => p.length === uniqueSortedWords(p).size
-).length;
+);
 
-assert.strictEqual(validPassphrasesCount, 455, 'Part 1 failed');
-assert.strictEqual(validPassphrasesCount2, 186, 'Part 2 failed');
+assert.strictEqual(validPassphrases.length, 455, 'Part 1 failed');
+assert.strictEqual(validPassphrases2.length, 186, 'Part 2 failed');

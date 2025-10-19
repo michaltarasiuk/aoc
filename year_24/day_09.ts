@@ -54,8 +54,8 @@ function computeDiskByFiles([...disk]: DiskElement[]) {
   return calcChecksum(disk);
 }
 
-const disk: DiskElement[] = [...input].flatMap((n, i) =>
-  Array(Number(n)).fill(i % 2 === 0 ? i / 2 : Space)
+const disk = [...input].flatMap((n, i) =>
+  Array<DiskElement>(Number(n)).fill(i % 2 === 0 ? i / 2 : Space)
 );
 
 assert.strictEqual(computeDisk(disk), 6446899523367, 'Part 1 failed');

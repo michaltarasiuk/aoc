@@ -5,37 +5,32 @@ import {isDefined} from 'lib/is_defined.js';
 
 const input = await fetchInput({year: 2023, day: 5});
 
-function mapValueThroughLayers(
-  [...conversionLayers]: number[][][],
-  value: number
-) {
-  const currentLayer = conversionLayers.shift();
-  if (!isDefined(currentLayer)) {
-    return value;
-  }
-  for (const [destStart, srcStart, length] of currentLayer) {
-    if (value >= srcStart && value < srcStart + length) {
-      return mapValueThroughLayers(
-        conversionLayers,
-        destStart + (value - srcStart)
-      );
-    }
-  }
-  return mapValueThroughLayers(conversionLayers, value);
+function parseLine(l: string) {
+  return l.split(/\s+/).map(Number);
 }
 
-const [seedRanges, ...conversionMaps] = input.split(/\n\n/);
+function applyMaps(maps: number[][][], value: number) {
+  const [map, ...rest] = maps;
+  if (!isDefined(map)) {
+    return value;
+  }
+  for (const [dest, src, len] of map) {
+    if (value >= src && value < src + len) {
+      const next = dest + (value - src);
+      return applyMaps(rest, next);
+    }
+  }
+  return applyMaps(rest, value);
+}
 
-const conversionLayers = conversionMaps
-  .map(map => map.split(/\n/).slice(1))
-  .map(layer => layer.map(l => l.split(/\s+/).map(Number)));
+const [seedLine, ...sections] = input.split(/\n\n/);
 
-const minLocation = Math.min(
-  ...seedRanges
-    .replace(/^seeds: /, '')
-    .split(/\s+/)
-    .map(Number)
-    .map(seed => mapValueThroughLayers(conversionLayers, Number(seed)))
-);
+const seeds = parseLine(seedLine.replace(/^seeds: /, ''));
+
+const maps = sections
+  .map(s => s.split(/\n/).slice(1))
+  .map(lns => lns.map(parseLine));
+
+const minLocation = Math.min(...seeds.map(s => applyMaps(maps, s)));
 
 assert.strictEqual(minLocation, 323142486, 'Part 1 failed');

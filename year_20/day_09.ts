@@ -4,12 +4,14 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2020, day: 9});
 
+const PreambleLen = 25;
+
 function hasSum(preamble: number[], target: number) {
   return preamble.some(a => preamble.some(b => a !== b && a + b === target));
 }
-function findInvalid(nums: number[], preambleLen: number) {
-  for (let i = preambleLen; i < nums.length; i++) {
-    if (!hasSum(nums.slice(i - preambleLen, i), nums[i])) {
+function findInvalid(nums: number[]) {
+  for (let i = PreambleLen; i < nums.length; i++) {
+    if (!hasSum(nums.slice(i - PreambleLen, i), nums[i])) {
       return nums[i];
     }
   }
@@ -29,11 +31,9 @@ function findContiguousSet(nums: number[], target: number) {
   throw new Error('Contiguous set not found');
 }
 
-const PreambleLen = 25;
-
 const nums = input.split(/\n/).map(Number);
 
-const invalidNum = findInvalid(nums, PreambleLen);
+const invalidNum = findInvalid(nums);
 
 const set = findContiguousSet(nums, invalidNum);
 const weakness = Math.min(...set) + Math.max(...set);
