@@ -15,16 +15,18 @@ const passwords = input.split(/\n/).map(l => {
 const validPasswordsCount = passwords
   .map(({min, max, char, password}) => {
     const count = password.split(char).length - 1;
-    return Number(count >= min && count <= max);
+    return count >= min && count <= max;
   })
+  .map(Number)
   .reduce((a, b) => a + b);
 
 const validPasswordsCount2 = passwords
   .map(({min, max, char, password}) => {
     const minChar = password[min - 1];
     const maxChar = password[max - 1];
-    return Number((minChar === char) !== (maxChar === char));
+    return (minChar === char) !== (maxChar === char);
   })
+  .map(Number)
   .reduce((a, b) => a + b);
 
 assert.strictEqual(validPasswordsCount, 445, 'Part 1 failed');

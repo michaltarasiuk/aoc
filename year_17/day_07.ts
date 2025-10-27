@@ -4,8 +4,9 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2017, day: 7});
 
+const programRe = /(\w+|\d+)/g;
 const programs = input.split(/\n/).map(p => {
-  const [name, weight, ...children] = p.match(/(\w+|\d+)/g)!;
+  const [name, weight, ...children] = p.match(programRe)!;
   return {name, weight: Number(weight), children};
 });
 
