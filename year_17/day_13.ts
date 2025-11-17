@@ -10,7 +10,7 @@ function isCaught({depth, range}: {depth: number; range: number}, delay = 0) {
 }
 
 const layerRe = /^(\d+): (\d+)$/;
-const firewallLayers = input.split('\n').map(l => {
+const firewallLayers = input.split(/\n/).map(l => {
   const [, depth, range] = l.match(layerRe) ?? raise('Invalid layer');
   return {depth: Number(depth), range: Number(range)};
 });

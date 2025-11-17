@@ -15,7 +15,7 @@ function calcManhattanDistance(c: ReturnType<typeof parseCoords>) {
   return Math.abs(c.x) + Math.abs(c.y) + Math.abs(c.z);
 }
 
-const particles = input.split('\n').map(l => {
+const particles = input.split(/\n/).map(l => {
   const [p, v, a] = l.split(', ');
   return {
     p: parseCoords(p),

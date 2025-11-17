@@ -15,7 +15,7 @@ function isLowPoint(map: number[][], x: number, y: number) {
   return !Directions.some(([i, j]) => map[y][x] >= map[y + j]?.[x + i]);
 }
 
-const heightMap = input.split('\n').map(([...l]) => l.map(Number));
+const heightMap = input.split(/\n/).map(([...l]) => l.map(Number));
 
 let riskLevel = 0;
 for (const y of heightMap.keys()) {

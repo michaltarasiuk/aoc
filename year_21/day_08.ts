@@ -16,7 +16,7 @@ function parseEntry(e: string) {
 const UniqSegments = [2, 4, 3, 7];
 
 const easyDigitCount = input
-  .split('\n')
+  .split(/\n/)
   .map(parseEntry)
   .reduce((acc, [, fourDigitOutputs]) => {
     return fourDigitOutputs

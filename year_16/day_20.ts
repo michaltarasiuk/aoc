@@ -8,24 +8,24 @@ const input = await fetchInput({year: 2016, day: 20});
 
 type Range = ReturnType<typeof parseRange>;
 
-function parseRange(range: string) {
+function parseRange(r: string) {
   const rangeRe = /^(\d+)-(\d+)$/;
-  const [, start, end] = rangeRe.exec(range) ?? raise('Invalid range');
+  const [, start, end] = rangeRe.exec(r) ?? raise('Invalid range');
   return {start: Number(start), end: Number(end)};
 }
 
 const ranges = input
-  .split('\n')
+  .split(/\n/)
   .map(parseRange)
   .sort((a, b) => a.start - b.start);
 
 const mergedRanges: Range[] = [];
-for (const range of ranges) {
+for (const r of ranges) {
   const lastRange = mergedRanges.at(-1);
-  if (!isDefined(lastRange) || range.start > lastRange.end + 1) {
-    mergedRanges.push(range);
+  if (!isDefined(lastRange) || r.start > lastRange.end + 1) {
+    mergedRanges.push(r);
   } else {
-    lastRange.end = Math.max(lastRange.end, range.end);
+    lastRange.end = Math.max(lastRange.end, r.end);
   }
 }
 

@@ -8,7 +8,7 @@ const input = await fetchInput({year: 2023, day: 1});
 const digitRe = /\d/;
 const lastdigitRe = new RegExp(`.*(${digitRe.source})`);
 
-const lines = input.split('\n');
+const lines = input.split(/\n/);
 
 const calibrationValuesSum = lines
   .map(l => {

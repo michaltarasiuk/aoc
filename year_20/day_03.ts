@@ -25,7 +25,7 @@ function countTrees(toboggan: string[], slope: (typeof Slopes)[number]) {
   return trees;
 }
 
-const toboggan = input.split('\n');
+const toboggan = input.split(/\n/);
 
 const treesForSlope = countTrees(toboggan, Slopes[1]);
 const multipliedTrees = Slopes.reduce(

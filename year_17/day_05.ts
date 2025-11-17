@@ -17,7 +17,7 @@ function countStepsToExit(
   return steps;
 }
 
-const jumpOffsets = input.split('\n').map(Number);
+const jumpOffsets = input.split(/\n/).map(Number);
 
 const part1Steps = countStepsToExit(jumpOffsets);
 const part2Steps = countStepsToExit(jumpOffsets, (jumps, i) =>

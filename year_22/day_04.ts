@@ -10,7 +10,7 @@ function parseRange(r: string) {
 }
 
 let fullyContainedPairsCount = 0;
-for (const l of input.split('\n')) {
+for (const l of input.split(/\n/)) {
   const [a, b, c, d] = parseRange(l);
   if ((a <= c && b >= d) || (c <= a && d >= b)) {
     fullyContainedPairsCount++;
