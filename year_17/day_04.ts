@@ -4,13 +4,12 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2017, day: 4});
 
-function hasUniqueWords(words: string[]): boolean {
+function hasUniqueWords(words: string[]) {
   return words.length === new Set(words).size;
 }
 
-function hasUniqueAnagrams(words: string[]): boolean {
-  const normalized = words.map(word => [...word].sort().join(''));
-  return words.length === new Set(normalized).size;
+function hasUniqueAnagrams(words: string[]) {
+  return words.length === new Set(words.map(w => [...w].sort().join(''))).size;
 }
 
 const passphrases = input.split('\n').map(line => line.split(/\s+/));
