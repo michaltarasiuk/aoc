@@ -14,9 +14,9 @@ function applyMaps(maps: number[][][], value: number) {
   if (!isDefined(map)) {
     return value;
   }
-  for (const [dest, src, len] of map) {
-    if (value >= src && value < src + len) {
-      const next = dest + (value - src);
+  for (const [a, b, size] of map) {
+    if (value >= b && value < b + size) {
+      const next = a + (value - a);
       return applyMaps(rest, next);
     }
   }
