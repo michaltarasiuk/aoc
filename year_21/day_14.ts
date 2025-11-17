@@ -28,7 +28,7 @@ function pairInsertion(
       polymer += pair;
     }
   }
-  throw raise('Unreachable');
+  throw new Error('Invalid polymer');
 }
 
 const [polymerTemplate, rules] = input.split(/\n\n/);

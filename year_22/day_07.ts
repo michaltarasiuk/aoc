@@ -62,7 +62,7 @@ for (const [[cmd, arg], ...output] of cmds) {
       filesystem = updateFilesystem(filesystem, cwd, output);
       break;
     default:
-      throw new Error(`Unknown command: ${cmd}`);
+      throw new Error(`Invalid command: ${cmd}`);
   }
 }
 

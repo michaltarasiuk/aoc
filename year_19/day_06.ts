@@ -33,7 +33,7 @@ function findMinimumTransfers(
       }
     }
   }
-  throw new Error('No path found');
+  throw raise('Path not found');
 }
 
 const orbitRe = /^(.*)\)(.*)$/;

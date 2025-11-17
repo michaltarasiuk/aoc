@@ -12,7 +12,7 @@ const lines = input.split(/\n/);
 
 const calibrationValuesSum = lines
   .map(l => {
-    const [first = raise('No digit')] = l.match(digitRe) ?? [];
+    const [first = raise('Invalid digit')] = l.match(digitRe) ?? [];
     const [, last = first] = l.match(lastdigitRe) ?? [];
 
     return Number(first + last);
@@ -31,7 +31,7 @@ const lastDigitOrSpelledRe = new RegExp(`.*(${digitOrSpelledRe.source})`);
 
 const calibrationValuesSum2 = lines
   .map(l => {
-    const [first = raise('No digit')] = l.match(digitOrSpelledRe) ?? [];
+    const [first = raise('Invalid digit')] = l.match(digitOrSpelledRe) ?? [];
     const [, last = first] = l.match(lastDigitOrSpelledRe) ?? [];
 
     return Number(

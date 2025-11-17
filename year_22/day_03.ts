@@ -20,7 +20,7 @@ function calcPriority(char: string) {
   } else if (char >= 'A' && char <= 'Z') {
     return codePoint - 'A'.codePointAt(0)! + 27;
   }
-  throw new Error(`Invalid char: ${char}`);
+  throw new Error(`Invalid character: ${char}`);
 }
 
 const lines = input.split(/\n/);

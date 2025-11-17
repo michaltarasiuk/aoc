@@ -76,7 +76,7 @@ outer: while (pointer < program.length) {
       );
       break;
     default:
-      throw new Error(`Unknown opcode: ${opcode}`);
+      throw new Error(`Invalid opcode: ${opcode}`);
   }
   pointer += 1;
 }

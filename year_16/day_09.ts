@@ -15,7 +15,7 @@ const markerRe = /\((?<length>\d+)x(?<repeatCount>\d+)\)/g;
 let decompressed = input;
 let exec: RegExpExecArray | null = null;
 while ((exec = markerRe.exec(decompressed))) {
-  const {0: match, groups, index = raise('Unreachable')} = exec;
+  const {0: match, groups, index = raise('Invalid index')} = exec;
   const {length, repeatCount} = MarkerGroupsSchema.parse(groups);
 
   const marked = decompressed.slice(

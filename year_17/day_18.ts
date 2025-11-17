@@ -8,7 +8,7 @@ const input = await fetchInput({year: 2017, day: 18});
 const instructionRe = /^(\w{3}) (\w)(?: (\S+))?$/;
 const instructions = input.split(/\n/).map(l => {
   const [, operation, register, val] =
-    instructionRe.exec(l) ?? raise('Invalid');
+    instructionRe.exec(l) ?? raise('Invalid instruction');
   return {operation, register, val};
 });
 
