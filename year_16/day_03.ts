@@ -7,12 +7,17 @@ const input = await fetchInput({year: 2016, day: 3});
 
 const TriangleSides = 3;
 
+function parseTriangle(t: string) {
+  const triangle = Array.from(t.matchAll(/\d+/g), Number);
+  assert(triangle.length === 3);
+  return triangle;
+}
+
 function isValidTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a;
 }
 
-const lines = input.split(/\n/);
-const trianglesByRows = lines.map(l => l.split(/\s+/).map(Number).slice(1));
+const trianglesByRows = input.split(/\n/).map(parseTriangle);
 
 const cols: number[][] = [];
 for (const triangle of trianglesByRows) {
