@@ -15,12 +15,7 @@ function getRange(n: number, x: number) {
   return [Math.max(x - offset, 0), x + String(n).length + offset];
 }
 
-function extractSegments(
-  lines: string[],
-  y: number,
-  x: number,
-  n: number
-): string[] {
+function extractSegments(lines: string[], y: number, x: number, n: number) {
   return Offsets.map(j => lines[y + j]?.slice(...getRange(n, x)));
 }
 

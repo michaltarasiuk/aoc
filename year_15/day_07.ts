@@ -20,7 +20,7 @@ const circuit = input.split(/\n/).reduce<Record<string, string[]>>((acc, l) => {
   return acc;
 }, {});
 
-function calcSignalOrParse(s: string, cache: Map<string, number>): number {
+function calcSignalOrParse(s: string, cache: Map<string, number>) {
   const parsed = Number(s);
   if (Number.isNaN(parsed)) {
     return cache.get(s) ?? cache.set(s, calcSignal(s, cache)).get(s)!;

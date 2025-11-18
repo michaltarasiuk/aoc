@@ -17,7 +17,7 @@ function parseFile(file: string) {
   return isDefined(m) ? Number(m[1]) : null;
 }
 
-function cd(arg: string, cwd: string[]): string[] {
+function cd(arg: string, cwd: string[]) {
   switch (arg) {
     case '/':
       return [];
