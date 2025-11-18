@@ -12,10 +12,10 @@ function parseReindeer(r: string) {
   return reindeer as [number, number, number];
 }
 
-function calcDistance(speed: number, flyTime: number, restTime: number) {
+function calcDistance(speed: number, duration: number, rest: number) {
   let distance = 0;
-  for (let second = 1; second <= RaceDuration; second += flyTime + restTime) {
-    distance += speed * Math.min(flyTime, RaceDuration - second);
+  for (let second = 1; second <= RaceDuration; second += duration + rest) {
+    distance += speed * Math.min(duration, RaceDuration - second);
   }
   return distance;
 }
