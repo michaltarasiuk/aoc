@@ -1,12 +1,14 @@
 import assert from 'node:assert';
 
 import {fetchInput} from 'lib/input.js';
+import {raise} from 'lib/raise.js';
 
 const input = await fetchInput({year: 2015, day: 6});
 
 function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
-  const [, action, ...dimensions] = instruction.match(instructionRe)!;
+  const [, action, ...dimensions] =
+    instruction.match(instructionRe) ?? raise('Invalid instruction');
 
   return [action, ...dimensions.map(Number)] as const;
 }

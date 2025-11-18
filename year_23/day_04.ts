@@ -19,7 +19,9 @@ function countTotalCards(
 
 const cards = new Map(
   input.split(/\n/).map(l => {
-    const [[id, ...a], b] = l.split('|').map(l => l.match(/\d+/g)!.map(Number));
+    const [[id, ...a], b] = l
+      .split('|')
+      .map(l => Array.from(l.matchAll(/\d+/g), Number));
     return [id, new Set(a).intersection(new Set(b))] as const;
   })
 );
