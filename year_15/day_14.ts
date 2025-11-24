@@ -13,9 +13,13 @@ function parseReindeer(r: string) {
 }
 
 function calcDistance(speed: number, duration: number, rest: number) {
+  let time = 0;
   let distance = 0;
-  for (let second = 1; second <= RaceDuration; second += duration + rest) {
-    distance += speed * Math.min(duration, RaceDuration - second);
+  while (time < RaceDuration) {
+    for (let i = 0; i < duration && time < RaceDuration; i++, time++) {
+      distance += speed;
+    }
+    time += rest;
   }
   return distance;
 }

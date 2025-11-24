@@ -12,7 +12,7 @@ function hasUniqueAnagrams(words: string[]) {
   return words.length === new Set(words.map(w => [...w].sort().join(''))).size;
 }
 
-const passphrases = input.split('\n').map(line => line.split(/\s+/));
+const passphrases = input.split(/\n/).map(l => l.split(/\s+/));
 
 const part1 = passphrases.filter(hasUniqueWords);
 const part2 = passphrases.filter(hasUniqueAnagrams);
