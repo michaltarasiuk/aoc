@@ -9,9 +9,14 @@ const rotations = input.split(/\n/).map(([direction, ...distance]) => ({
   distance: Number(distance.join('')),
 }));
 
-const dial = rotations.reduce((acc, {direction, distance}) => {
-  direction === 'L' ? (acc -= distance) : (acc += distance);
-  return acc;
-}, 50);
+let dial = 50;
+let timesAtZero = 0;
+for (const {direction, distance} of rotations) {
+  dial += direction === 'L' ? -distance : distance;
+  dial = ((dial % 100) + 100) % 100;
+  if (dial === 0) {
+    timesAtZero++;
+  }
+}
 
-assert.strictEqual(dial, NaN, 'Part 1 failed');
+assert.strictEqual(timesAtZero, 1102, 'Part 1 failed');
