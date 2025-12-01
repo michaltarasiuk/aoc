@@ -1,7 +1,12 @@
 {
   "type": "module",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "prettier-check": "prettier --check .",
+    "prettier-write": "prettier --write .",
+    "type-check": "tsc --noEmit --incremental false",
+    "lint": "eslint",
+    "lint-fix": "eslint --fix ."
   },
   "dependencies": {
     "zod": "^3.23.8"
