@@ -11,12 +11,18 @@ const rotations = input.split(/\n/).map(([direction, ...distance]) => ({
 
 let dial = 50;
 let timesAtZero = 0;
+let timesEndedAtZero = 0;
 for (const {direction, distance} of rotations) {
-  dial += direction === 'L' ? -distance : distance;
-  dial = ((dial % 100) + 100) % 100;
+  for (let i = 0; i < distance; i++) {
+    dial = (dial + (direction === 'L' ? -1 : 1) + 100) % 100;
+    if (dial === 0) {
+      timesAtZero++;
+    }
+  }
   if (dial === 0) {
-    timesAtZero++;
+    timesEndedAtZero++;
   }
 }
 
-assert.strictEqual(timesAtZero, 1102, 'Part 1 failed');
+assert.strictEqual(timesEndedAtZero, 1102, 'Part 1 failed');
+assert.strictEqual(timesAtZero, 6175, 'Part 2 failed');
