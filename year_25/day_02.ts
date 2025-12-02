@@ -9,8 +9,8 @@ function isValidId(id: string) {
 }
 
 const ranges = input.split(',').map(r => {
-  const [start, end] = r.split('-');
-  return [Number(start), Number(end)] as const;
+  const [start, end] = r.split('-').map(Number);
+  return [start, end] as const;
 });
 
 let count = 0;
