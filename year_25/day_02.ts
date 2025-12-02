@@ -4,7 +4,7 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 2});
 
-function isValidId(id: string, m: string | number = '') {
+function isValidId(id: string, m = '') {
   let end = 0;
   while (end++ !== Math.floor(id.length / 2)) {
     const sequence = id.slice(0, end);
@@ -25,7 +25,7 @@ let count2 = 0;
 for (const [start, end] of ranges) {
   for (let i = start; i <= end; i++) {
     const id = String(i);
-    if (isValidId(id, 2)) {
+    if (isValidId(id, '2')) {
       count += i;
     }
     if (isValidId(id)) {
