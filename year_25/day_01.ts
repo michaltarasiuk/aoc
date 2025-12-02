@@ -4,9 +4,9 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 1});
 
-const rotations = input.split(/\n/).map(([direction, ...distance]) => ({
+const rotations = input.split(/\n/).map(([direction, ...rest]) => ({
   direction,
-  distance: Number(distance.join('')),
+  distance: Number(rest.join('')),
 }));
 
 let dial = 50;
