@@ -4,11 +4,11 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 3});
 
-function findMaxJoltage(bank: number[], size: number) {
+function findMaxJoltage(bank: number[], len: number) {
   let joltage = '';
   let start = 0;
-  while (size--) {
-    const batteries = bank.slice(start, bank.length - size);
+  while (len--) {
+    const batteries = bank.slice(start, bank.length - len);
     const maxBattery = Math.max(...batteries);
     joltage += maxBattery;
     start += batteries.indexOf(maxBattery) + 1;
