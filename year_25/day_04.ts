@@ -20,11 +20,11 @@ const Directions = [
 const grid = input.split(/\n/).map(l => [...l]);
 
 const accessibleRolls = grid
-  .flatMap((r, y) => r.map((c, x) => ({c, x, y})))
-  .filter(({c}) => c === Roll)
+  .flatMap((r, y) => r.map((v, x) => ({v, x, y})))
+  .filter(({v}) => v === Roll)
   .filter(({x, y}) => {
     const adjacentRolls = Directions.reduce(
-      (count, [i, j]) => count + (grid[y + j]?.[x + i] === Roll ? 1 : 0),
+      (count, [i, j]) => count + +(grid[y + j]?.[x + i] === Roll),
       0
     );
     return adjacentRolls < MaxAdjacentRolls;

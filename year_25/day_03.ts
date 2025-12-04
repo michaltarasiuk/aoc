@@ -16,7 +16,7 @@ function findMaxJoltage(bank: number[], len: number) {
   return Number(joltage);
 }
 
-const banks = input.split(/\n/).map(([...b]) => b.map(Number));
+const banks = input.split(/\n/).map(b => [...b].map(Number));
 
 const totalJoltage = banks
   .map(b => findMaxJoltage(b, 2))
