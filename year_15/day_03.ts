@@ -2,7 +2,7 @@ import assert from 'node:assert';
 
 import {fetchInput} from 'lib/input.js';
 
-const input = await fetchInput({year: 2015, day: 3});
+const [...input] = await fetchInput({year: 2015, day: 3});
 
 function createPosition() {
   let x = 0;
@@ -21,19 +21,13 @@ function createPosition() {
 
 const visitedHouses = (() => {
   const santa = createPosition();
-  const visited = new Set();
-  for (const dir of input) {
-    visited.add(santa.move(dir).toString());
-  }
+  const visited = new Set(input.map(d => String(santa.move(d))));
   return visited;
 })();
 
 const visitedHousesWithRoboSanta = (() => {
   const santas = [createPosition(), createPosition()];
-  const visited = new Set();
-  for (const [i, dir] of [...input].entries()) {
-    visited.add(santas[i % 2].move(dir).toString());
-  }
+  const visited = new Set(input.map((d, i) => String(santas[i % 2].move(d))));
   return visited;
 })();
 
