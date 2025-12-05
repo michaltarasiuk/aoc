@@ -4,7 +4,11 @@ import {fetchInput} from 'lib/input.js';
 
 const input = await fetchInput({year: 2020, day: 10});
 
-const adapters = (input.match(/\d+/g) ?? []).map(Number).sort((a, b) => a - b);
+const adapters = input
+  .matchAll(/\d+/g)
+  .map(Number)
+  .toArray()
+  .sort((a, b) => a - b);
 assert(adapters.length > 0, 'No adapters found');
 assert(new Set(adapters).size === adapters.length, 'Duplicate adapters found');
 adapters.push(adapters.at(-1)! + 3);

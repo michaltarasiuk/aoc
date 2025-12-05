@@ -5,36 +5,39 @@ import {isDefined} from 'lib/is_defined.js';
 
 const input = await fetchInput({year: 2025, day: 5});
 
-const [ranges, ids] = input.split(/\n\n/);
+const [ranges, ids] = input.split(/\n\n/).map(p => p.split(/\n/));
 
-const freshRanges = ranges
-  .split(/\n/)
-  .map(r => r.split('-').map(Number) as [number, number])
-  .sort((a, b) => a[0] - b[0])
-  .reduce<[number, number][]>((acc, [start, end]) => {
+const freshRanges = ranges.map(r => {
+  const [start, end] = r.split('-');
+  return {start: Number(start), end: Number(end)};
+});
+
+const mergedFreshRanges = freshRanges
+  .toSorted((a, b) => a.start - b.start)
+  .reduce<typeof freshRanges>((acc, r) => {
     const last = acc.at(-1);
-    if (!isDefined(last) || start > last[1]) {
-      acc.push([start, end]);
-    } else if (end > last[1]) {
-      last[1] = end;
+    if (!isDefined(last) || r.start > last.end) {
+      acc.push(r);
+    } else if (r.end > last.end) {
+      last.end = r.end;
     }
     return acc;
   }, []);
 
-const ingredientIds = ids.split(/\n/).map(Number);
+const ingredientIds = ids.map(Number);
 
 let freshCount = 0;
 for (const id of ingredientIds) {
-  for (const [start, end] of freshRanges) {
-    if (id >= start && id <= end) {
+  for (const r of mergedFreshRanges) {
+    if (id >= r.start && id <= r.end) {
       freshCount++;
       break;
     }
   }
 }
 
-const totalFreshIds = freshRanges.reduce(
-  (acc, [start, end]) => acc + (end - start + 1),
+const totalFreshIds = mergedFreshRanges.reduce(
+  (acc, r) => acc + (r.end - r.start + 1),
   0
 );
 

@@ -19,7 +19,7 @@ const totalDistance = l.reduce((acc, v, i) => acc + Math.abs(v - r[i]), 0);
 
 const rFrequencies = frequencies(r);
 const similarityScore = l.reduce(
-  (acc, value) => acc + value * (rFrequencies.get(value) ?? 0),
+  (acc, v) => acc + v * (rFrequencies.get(v) ?? 0),
   0
 );
 

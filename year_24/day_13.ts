@@ -27,7 +27,7 @@ const B = 1;
 const games = input
   .split(/\n\n/)
   .map(p => p.split(/\n/))
-  .map(p => p.map(l => (l.match(/\d+/g) ?? []).map(Number)) as Shape);
+  .map(p => p.map(l => l.matchAll(/\d+/g).map(Number).toArray()) as Shape);
 
 let totalTokensSpent = 0;
 for (const game of games) {

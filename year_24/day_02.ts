@@ -23,8 +23,8 @@ function isSafeReport(report: number[]) {
 const reports = input.split(/\n/).map(l => l.split(/\s/).map(Number));
 
 const safeReports = reports.filter(isSafeReport);
-const safeReports2 = reports.filter(report =>
-  report.map((_, i, arr) => arr.toSpliced(i, 1)).some(isSafeReport)
+const safeReports2 = reports.filter(r =>
+  r.map((_, i, arr) => arr.toSpliced(i, 1)).some(isSafeReport)
 );
 
 assert.strictEqual(safeReports.length, 359, 'Part 1 failed');

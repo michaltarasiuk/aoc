@@ -8,7 +8,7 @@ const questionRe = /[a-z]/g;
 const questions = input
   .split(/\n\n/)
   .map(p => p.split(/\n/))
-  .map(p => p.map((l): string[] => l.match(questionRe) ?? []));
+  .map(p => p.map(l => [...l.matchAll(questionRe)].map(m => m[0])));
 
 const questionsCount = questions
   .map(group => new Set(group.flat()).size)
