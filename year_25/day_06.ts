@@ -28,7 +28,7 @@ const lines = input.split(/\n/);
       }
     }
   }
-  assert.strictEqual(calcGrandTotal(cols), 11136895955912, 'Part 1 failed');
+  assert.strictEqual(calcGrandTotal(cols), 11136895955912, 'Part 2 failed');
 }
 
 function calcGrandTotal(cols: string[][]) {
