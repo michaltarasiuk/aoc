@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
-import {raise} from 'lib/raise.js';
+import {fetchInput} from '#lib/input.js';
+import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2020, day: 2});
 

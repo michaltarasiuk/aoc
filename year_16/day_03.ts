@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {chunkEvery} from 'lib/chunk_every.js';
-import {fetchInput} from 'lib/input.js';
+import {chunkEvery} from '#lib/chunk_every.js';
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2016, day: 3});
 

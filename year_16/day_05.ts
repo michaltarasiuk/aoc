@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import crypto from 'node:crypto';
 
-import {fetchInput} from 'lib/input.js';
+import {fetchInput} from '#lib/input.js';
 
 const doorId = await fetchInput({year: 2016, day: 5});
 

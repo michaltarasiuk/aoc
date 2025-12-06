@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 
-import {fetchInput} from 'lib/input.js';
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2022, day: 6});
 

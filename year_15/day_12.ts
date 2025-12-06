@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
-import {isRecord} from 'lib/is_record.js';
+import {fetchInput} from '#lib/input.js';
+import {isRecord} from '#lib/is_record.js';
 
 const input = await fetchInput({year: 2015, day: 12});
 

@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
-import {isDefined} from 'lib/is_defined.js';
+import {fetchInput} from '#lib/input.js';
+import {isDefined} from '#lib/is_defined.js';
 
 const input = await fetchInput({year: 2025, day: 5});
 

@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {chunkEvery} from 'lib/chunk_every.js';
-import {frequencies} from 'lib/frequencies.js';
-import {fetchInput} from 'lib/input.js';
+import {chunkEvery} from '#lib/chunk_every.js';
+import {frequencies} from '#lib/frequencies.js';
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2019, day: 8});
 

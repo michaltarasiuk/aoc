@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {frequencies} from 'lib/frequencies.js';
-import {fetchInput} from 'lib/input.js';
+import {frequencies} from '#lib/frequencies.js';
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2016, day: 6});
 

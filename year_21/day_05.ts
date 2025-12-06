@@ -1,7 +1,8 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
 import {z} from 'zod';
+
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2021, day: 5});
 

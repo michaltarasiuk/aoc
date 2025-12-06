@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
-import {isDefined} from 'lib/is_defined.js';
-import {isKeyof} from 'lib/is_keyof.js';
+import {fetchInput} from '#lib/input.js';
+import {isDefined} from '#lib/is_defined.js';
+import {isKeyof} from '#lib/is_keyof.js';
 
 const input = await fetchInput({year: 2021, day: 10});
 

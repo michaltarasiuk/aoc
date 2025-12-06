@@ -1,9 +1,10 @@
 import assert from 'node:assert';
 
-import {chunkEvery} from 'lib/chunk_every.js';
-import {fetchInput} from 'lib/input.js';
-import {isKeyof} from 'lib/is_keyof.js';
 import {z} from 'zod';
+
+import {chunkEvery} from '#lib/chunk_every.js';
+import {fetchInput} from '#lib/input.js';
+import {isKeyof} from '#lib/is_keyof.js';
 
 const input = await fetchInput({year: 2024, day: 17});
 

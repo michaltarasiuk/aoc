@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars -- `old` is used by eval */
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
 import {z} from 'zod';
+
+import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2022, day: 11});
 

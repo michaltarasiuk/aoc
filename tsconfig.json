@@ -15,7 +15,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      "lib/*": ["./lib/*"]
+      "#lib/*": ["./lib/*"]
     }
   }
 }

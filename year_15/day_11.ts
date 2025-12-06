@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 
-import {fetchInput} from 'lib/input.js';
-import {stringToCodePoints} from 'lib/string_to_code_points.js';
+import {fetchInput} from '#lib/input.js';
+import {stringToCodePoints} from '#lib/string_to_code_points.js';
 
 const input = await fetchInput({year: 2015, day: 11});
 
