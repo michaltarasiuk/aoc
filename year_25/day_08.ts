@@ -13,18 +13,18 @@ const junctionBoxes = input.split(/\n/).map(l => {
   return {x, y, z};
 });
 
-const distances: [i: number, j: number, d: number][] = [];
+const distances: {i: number; j: number; d: number}[] = [];
 for (const i of junctionBoxes.keys()) {
   for (const j of junctionBoxes.keys().drop(i + 1)) {
     const a = junctionBoxes[i];
     const b = junctionBoxes[j];
-    distances.push([i, j, calcDistance(a, b)]);
+    distances.push({i, j, d: calcDistance(a, b)});
   }
 }
 
 const circuits: Set<number>[] = [];
-const sortedDistances = distances.toSorted((a, b) => a[2] - b[2]);
-for (const [i, j] of sortedDistances.slice(0, ShortestConnections)) {
+const sortedDistances = distances.toSorted((a, b) => a.d - b.d);
+for (const {i, j} of sortedDistances.slice(0, ShortestConnections)) {
   const circuitI = circuits.find(c => c.has(i));
   const circuitJ = circuits.find(c => c.has(j));
   if (isDefined(circuitI) && isDefined(circuitJ)) {
@@ -34,9 +34,9 @@ for (const [i, j] of sortedDistances.slice(0, ShortestConnections)) {
       }
       circuits.splice(circuits.indexOf(circuitJ), 1);
     }
-  } else if (circuitI) {
+  } else if (isDefined(circuitI)) {
     circuitI.add(j);
-  } else if (circuitJ) {
+  } else if (isDefined(circuitJ)) {
     circuitJ.add(i);
   } else {
     circuits.push(new Set([i, j]));
