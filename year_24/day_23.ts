@@ -12,9 +12,9 @@ function* permuteConnections(
     yield [];
     return;
   }
-  for (const connection of connections) {
+  for (const c of connections) {
     for (const arr of permuteConnections(connections, arrayLength - 1)) {
-      yield [connection, ...arr];
+      yield [c, ...arr];
     }
   }
 }
