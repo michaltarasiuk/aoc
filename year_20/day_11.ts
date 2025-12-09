@@ -40,7 +40,7 @@ function getNextSeatState(seat: string, neighbors: string[]) {
 }
 
 let changed = true;
-let grid = input.split(/\n/).map(([...l]) => l);
+let grid = input.split(/\n/).map(l => [...l]);
 while (changed) {
   const nextGridState = grid.map((r, y) =>
     r.map((v, x) => getNextSeatState(v, getAdjacentSeats(grid, {x, y})))

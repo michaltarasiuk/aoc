@@ -19,7 +19,7 @@ function* createAntennaPairs(antennas: AntennaPositions) {
   }
 }
 
-const grid = input.split(/\n/).map(([...l]) => l);
+const grid = input.split(/\n/).map(l => [...l]);
 
 const antennaPositions = grid.keys().reduce<AntennaPositions>((acc, y) => {
   grid[y].forEach((f, x) => {

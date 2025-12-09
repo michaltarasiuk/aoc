@@ -11,11 +11,7 @@ const Directions = [
   [-1, 0],
 ];
 
-function isLowPoint(map: number[][], x: number, y: number) {
-  return !Directions.some(([i, j]) => map[y][x] >= map[y + j]?.[x + i]);
-}
-
-const heightMap = input.split(/\n/).map(([...l]) => l.map(Number));
+const heightMap = input.split(/\n/).map(l => [...l].map(Number));
 
 let riskLevel = 0;
 for (const y of heightMap.keys()) {
@@ -27,3 +23,9 @@ for (const y of heightMap.keys()) {
 }
 
 assert.strictEqual(riskLevel, 480, 'Part 1 failed');
+
+function isLowPoint(heightMap: number[][], x: number, y: number) {
+  return !Directions.some(
+    ([i, j]) => heightMap[y][x] >= heightMap[y + j]?.[x + i]
+  );
+}

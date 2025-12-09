@@ -13,7 +13,7 @@ const Directions = [
   [-1, 0],
 ];
 
-const grid = input.split(/\n/).map(([...l]) => l);
+const grid = input.split(/\n/).map(l => [...l]);
 const path: string[] = [];
 
 let dir = 0;

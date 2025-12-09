@@ -17,8 +17,8 @@ const Directions = {
 
 const [a, b] = input.split(/\n\n/).map(p => p.split(/\n/));
 
-const warehouse = a.map(([...l]) => l);
-const moves = b.flatMap(([...l]) => l);
+const warehouse = a.map(l => [...l]);
+const moves = b.flatMap(l => [...l]);
 
 let [robotX, robotY] = (() => {
   for (const y of warehouse.keys()) {

@@ -34,7 +34,7 @@ function* exploreRegion(
   yield [`${x},${y}`, perimeter];
 }
 
-const grid = input.split(/\n/).map(([...l]) => l);
+const grid = input.split(/\n/).map(l => [...l]);
 
 const visited = new Set<string>();
 let totalCost = 0;

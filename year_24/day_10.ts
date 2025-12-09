@@ -29,7 +29,7 @@ function* findTrails(
   }
 }
 
-const grid = input.split(/\n/).map(([...l]) => l.map(Number));
+const grid = input.split(/\n/).map(l => [...l].map(Number));
 
 const trailheadScores: Record<string, Set<string>> = {};
 const trailheadRatings: Record<string, Array<string>> = {};

@@ -33,7 +33,7 @@ function parseCacheKey(cacheKey: string) {
   return [Number(dir), Number(x), Number(y)] as const;
 }
 
-const grid = input.split(/\n/).map(([...l]) => l);
+const grid = input.split(/\n/).map(l => [...l]);
 
 const stack = new Map([
   [toCacheKey(InitialFacing, ...getStartTileCoords(grid)), 0],
