@@ -22,9 +22,10 @@ for (const i of junctionBoxes.keys()) {
   }
 }
 
-const circuits: Set<number>[] = [];
-const sortedDistances = distances.toSorted((a, b) => a.d - b.d);
-for (const {i, j} of sortedDistances.slice(0, ShortestConnections)) {
+const circuits = junctionBoxes.map((_, i) => new Set([i]));
+let snapshotAt1000: typeof circuits = [];
+let lastPairXProduct = 0;
+for (const [k, {i, j}] of distances.toSorted((a, b) => a.d - b.d).entries()) {
   const circuitI = circuits.find(c => c.has(i));
   const circuitJ = circuits.find(c => c.has(j));
   if (isDefined(circuitI) && isDefined(circuitJ)) {
@@ -34,21 +35,23 @@ for (const {i, j} of sortedDistances.slice(0, ShortestConnections)) {
       }
       circuits.splice(circuits.indexOf(circuitJ), 1);
     }
-  } else if (isDefined(circuitI)) {
-    circuitI.add(j);
-  } else if (isDefined(circuitJ)) {
-    circuitJ.add(i);
-  } else {
-    circuits.push(new Set([i, j]));
+  }
+  if (k === ShortestConnections) {
+    snapshotAt1000 = structuredClone(circuits);
+  }
+  if (circuits.length === 1) {
+    lastPairXProduct = junctionBoxes[i].x * junctionBoxes[j].x;
+    break;
   }
 }
 
-const circuitSizeProduct = circuits
+const circuitSizeProduct = snapshotAt1000
   .toSorted((a, b) => b.size - a.size)
   .slice(0, TopCircuits)
   .reduce((acc, c) => acc * c.size, 1);
 
 assert.strictEqual(circuitSizeProduct, 131150, 'Part 1 failed');
+assert.strictEqual(lastPairXProduct, 2497445, 'Part 2 failed');
 
 function calcDistance<T extends (typeof junctionBoxes)[number]>(a: T, b: T) {
   return Math.sqrt(
