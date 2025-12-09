@@ -34,11 +34,11 @@ function computeNextState(current: string, neighbors: string[]) {
 
 const Steps = 100;
 
-const initialGrid = input.split(/\n/).map(row => [...row]);
+const initialGrid = input.split(/\n/).map(r => [...r]);
 let grid = initialGrid;
 for (let step = 0; step < Steps; step++) {
-  grid = grid.map((row, y) =>
-    row.map((cell, x) => computeNextState(cell, getNeighbors(grid, {x, y})))
+  grid = grid.map((r, y) =>
+    r.map((v, x) => computeNextState(v, getNeighbors(grid, {x, y})))
   );
 }
 const totalOn = grid.flat().filter(cell => cell === On).length;

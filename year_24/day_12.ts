@@ -38,8 +38,8 @@ const grid = input.split(/\n/).map(([...l]) => l);
 
 const visited = new Set<string>();
 let totalCost = 0;
-for (const [y, row] of grid.entries()) {
-  for (const [x, plantType] of row.entries()) {
+for (const [y, r] of grid.entries()) {
+  for (const [x, plantType] of r.entries()) {
     if (visited.has(`${x},${y}`)) {
       continue;
     }

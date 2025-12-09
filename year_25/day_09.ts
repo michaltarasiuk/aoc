@@ -10,7 +10,9 @@ const redTiles = input.split(/\n/).map(l => {
 let largestArea = -Infinity;
 for (const i of redTiles.keys()) {
   for (const j of redTiles.keys().drop(i + 1)) {
-    largestArea = Math.max(largestArea, calcArea(redTiles[i], redTiles[j]));
+    const a = redTiles[i];
+    const b = redTiles[j];
+    largestArea = Math.max(largestArea, calcArea(a, b));
   }
 }
 

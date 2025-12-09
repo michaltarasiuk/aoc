@@ -21,7 +21,7 @@ function findMinimumTransfers(
   end = 'SAN'
 ) {
   const stack = [{node: start, distance: -1}];
-  const visited = new Set<string>([start]);
+  const visited = new Set([start]);
   while (stack.length > 0) {
     const {node, distance} = stack.shift()!;
     for (const next of orbitGraph[node]) {

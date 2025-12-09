@@ -28,7 +28,7 @@ for (const l of input.split(/\n/)) {
       break;
     }
     case 'rotate-column': {
-      const column = screen.map(row => row[op.index]);
+      const column = screen.map(r => r[op.index]);
       for (let y = 0; y < Tall; y++) {
         screen[y][op.index] = column[(y - op.amount + Tall) % Tall];
       }

@@ -7,8 +7,8 @@ const input = await fetchInput({year: 2023, day: 13});
 function parsePattern(p: string) {
   const rows = p.split(/\n/);
   const cols: string[] = [];
-  for (const [...row] of rows) {
-    for (const [i, v] of row.entries()) {
+  for (const [...r] of rows) {
+    for (const [i, v] of r.entries()) {
       cols[i] ??= '';
       cols[i] += v;
     }

@@ -34,9 +34,9 @@ const grid = input.split(/\n/).map(([...l]) => l.map(Number));
 const trailheadScores: Record<string, Set<string>> = {};
 const trailheadRatings: Record<string, Array<string>> = {};
 
-for (const [y, row] of grid.entries()) {
-  for (const [x, height] of row.entries()) {
-    if (height === 0) {
+for (const [y, r] of grid.entries()) {
+  for (const [x, h] of r.entries()) {
+    if (h === 0) {
       const trailhead = `${x},${y}`;
       for (const trail of findTrails(grid, {x, y})) {
         (trailheadScores[trailhead] ??= new Set()).add(trail);
