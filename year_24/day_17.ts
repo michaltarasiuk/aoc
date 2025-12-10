@@ -24,7 +24,7 @@ function calcComboValue(
   return operandMap[operand];
 }
 
-const InputSchema = z.object({
+const inputSchema = z.object({
   a: z.string().transform(Number),
   b: z.string().transform(Number),
   c: z.string().transform(Number),
@@ -36,7 +36,7 @@ Register C: (?<c>\\d+)
 
 Program: (?<program>.*)`);
 
-const {program, ...registers} = InputSchema.parse(inputRe.exec(input)?.groups);
+const {program, ...registers} = inputSchema.parse(inputRe.exec(input)?.groups);
 const output: number[] = [];
 
 let pointer = 0;

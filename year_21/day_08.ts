@@ -13,14 +13,14 @@ function parseEntry(e: string) {
   return [uniqueSignalPatterns, fourDigitOutputs];
 }
 
-const UniqSegments = [2, 4, 3, 7];
+const uniqSegments = [2, 4, 3, 7];
 
 const easyDigitCount = input
   .split(/\n/)
   .map(parseEntry)
   .reduce((acc, [, fourDigitOutputs]) => {
     return fourDigitOutputs
-      .map(output => UniqSegments.includes(output.length))
+      .map(output => uniqSegments.includes(output.length))
       .map(Number)
       .reduce((a, b) => a + b, acc);
   }, 0);

@@ -22,10 +22,10 @@ function* permuteContainers(
   }
 }
 
-const Liters = 150;
+const LITERS = 150;
 
 const lines = input.split(/\n/);
-const combinations = [...permuteContainers(Liters, ...lines.map(Number))];
+const combinations = [...permuteContainers(LITERS, ...lines.map(Number))];
 
 const combinationsByLength = Object.groupBy(combinations, c => c.length);
 const containerCounts = Object.keys(combinationsByLength).map(Number);

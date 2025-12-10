@@ -15,7 +15,7 @@ Monkey (?<id>\\d):
     If true: throw to monkey (?<throwToIfDivisible>\\d+)
     If false: throw to monkey (?<throwToIfIndivisible>\\d+)`);
 
-const MonkeySchema = z.object({
+const monkeySchema = z.object({
   id: z.string().transform(Number),
   items: z.string().transform(items => items.split(', ').map(Number)),
   operation: z.string(),
@@ -24,7 +24,7 @@ const MonkeySchema = z.object({
   throwToIfIndivisible: z.string().transform(Number),
   inspects: z.number().default(0),
 });
-const MonkeyWithInspection = MonkeySchema.transform(m => ({
+const monkeyWithInspection = monkeySchema.transform(m => ({
   ...m,
   inspect(this: typeof m, old: number) {
     this.inspects++;
@@ -32,15 +32,15 @@ const MonkeyWithInspection = MonkeySchema.transform(m => ({
   },
 }));
 
-const RoundsCount = 20;
+const ROUNDS_COUNT = 20;
 const monkeys = new Map(
   input
     .split(/\n\n/)
-    .map(m => MonkeyWithInspection.parse(monkeyRe.exec(m)?.groups))
+    .map(m => monkeyWithInspection.parse(monkeyRe.exec(m)?.groups))
     .map(m => [m.id, m])
 );
 
-for (let i = 0; i < RoundsCount; i++) {
+for (let i = 0; i < ROUNDS_COUNT; i++) {
   for (const m of monkeys.values()) {
     const {divisible = [], indivisible = []} = Object.groupBy(
       m.items.splice(0).map(old => m.inspect(old)),

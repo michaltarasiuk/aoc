@@ -6,16 +6,16 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2022, day: 10});
 
-const InstructionSchema = z.union([
+const instructionSchema = z.union([
   z.object({op: z.literal('addx'), arg: z.string().transform(Number)}),
   z.object({op: z.literal('noop')}),
 ]);
 function parseInstruction(instruction: string) {
   const [op, arg] = instruction.split(/\s/);
-  return InstructionSchema.parse({op, arg});
+  return instructionSchema.parse({op, arg});
 }
 
-function calcSignal(instructions: z.infer<typeof InstructionSchema>[]) {
+function calcSignal(instructions: z.infer<typeof instructionSchema>[]) {
   return instructions.reduce((acc, instruction) => {
     return instruction.op === 'addx' ? acc + instruction.arg : acc;
   }, 1);
@@ -24,12 +24,12 @@ function calcSignal(instructions: z.infer<typeof InstructionSchema>[]) {
 const instructions = input
   .split(/\n/)
   .map(parseInstruction)
-  .flatMap((instruction): z.infer<typeof InstructionSchema>[] =>
+  .flatMap((instruction): z.infer<typeof instructionSchema>[] =>
     instruction.op === 'addx' ? [{op: 'noop'}, instruction] : [instruction]
   );
 
-const Cycles = [20, 60, 100, 140, 180, 220];
-const sumOfSignals = Cycles.reduce(
+const cycles = [20, 60, 100, 140, 180, 220];
+const sumOfSignals = cycles.reduce(
   (acc, cycle) => acc + cycle * calcSignal(instructions.slice(0, cycle - 1)),
   0
 );

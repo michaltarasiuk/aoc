@@ -4,12 +4,12 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 10});
 
-const ExcludeJoltageRequirements = -1;
+const EXCLUDE_JOLTAGE_REQUIREMENTS = -1;
 
 const machines = input.split(/\n/).map(l => {
   const [targetLights, ...buttonWirings] = l
     .split(/\s/)
-    .slice(0, ExcludeJoltageRequirements);
+    .slice(0, EXCLUDE_JOLTAGE_REQUIREMENTS);
   return {
     targetLights: parseTargetLights(targetLights),
     buttons: parseButtonWirings(buttonWirings),

@@ -7,7 +7,7 @@ const input = await fetchInput({year: 2023, day: 3});
 
 type Layer = string[][];
 
-const Offsets = [-1, 0, 1];
+const offsets = [-1, 0, 1];
 const symbolRe = /[^\d.]/;
 
 function getRange(n: number, x: number) {
@@ -16,7 +16,7 @@ function getRange(n: number, x: number) {
 }
 
 function extractSegments(lines: string[], y: number, x: number, n: number) {
-  return Offsets.map(j => lines[y + j]?.slice(...getRange(n, x)));
+  return offsets.map(j => lines[y + j]?.slice(...getRange(n, x)));
 }
 
 function parseLayers(lines: string[]) {

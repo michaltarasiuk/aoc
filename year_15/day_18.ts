@@ -6,10 +6,10 @@ const input = await fetchInput({year: 2015, day: 18});
 
 type LightGrid = typeof initialGrid;
 
-const On = '#';
-const Off = '.';
+const ON = '#';
+const OFF = '.';
 
-const AdjacentOffsets = [
+const adjacentOffsets = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -20,27 +20,27 @@ const AdjacentOffsets = [
   [1, 1],
 ];
 function getNeighbors(grid: LightGrid, {x, y}: {x: number; y: number}) {
-  return AdjacentOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? Off);
+  return adjacentOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? OFF);
 }
 
 function computeNextState(current: string, neighbors: string[]) {
-  const onCount = neighbors.filter(n => n === On).length;
-  if (current === On) {
-    return onCount === 2 || onCount === 3 ? On : Off;
+  const onCount = neighbors.filter(n => n === ON).length;
+  if (current === ON) {
+    return onCount === 2 || onCount === 3 ? ON : OFF;
   } else {
-    return onCount === 3 ? On : Off;
+    return onCount === 3 ? ON : OFF;
   }
 }
 
-const Steps = 100;
+const STEPS = 100;
 
 const initialGrid = input.split(/\n/).map(r => [...r]);
 let grid = initialGrid;
-for (let step = 0; step < Steps; step++) {
+for (let step = 0; step < STEPS; step++) {
   grid = grid.map((r, y) =>
     r.map((v, x) => computeNextState(v, getNeighbors(grid, {x, y})))
   );
 }
-const totalOn = grid.flat().filter(cell => cell === On).length;
+const totalOn = grid.flat().filter(cell => cell === ON).length;
 
 assert.strictEqual(totalOn, 821, 'Part 1 failed');

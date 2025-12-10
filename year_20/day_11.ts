@@ -4,13 +4,13 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2020, day: 11});
 
-const Seat = {
+const seat = {
   Empty: 'L',
   Occupied: '#',
   Floor: '.',
 };
 
-const NeighborOffsets = [
+const neighborOffsets = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -21,21 +21,21 @@ const NeighborOffsets = [
   [1, 1],
 ];
 function getAdjacentSeats(grid: string[][], {x, y}: {x: number; y: number}) {
-  return NeighborOffsets.flatMap(([dy, dx]) => grid[y + dy]?.[x + dx] ?? []);
+  return neighborOffsets.flatMap(([dy, dx]) => grid[y + dy]?.[x + dx] ?? []);
 }
 
 function countOccupiedSeats(seats: string[]) {
-  return seats.filter(seat => seat === Seat.Occupied).length;
+  return seats.filter(s => s === seat.Occupied).length;
 }
 
-function getNextSeatState(seat: string, neighbors: string[]) {
+function getNextSeatState(seatState: string, neighbors: string[]) {
   const occupiedCount = countOccupiedSeats(neighbors);
-  if (seat === Seat.Empty && occupiedCount === 0) {
-    return Seat.Occupied;
-  } else if (seat === Seat.Occupied && occupiedCount >= 4) {
-    return Seat.Empty;
+  if (seatState === seat.Empty && occupiedCount === 0) {
+    return seat.Occupied;
+  } else if (seatState === seat.Occupied && occupiedCount >= 4) {
+    return seat.Empty;
   } else {
-    return seat;
+    return seatState;
   }
 }
 

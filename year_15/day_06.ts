@@ -30,22 +30,22 @@ function setLights(
   return lights;
 }
 
-const Actions = {turnOn: 'turn on', turnOff: 'turn off', toggle: 'toggle'};
+const actions = {turnOn: 'turn on', turnOff: 'turn off', toggle: 'toggle'};
 const instructions = input.split(/\n/).map(parseInstruction);
 
 const lights = setLights(
   {
-    [Actions.turnOn]: () => 1,
-    [Actions.turnOff]: () => 0,
-    [Actions.toggle]: v => Number(!v),
+    [actions.turnOn]: () => 1,
+    [actions.turnOff]: () => 0,
+    [actions.toggle]: v => Number(!v),
   },
   ...instructions
 );
 const brightness = setLights(
   {
-    [Actions.turnOn]: v => v + 1,
-    [Actions.turnOff]: v => Math.max(0, v - 1),
-    [Actions.toggle]: v => v + 2,
+    [actions.turnOn]: v => v + 1,
+    [actions.turnOff]: v => Math.max(0, v - 1),
+    [actions.toggle]: v => v + 2,
   },
   ...instructions
 );

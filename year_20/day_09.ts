@@ -4,14 +4,14 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2020, day: 9});
 
-const PreambleLen = 25;
+const PREAMBLE_LEN = 25;
 
 function hasSum(preamble: number[], target: number) {
   return preamble.some(a => preamble.some(b => a !== b && a + b === target));
 }
 function findInvalid(nums: number[]) {
-  for (let i = PreambleLen; i < nums.length; i++) {
-    if (!hasSum(nums.slice(i - PreambleLen, i), nums[i])) {
+  for (let i = PREAMBLE_LEN; i < nums.length; i++) {
+    if (!hasSum(nums.slice(i - PREAMBLE_LEN, i), nums[i])) {
       return nums[i];
     }
   }

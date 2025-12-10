@@ -7,7 +7,7 @@ import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2016, day: 9});
 
-const MarkerGroupsSchema = z.object({
+const markerGroupsSchema = z.object({
   length: z.string().transform(Number),
   repeatCount: z.string().transform(Number),
 });
@@ -17,7 +17,7 @@ let decompressed = input;
 let exec: RegExpExecArray | null = null;
 while ((exec = markerRe.exec(decompressed))) {
   const {0: match, groups, index = raise('Invalid index')} = exec;
-  const {length, repeatCount} = MarkerGroupsSchema.parse(groups);
+  const {length, repeatCount} = markerGroupsSchema.parse(groups);
 
   const marked = decompressed.slice(
     index + match.length,

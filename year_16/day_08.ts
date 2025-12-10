@@ -5,12 +5,12 @@ import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2016, day: 8});
 
-const Tall = 6;
-const Wide = 50;
+const TALL = 6;
+const WIDE = 50;
 
-const screen = Array(Tall)
+const screen = Array(TALL)
   .fill(0)
-  .map(() => Array<boolean>(Wide).fill(false));
+  .map(() => Array<boolean>(WIDE).fill(false));
 
 for (const l of input.split(/\n/)) {
   const op = parseRect(l) ?? parseRotate(l) ?? raise('Invalid operation');
@@ -23,14 +23,14 @@ for (const l of input.split(/\n/)) {
     }
     case 'rotate-row': {
       screen[op.index] = screen[op.index].map(
-        (_, i) => screen[op.index][(i - op.amount + Wide) % Wide]
+        (_, i) => screen[op.index][(i - op.amount + WIDE) % WIDE]
       );
       break;
     }
     case 'rotate-column': {
       const column = screen.map(r => r[op.index]);
-      for (let y = 0; y < Tall; y++) {
-        screen[y][op.index] = column[(y - op.amount + Tall) % Tall];
+      for (let y = 0; y < TALL; y++) {
+        screen[y][op.index] = column[(y - op.amount + TALL) % TALL];
       }
       break;
     }

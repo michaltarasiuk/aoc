@@ -4,17 +4,17 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2024, day: 18});
 
-const Size = 71;
-const MaxBytes = 1024;
+const SIZE = 71;
+const MAX_BYTES = 1024;
 
 type Point = [x: number, y: number];
-const StartPoint: Point = [0, 0];
-const EndPoint: Point = [Size - 1, Size - 1];
+const startPoint: Point = [0, 0];
+const endPoint: Point = [SIZE - 1, SIZE - 1];
 
-const Corrupted = '#';
-const Safe = '.';
+const CORRUPTED = '#';
+const SAFE = '.';
 
-const Directions = [
+const directions = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -22,7 +22,7 @@ const Directions = [
 ];
 
 function findShortestPath(memoryGrid: string[][]): number {
-  const stack: [Point, steps: number][] = [[StartPoint, 0]];
+  const stack: [Point, steps: number][] = [[startPoint, 0]];
   const visited = new Set<string>();
 
   while (stack.length > 0) {
@@ -32,13 +32,13 @@ function findShortestPath(memoryGrid: string[][]): number {
     } else {
       visited.add(`${x},${y}`);
     }
-    if (x === EndPoint[0] && y === EndPoint[1]) {
+    if (x === endPoint[0] && y === endPoint[1]) {
       return steps;
     }
-    for (const [dx, dy] of Directions) {
+    for (const [dx, dy] of directions) {
       const i = x + dx;
       const j = y + dy;
-      if (memoryGrid[j]?.[i] === Safe) {
+      if (memoryGrid[j]?.[i] === SAFE) {
         stack.push([[i, j], steps + 1]);
       }
     }
@@ -47,16 +47,16 @@ function findShortestPath(memoryGrid: string[][]): number {
 }
 
 const bytes = input.split(/\n/).map(l => l.split(',').map(Number));
-const memorySpace = [...Array(Size)].map(() => Array(Size).fill(Safe));
+const memorySpace = [...Array(SIZE)].map(() => Array(SIZE).fill(SAFE));
 
-for (const [i, j] of bytes.splice(0, MaxBytes)) {
-  memorySpace[j][i] = Corrupted;
+for (const [i, j] of bytes.splice(0, MAX_BYTES)) {
+  memorySpace[j][i] = CORRUPTED;
 }
 assert.strictEqual(findShortestPath(memorySpace), 246, 'Part 1 failed');
 
 while (bytes.length > 0) {
   const [i, j] = bytes.shift()!;
-  memorySpace[j][i] = Corrupted;
+  memorySpace[j][i] = CORRUPTED;
   if (findShortestPath(memorySpace) === -1) {
     assert.strictEqual(`${i},${j}`, '22,50', 'Part 2 failed');
     break;

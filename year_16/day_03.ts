@@ -5,7 +5,7 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2016, day: 3});
 
-const TriangleSides = 3;
+const TRIANGLE_SIDES = 3;
 
 function parseTriangle(t: string) {
   const triangle = Array.from(t.matchAll(/\d+/g), Number);
@@ -25,7 +25,7 @@ for (const triangle of trianglesByRows) {
     (cols[k] ??= []).push(v);
   }
 }
-const trianglesByCols = chunkEvery(cols.flat(), TriangleSides);
+const trianglesByCols = chunkEvery(cols.flat(), TRIANGLE_SIDES);
 
 assert.strictEqual(
   trianglesByRows.filter(isValidTriangle).length,

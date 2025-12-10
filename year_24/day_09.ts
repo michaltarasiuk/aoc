@@ -6,7 +6,7 @@ const input = await fetchInput({year: 2024, day: 9});
 
 type DiskElement = number | string;
 
-const Space = '.';
+const SPACE = '.';
 
 function calcChecksum(disk: DiskElement[]) {
   let sum = 0;
@@ -20,7 +20,7 @@ function calcChecksum(disk: DiskElement[]) {
 
 function computeDisk([...disk]: DiskElement[]) {
   while (true) {
-    const i = disk.indexOf(Space);
+    const i = disk.indexOf(SPACE);
     const j = disk.findLastIndex(v => typeof v === 'number');
     if (i > j) {
       break;
@@ -43,19 +43,19 @@ function computeDiskByFiles([...disk]: DiskElement[]) {
     const m = disk
       .map(v => (typeof v === 'number' ? '_' : v))
       .join('')
-      .matchAll(new RegExp(`\\${Space}+`, 'g'))
+      .matchAll(new RegExp(`\\${SPACE}+`, 'g'))
       .find(([m]) => m.length >= j - i + 1);
     if (!m || m.index > i) {
       continue;
     }
     disk.splice(m.index, j - i + 1, ...Array(j - i + 1).fill(disk[i]));
-    disk.splice(i, j - i + 1, ...Array(j - i + 1).fill(Space));
+    disk.splice(i, j - i + 1, ...Array(j - i + 1).fill(SPACE));
   }
   return calcChecksum(disk);
 }
 
 const disk = [...input].flatMap((n, i) =>
-  Array<DiskElement>(Number(n)).fill(i % 2 === 0 ? i / 2 : Space)
+  Array<DiskElement>(Number(n)).fill(i % 2 === 0 ? i / 2 : SPACE)
 );
 
 assert.strictEqual(computeDisk(disk), 6446899523367, 'Part 1 failed');

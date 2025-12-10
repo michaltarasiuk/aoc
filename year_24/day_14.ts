@@ -4,12 +4,12 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2024, day: 14});
 
-const Time = 100;
-const TilesWide = 101;
-const TilesTall = 103;
+const TIME = 100;
+const TILES_WIDE = 101;
+const TILES_TALL = 103;
 
-const horizontalMiddle = Math.floor(TilesWide / 2);
-const verticalMiddle = Math.floor(TilesTall / 2);
+const horizontalMiddle = Math.floor(TILES_WIDE / 2);
+const verticalMiddle = Math.floor(TILES_TALL / 2);
 
 const robotRe = /^p=(\d+),(\d+) v=(-?\d+),(-?\d+)$/;
 const robots = input.split(/\n/).map(l => {
@@ -18,11 +18,11 @@ const robots = input.split(/\n/).map(l => {
 });
 
 const positions = robots.map(({px, py, vx, vy}) => {
-  const x = (px + vx * Time) % TilesWide;
-  const y = (py + vy * Time) % TilesTall;
+  const x = (px + vx * TIME) % TILES_WIDE;
+  const y = (py + vy * TIME) % TILES_TALL;
   return {
-    x: x < 0 ? x + TilesWide : x,
-    y: y < 0 ? y + TilesTall : y,
+    x: x < 0 ? x + TILES_WIDE : x,
+    y: y < 0 ? y + TILES_TALL : y,
   };
 });
 const {middle: _middle, ...quadrants} = Object.groupBy(positions, ({x, y}) => {

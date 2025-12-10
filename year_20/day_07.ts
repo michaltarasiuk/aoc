@@ -25,7 +25,7 @@ function countBagsOf(rules: Rules, search: string): number {
     .reduce((acc, count) => acc + count, 0);
 }
 
-const SearchBag = 'shiny gold';
+const SEARCH_BAG = 'shiny gold';
 const rules = new Map(
   input
     .split(/\n/)
@@ -34,8 +34,8 @@ const rules = new Map(
 );
 const bagsWithShinyGoldCount = rules
   .keys()
-  .map(holder => includesBag(rules, holder, SearchBag))
+  .map(holder => includesBag(rules, holder, SEARCH_BAG))
   .reduce((acc, has) => acc + Number(has), 0);
 
 assert.strictEqual(bagsWithShinyGoldCount, 242, 'Part 1 failed');
-assert.strictEqual(countBagsOf(rules, SearchBag), 176035, 'Part 2 failed');
+assert.strictEqual(countBagsOf(rules, SEARCH_BAG), 176035, 'Part 2 failed');

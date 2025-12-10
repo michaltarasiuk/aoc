@@ -5,11 +5,11 @@ import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2022, day: 2});
 
-const ShapesCount = 3;
-const Points = {win: 6, draw: 3, lose: 0};
+const SHAPES_COUNT = 3;
+const points = {win: 6, draw: 3, lose: 0};
 
 function getHandShape(char: string) {
-  return ('ABCXYZ'.indexOf(char) % ShapesCount) + 1;
+  return ('ABCXYZ'.indexOf(char) % SHAPES_COUNT) + 1;
 }
 function parseRound(round: string) {
   const roundRe = /^([ABC]) ([XYZ])$/;
@@ -22,11 +22,11 @@ function roundOutcome(them: number, me: number) {
   const diff = me - them;
 
   if (diff === 0) {
-    return Points.draw;
+    return points.draw;
   } else if (diff === 1 || diff === -2) {
-    return Points.win;
+    return points.win;
   } else if (diff === -1 || diff === 2) {
-    return Points.lose;
+    return points.lose;
   }
   throw new Error('Invalid round outcome');
 }

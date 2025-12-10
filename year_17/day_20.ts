@@ -24,12 +24,12 @@ const particles = input.split(/\n/).map(l => {
   };
 });
 
-const Ticks = 1_000;
+const TICKS = 1_000;
 
 let closestParticleIndex = -1;
 let minDistance = Infinity;
 for (const [i, {...particle}] of particles.entries()) {
-  for (let t = 0; t < Ticks; t++) {
+  for (let t = 0; t < TICKS; t++) {
     particle.v.x += particle.a.x;
     particle.v.y += particle.a.y;
     particle.v.z += particle.a.z;

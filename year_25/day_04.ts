@@ -4,9 +4,9 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 4});
 
-const PaperRoll = '@';
-const MaxAdjacentRollsForAccess = 4;
-const AdjacentDirections = [
+const PAPER_ROLL = '@';
+const MAX_ADJACENT_ROLLS_FOR_ACCESS = 4;
+const adjacentDirections = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -18,15 +18,15 @@ const AdjacentDirections = [
 ];
 
 function isPaperRoll(v: string) {
-  return v === PaperRoll;
+  return v === PAPER_ROLL;
 }
 
 function isAccessibleByForklift(grid: string[][], x: number, y: number) {
-  const adjacentRollCount = AdjacentDirections.reduce(
+  const adjacentRollCount = adjacentDirections.reduce(
     (count, [i, j]) => count + Number(isPaperRoll(grid[y + j]?.[x + i])),
     0
   );
-  return adjacentRollCount < MaxAdjacentRollsForAccess;
+  return adjacentRollCount < MAX_ADJACENT_ROLLS_FOR_ACCESS;
 }
 
 function getRolls(grid: string[][]) {

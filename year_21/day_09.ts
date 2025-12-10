@@ -4,7 +4,7 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2021, day: 9});
 
-const Directions = [
+const directions = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -25,7 +25,7 @@ for (const y of heightMap.keys()) {
 assert.strictEqual(riskLevel, 480, 'Part 1 failed');
 
 function isLowPoint(heightMap: number[][], x: number, y: number) {
-  return !Directions.some(
+  return !directions.some(
     ([i, j]) => heightMap[y][x] >= heightMap[y + j]?.[x + i]
   );
 }

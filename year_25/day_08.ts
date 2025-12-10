@@ -5,8 +5,8 @@ import {isDefined} from '#lib/is_defined.js';
 
 const input = await fetchInput({year: 2025, day: 8});
 
-const ShortestConnections = 1000;
-const TopCircuits = 3;
+const SHORTEST_CONNECTIONS = 1000;
+const TOP_CIRCUITS = 3;
 
 const junctionBoxes = input.split(/\n/).map(l => {
   const [x, y, z] = l.split(',').map(Number);
@@ -36,7 +36,7 @@ for (const [k, {i, j}] of distances.toSorted((a, b) => a.d - b.d).entries()) {
       circuits.splice(circuits.indexOf(circuitJ), 1);
     }
   }
-  if (k === ShortestConnections) {
+  if (k === SHORTEST_CONNECTIONS) {
     snapshotAt1000 = structuredClone(circuits);
   }
   if (circuits.length === 1) {
@@ -47,7 +47,7 @@ for (const [k, {i, j}] of distances.toSorted((a, b) => a.d - b.d).entries()) {
 
 const circuitSizeProduct = snapshotAt1000
   .toSorted((a, b) => b.size - a.size)
-  .slice(0, TopCircuits)
+  .slice(0, TOP_CIRCUITS)
   .reduce((acc, c) => acc * c.size, 1);
 
 assert.strictEqual(circuitSizeProduct, 131150, 'Part 1 failed');

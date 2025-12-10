@@ -5,8 +5,8 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2023, day: 7});
 
-const Cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-const HandTypes = {
+const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+const handTypes = {
   fiveKind: 6,
   fourKind: 5,
   fullHouse: 4,
@@ -20,21 +20,21 @@ function classifyHand(hand: string) {
   const frequency = frequencies(hand);
   switch (Math.max(...frequency.values())) {
     case 5:
-      return HandTypes.fiveKind;
+      return handTypes.fiveKind;
     case 4:
-      return HandTypes.fourKind;
+      return handTypes.fourKind;
     case 3:
-      return frequency.size === 2 ? HandTypes.fullHouse : HandTypes.threeKind;
+      return frequency.size === 2 ? handTypes.fullHouse : handTypes.threeKind;
     case 2:
-      return frequency.size === 3 ? HandTypes.twoPair : HandTypes.pair;
+      return frequency.size === 3 ? handTypes.twoPair : handTypes.pair;
     default:
-      return HandTypes.highCard;
+      return handTypes.highCard;
   }
 }
 function compareHands(a: string, b: string) {
   for (const [i, card] of [...a].entries()) {
     if (card !== b[i]) {
-      return Cards.indexOf(card) - Cards.indexOf(b[i]);
+      return cards.indexOf(card) - cards.indexOf(b[i]);
     }
   }
   return 0;

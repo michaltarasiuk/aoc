@@ -32,14 +32,14 @@ function dance(moves: string[], ...programs: string[]) {
   return programs.join('');
 }
 
-const Programs = 'abcdefghijklmnop';
+const PROGRAMS = 'abcdefghijklmnop';
 
 const moves = input.split(',');
 
-let programs = Programs;
+let programs = PROGRAMS;
 let stepsToRepeat = 0;
 for (let i = 1; i <= 1_000_000_000; i++) {
-  if ((programs = dance(moves, ...programs)) === Programs) {
+  if ((programs = dance(moves, ...programs)) === PROGRAMS) {
     stepsToRepeat = i;
     break;
   }
@@ -49,7 +49,7 @@ for (let i = 1; i <= 1_000_000_000 % stepsToRepeat; i++) {
 }
 
 assert.strictEqual(
-  dance(moves, ...Programs),
+  dance(moves, ...PROGRAMS),
   'namdgkbhifpceloj',
   'Part 1 failed'
 );

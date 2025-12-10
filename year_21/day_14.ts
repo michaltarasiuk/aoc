@@ -41,10 +41,10 @@ const rulesMap = new Map(
   })
 );
 
-const StepsCount = 10;
+const STEPS_COUNT = 10;
 
 let polymer = polymerTemplate;
-for (let i = 0; i < StepsCount; i++) {
+for (let i = 0; i < STEPS_COUNT; i++) {
   polymer = pairInsertion(polymer, rulesMap);
 }
 
