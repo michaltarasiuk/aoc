@@ -4,21 +4,24 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2025, day: 10});
 
+const LIGHT_ON = '#';
+const LIGHT_OFF = '.';
+
 const EXCLUDE_JOLTAGE_REQUIREMENTS = -1;
 
 const machines = input.split(/\n/).map(l => {
-  const [targetLights, ...buttonWirings] = l
+  const [targetLights, ...buttons] = l
     .split(/\s/)
     .slice(0, EXCLUDE_JOLTAGE_REQUIREMENTS);
   return {
-    targetLights: parseTargetLights(targetLights),
-    buttons: parseButtonWirings(buttonWirings),
+    targetLights: targetLights.slice(1, -1),
+    buttons: buttons.map(parseButton),
   };
 });
 
 let totalButtonPresses = 0;
 for (const {targetLights, buttons} of machines) {
-  const initialLights = getInitialLights(targetLights.length);
+  const initialLights = LIGHT_OFF.repeat(targetLights.length);
   const visited = new Set([initialLights]);
   const queue = [{lights: initialLights, presses: 0}];
   outer: while (queue.length > 0) {
@@ -38,20 +41,13 @@ for (const {targetLights, buttons} of machines) {
 
 assert.strictEqual(totalButtonPresses, 484, 'Part 1 failed');
 
-function getInitialLights(length: number) {
-  return '.'.repeat(length);
-}
-
 function toggleLights([...lights]: string, button: number[]) {
-  return lights
-    .map((l, i) => (button.includes(i) ? (l === '.' ? '#' : '.') : l))
-    .join('');
+  for (const i of button) {
+    lights[i] = lights[i] === LIGHT_OFF ? LIGHT_ON : LIGHT_OFF;
+  }
+  return lights.join('');
 }
 
-function parseTargetLights(encoded: string) {
-  return encoded.slice(1, -1);
-}
-
-function parseButtonWirings(wirings: string[]) {
-  return wirings.map(w => w.slice(1, -1).split(',').map(Number));
+function parseButton(b: string) {
+  return b.slice(1, -1).split(',').map(Number);
 }
