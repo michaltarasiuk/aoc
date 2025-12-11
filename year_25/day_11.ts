@@ -25,7 +25,7 @@ while (queue.length > 0) {
       continue;
     }
     const newPath = [...path, device];
-    const pathKey = newPath.join(',');
+    const pathKey = newPath.join();
     if (!visited.has(pathKey)) {
       visited.add(pathKey);
       queue.push(newPath);
