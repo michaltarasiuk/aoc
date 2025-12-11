@@ -1,4 +1,4 @@
-import {env} from '../env.js';
+import {env} from './env.js';
 
 export async function fetchInput({year, day}: {year: number; day: number}) {
   const response = await fetch(
