@@ -22,10 +22,12 @@ for (const i of junctionBoxes.keys()) {
   }
 }
 
+const sortedDistances = distances.toSorted((a, b) => a.d - b.d);
+
 const circuits = junctionBoxes.map((_, i) => new Set([i]));
 let snapshotAt1000: typeof circuits = [];
 let lastPairXProduct = 0;
-for (const [k, {i, j}] of distances.toSorted((a, b) => a.d - b.d).entries()) {
+for (const [k, {i, j}] of sortedDistances.entries()) {
   const circuitI = circuits.find(c => c.has(i));
   const circuitJ = circuits.find(c => c.has(j));
   if (isDefined(circuitI) && isDefined(circuitJ)) {
