@@ -19,7 +19,8 @@ const queue = [[START]];
 let pathCount = 0;
 while (queue.length > 0) {
   const path = queue.shift()!;
-  for (const device of deviceConnections[path.at(-1)!]) {
+  const last = path.at(-1)!;
+  for (const device of deviceConnections[last]) {
     if (device === END) {
       pathCount++;
       continue;
