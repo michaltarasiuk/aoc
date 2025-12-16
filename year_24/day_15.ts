@@ -8,7 +8,7 @@ const ROBOT = '@';
 const BOX = 'O';
 const EMPTY = '.';
 
-const directions = {
+const DIRECTIONS = {
   '^': [0, -1],
   '>': [1, 0],
   'v': [0, 1],
@@ -29,7 +29,7 @@ let [robotX, robotY] = (() => {
 })();
 
 for (const move of moves) {
-  const [dx, dy] = directions[move as keyof typeof directions];
+  const [dx, dy] = DIRECTIONS[move as keyof typeof DIRECTIONS];
   const [newX, newY] = [robotX + dx, robotY + dy];
   if ([BOX, EMPTY].includes(warehouse[newY][newX])) {
     if (warehouse[newY][newX] === BOX) {

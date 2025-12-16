@@ -5,8 +5,8 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2023, day: 7});
 
-const cards = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-const handTypes = {
+const CARDS = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+const HAND_TYPES = {
   fiveKind: 6,
   fourKind: 5,
   fullHouse: 4,
@@ -20,21 +20,21 @@ function classifyHand(hand: string) {
   const frequency = frequencies(hand);
   switch (Math.max(...frequency.values())) {
     case 5:
-      return handTypes.fiveKind;
+      return HAND_TYPES.fiveKind;
     case 4:
-      return handTypes.fourKind;
+      return HAND_TYPES.fourKind;
     case 3:
-      return frequency.size === 2 ? handTypes.fullHouse : handTypes.threeKind;
+      return frequency.size === 2 ? HAND_TYPES.fullHouse : HAND_TYPES.threeKind;
     case 2:
-      return frequency.size === 3 ? handTypes.twoPair : handTypes.pair;
+      return frequency.size === 3 ? HAND_TYPES.twoPair : HAND_TYPES.pair;
     default:
-      return handTypes.highCard;
+      return HAND_TYPES.highCard;
   }
 }
 function compareHands(a: string, b: string) {
   for (const [i, card] of [...a].entries()) {
     if (card !== b[i]) {
-      return cards.indexOf(card) - cards.indexOf(b[i]);
+      return CARDS.indexOf(card) - CARDS.indexOf(b[i]);
     }
   }
   return 0;

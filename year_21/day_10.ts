@@ -6,13 +6,13 @@ import {isKeyof} from '#lib/is_keyof.js';
 
 const input = await fetchInput({year: 2021, day: 10});
 
-const syntaxErrorPoints = {
+const SYNTAX_ERROR_POINTS = {
   ')': 3,
   ']': 57,
   '}': 1197,
   '>': 25137,
 };
-const autocompletePoints = {
+const AUTOCOMPLETE_POINTS = {
   '(': 1,
   '[': 2,
   '{': 3,
@@ -38,7 +38,7 @@ function analyzeLineSyntax(l: string) {
         if (!isDefined(last) || !isMatchingPair(last, char)) {
           return {
             status: 'SYNTAX_ERROR',
-            score: syntaxErrorPoints[char],
+            score: SYNTAX_ERROR_POINTS[char],
           } as const;
         }
         break;
@@ -58,8 +58,8 @@ function isMatchingPair(open: string, close: string) {
 
 function calcAutocompleteScore(stack: string[]) {
   return stack.toReversed().reduce((acc, char) => {
-    assert(isKeyof(autocompletePoints, char));
-    return 5 * acc + autocompletePoints[char];
+    assert(isKeyof(AUTOCOMPLETE_POINTS, char));
+    return 5 * acc + AUTOCOMPLETE_POINTS[char];
   }, 0);
 }
 

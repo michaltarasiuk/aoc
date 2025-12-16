@@ -6,7 +6,7 @@ import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2015, day: 16});
 
-const tickerTape = {
+const TICKER_TAPE = {
   children: 3,
   cats: 7,
   samoyeds: 2,
@@ -21,7 +21,7 @@ const tickerTape = {
 
 function findBestMatchSueId(
   sues: (readonly [number, string])[],
-  fn = (k: keyof typeof tickerTape, v: number) => tickerTape[k] === v
+  fn = (k: keyof typeof TICKER_TAPE, v: number) => TICKER_TAPE[k] === v
 ) {
   let bestMatchSueId = -1;
   let bestMatchCount = -1;
@@ -29,7 +29,7 @@ function findBestMatchSueId(
     const count = items
       .matchAll(/(\w+): (\d+)/g)
       .map(([, k, v]) => {
-        assert(isKeyof(tickerTape, k));
+        assert(isKeyof(TICKER_TAPE, k));
         return fn(k, Number(v));
       })
       .map(Number)
@@ -53,12 +53,12 @@ const bestMatchSueId2 = findBestMatchSueId(sues, (k, v) => {
   switch (k) {
     case 'cats':
     case 'trees':
-      return tickerTape[k] < v;
+      return TICKER_TAPE[k] < v;
     case 'pomeranians':
     case 'goldfish':
-      return tickerTape[k] > v;
+      return TICKER_TAPE[k] > v;
     default:
-      return tickerTape[k] === v;
+      return TICKER_TAPE[k] === v;
   }
 });
 

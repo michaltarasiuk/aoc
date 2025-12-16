@@ -6,7 +6,7 @@ const input = await fetchInput({year: 2024, day: 6});
 
 const GUARD_START = '^';
 const OBSTACLE = '#';
-const directions = [
+const DIRECTIONS = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -21,11 +21,11 @@ let y = grid.findIndex(l => l.includes(GUARD_START));
 let x = grid[y].indexOf(GUARD_START);
 while (true) {
   path.push(`${x},${y}`);
-  const nextX = x + directions[dir][0];
-  const nextY = y + directions[dir][1];
+  const nextX = x + DIRECTIONS[dir][0];
+  const nextY = y + DIRECTIONS[dir][1];
   const nextPosition = grid[nextY]?.[nextX];
   if (nextPosition === OBSTACLE) {
-    dir = (dir + 1) % directions.length;
+    dir = (dir + 1) % DIRECTIONS.length;
   } else if (!nextPosition) {
     break;
   } else {

@@ -6,10 +6,12 @@ const input = await fetchInput({year: 2015, day: 18});
 
 type LightGrid = typeof initialGrid;
 
+const STEPS = 100;
+
 const ON = '#';
 const OFF = '.';
 
-const adjacentOffsets = [
+const ADJACENT_OFFSETS = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -20,7 +22,7 @@ const adjacentOffsets = [
   [1, 1],
 ];
 function getNeighbors(grid: LightGrid, {x, y}: {x: number; y: number}) {
-  return adjacentOffsets.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? OFF);
+  return ADJACENT_OFFSETS.map(([dy, dx]) => grid[y + dy]?.[x + dx] ?? OFF);
 }
 
 function computeNextState(current: string, neighbors: string[]) {
@@ -31,8 +33,6 @@ function computeNextState(current: string, neighbors: string[]) {
     return onCount === 3 ? ON : OFF;
   }
 }
-
-const STEPS = 100;
 
 const initialGrid = input.split(/\n/).map(r => [...r]);
 let grid = initialGrid;

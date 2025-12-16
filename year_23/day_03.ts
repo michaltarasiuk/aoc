@@ -7,8 +7,7 @@ const input = await fetchInput({year: 2023, day: 3});
 
 type Layer = string[][];
 
-const offsets = [-1, 0, 1];
-const symbolRe = /[^\d.]/;
+const OFFSETS = [-1, 0, 1];
 
 function getRange(n: number, x: number) {
   const offset = 1;
@@ -16,7 +15,7 @@ function getRange(n: number, x: number) {
 }
 
 function extractSegments(lines: string[], y: number, x: number, n: number) {
-  return offsets.map(j => lines[y + j]?.slice(...getRange(n, x)));
+  return OFFSETS.map(j => lines[y + j]?.slice(...getRange(n, x)));
 }
 
 function parseLayers(lines: string[]) {
@@ -30,6 +29,7 @@ function parseLayers(lines: string[]) {
 }
 
 function sumPartNumbers(layers: Layer[]) {
+  const symbolRe = /[^\d.]/;
   return layers.flat().reduce((acc, segments) => {
     if (segments.filter(isDefined).some(s => symbolRe.test(s))) {
       acc += Number(segments[1].replace(/\D/g, ''));

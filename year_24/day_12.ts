@@ -4,7 +4,7 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2024, day: 12});
 
-const directions = [
+const DIRECTIONS = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -20,7 +20,7 @@ function* exploreRegion(
 ): Generator<[string, number]> {
   seen.add(`${x},${y}`);
   let perimeter = 0;
-  for (const [dx, dy] of directions) {
+  for (const [dx, dy] of DIRECTIONS) {
     const i = x + dx;
     const j = y + dy;
     if (!seen.has(`${i},${j}`)) {

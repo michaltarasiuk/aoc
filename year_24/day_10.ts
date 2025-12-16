@@ -4,7 +4,7 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2024, day: 10});
 
-const directions = [
+const DIRECTIONS = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -16,7 +16,7 @@ function* findTrails(
   {x, y}: {x: number; y: number},
   {increment, max} = {increment: 1, max: 9}
 ): Generator<string> {
-  for (const [dx, dy] of directions) {
+  for (const [dx, dy] of DIRECTIONS) {
     const i = x + dx;
     const j = y + dy;
     if (!grid[j]?.[i]) {

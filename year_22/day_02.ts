@@ -6,7 +6,7 @@ import {raise} from '#lib/raise.js';
 const input = await fetchInput({year: 2022, day: 2});
 
 const SHAPES_COUNT = 3;
-const points = {win: 6, draw: 3, lose: 0};
+const POINTS = {win: 6, draw: 3, lose: 0};
 
 function getHandShape(char: string) {
   return ('ABCXYZ'.indexOf(char) % SHAPES_COUNT) + 1;
@@ -20,13 +20,12 @@ function parseRound(round: string) {
 
 function roundOutcome(them: number, me: number) {
   const diff = me - them;
-
   if (diff === 0) {
-    return points.draw;
+    return POINTS.draw;
   } else if (diff === 1 || diff === -2) {
-    return points.win;
+    return POINTS.win;
   } else if (diff === -1 || diff === 2) {
-    return points.lose;
+    return POINTS.lose;
   }
   throw new Error('Invalid round outcome');
 }

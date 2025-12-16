@@ -10,7 +10,7 @@ const END_TILE = 'E';
 const WALL = '#';
 
 const INITIAL_FACING = 1;
-const directions = [
+const DIRECTIONS = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -52,7 +52,7 @@ outer: while (stack.size > 0) {
     visited.add(cacheKey);
   }
   const [dir, x, y] = parseCacheKey(cacheKey);
-  for (const direction of directions) {
+  for (const direction of DIRECTIONS) {
     const [i, j] = [x + direction[0], y + direction[1]];
     if (grid[j][i] === WALL) {
       continue;
@@ -60,7 +60,7 @@ outer: while (stack.size > 0) {
       assert.strictEqual(score + 1, 160624, 'Part 1 failed');
       break outer;
     } else {
-      const newDir = directions.indexOf(direction);
+      const newDir = DIRECTIONS.indexOf(direction);
       const newCacheKey = toCacheKey(newDir, i, j);
       const newScore = score + 1 + (newDir !== dir ? 1_000 : 0);
       if (!stack.has(newCacheKey) || stack.get(newCacheKey)! > newScore) {

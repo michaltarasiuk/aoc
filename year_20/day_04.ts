@@ -5,7 +5,7 @@ import {isKeyof} from '#lib/is_keyof.js';
 
 const input = await fetchInput({year: 2020, day: 4});
 
-const passportKeys = {
+const PASSPORT_KEYS = {
   byr: /^(19[2-9]\d|200[0-2])$/,
   iyr: /^(201\d|2020)$/,
   eyr: /^(202\d|2030)$/,
@@ -27,13 +27,13 @@ const passports = input.split(/\n\n/).map(p => {
 });
 
 const validPassportsCount = passports
-  .map(p => Object.keys(passportKeys).every(k => isKeyof(p, k)))
+  .map(p => Object.keys(PASSPORT_KEYS).every(k => isKeyof(p, k)))
   .map(Number)
   .reduce((a, b) => a + b);
 
 const validPassportsCount2 = passports
   .map(p =>
-    Object.entries(passportKeys).every(
+    Object.entries(PASSPORT_KEYS).every(
       ([k, re]) => isKeyof(p, k) && re.test(p[k])
     )
   )

@@ -8,13 +8,13 @@ const SIZE = 71;
 const MAX_BYTES = 1024;
 
 type Point = [x: number, y: number];
-const startPoint: Point = [0, 0];
-const endPoint: Point = [SIZE - 1, SIZE - 1];
+const START_POINT: Point = [0, 0];
+const END_POINT: Point = [SIZE - 1, SIZE - 1];
 
 const CORRUPTED = '#';
 const SAFE = '.';
 
-const directions = [
+const DIRECTIONS = [
   [0, -1],
   [1, 0],
   [0, 1],
@@ -22,7 +22,7 @@ const directions = [
 ];
 
 function findShortestPath(memoryGrid: string[][]): number {
-  const stack: [Point, steps: number][] = [[startPoint, 0]];
+  const stack: [Point, steps: number][] = [[START_POINT, 0]];
   const visited = new Set<string>();
 
   while (stack.length > 0) {
@@ -32,10 +32,10 @@ function findShortestPath(memoryGrid: string[][]): number {
     } else {
       visited.add(`${x},${y}`);
     }
-    if (x === endPoint[0] && y === endPoint[1]) {
+    if (x === END_POINT[0] && y === END_POINT[1]) {
       return steps;
     }
-    for (const [dx, dy] of directions) {
+    for (const [dx, dy] of DIRECTIONS) {
       const i = x + dx;
       const j = y + dy;
       if (memoryGrid[j]?.[i] === SAFE) {

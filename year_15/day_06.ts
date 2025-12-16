@@ -5,6 +5,12 @@ import {raise} from '#lib/raise.js';
 
 const input = await fetchInput({year: 2015, day: 6});
 
+const ACTIONS = {
+  turnOn: 'turn on',
+  turnOff: 'turn off',
+  toggle: 'toggle',
+};
+
 function parseInstruction(instruction: string) {
   const instructionRe = /^(.*) (\d+),(\d+) through (\d+),(\d+)$/;
   const [, action, ...dimensions] =
@@ -30,22 +36,21 @@ function setLights(
   return lights;
 }
 
-const actions = {turnOn: 'turn on', turnOff: 'turn off', toggle: 'toggle'};
 const instructions = input.split(/\n/).map(parseInstruction);
 
 const lights = setLights(
   {
-    [actions.turnOn]: () => 1,
-    [actions.turnOff]: () => 0,
-    [actions.toggle]: v => Number(!v),
+    [ACTIONS.turnOn]: () => 1,
+    [ACTIONS.turnOff]: () => 0,
+    [ACTIONS.toggle]: v => Number(!v),
   },
   ...instructions
 );
 const brightness = setLights(
   {
-    [actions.turnOn]: v => v + 1,
-    [actions.turnOff]: v => Math.max(0, v - 1),
-    [actions.toggle]: v => v + 2,
+    [ACTIONS.turnOn]: v => v + 1,
+    [ACTIONS.turnOff]: v => Math.max(0, v - 1),
+    [ACTIONS.toggle]: v => v + 2,
   },
   ...instructions
 );

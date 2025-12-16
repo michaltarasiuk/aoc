@@ -5,7 +5,7 @@ import {fetchInput} from '#lib/input.js';
 const input = await fetchInput({year: 2020, day: 3});
 
 const TREE = '#';
-const slopes = [
+const SLOPES = [
   [1, 1],
   [3, 1],
   [5, 1],
@@ -13,7 +13,7 @@ const slopes = [
   [1, 2],
 ] satisfies [number, number][];
 
-function countTrees(toboggan: string[], slope: (typeof slopes)[number]) {
+function countTrees(toboggan: string[], slope: (typeof SLOPES)[number]) {
   let trees = 0;
   let [x, y] = [0, 0];
   while (y < toboggan.length - 1) {
@@ -27,9 +27,9 @@ function countTrees(toboggan: string[], slope: (typeof slopes)[number]) {
 
 const toboggan = input.split(/\n/);
 
-const treesForSlope = countTrees(toboggan, slopes[1]);
-const multipliedTrees = slopes.reduce(
-  (acc, slope) => acc * countTrees(toboggan, slope),
+const treesForSlope = countTrees(toboggan, SLOPES[1]);
+const multipliedTrees = SLOPES.reduce(
+  (acc, s) => acc * countTrees(toboggan, s),
   1
 );
 

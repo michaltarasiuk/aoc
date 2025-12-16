@@ -4,14 +4,16 @@ import {fetchInput} from '#lib/input.js';
 
 const input = await fetchInput({year: 2016, day: 2});
 
-const keypad = [
+const KEYPAD = [
   ['1', '2', '3'],
   ['4', '5', '6'],
   ['7', '8', '9'],
 ];
 
-const X_BOUND = keypad[0].length - 1;
-const Y_BOUND = keypad.length - 1;
+const START_POINT = [1, 1];
+
+const X_BOUND = KEYPAD[0].length - 1;
+const Y_BOUND = KEYPAD.length - 1;
 
 function move(x: number, y: number, direction: string) {
   switch (direction) {
@@ -28,16 +30,14 @@ function move(x: number, y: number, direction: string) {
   }
 }
 
-const startPoint = [1, 1];
-
-let [x, y] = startPoint;
+let [x, y] = START_POINT;
 let bathroomCode = '';
 
 for (const l of input.split(/\n/)) {
   for (const char of l) {
     [x, y] = move(x, y, char);
   }
-  bathroomCode += keypad[y][x];
+  bathroomCode += KEYPAD[y][x];
 }
 
 assert.strictEqual(bathroomCode, '19636', 'Part 1 failed');

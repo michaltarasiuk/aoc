@@ -5,7 +5,7 @@ import {isKeyof} from '#lib/is_keyof.js';
 
 const input = await fetchInput({year: 2024, day: 7});
 
-const operators = {
+const OPERATORS = {
   '+': (a, b) => a + b,
   '*': (a, b) => a * b,
   '||': (a, b) => Number(a + String(b)),
@@ -13,7 +13,7 @@ const operators = {
 
 function* permuteOperators(
   arrayLength: number,
-  operatorKeys = Object.keys(operators) as (keyof typeof operators)[]
+  operatorKeys = Object.keys(OPERATORS) as (keyof typeof OPERATORS)[]
 ): Generator<string[]> {
   if (arrayLength === 0) {
     yield [];
@@ -30,8 +30,8 @@ function evaluateLeftToRight(
   operatorKeys: string[]
 ) {
   return operands.reduce((acc, operand, i) => {
-    assert(isKeyof(operators, operatorKeys[i]));
-    return operators[operatorKeys[i]](acc, operand);
+    assert(isKeyof(OPERATORS, operatorKeys[i]));
+    return OPERATORS[operatorKeys[i]](acc, operand);
   }, initialValue);
 }
 

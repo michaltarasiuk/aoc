@@ -6,7 +6,7 @@ const input = await fetchInput({year: 2021, day: 11});
 
 const STEPS = 100;
 const THRESHOLD = 9;
-const directions = [
+const DIRECTIONS = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -36,7 +36,7 @@ for (let step = 1; ; step++) {
     }
     flashed.add(`${x},${y}`);
     octopuses[y][x] = 0;
-    for (const [i, j] of directions) {
+    for (const [i, j] of DIRECTIONS) {
       if (octopuses[y + j]?.[x + i] && ++octopuses[y + j][x + i] > THRESHOLD) {
         stack.push([x + i, y + j]);
       }
