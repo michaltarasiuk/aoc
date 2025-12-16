@@ -16,9 +16,10 @@ function parseInstruction(instruction: string) {
 }
 
 function calcSignal(instructions: z.infer<typeof instructionSchema>[]) {
-  return instructions.reduce((acc, instruction) => {
-    return instruction.op === 'addx' ? acc + instruction.arg : acc;
-  }, 1);
+  return instructions.reduce(
+    (acc, i) => (i.op === 'addx' ? acc + i.arg : acc),
+    1
+  );
 }
 
 const instructions = input
@@ -30,7 +31,7 @@ const instructions = input
 
 const cycles = [20, 60, 100, 140, 180, 220];
 const sumOfSignals = cycles.reduce(
-  (acc, cycle) => acc + cycle * calcSignal(instructions.slice(0, cycle - 1)),
+  (acc, c) => acc + c * calcSignal(instructions.slice(0, c - 1)),
   0
 );
 
