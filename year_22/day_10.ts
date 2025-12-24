@@ -29,8 +29,8 @@ const instructions = input
     instruction.op === 'addx' ? [{op: 'noop'}, instruction] : [instruction]
   );
 
-const cycles = [20, 60, 100, 140, 180, 220];
-const sumOfSignals = cycles.reduce(
+const CYCLES = [20, 60, 100, 140, 180, 220];
+const sumOfSignals = CYCLES.reduce(
   (acc, c) => acc + c * calcSignal(instructions.slice(0, c - 1)),
   0
 );

@@ -24,7 +24,7 @@ function createShift() {
   return Array(MinutesInHour).fill(0);
 }
 
-const events = {falls: 'falls asleep', wakes: 'wakes up'};
+const EVENTS = {falls: 'falls asleep', wakes: 'wakes up'};
 const records = input
   .split(/\n/)
   .map(parseRecord)
@@ -40,9 +40,9 @@ for (const {event, date} of records) {
   const shift = parseShift(event);
   if (isDefined(shift)) {
     currentGuard = guards[shift.id] ??= createShift();
-  } else if (event === events.falls) {
+  } else if (event === EVENTS.falls) {
     sleepStart = date;
-  } else if (event === events.wakes) {
+  } else if (event === EVENTS.wakes) {
     for (let i = sleepStart!.getMinutes(); i < date.getMinutes(); i++) {
       currentGuard![i]++;
     }
