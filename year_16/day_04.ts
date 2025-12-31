@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 
+import {stringToCodePoints} from '#lib/code-points.js';
 import {frequencies} from '#lib/frequencies.js';
 import {fetchInput} from '#lib/input.js';
 import {raise} from '#lib/raise.js';
-import {stringToCodePoints} from '#lib/string_to_code_points.js';
 
 const input = await fetchInput({year: 2016, day: 4});
 
