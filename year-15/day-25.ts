@@ -1,0 +1,22 @@
+import assert from "node:assert"
+
+import {fetchInput, raise} from "../lib.js"
+
+const input = await fetchInput({year: 2015, day: 25})
+
+const INITIAL_CODE = 20151125
+const MULTIPLIER = 252533
+const MODULO = 33554393
+
+const inputRe = /Enter the code at row (\d+), column (\d+)/
+const inputMatch = input.match(inputRe) ?? raise("Invalid input")
+
+const row = Number(inputMatch[1])
+const col = Number(inputMatch[2])
+
+let code = INITIAL_CODE
+for (let i = 0; i < ((row + col) * (row + col - 1)) / 2 - row; i++) {
+  code = (code * MULTIPLIER) % MODULO
+}
+
+assert.strictEqual(code, 9132360, "Part 1 failed")
