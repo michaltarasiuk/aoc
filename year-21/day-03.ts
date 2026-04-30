@@ -4,7 +4,7 @@ import {fetchInput, frequencies, transpose} from "../lib.js"
 
 const input = await fetchInput({year: 2021, day: 3})
 
-const mostCommonBit = (bits: (string | undefined)[]) => {
+const mostCommonBit = (bits: string[]) => {
   const freq = frequencies(bits)
   return freq.get("0")! > freq.get("1")! ? "0" : "1"
 }
