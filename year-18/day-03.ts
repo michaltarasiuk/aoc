@@ -11,7 +11,7 @@ function parseClaim(claim: string) {
   return {id, x, y, width, height}
 }
 
-const claims = input.split(/\n/).map(parseClaim)
+const claims = input.split("\n").map(parseClaim)
 const overlappingClaims = new Set<number>()
 
 const FABRIC_SIZE = 1_000

@@ -8,7 +8,7 @@ const START = "you"
 const END = "out"
 
 const deviceConnections = Object.fromEntries(
-  input.split(/\n/).map(l => {
+  input.split("\n").map(l => {
     const [device, ...outputs] = l.matchAll(/\w+/g).map(([m]) => m)
     return [device, outputs]
   }),

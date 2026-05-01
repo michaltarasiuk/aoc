@@ -34,7 +34,7 @@ function setLights(
   return lights
 }
 
-const instructions = input.split(/\n/).map(parseInstruction)
+const instructions = input.split("\n").map(parseInstruction)
 
 const lights = setLights(
   {

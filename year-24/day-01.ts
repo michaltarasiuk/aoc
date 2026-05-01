@@ -4,7 +4,7 @@ import {fetchInput, frequencies, raise} from "../lib.js"
 
 const input = await fetchInput({year: 2024, day: 1})
 
-const locations = input.split(/\n/).map(ln => {
+const locations = input.split("\n").map(ln => {
   const locationPairRe = /^(\d+) {3}(\d+)$/
   const [, l, r] = locationPairRe.exec(ln) ?? raise(`Invalid pair: ${ln}`)
   return [Number(l), Number(r)] as const

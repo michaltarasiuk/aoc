@@ -9,7 +9,7 @@ const LIGHT_OFF = "."
 
 const EXCLUDE_JOLTAGE_REQUIREMENTS = -1
 
-const machines = input.split(/\n/).map(l => {
+const machines = input.split("\n").map(l => {
   const [goalState, ...buttons] = l
     .split(/\s/)
     .slice(0, EXCLUDE_JOLTAGE_REQUIREMENTS)

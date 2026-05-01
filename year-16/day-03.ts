@@ -16,7 +16,7 @@ function isValidTriangle([a, b, c]: number[]) {
   return a + b > c && a + c > b && b + c > a
 }
 
-const trianglesByRows = input.split(/\n/).map(parseTriangle)
+const trianglesByRows = input.split("\n").map(parseTriangle)
 
 const cols: number[][] = []
 for (const triangle of trianglesByRows) {

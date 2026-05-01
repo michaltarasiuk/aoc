@@ -19,8 +19,8 @@ const A = 3
 const B = 1
 
 const games = input
-  .split(/\n\n/)
-  .map(p => p.split(/\n/))
+  .split("\n\n")
+  .map(p => p.split("\n"))
   .map(p => p.map(l => l.matchAll(/\d+/g).map(Number).toArray()) as Shape)
 
 let totalTokensSpent = 0

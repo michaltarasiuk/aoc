@@ -4,7 +4,7 @@ import {fetchInput, raise} from "../lib.js"
 
 const input = await fetchInput({year: 2024, day: 24})
 
-const [initialValues, gateDescriptions] = input.split(/\n\n/).map(p => p.split(/\n/))
+const [initialValues, gateDescriptions] = input.split("\n\n").map(p => p.split("\n"))
 
 const wireValues = Object.fromEntries(
   initialValues.map(l => l.split(": ")).map(([k, v]) => [k, Number(v)]),

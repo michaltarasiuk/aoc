@@ -15,7 +15,7 @@ const DIRECTIONS = {
   "<": [-1, 0],
 }
 
-const [a, b] = input.split(/\n\n/).map(p => p.split(/\n/))
+const [a, b] = input.split("\n\n").map(p => p.split("\n"))
 
 const warehouse = a.map(l => [...l])
 const moves = b.flatMap(l => [...l])

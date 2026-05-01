@@ -22,11 +22,11 @@ function pairInsertion([...polymerElements]: string, rules: Map<string, string>)
   throw new Error("Invalid polymer")
 }
 
-const [polymerTemplate, rules] = input.split(/\n\n/)
+const [polymerTemplate, rules] = input.split("\n\n")
 
 const ruleRe = /^(\w{2}) -> (\w)$/
 const rulesMap = new Map(
-  rules.split(/\n/).map(rule => {
+  rules.split("\n").map(rule => {
     const [, pair, insertion] = ruleRe.exec(rule) ?? raise("Invalid rule")
     return [pair, insertion]
   }),

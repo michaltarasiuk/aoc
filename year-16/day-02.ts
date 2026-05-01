@@ -33,7 +33,7 @@ function move(x: number, y: number, direction: string) {
 let [x, y] = START_POINT
 let bathroomCode = ""
 
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   for (const char of l) {
     ;[x, y] = move(x, y, char)
   }

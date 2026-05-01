@@ -7,7 +7,7 @@ const input = await fetchInput({year: 2015, day: 7})
 function parseInstruction(instruction: string) {
   return [...(instruction.match(/[A-Z]+/) ?? []), ...(instruction.match(/([a-z]|[0-9])+/g) ?? [])]
 }
-const circuit = input.split(/\n/).reduce<Record<string, string[]>>((acc, l) => {
+const circuit = input.split("\n").reduce<Record<string, string[]>>((acc, l) => {
   const instruction = parseInstruction(l)
   const dest = instruction.pop()
   if (isDefined(dest)) {

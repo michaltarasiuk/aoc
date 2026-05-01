@@ -31,7 +31,7 @@ function traceWirePath(path: ReturnType<typeof parseWirePath>) {
   return visitedCoords
 }
 
-const [wire1Coords, wire2Coords] = input.split(/\n/).map(parseWirePath).map(traceWirePath)
+const [wire1Coords, wire2Coords] = input.split("\n").map(parseWirePath).map(traceWirePath)
 
 const intersections = [...wire1Coords.keys()].filter(p => wire2Coords.has(p))
 

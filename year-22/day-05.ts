@@ -15,7 +15,7 @@ function cratesToString(crates: Record<string, string[]>) {
     .join("")
 }
 
-const [stacks, instructions] = input.split(/\n\n/).map(l => l.split(/\n/))
+const [stacks, instructions] = input.split("\n\n").map(l => l.split("\n"))
 const [stackIds, ...crateStacks] = stacks.toReversed()
 
 const stackIdMap = Object.fromEntries(stackIds.matchAll(/\d/g).map(m => [m.index, m[0]]))

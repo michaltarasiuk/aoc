@@ -37,7 +37,7 @@ function updateFilesystem(filesystem: Filesystem, cwd: string[], dir: string[]) 
 }
 
 const cmds: Cmd[] = []
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   const cmd = parseCmd(l)
   if (isDefined(cmd)) {
     cmds.push([cmd])

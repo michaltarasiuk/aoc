@@ -32,7 +32,7 @@ function parseCacheKey(cacheKey: string) {
   return [Number(dir), Number(x), Number(y)] as const
 }
 
-const grid = input.split(/\n/).map(l => [...l])
+const grid = input.split("\n").map(l => [...l])
 
 const stack = new Map([[toCacheKey(INITIAL_FACING, ...getStartTileCoords(grid)), 0]])
 const visited = new Set<string>()

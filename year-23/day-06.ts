@@ -12,7 +12,7 @@ function countWaysOfBeatRecord(time: number, record: number) {
   return count
 }
 
-const [times, distances] = input.split(/\n/)
+const [times, distances] = input.split("\n")
 
 const parsedTimes = times
   .replace(/^Time:\s+/, "")

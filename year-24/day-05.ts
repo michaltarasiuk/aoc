@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2024, day: 5})
 
-const [rules, updates] = input.split(/\n\n/).map(p => p.split(/\n/))
+const [rules, updates] = input.split("\n\n").map(p => p.split("\n"))
 
 const rulesByPage = Object.groupBy(
   rules.map(r => r.split("|").map(Number)),

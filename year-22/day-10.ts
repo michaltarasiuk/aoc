@@ -19,7 +19,7 @@ function calcSignal(instructions: z.infer<typeof instructionSchema>[]) {
 }
 
 const instructions = input
-  .split(/\n/)
+  .split("\n")
   .map(parseInstruction)
   .flatMap((instruction): z.infer<typeof instructionSchema>[] =>
     instruction.op === "addx" ? [{op: "noop"}, instruction] : [instruction],

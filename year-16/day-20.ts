@@ -13,7 +13,7 @@ function parseRange(r: string) {
 }
 
 const ranges = input
-  .split(/\n/)
+  .split("\n")
   .map(parseRange)
   .sort((a, b) => a.start - b.start)
 

@@ -5,7 +5,7 @@ import {fetchInput} from "../lib.js"
 const input = await fetchInput({year: 2023, day: 13})
 
 function parsePattern(p: string) {
-  const rows = p.split(/\n/)
+  const rows = p.split("\n")
   const cols: string[] = []
   for (const [...r] of rows) {
     for (const [i, v] of r.entries()) {
@@ -28,7 +28,7 @@ function calcReflection(lines: string[]) {
 }
 
 const totalReflection = input
-  .split(/\n\n/)
+  .split("\n\n")
   .map(parsePattern)
   .map(([r, c]) => Math.max(calcReflection(r) * 100, calcReflection(c)))
   .reduce((acc, v) => acc + v, 0)

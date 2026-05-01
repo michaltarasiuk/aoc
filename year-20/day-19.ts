@@ -23,7 +23,7 @@ function resolveRule(rule: Rule[1], ruleMap: Map<number, Rule[1]>): string {
   return `(${rule.map(sub => sub.map(id => resolveRule(ruleMap.get(id)!, ruleMap)).join("")).join("|")})`
 }
 
-const [rules, messages] = input.split(/\n\n/).map(s => s.split(/\n/))
+const [rules, messages] = input.split("\n\n").map(s => s.split("\n"))
 
 const ruleMap = new Map(rules.map(parseRule))
 const ruleZeroRe = new RegExp(`^${resolveRule(ruleMap.get(0)!, ruleMap)}$`)

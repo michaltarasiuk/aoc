@@ -18,7 +18,7 @@ function* permuteContainers(liters: number, ...containers: number[]): Generator<
 
 const LITERS = 150
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 const combinations = [...permuteContainers(LITERS, ...lines.map(Number))]
 
 const combinationsByLength = Object.groupBy(combinations, c => c.length)

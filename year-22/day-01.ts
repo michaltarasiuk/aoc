@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2022, day: 1})
 
-const paragraphs = input.split(/\n\n/).map(p => p.split(/\n/))
+const paragraphs = input.split("\n\n").map(p => p.split("\n"))
 
 const elfs = paragraphs.map(p => p.map(Number).reduce((a, b) => a + b)).sort((a, b) => b - a)
 

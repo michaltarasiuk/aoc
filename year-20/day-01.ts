@@ -8,7 +8,7 @@ function hasSumOf2020(...entries: number[]) {
   return entries.reduce((acc, entry) => acc + entry, 0) === 2020
 }
 
-const expenses = input.split(/\n/).map(Number)
+const expenses = input.split("\n").map(Number)
 
 let productOfTwoEntries = 1
 let productOfThreeEntries = 1

@@ -21,7 +21,7 @@ function calcYell(jobs: Record<string, string>, name: string): number {
   return parsedJob
 }
 
-const jobs = Object.fromEntries(input.split(/\n/).map(parseJob))
+const jobs = Object.fromEntries(input.split("\n").map(parseJob))
 const rootYell = calcYell(jobs, "root")
 
 assert.strictEqual(rootYell, 142707821472432, "Part 1 failed")

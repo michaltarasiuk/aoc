@@ -11,7 +11,7 @@ const DIRECTIONS = [
   [-1, 0],
 ]
 
-const heightMap = input.split(/\n/).map(l => [...l].map(Number))
+const heightMap = input.split("\n").map(l => [...l].map(Number))
 
 let riskLevel = 0
 for (const y of heightMap.keys()) {

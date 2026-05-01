@@ -12,7 +12,7 @@ function parseStep(step: string) {
 }
 
 const steps = input
-  .split(/\n/)
+  .split("\n")
   .map(parseStep)
   .reduce<Map<string, Set<string>>>((acc, {before, after}) => {
     if (!acc.has(before)) acc.set(before, new Set())

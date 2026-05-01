@@ -34,7 +34,7 @@ function sumPartNumbers(layers: Layer[]) {
   }, 0)
 }
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 const layers = parseLayers(lines)
 
 const part1Result = sumPartNumbers(layers)

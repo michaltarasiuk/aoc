@@ -22,11 +22,11 @@ function applyMaps(maps: number[][][], value: number) {
   return applyMaps(rest, value)
 }
 
-const [seedLine, ...sections] = input.split(/\n\n/)
+const [seedLine, ...sections] = input.split("\n\n")
 
 const seeds = parseLine(seedLine.replace(/^seeds: /, ""))
 
-const maps = sections.map(s => s.split(/\n/).slice(1)).map(lns => lns.map(parseLine))
+const maps = sections.map(s => s.split("\n").slice(1)).map(lns => lns.map(parseLine))
 
 const minLocation = Math.min(...seeds.map(s => applyMaps(maps, s)))
 

@@ -12,7 +12,7 @@ const horizontalMiddle = Math.floor(TILES_WIDE / 2)
 const verticalMiddle = Math.floor(TILES_TALL / 2)
 
 const robotRe = /^p=(\d+),(\d+) v=(-?\d+),(-?\d+)$/
-const robots = input.split(/\n/).map(l => {
+const robots = input.split("\n").map(l => {
   const [, px, py, vx, vy] = (robotRe.exec(l) ?? []).map(Number)
   return {px, py, vx, vy}
 })

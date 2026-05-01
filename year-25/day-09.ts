@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2025, day: 9})
 
-const redTiles = input.split(/\n/).map(l => {
+const redTiles = input.split("\n").map(l => {
   const [x, y] = l.split(",").map(Number)
   return {x, y}
 })

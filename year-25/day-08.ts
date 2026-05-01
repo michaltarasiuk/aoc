@@ -7,7 +7,7 @@ const input = await fetchInput({year: 2025, day: 8})
 const SHORTEST_CONNECTIONS = 1000
 const TOP_CIRCUITS = 3
 
-const junctionBoxes = input.split(/\n/).map(l => {
+const junctionBoxes = input.split("\n").map(l => {
   const [x, y, z] = l.split(",").map(Number)
   return {x, y, z}
 })

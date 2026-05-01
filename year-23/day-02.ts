@@ -4,7 +4,7 @@ import {fetchInput, isKeyof} from "../lib.js"
 
 const input = await fetchInput({year: 2023, day: 2})
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 const games = lines.map(l =>
   l
     .matchAll(/(\d+) (r|g|b)/g)

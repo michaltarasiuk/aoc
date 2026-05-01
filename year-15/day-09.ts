@@ -11,7 +11,7 @@ function parseDistance(l: string) {
 }
 
 const distancesMap = input
-  .split(/\n/)
+  .split("\n")
   .map(parseDistance)
   .reduce<{[from: string]: {[to: string]: number}}>((acc, [a, b, cost]) => {
     acc[a] ??= {}

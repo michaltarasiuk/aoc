@@ -14,10 +14,10 @@ function countWays(design: string, patterns: RegExp[], cache: Record<typeof desi
   return (cache[design] = ways)
 }
 
-const [patterns, designs] = input.split(/\n\n/)
+const [patterns, designs] = input.split("\n\n")
 
 const compiledPatterns = patterns.split(", ").map(p => new RegExp("^" + p))
-const waysCount = designs.split(/\n/).map(d => countWays(d, compiledPatterns))
+const waysCount = designs.split("\n").map(d => countWays(d, compiledPatterns))
 
 const possibleDesignsCount = waysCount.filter(c => c > 0).length
 const totalWaysCount = waysCount.reduce((acc, c) => acc + c)

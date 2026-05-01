@@ -29,7 +29,7 @@ function roundOutcome(them: number, me: number) {
   throw new Error("Invalid round outcome")
 }
 
-const score = input.split(/\n/).reduce((acc, l) => {
+const score = input.split("\n").reduce((acc, l) => {
   const [them, me] = parseRound(l)
   return acc + roundOutcome(them, me) + me
 }, 0)

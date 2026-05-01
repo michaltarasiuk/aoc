@@ -31,7 +31,7 @@ function findContiguousSet(nums: number[], target: number) {
   throw new Error("Contiguous set not found")
 }
 
-const nums = input.split(/\n/).map(Number)
+const nums = input.split("\n").map(Number)
 
 const invalidNum = findInvalid(nums)
 

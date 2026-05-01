@@ -17,7 +17,7 @@ function* permuteConnections(connections: string[], arrayLength: number): Genera
 }
 
 const connections = input
-  .split(/\n/)
+  .split("\n")
   .map(l => l.split("-"))
   .reduce<Record<string, Set<string>>>((acc, [a, b]) => {
     ;(acc[a] ??= new Set()).add(b)

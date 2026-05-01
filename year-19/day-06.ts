@@ -33,7 +33,7 @@ function findMinimumTransfers(orbitGraph: OrbitGraph, start = "YOU", end = "SAN"
 
 const orbitRe = /^(.*)\)(.*)$/
 const orbits = new Map(
-  input.split(/\n/).map(l => {
+  input.split("\n").map(l => {
     const [, center, satellite] = orbitRe.exec(l) ?? raise("Invalid orbit")
     return [satellite, center]
   }),

@@ -14,11 +14,11 @@ const PASSPORT_KEYS = {
   pid: /^\d{9}$/,
 }
 
-const passports = input.split(/\n\n/).map(p => {
+const passports = input.split("\n\n").map(p => {
   const pairRe = /(\w+):(\S+)/g
   return Object.fromEntries(
     p
-      .split(/\n/)
+      .split("\n")
       .join(" ")
       .matchAll(pairRe)
       .map(([, k, v]) => [k, v]),

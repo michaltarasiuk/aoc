@@ -61,7 +61,7 @@ function calcAutocompleteScore(stack: string[]) {
   }, 0)
 }
 
-const parsedLines = input.split(/\n/).map(analyzeLineSyntax)
+const parsedLines = input.split("\n").map(analyzeLineSyntax)
 
 const totalSyntaxErrorScore = parsedLines
   .flatMap(l => (l.status === "SYNTAX_ERROR" ? [l.score] : []))

@@ -4,7 +4,7 @@ import {fetchInput, transpose} from "../lib.js"
 
 const input = await fetchInput({year: 2025, day: 6})
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 
 {
   const rows = lines.map(l => l.trim().split(/\s+/))

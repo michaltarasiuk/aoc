@@ -46,7 +46,7 @@ function findShortestPath(memoryGrid: string[][]): number {
   return -1
 }
 
-const bytes = input.split(/\n/).map(l => l.split(",").map(Number))
+const bytes = input.split("\n").map(l => l.split(",").map(Number))
 const memorySpace = [...Array(SIZE)].map(() => Array(SIZE).fill(SAFE))
 
 for (const [i, j] of bytes.splice(0, MAX_BYTES)) {

@@ -8,7 +8,7 @@ function mapBoxIdToIndexedChars(boxId: string) {
   return Array.from(boxId, (char, i) => char + `[${i}]`)
 }
 
-const boxIds = input.split(/\n/)
+const boxIds = input.split("\n")
 
 let countOfTwos = 0
 let countOfThrees = 0

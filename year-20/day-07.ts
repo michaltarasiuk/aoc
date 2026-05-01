@@ -26,7 +26,7 @@ function countBagsOf(rules: Rules, search: string): number {
 const SEARCH_BAG = "shiny gold"
 const rules = new Map(
   input
-    .split(/\n/)
+    .split("\n")
     .map(parseRule)
     .map(([{color}, ...bags]) => [color, bags]),
 )

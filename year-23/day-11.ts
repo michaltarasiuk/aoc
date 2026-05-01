@@ -11,7 +11,7 @@ function isEmptySpace(...space: string[]) {
   return space.join("").replaceAll(EMPTY_SPACE, "").length === 0
 }
 
-const image = input.split(/\n/).map(l => [...l])
+const image = input.split("\n").map(l => [...l])
 assert(image.length === image[0].length, "Image is not square")
 
 const expandedImage = structuredClone(image)

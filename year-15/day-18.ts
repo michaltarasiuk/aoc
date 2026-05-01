@@ -34,7 +34,7 @@ function computeNextState(current: string, neighbors: string[]) {
   }
 }
 
-const initialGrid = input.split(/\n/).map(r => [...r])
+const initialGrid = input.split("\n").map(r => [...r])
 let grid = initialGrid
 for (let step = 0; step < STEPS; step++) {
   grid = grid.map((r, y) => r.map((v, x) => computeNextState(v, getNeighbors(grid, {x, y}))))

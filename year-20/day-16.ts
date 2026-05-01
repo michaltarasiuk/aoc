@@ -18,7 +18,7 @@ function parseTicket(ticket: string) {
   return ticket.split(",").map(Number)
 }
 
-const [rules, , [, ...nearbyTickets]] = input.split(/\n\n/).map(p => p.split(/\n/))
+const [rules, , [, ...nearbyTickets]] = input.split("\n\n").map(p => p.split("\n"))
 
 const ranges = rules.flatMap(parseRule)
 const errorRate = nearbyTickets.flatMap(parseTicket).reduce((acc, n) => {

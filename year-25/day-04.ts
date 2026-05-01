@@ -41,7 +41,7 @@ function getRolls(grid: string[][]) {
   return rolls
 }
 
-const grid = input.split(/\n/).map(l => [...l])
+const grid = input.split("\n").map(l => [...l])
 const initialAccessibleRolls = getRolls(grid).filter(r => isAccessibleByForklift(grid, ...r))
 
 let totalRollsRemoved = 0

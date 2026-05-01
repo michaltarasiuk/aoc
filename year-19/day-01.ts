@@ -17,7 +17,7 @@ function calcFuelRecursive(mass: number): number {
   }
 }
 
-const moduleMasses = input.split(/\n/).map(Number)
+const moduleMasses = input.split("\n").map(Number)
 
 const fuelRequirementsSum = moduleMasses.map(calcFuel).reduce((a, b) => a + b)
 const fuelRequirementsSumRecursive = moduleMasses.map(calcFuelRecursive).reduce((a, b) => a + b)

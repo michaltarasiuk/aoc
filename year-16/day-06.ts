@@ -15,7 +15,7 @@ function decodeMessage(cols: string[][], compareFn = (a: number, b: number) => a
 }
 
 const cols: string[][] = []
-for (const [...l] of input.split(/\n/)) {
+for (const [...l] of input.split("\n")) {
   for (const [k, v] of l.entries()) {
     ;(cols[k] ??= []).push(v)
   }

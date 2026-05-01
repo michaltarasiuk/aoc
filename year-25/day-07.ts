@@ -9,7 +9,7 @@ const BEAM = "|"
 const SPLITTER = "^"
 
 const manifold = input
-  .split(/\n/)
+  .split("\n")
   .map(l => [...l])
   .map(l => l.map(symbol => ({symbol, timelines: 0})))
 

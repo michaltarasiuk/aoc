@@ -25,7 +25,7 @@ function calcDistance(speed: number, duration: number, rest: number) {
 }
 
 const distances = input
-  .split(/\n/)
+  .split("\n")
   .map(parseReindeer)
   .map(r => calcDistance(...r))
 

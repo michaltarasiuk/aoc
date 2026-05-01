@@ -19,7 +19,7 @@ function calcPriority(char: string) {
   throw new Error(`Invalid character: ${char}`)
 }
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 
 const prioritiesSum = lines.reduce((acc, rucksack) => {
   const [a, b] = splitRucksack(rucksack)

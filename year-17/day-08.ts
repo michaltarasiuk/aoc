@@ -6,7 +6,7 @@ const input = await fetchInput({year: 2017, day: 8})
 
 const registers: Record<string, number> = {}
 let maxEverSeen = -Infinity
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   const {register, operation, value, condition} = parseInstruction(l)
   const expression = `${(registers[condition.register] ??= 0)} ${condition.operation} ${condition.value}`
   if (!eval(expression)) {

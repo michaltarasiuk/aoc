@@ -7,7 +7,7 @@ const input = await fetchInput({year: 2016, day: 7})
 const abbaRe = /(\w)((?!\1)\w)\2\1/
 const abaRe = /(\w)((?!\1)\w)\1.* .*\2\1\2.*/
 
-const ipAddresses = input.split(/\n/).map(l => {
+const ipAddresses = input.split("\n").map(l => {
   const groups = Object.groupBy(l.split(/\[|\]/), (_, i) => (i % 2 === 0 ? "supers" : "hypers"))
   return {
     supers: groups.supers?.join() ?? "",

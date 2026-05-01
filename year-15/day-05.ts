@@ -5,7 +5,7 @@ import {fetchInput} from "../lib.js"
 const input = await fetchInput({year: 2015, day: 5})
 
 const niceStringsCount = input
-  .split(/\n/)
+  .split("\n")
   .map(l => {
     const hasAtLeastThreeVowels = /(.*[aeuio].*){3}/.test(l)
     const hasDoubleLetter = /(?:(\w)\1+)/.test(l)
@@ -16,7 +16,7 @@ const niceStringsCount = input
   .reduce((a, b) => a + b)
 
 const niceStringsCount2 = input
-  .split(/\n/)
+  .split("\n")
   .map(l => {
     const hasPairOfTwoLetters = /(\w{2}).*\1/.test(l)
     const hasRepeatingLetter = /(\w)\w\1/.test(l)

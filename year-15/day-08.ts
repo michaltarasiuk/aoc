@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2015, day: 8})
 
-const lines = input.split(/\n/)
+const lines = input.split("\n")
 
 const memoryStrings = <string[]>eval(`[${lines.join()}]`)
 const encodedStrings = lines.map(line => JSON.stringify(line))

@@ -4,7 +4,7 @@ import {fetchInput, isDefined} from "../lib.js"
 
 const input = await fetchInput({year: 2025, day: 5})
 
-const [ranges, ids] = input.split(/\n\n/).map(p => p.split(/\n/))
+const [ranges, ids] = input.split("\n\n").map(p => p.split("\n"))
 
 const freshRanges = ranges.map(r => {
   const [start, end] = r.split("-")

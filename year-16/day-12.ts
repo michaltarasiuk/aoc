@@ -34,7 +34,7 @@ function execute(
   return registers
 }
 
-const instructions = input.split(/\n/).map(l => l.split(/\s/))
+const instructions = input.split("\n").map(l => l.split(/\s/))
 
 const registersPart1 = execute({a: 0, b: 0, c: 0, d: 0}, ...instructions)
 const registersPart2 = execute({a: 0, b: 0, c: 1, d: 0}, ...instructions)

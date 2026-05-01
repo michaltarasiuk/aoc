@@ -15,7 +15,7 @@ function extrapolate(...ns: number[]): number[] {
 }
 
 let extrapolatedValuesSum = 0
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   for (const v of extrapolate(...l.split(/\s/).map(Number))) {
     extrapolatedValuesSum += v
   }

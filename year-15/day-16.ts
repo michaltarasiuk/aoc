@@ -41,7 +41,7 @@ function findBestMatchSueId(
 }
 
 const sueRe = /^Sue (\d+): (.*)/
-const sues = input.split(/\n/).map(l => {
+const sues = input.split("\n").map(l => {
   const [, id, items] = l.match(sueRe) ?? raise("No match")
   return [Number(id), items] as const
 })

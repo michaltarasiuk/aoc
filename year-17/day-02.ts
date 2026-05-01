@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2017, day: 2})
 
-const rows = input.split(/\n/).map(l => l.split(/\s+/).map(Number))
+const rows = input.split("\n").map(l => l.split(/\s+/).map(Number))
 
 let checksum = 0
 for (const r of rows) {

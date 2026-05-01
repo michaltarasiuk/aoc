@@ -5,7 +5,7 @@ import {fetchInput} from "../lib.js"
 const input = await fetchInput({year: 2020, day: 8})
 
 const instructions = input
-  .split(/\n/)
+  .split("\n")
   .map(l => l.split(/\s/))
   .map(([operation, arg]) => ({operation, arg: Number(arg)}))
 

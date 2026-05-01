@@ -45,7 +45,7 @@ function execute({...registers}: {a: number; b: number}, ...instructions: string
 
 const instructionRe = /(\w+|[+-]\d+)/g
 const instructions = input
-  .split(/\n/)
+  .split("\n")
   .map(l => l.match(instructionRe) ?? raise("Invalid instruction"))
 
 const registers = [execute({a: 0, b: 0}, ...instructions), execute({a: 1, b: 0}, ...instructions)]

@@ -33,7 +33,7 @@ const monkeyWithInspection = monkeySchema.transform(m => ({
 const ROUNDS_COUNT = 20
 const monkeys = new Map(
   input
-    .split(/\n\n/)
+    .split("\n\n")
     .map(m => monkeyWithInspection.parse(monkeyRe.exec(m)?.groups))
     .map(m => [m.id, m]),
 )

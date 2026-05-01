@@ -17,7 +17,7 @@ function shiftAlphabetCodePoint(codePoint: number, shift: number) {
 }
 
 const roomRe = /^([\w-]+)-(\d+)\[(\w+)\]$/
-const rooms = input.split(/\n/).map(l => {
+const rooms = input.split("\n").map(l => {
   const [, name, id, checksum] = roomRe.exec(l) ?? raise("Invalid room")
   return {name: name.replace(/-/g, ""), id: Number(id), checksum}
 })

@@ -31,7 +31,7 @@ function evaluateLeftToRight([initialValue, ...operands]: number[], operatorKeys
   }, initialValue)
 }
 
-const equations = input.split(/\n/).map(l => l.split(/:? /).map(Number))
+const equations = input.split("\n").map(l => l.split(/:? /).map(Number))
 
 const totalCalibration = equations.reduce((acc, [result, ...operands]) => {
   const isValidEquation = permuteOperators(operands.length, ["+", "*"]).some(

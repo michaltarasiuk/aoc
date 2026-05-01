@@ -24,7 +24,7 @@ function createShift() {
 
 const EVENTS = {falls: "falls asleep", wakes: "wakes up"}
 const records = input
-  .split(/\n/)
+  .split("\n")
   .map(parseRecord)
   .sort((a, b) => Number(a.date) - Number(b.date))
 

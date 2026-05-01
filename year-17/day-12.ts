@@ -33,7 +33,7 @@ function countGroups(programs: Map<string, string[]>) {
 }
 
 const programs = new Map(
-  input.split(/\n/).map(l => {
+  input.split("\n").map(l => {
     const {id, connections} = parseProgram(l)
     return [id, connections]
   }),

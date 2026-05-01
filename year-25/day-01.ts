@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2025, day: 1})
 
-const rotations = input.split(/\n/).map(([direction, ...rest]) => ({
+const rotations = input.split("\n").map(([direction, ...rest]) => ({
   direction,
   distance: Number(rest.join("")),
 }))

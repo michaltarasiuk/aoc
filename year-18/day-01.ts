@@ -4,7 +4,7 @@ import {fetchInput} from "../lib.js"
 
 const input = await fetchInput({year: 2018, day: 1})
 
-const changes = input.split(/\n/).map(Number)
+const changes = input.split("\n").map(Number)
 const resultFreq = changes.reduce((a, b) => a + b)
 const seen = new Set<number>()
 

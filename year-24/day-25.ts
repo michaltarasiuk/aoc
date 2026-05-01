@@ -22,7 +22,7 @@ function overlaps(lockHeights: number[], keyHeights: number[]) {
   return lockHeights.some((lockHeight, i) => lockHeight + keyHeights[i] > SCHEMATIC_SIZE)
 }
 
-const schematics = input.split(/\n\n/).map(p => p.split(/\n/))
+const schematics = input.split("\n\n").map(p => p.split("\n"))
 const {locks = [], keys = []} = Object.groupBy(schematics, schematic =>
   new RegExp(`^${FILLED}{${SCHEMATIC_SIZE}}$`).test(schematic[0]) ? "locks" : "keys",
 )

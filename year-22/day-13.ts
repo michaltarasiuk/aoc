@@ -28,8 +28,8 @@ function isValidPacketPair([a, b]: [Packet, Packet]): boolean | void {
 }
 
 const indicesSum = input
-  .split(/\n\n/)
-  .map(p => p.split(/\n/))
+  .split("\n\n")
+  .map(p => p.split("\n"))
   .map(parsePacketPair)
   .reduce((acc, packetPair, i) => {
     if (isValidPacketPair(packetPair)) {

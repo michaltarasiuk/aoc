@@ -11,7 +11,7 @@ const screen = Array(TALL)
   .fill(0)
   .map(() => Array<boolean>(WIDE).fill(false))
 
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   const op = parseRect(l) ?? parseRotate(l) ?? raise("Invalid operation")
   switch (op.type) {
     case "rect": {

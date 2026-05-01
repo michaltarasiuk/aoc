@@ -20,7 +20,7 @@ function parseVent(l: string) {
 }
 
 const diagram: Record<string, number> = {}
-for (const l of input.split(/\n/)) {
+for (const l of input.split("\n")) {
   const {x1, x2, y1, y2} = parseVent(l)
   if (x1 !== x2 && y1 !== y2) {
     continue

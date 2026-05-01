@@ -40,7 +40,7 @@ function compareHands(a: string, b: string) {
 }
 
 const hands = input
-  .split(/\n/)
+  .split("\n")
   .map(l => l.split(/\s/))
   .map(([hand, bit]) => ({hand, bid: Number(bit), type: classifyHand(hand)}))
   .sort((a, b) => a.type - b.type || compareHands(a.hand, b.hand))

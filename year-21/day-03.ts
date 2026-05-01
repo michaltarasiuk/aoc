@@ -11,7 +11,7 @@ const mostCommonBit = (bits: string[]) => {
 
 const toDecimal = (bits: string[]) => parseInt(bits.join(""), 2)
 
-const binaryNumbers = input.split(/\n/).map(line => [...line])
+const binaryNumbers = input.split("\n").map(line => [...line])
 
 const gammaRate = transpose(binaryNumbers).map(mostCommonBit)
 const epsilonRate = gammaRate.map(bit => (bit === "0" ? "1" : "0"))
