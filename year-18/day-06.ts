@@ -17,6 +17,10 @@ function calcManhattanDistance(a: {x: number; y: number}, b: {x: number; y: numb
   return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
 }
 
+function totalManhattanDistanceToSites(x: number, y: number) {
+  return sites.reduce((acc, site) => acc + calcManhattanDistance({x, y}, {x: site.x, y: site.y}), 0)
+}
+
 function closestSites(x: number, y: number) {
   const sitesByDistance = Object.groupBy(sites, site =>
     calcManhattanDistance({x, y}, {x: site.x, y: site.y}),
@@ -50,6 +54,17 @@ for (let y = minCoordinateY; y <= maxCoordinateY; y++) {
   }
 }
 
+const MAX_TOTAL_DISTANCE_SUM = 10_000
+
+let safeRegionSize = 0
+for (let y = minCoordinateY; y <= maxCoordinateY; y++) {
+  for (let x = minCoordinateX; x <= maxCoordinateX; x++) {
+    if (totalManhattanDistanceToSites(x, y) < MAX_TOTAL_DISTANCE_SUM) {
+      safeRegionSize++
+    }
+  }
+}
+
 const largestFiniteArea = Math.max(
   ...sites
     .filter(site => !infiniteSiteLabels.has(site.label))
@@ -57,3 +72,4 @@ const largestFiniteArea = Math.max(
 )
 
 assert.strictEqual(largestFiniteArea, 4186, "Part 1 failed")
+assert.strictEqual(safeRegionSize, 45509, "Part 2 failed")
