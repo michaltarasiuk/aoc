@@ -43,9 +43,9 @@ for (let y = minCoordinateY; y <= maxCoordinateY; y++) {
       x === minCoordinateX || x === maxCoordinateX || y === minCoordinateY || y === maxCoordinateY
     if (uniquelyOwned) {
       ownedAreaBySiteLabel.set(nearest.label, (ownedAreaBySiteLabel.get(nearest.label) ?? 0) + 1)
-    }
-    if (onBoundingRectangle && uniquelyOwned) {
-      infiniteSiteLabels.add(nearest.label)
+      if (onBoundingRectangle) {
+        infiniteSiteLabels.add(nearest.label)
+      }
     }
   }
 }
