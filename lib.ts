@@ -1,15 +1,23 @@
-import {z} from "zod"
-
 export async function fetchInput(meta: ImportMeta) {
-  const {session} = z.object({session: z.string()}).parse(process.env)
-  const [, year, day] = meta.url.match(/year-(\d+)\/day-(\d+)/) ?? raise("Invalid path")
+  const [path, year, day] = meta.url.match(/year-(\d+)\/day-(\d+)/) ?? raise("Invalid path")
+  const cache = Bun.file(`${import.meta.dir}/inputs/${path}.txt`)
+  if (await cache.exists()) {
+    return cache.text()
+  }
+  const session = process.env.session ?? raise("Missing session env variable")
   const response = await fetch(`https://adventofcode.com/20${year}/day/${Number(day)}/input`, {
     headers: {
       Accept: "text/plain",
       Cookie: `session=${session}`,
+      "User-Agent": "github.com/michaltarasiuk/aoc",
     },
   })
-  return (await response.text()).trimEnd()
+  if (!response.ok) {
+    raise(`Failed to fetch input: ${response.status} ${response.statusText}`)
+  }
+  const input = (await response.text()).trimEnd()
+  await Bun.write(cache, input)
+  return input
 }
 
 export function raise(message: string): never {

@@ -1,4 +1,4 @@
-*.tsbuildinfo
 .DS_Store
 .env
+inputs/
 node_modules/
