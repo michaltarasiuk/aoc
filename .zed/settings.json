@@ -1,10 +1,5 @@
 {
   "lsp": {
-    "tsgo": {
-      "settings": {
-        "package_version": "7.0.0-dev.20260115.1"
-      }
-    },
     "oxfmt": {
       "initialization_options": {
         "settings": {
@@ -15,7 +10,7 @@
   },
   "languages": {
     "TypeScript": {
-      "language_servers": ["tsgo", "vtsls", "oxfmt"],
+      "language_servers": ["typescript-ls", "oxfmt"],
       "prettier": {
         "allowed": false
       },
