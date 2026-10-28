@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput, frequencies, isDefined, raise} from "../lib.js"
+import {fetchInput, frequencies, isDefined, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const STEPS_COUNT = 10
 
 function pairInsertion([...polymerElements]: string, rules: Map<string, string>) {
   let polymer = ""
@@ -31,8 +33,6 @@ const rulesMap = new Map(
     return [pair, insertion]
   }),
 )
-
-const STEPS_COUNT = 10
 
 let polymer = polymerTemplate
 for (let i = 0; i < STEPS_COUNT; i++) {

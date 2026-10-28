@@ -1,8 +1,11 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const PROGRAMS = "abcdefghijklmnop"
+const DANCE_COUNT = 1_000_000_000
 
 function dance(moves: string[], ...programs: string[]) {
   for (const m of moves) {
@@ -31,19 +34,17 @@ function dance(moves: string[], ...programs: string[]) {
   return programs.join("")
 }
 
-const PROGRAMS = "abcdefghijklmnop"
-
 const moves = input.split(",")
 
 let programs = PROGRAMS
 let stepsToRepeat = 0
-for (let i = 1; i <= 1_000_000_000; i++) {
+for (let i = 1; i <= DANCE_COUNT; i++) {
   if ((programs = dance(moves, ...programs)) === PROGRAMS) {
     stepsToRepeat = i
     break
   }
 }
-for (let i = 1; i <= 1_000_000_000 % stepsToRepeat; i++) {
+for (let i = 1; i <= DANCE_COUNT % stepsToRepeat; i++) {
   programs = dance(moves, ...programs)
 }
 

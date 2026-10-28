@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {chunkEvery, fetchInput} from "../lib.js"
+import {chunkEvery, fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
@@ -8,7 +8,7 @@ const TRIANGLE_SIDES = 3
 
 function parseTriangle(t: string) {
   const triangle = Array.from(t.matchAll(/\d+/g), Number)
-  assert(triangle.length === 3)
+  assert(triangle.length === TRIANGLE_SIDES)
   return triangle
 }
 

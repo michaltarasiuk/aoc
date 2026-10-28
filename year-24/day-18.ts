@@ -1,13 +1,14 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
-const SIZE = 71
-const MAX_BYTES = 1024
-
 type Point = [x: number, y: number]
+
+const SIZE = 71
+const MAX_BYTES = 1_024
+
 const START_POINT: Point = [0, 0]
 const END_POINT: Point = [SIZE - 1, SIZE - 1]
 

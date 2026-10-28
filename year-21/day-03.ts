@@ -1,15 +1,17 @@
 import assert from "node:assert"
 
-import {fetchInput, frequencies, transpose} from "../lib.js"
+import {fetchInput, frequencies, transpose} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
-const mostCommonBit = (bits: string[]) => {
+function mostCommonBit(bits: string[]) {
   const frequency = frequencies(bits)
   return frequency.get("0")! > frequency.get("1")! ? "0" : "1"
 }
 
-const toDecimal = (bits: string[]) => parseInt(bits.join(""), 2)
+function toDecimal(bits: string[]) {
+  return Number.parseInt(bits.join(""), 2)
+}
 
 const binaryNumbers = input.split("\n").map(l => [...l])
 

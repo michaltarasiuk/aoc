@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
@@ -32,7 +32,7 @@ function* findTrails(
 const grid = input.split("\n").map(l => [...l].map(Number))
 
 const trailheadScores: Record<string, Set<string>> = {}
-const trailheadRatings: Record<string, Array<string>> = {}
+const trailheadRatings: Record<string, string[]> = {}
 
 for (const [y, r] of grid.entries()) {
   for (const [x, h] of r.entries()) {

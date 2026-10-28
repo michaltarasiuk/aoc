@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const TICKS = 1_000
 
 function parseCoords(coords: string) {
   const [, x, y, z] = coords.match(/-?\d+/g)!.map(Number)
@@ -21,8 +23,6 @@ const particles = input.split("\n").map(l => {
     a: parseCoords(a),
   }
 })
-
-const TICKS = 1_000
 
 let closestParticleIndex = -1
 let minDistance = Infinity

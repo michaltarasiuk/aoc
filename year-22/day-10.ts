@@ -1,10 +1,12 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 type Instruction = {op: "addx"; arg: number} | {op: "noop"}
+
+const CYCLES = [20, 60, 100, 140, 180, 220]
 
 function parseInstruction(line: string): Instruction {
   const [op, arg] = line.split(/\s/)
@@ -20,7 +22,6 @@ const instructions: Instruction[] = input
   .map(parseInstruction)
   .flatMap(i => (i.op === "addx" ? [{op: "noop"} as const, i] : [i]))
 
-const CYCLES = [20, 60, 100, 140, 180, 220]
 const sumOfSignals = CYCLES.reduce(
   (acc, c) => acc + c * calcSignal(instructions.slice(0, c - 1)),
   0,

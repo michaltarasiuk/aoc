@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
@@ -8,6 +8,13 @@ const LIGHT_ON = "#"
 const LIGHT_OFF = "."
 
 const EXCLUDE_JOLTAGE_REQUIREMENTS = -1
+
+function toggleLights([...lights]: string, indices: number[]) {
+  for (const i of indices) {
+    lights[i] = lights[i] === LIGHT_OFF ? LIGHT_ON : LIGHT_OFF
+  }
+  return lights.join("")
+}
 
 const machines = input.split("\n").map(l => {
   const [goalState, ...buttons] = l
@@ -41,10 +48,3 @@ for (const {goalState, buttons} of machines) {
 }
 
 assert.strictEqual(totalPresses, 484, "Part 1 failed")
-
-function toggleLights([...lights]: string, indices: number[]) {
-  for (const i of indices) {
-    lights[i] = lights[i] === LIGHT_OFF ? LIGHT_ON : LIGHT_OFF
-  }
-  return lights.join("")
-}

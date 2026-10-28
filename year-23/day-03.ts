@@ -1,16 +1,16 @@
 import assert from "node:assert"
 
-import {fetchInput, isDefined} from "../lib.js"
+import {fetchInput, isDefined} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 type Layer = string[][]
 
 const OFFSETS = [-1, 0, 1]
+const PADDING = 1
 
 function getRange(n: number, x: number) {
-  const offset = 1
-  return [Math.max(x - offset, 0), x + String(n).length + offset]
+  return [Math.max(x - PADDING, 0), x + String(n).length + PADDING]
 }
 
 function extractSegments(lines: string[], y: number, x: number, n: number) {

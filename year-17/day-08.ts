@@ -1,13 +1,13 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 function parseInstruction(i: string) {
-  const re = /^(\w+) (inc|dec) (-?\d+) if (\w+) ([!<>=]=?) (-?\d+)$/
+  const instructionRe = /^(\w+) (inc|dec) (-?\d+) if (\w+) ([!<>=]=?) (-?\d+)$/
   const [, register, operation, value, condReg, condOp, condVal] =
-    re.exec(i) ?? raise("Invalid instruction")
+    instructionRe.exec(i) ?? raise("Invalid instruction")
   return {
     register,
     operation,

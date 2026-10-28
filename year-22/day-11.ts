@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const ROUNDS_COUNT = 20
 
 const monkeyRe = new RegExp(`\
 Monkey (?<id>\\d):
@@ -29,7 +31,6 @@ function parseMonkey(block: string) {
   }
 }
 
-const ROUNDS_COUNT = 20
 const monkeys = new Map(
   input
     .split("\n\n")

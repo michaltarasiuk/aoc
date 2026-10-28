@@ -1,11 +1,15 @@
 import assert from "node:assert"
 
-import {fetchInput, isDefined} from "../lib.js"
+import {fetchInput, isDefined} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
-const SHORTEST_CONNECTIONS = 1000
+const SHORTEST_CONNECTIONS = 1_000
 const TOP_CIRCUITS = 3
+
+function calcDistance<T extends (typeof junctionBoxes)[number]>(a: T, b: T) {
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2) + Math.pow(a.z - b.z, 2))
+}
 
 const junctionBoxes = input.split("\n").map(l => {
   const [x, y, z] = l.split(",").map(Number)
@@ -53,7 +57,3 @@ const circuitSizeProduct = snapshotAt1000
 
 assert.strictEqual(circuitSizeProduct, 131150, "Part 1 failed")
 assert.strictEqual(lastPairXProduct, 2497445, "Part 2 failed")
-
-function calcDistance<T extends (typeof junctionBoxes)[number]>(a: T, b: T) {
-  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2) + Math.pow(a.z - b.z, 2))
-}

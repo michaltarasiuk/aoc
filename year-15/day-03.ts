@@ -1,8 +1,8 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
-const input = [...(await fetchInput(import.meta))]
+const input = await fetchInput(import.meta)
 
 function createPosition() {
   let x = 0
@@ -20,10 +20,10 @@ function createPosition() {
 }
 
 const santa = createPosition()
-const visitedHouses = new Set(input.map(d => String(santa.move(d))))
+const visitedHouses = new Set([...input].map(d => String(santa.move(d))))
 
 const santas = [createPosition(), createPosition()]
-const visitedHousesWithRoboSanta = new Set(input.map((d, i) => String(santas[i % 2].move(d))))
+const visitedHousesWithRoboSanta = new Set([...input].map((d, i) => String(santas[i % 2].move(d))))
 
 assert.strictEqual(visitedHouses.size, 2565, "Part 1 failed")
 assert.strictEqual(visitedHousesWithRoboSanta.size, 2639, "Part 2 failed")

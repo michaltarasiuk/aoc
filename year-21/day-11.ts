@@ -1,12 +1,12 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 const STEPS = 100
 const THRESHOLD = 9
-const DIRECTIONS = [
+const ADJACENT_OFFSETS = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -36,7 +36,7 @@ for (let step = 1; ; step++) {
     }
     flashed.add(`${x},${y}`)
     octopuses[y][x] = 0
-    for (const [i, j] of DIRECTIONS) {
+    for (const [i, j] of ADJACENT_OFFSETS) {
       if (octopuses[y + j]?.[x + i] && ++octopuses[y + j][x + i] > THRESHOLD) {
         stack.push([x + i, y + j])
       }

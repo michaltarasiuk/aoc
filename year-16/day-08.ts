@@ -1,11 +1,35 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 const TALL = 6
 const WIDE = 50
+
+function parseRect(l: string) {
+  const m = l.match(/^rect (\d+)x(\d+)$/)
+  if (!m) {
+    return
+  }
+  return {
+    type: "rect" as const,
+    x: Number(m[1]),
+    y: Number(m[2]),
+  }
+}
+
+function parseRotate(l: string) {
+  const m = l.match(/^rotate (row|column) [xy]=(\d+) by (\d+)$/)
+  if (!m) {
+    return
+  }
+  return {
+    type: `rotate-${m[1] as "row" | "column"}` as const,
+    index: Number(m[2]),
+    amount: Number(m[3]),
+  }
+}
 
 const screen = [...Array(TALL)].map(() => Array<boolean>(WIDE).fill(false))
 
@@ -31,30 +55,6 @@ for (const l of input.split("\n")) {
       }
       break
     }
-  }
-}
-
-function parseRect(l: string) {
-  const m = l.match(/^rect (\d+)x(\d+)$/)
-  if (!m) {
-    return
-  }
-  return {
-    type: "rect" as const,
-    x: Number(m[1]),
-    y: Number(m[2]),
-  }
-}
-
-function parseRotate(l: string) {
-  const m = l.match(/^rotate (row|column) [xy]=(\d+) by (\d+)$/)
-  if (!m) {
-    return
-  }
-  return {
-    type: `rotate-${m[1] as "row" | "column"}` as const,
-    index: Number(m[2]),
-    amount: Number(m[3]),
   }
 }
 

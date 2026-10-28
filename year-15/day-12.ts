@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput, isRecord} from "../lib.js"
+import {fetchInput, isRecord} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 

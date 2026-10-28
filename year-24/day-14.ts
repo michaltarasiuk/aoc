@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
@@ -8,8 +8,8 @@ const TIME = 100
 const TILES_WIDE = 101
 const TILES_TALL = 103
 
-const horizontalMiddle = Math.floor(TILES_WIDE / 2)
-const verticalMiddle = Math.floor(TILES_TALL / 2)
+const HORIZONTAL_MIDDLE = Math.floor(TILES_WIDE / 2)
+const VERTICAL_MIDDLE = Math.floor(TILES_TALL / 2)
 
 const robotRe = /^p=(\d+),(\d+) v=(-?\d+),(-?\d+)$/
 const robots = input.split("\n").map(l => {
@@ -26,8 +26,8 @@ const positions = robots.map(({px, py, vx, vy}) => {
   }
 })
 const quadrants = Object.groupBy(positions, ({x, y}) => {
-  if (x === horizontalMiddle || y === verticalMiddle) return "middle"
-  return `${x < horizontalMiddle ? "left" : "right"}-${y < verticalMiddle ? "top" : "bottom"}`
+  if (x === HORIZONTAL_MIDDLE || y === VERTICAL_MIDDLE) return "middle"
+  return `${x < HORIZONTAL_MIDDLE ? "left" : "right"}-${y < VERTICAL_MIDDLE ? "top" : "bottom"}`
 })
 
 const safetyFactor = Object.entries(quadrants)

@@ -1,10 +1,12 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 type Rules = typeof rules
+
+const SEARCH_BAG = "shiny gold"
 
 function parseRule(rule: string) {
   const bagsRe = /(?:(\d+) )?(\b(?!no other)\w+ \w+) bags?/g
@@ -23,7 +25,6 @@ function countBagsOf(rules: Rules, search: string): number {
     .reduce((acc, count) => acc + count, 0)
 }
 
-const SEARCH_BAG = "shiny gold"
 const rules = new Map(
   input
     .split("\n")

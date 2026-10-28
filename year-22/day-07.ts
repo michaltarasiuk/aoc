@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput, isDefined} from "../lib.js"
+import {fetchInput, isDefined} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 

@@ -1,8 +1,16 @@
 import assert from "node:assert"
 
-import {fetchInput, transpose} from "../lib.js"
+import {fetchInput, transpose} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+function calcGrandTotal(cols: string[][]) {
+  return cols
+    .map(c => c.slice(0, -1).join(c.at(-1)))
+    .map(e => eval(e))
+    .filter(v => typeof v === "number")
+    .reduce((acc, v) => acc + v, 0)
+}
 
 const lines = input.split("\n")
 
@@ -28,12 +36,4 @@ const lines = input.split("\n")
     }
   }
   assert.strictEqual(calcGrandTotal(cols), 11136895955912, "Part 2 failed")
-}
-
-function calcGrandTotal(cols: string[][]) {
-  return cols
-    .map(c => c.slice(0, -1).join(c.at(-1)))
-    .map(e => eval(e))
-    .filter(v => typeof v === "number")
-    .reduce((acc, v) => acc + v, 0)
 }

@@ -1,6 +1,6 @@
-import assert from "node:assert/strict"
+import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 

@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const LITERS = 150
 
 function* permuteContainers(liters: number, ...containers: number[]): Generator<number[]> {
   for (const [i, c] of containers.entries()) {
@@ -15,8 +17,6 @@ function* permuteContainers(liters: number, ...containers: number[]): Generator<
     }
   }
 }
-
-const LITERS = 150
 
 const lines = input.split("\n")
 const combinations = [...permuteContainers(LITERS, ...lines.map(Number))]

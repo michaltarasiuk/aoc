@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const MAX_TOTAL_DISTANCE_SUM = 10_000
 
 function uppercaseLetterForIndex(index: number) {
   return String.fromCharCode(65 + index)
@@ -53,8 +55,6 @@ for (let y = minCoordinateY; y <= maxCoordinateY; y++) {
     }
   }
 }
-
-const MAX_TOTAL_DISTANCE_SUM = 10_000
 
 let safeRegionSize = 0
 for (let y = minCoordinateY; y <= maxCoordinateY; y++) {

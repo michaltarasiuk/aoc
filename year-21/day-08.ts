@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const UNIQ_SEGMENTS = [2, 4, 3, 7]
 
 function parseEntry(e: string) {
   const [uniqueSignalPatterns, fourDigitOutputs] = e.split(" | ").map(v => v.split(/\s/))
@@ -10,8 +12,6 @@ function parseEntry(e: string) {
   assert(fourDigitOutputs.length === 4)
   return [uniqueSignalPatterns, fourDigitOutputs]
 }
-
-const UNIQ_SEGMENTS = [2, 4, 3, 7]
 
 const easyDigitCount = input
   .split("\n")

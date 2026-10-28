@@ -1,12 +1,13 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 const PAPER_ROLL = "@"
+const EMPTY = "."
 const MAX_ADJACENT_ROLLS_FOR_ACCESS = 4
-const ADJACENT_DIRECTIONS = [
+const ADJACENT_OFFSETS = [
   [-1, -1],
   [-1, 0],
   [-1, 1],
@@ -22,7 +23,7 @@ function isPaperRoll(v: string) {
 }
 
 function isAccessibleByForklift(grid: string[][], x: number, y: number) {
-  const adjacentRollCount = ADJACENT_DIRECTIONS.reduce(
+  const adjacentRollCount = ADJACENT_OFFSETS.reduce(
     (count, [i, j]) => count + Number(isPaperRoll(grid[y + j]?.[x + i])),
     0,
   )
@@ -51,7 +52,7 @@ while (true) {
     break
   }
   for (const [x, y] of accessibleRolls) {
-    grid[y][x] = "."
+    grid[y][x] = EMPTY
   }
   totalRollsRemoved += accessibleRolls.length
 }

@@ -1,37 +1,37 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 const digitRe = /\d/
-const lastdigitRe = new RegExp(`.*(${digitRe.source})`)
-
-const lines = input.split("\n")
-
-const calibrationValuesSum = lines
-  .map(l => {
-    const [first = raise("Invalid digit")] = l.match(digitRe) ?? []
-    const [, last = first] = l.match(lastdigitRe) ?? []
-
-    return Number(first + last)
-  })
-  .reduce((a, b) => a + b)
+const lastDigitRe = new RegExp(`.*(${digitRe.source})`)
 
 const spelledDigitRe = /one|two|three|four|five|six|seven|eight|nine/
-const spelledDigitMap = new Map(
+const SPELLED_DIGITS = new Map(
   spelledDigitRe.source.split("|").map((spelled, i) => [spelled, i + 1]),
 )
 
 const digitOrSpelledRe = new RegExp(`${digitRe.source}|${spelledDigitRe.source}`)
 const lastDigitOrSpelledRe = new RegExp(`.*(${digitOrSpelledRe.source})`)
 
+const lines = input.split("\n")
+
+const calibrationValuesSum = lines
+  .map(l => {
+    const [first = raise("Invalid digit")] = l.match(digitRe) ?? []
+    const [, last = first] = l.match(lastDigitRe) ?? []
+
+    return Number(first + last)
+  })
+  .reduce((a, b) => a + b)
+
 const calibrationValuesSum2 = lines
   .map(l => {
     const [first = raise("Invalid digit")] = l.match(digitOrSpelledRe) ?? []
     const [, last = first] = l.match(lastDigitOrSpelledRe) ?? []
 
-    return Number([first, last].map(digit => spelledDigitMap.get(digit) ?? Number(digit)).join(""))
+    return Number([first, last].map(digit => SPELLED_DIGITS.get(digit) ?? Number(digit)).join(""))
   })
   .reduce((a, b) => a + b)
 

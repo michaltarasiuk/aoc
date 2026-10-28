@@ -1,16 +1,16 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const MOVES = {R: [1, 0], L: [-1, 0], U: [0, 1], D: [0, -1]} as const
 
 function parseWirePath(path: string) {
   return path.matchAll(/([RLUD])(\d+)/g).map(([, dir, distance]) => {
     return [dir as keyof typeof MOVES, Number(distance)] as const
   })
 }
-
-const MOVES = {R: [1, 0], L: [-1, 0], U: [0, 1], D: [0, -1]} as const
 
 function traceWirePath(path: ReturnType<typeof parseWirePath>) {
   const visitedCoords = new Map<string, number>()

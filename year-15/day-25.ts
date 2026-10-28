@@ -1,12 +1,12 @@
 import assert from "node:assert"
 
-import {fetchInput, raise} from "../lib.js"
+import {fetchInput, raise} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
-const INITIAL_CODE = 20151125
-const MULTIPLIER = 252533
-const MODULO = 33554393
+const INITIAL_CODE = 20_151_125
+const MULTIPLIER = 252_533
+const MODULO = 33_554_393
 
 const inputRe = /Enter the code at row (\d+), column (\d+)/
 const inputMatch = input.match(inputRe) ?? raise("Invalid input")

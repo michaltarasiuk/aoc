@@ -1,11 +1,14 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
 type Buttons = [A: [x: number, y: number], B: [x: number, y: number]]
 type Shape = [...Buttons, Prize: [X: number, Y: number]]
+
+const BUTTON_A_COST = 3
+const BUTTON_B_COST = 1
 
 function getPoint([aClicks, bClicks]: [number, number], [[aX, aY], [bX, bY]]: Buttons) {
   return [aClicks * aX + bClicks * bX, aClicks * aY + bClicks * bY] as const
@@ -14,9 +17,6 @@ function isOut(clicks: [a: number, b: number], [buttonA, buttonB, [prizeX, prize
   const [x, y] = getPoint(clicks, [buttonA, buttonB])
   return x > prizeX || y > prizeY
 }
-
-const A = 3
-const B = 1
 
 const games = input
   .split("\n\n")
@@ -30,7 +30,7 @@ for (const game of games) {
     for (let b = 0; !isOut([a, b], game); ++b) {
       const [x, y] = getPoint([a, b], [buttonA, buttonB])
       if (x === prizeX && y === prizeY) {
-        totalTokensSpent += a * A + b * B
+        totalTokensSpent += a * BUTTON_A_COST + b * BUTTON_B_COST
       }
     }
   }

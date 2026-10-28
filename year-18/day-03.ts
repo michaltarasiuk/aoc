@@ -1,8 +1,10 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
+
+const FABRIC_SIZE = 1_000
 
 function parseClaim(claim: string) {
   const claimRe = /^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$/
@@ -14,7 +16,6 @@ function parseClaim(claim: string) {
 const claims = input.split("\n").map(parseClaim)
 const overlappingClaims = new Set<number>()
 
-const FABRIC_SIZE = 1_000
 const fabric = Array.from({length: FABRIC_SIZE}, () =>
   Array.from({length: FABRIC_SIZE}, () => new Set<number>()),
 )

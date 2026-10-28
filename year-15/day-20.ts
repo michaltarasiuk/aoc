@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {divisors, fetchInput} from "../lib.js"
+import {divisors, fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 

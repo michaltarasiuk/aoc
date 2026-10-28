@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 
@@ -10,6 +10,10 @@ const DIRECTIONS = [
   [0, 1],
   [-1, 0],
 ]
+
+function isLowPoint(heightMap: number[][], x: number, y: number) {
+  return !DIRECTIONS.some(([i, j]) => heightMap[y][x] >= heightMap[y + j]?.[x + i])
+}
 
 const heightMap = input.split("\n").map(l => [...l].map(Number))
 
@@ -23,7 +27,3 @@ for (const y of heightMap.keys()) {
 }
 
 assert.strictEqual(riskLevel, 480, "Part 1 failed")
-
-function isLowPoint(heightMap: number[][], x: number, y: number) {
-  return !DIRECTIONS.some(([i, j]) => heightMap[y][x] >= heightMap[y + j]?.[x + i])
-}

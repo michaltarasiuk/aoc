@@ -1,6 +1,6 @@
 import assert from "node:assert"
 
-import {chunkEvery, fetchInput} from "../lib.js"
+import {chunkEvery, fetchInput} from "../lib.ts"
 
 const input = await fetchInput(import.meta)
 

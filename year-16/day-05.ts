@@ -1,17 +1,17 @@
 import assert from "node:assert"
 import crypto from "node:crypto"
 
-import {fetchInput} from "../lib.js"
+import {fetchInput} from "../lib.ts"
 
-const doorId = await fetchInput(import.meta)
+const input = await fetchInput(import.meta)
 
-function md5(binaryLike: crypto.BinaryLike) {
-  return crypto.createHash("md5").update(binaryLike).digest("hex")
+function md5(data: crypto.BinaryLike) {
+  return crypto.createHash("md5").update(data).digest("hex")
 }
 
 let password = ""
 for (let i = 0; password.length < 8; i++) {
-  const hash = md5(doorId + i)
+  const hash = md5(input + i)
   if (/^0{5}/.test(hash)) {
     password += hash[5]
   }
@@ -19,7 +19,7 @@ for (let i = 0; password.length < 8; i++) {
 
 let password2 = "_".repeat(8)
 for (let i = 0; password2.includes("_"); i++) {
-  const hash = md5(doorId + i)
+  const hash = md5(input + i)
   if (!/^0{5}/.test(hash)) {
     continue
   }
